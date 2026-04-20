@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,9 +7,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Configuracion de capitulos")]
     [SerializeField] private List<ChapterDefinition> chapters = new List<ChapterDefinition>();
+    [SerializeField] private string prologueSceneName = "PrologueScene";
     [SerializeField] private string saveFileName = "savegame.json";
 
     private SaveSystem saveSystem;
+    private SceneController sceneController;
     private SaveData currentSaveData;
 
     public IReadOnlyList<ChapterDefinition> Chapters => chapters;
@@ -26,9 +27,12 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        string fallbackChapter = GetFirstValidChapterId();
-        saveSystem = new SaveSystem(new JsonSaveRepository(saveFileName), fallbackChapter);
+        List<string> chapterIds = GetValidChapterIds();
+        saveSystem = new SaveSystem(new JsonSaveRepository(saveFileName), prologueSceneName, chapterIds);
+        sceneController = new SceneController();
         currentSaveData = saveSystem.LoadOrDefault();
+
+        EnsureDefaultUnlockState();
     }
 
     public bool CanContinue()
@@ -51,7 +55,7 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
-            if (currentSaveData.unlockedChapterIds.Contains(chapter.id))
+            if (currentSaveData.chapterUnlocks.TryGetValue(chapter.id, out bool isUnlocked) && isUnlocked)
             {
                 unlocked.Add(chapter);
             }
@@ -68,14 +72,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        saveSystem.DeleteSave();
         currentSaveData = saveSystem.CreateNewSave();
+
+        ChapterDefinition firstChapter = GetFirstValidChapter();
+        if (firstChapter != null)
+        {
+            currentSaveData.chapterUnlocks[firstChapter.id] = true;
+        }
+
+        currentSaveData.lastSceneName = prologueSceneName;
+
         bool saved = saveSystem.Save(currentSaveData);
         if (!saved)
         {
             Debug.LogWarning("No se pudo persistir nuevo juego, pero se continuara con estado en memoria.");
         }
 
-        LoadCurrentChapterScene();
+        sceneController.TryLoadScene(prologueSceneName);
     }
 
     public void ContinueGame()
@@ -87,7 +101,11 @@ public class GameManager : MonoBehaviour
         }
 
         currentSaveData = saveSystem.LoadOrDefault();
-        LoadCurrentChapterScene();
+
+        if (!sceneController.TryLoadScene(currentSaveData.lastSceneName))
+        {
+            sceneController.TryLoadScene(prologueSceneName);
+        }
     }
 
     public void LoadChapterById(string chapterId)
@@ -103,15 +121,38 @@ public class GameManager : MonoBehaviour
             currentSaveData = saveSystem.LoadOrDefault();
         }
 
-        if (!currentSaveData.unlockedChapterIds.Contains(chapterId))
+        if (!currentSaveData.chapterUnlocks.TryGetValue(chapterId, out bool unlocked) || !unlocked)
         {
             Debug.LogWarning($"Capitulo bloqueado: {chapterId}");
             return;
         }
 
-        currentSaveData.currentChapterId = chapterId;
+        ChapterDefinition chapter = GetChapterById(chapterId);
+        if (chapter == null)
+        {
+            Debug.LogError($"No se encontro capitulo configurado: {chapterId}");
+            return;
+        }
+
+        currentSaveData.lastSceneName = chapter.sceneName;
         saveSystem.Save(currentSaveData);
-        LoadCurrentChapterScene();
+        sceneController.TryLoadScene(chapter.sceneName);
+    }
+
+    public void UnlockChapter(string chapterId)
+    {
+        if (string.IsNullOrWhiteSpace(chapterId))
+        {
+            return;
+        }
+
+        if (currentSaveData == null)
+        {
+            currentSaveData = saveSystem.LoadOrDefault();
+        }
+
+        currentSaveData.chapterUnlocks[chapterId] = true;
+        saveSystem.Save(currentSaveData);
     }
 
     public void UpdateBasicProgress(int value)
@@ -155,24 +196,6 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-    private void LoadCurrentChapterScene()
-    {
-        ChapterDefinition chapter = GetChapterById(currentSaveData.currentChapterId);
-        if (chapter == null)
-        {
-            Debug.LogError("No se encontro capitulo valido para cargar.");
-            return;
-        }
-
-        if (!Application.CanStreamedLevelBeLoaded(chapter.sceneName))
-        {
-            Debug.LogError($"Escena no registrada en Build Settings: {chapter.sceneName}");
-            return;
-        }
-
-        SceneManager.LoadScene(chapter.sceneName);
-    }
-
     private ChapterDefinition GetChapterById(string chapterId)
     {
         foreach (ChapterDefinition chapter in chapters)
@@ -186,17 +209,53 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    private string GetFirstValidChapterId()
+    private ChapterDefinition GetFirstValidChapter()
     {
         foreach (ChapterDefinition chapter in chapters)
         {
             if (chapter != null && chapter.IsValid())
             {
-                return chapter.id;
+                return chapter;
             }
         }
 
-        Debug.LogWarning("No hay capitulos validos configurados. Se usara 'chapter_01'.");
-        return "chapter_01";
+        return null;
+    }
+
+    private List<string> GetValidChapterIds()
+    {
+        List<string> chapterIds = new List<string>();
+        foreach (ChapterDefinition chapter in chapters)
+        {
+            if (chapter == null || !chapter.IsValid())
+            {
+                continue;
+            }
+
+            chapterIds.Add(chapter.id);
+        }
+
+        return chapterIds;
+    }
+
+    private void EnsureDefaultUnlockState()
+    {
+        if (currentSaveData == null)
+        {
+            return;
+        }
+
+        ChapterDefinition firstChapter = GetFirstValidChapter();
+        if (firstChapter == null)
+        {
+            Debug.LogError("No hay capitulos validos configurados en GameManager.");
+            return;
+        }
+
+        if (!currentSaveData.chapterUnlocks.ContainsKey(firstChapter.id))
+        {
+            currentSaveData.chapterUnlocks[firstChapter.id] = true;
+            saveSystem.Save(currentSaveData);
+        }
     }
 }
