@@ -5,6 +5,13 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Debug")]
+    [SerializeField] private bool debugLogs = true;
+
+    [Header("Titulo")]
+    [SerializeField] private TMP_Text gameTitleText;
+    [SerializeField] private string gameTitle = "Simon Mansion";
+
     [Header("Pantallas")]
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject chaptersPanel;
@@ -28,6 +35,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        ValidateReferences();
+        EnsureTitle();
         EnsureMainMenuLabels();
         WireEvents();
         ShowMainMenu();
@@ -41,15 +50,38 @@ public class UIManager : MonoBehaviour
 
     public void ShowMainMenu()
     {
+        if (debugLogs)
+        {
+            Debug.Log("UIManager: Mostrar MainMenuPanel");
+        }
+
         SetPanelState(mainMenuPanel, true);
         SetPanelState(chaptersPanel, false);
+
+        if (mainMenuPanel != null)
+        {
+            mainMenuPanel.transform.SetAsLastSibling();
+        }
+
         RefreshContinueState();
     }
 
     public void ShowChapters()
     {
+        if (debugLogs)
+        {
+            Debug.Log("UIManager: Click en Capítulos detectado. Mostrando ChaptersPanel.");
+        }
+
         SetPanelState(mainMenuPanel, false);
         SetPanelState(chaptersPanel, true);
+
+        if (chaptersPanel != null)
+        {
+            chaptersPanel.transform.SetAsLastSibling();
+        }
+
+        RefreshContinueState();
         BuildChapterButtons();
     }
 
@@ -57,26 +89,31 @@ public class UIManager : MonoBehaviour
     {
         if (newGameButton != null)
         {
+            newGameButton.onClick.RemoveListener(OnClickNewGame);
             newGameButton.onClick.AddListener(OnClickNewGame);
         }
 
         if (continueButton != null)
         {
+            continueButton.onClick.RemoveListener(OnClickContinue);
             continueButton.onClick.AddListener(OnClickContinue);
         }
 
         if (chaptersButton != null)
         {
+            chaptersButton.onClick.RemoveListener(ShowChapters);
             chaptersButton.onClick.AddListener(ShowChapters);
         }
 
         if (quitButton != null)
         {
+            quitButton.onClick.RemoveListener(OnClickQuit);
             quitButton.onClick.AddListener(OnClickQuit);
         }
 
         if (backToMainMenuButton != null)
         {
+            backToMainMenuButton.onClick.RemoveListener(ShowMainMenu);
             backToMainMenuButton.onClick.AddListener(ShowMainMenu);
         }
     }
@@ -160,6 +197,11 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        if (chaptersPanel != null && chapterButtonsContainer == chaptersPanel.transform)
+        {
+            Debug.LogWarning("chapterButtonsContainer apunta al ChaptersPanel completo. Debe apuntar al objeto interno ChaptersButtonContainer.");
+        }
+
         if (chapterButtonPrefab == null)
         {
             Debug.LogError("No se asigno chapterButtonPrefab en UIManager.");
@@ -178,9 +220,18 @@ public class UIManager : MonoBehaviour
         foreach (ChapterDefinition chapter in unlocked)
         {
             ChapterButtonItem item = Instantiate(chapterButtonPrefab, chapterButtonsContainer);
+            item.transform.SetParent(chapterButtonsContainer, false);
+            item.gameObject.SetActive(true);
+            item.transform.SetAsLastSibling();
+
             string chapterId = chapter.id;
             string label = string.IsNullOrWhiteSpace(chapter.displayName) ? chapter.id : chapter.displayName;
             item.Setup(label, () => GameManager.Instance.LoadChapterById(chapterId));
+        }
+
+        if (debugLogs)
+        {
+            Debug.Log($"UIManager: Se generaron {unlocked.Count} botones de capítulos en {chapterButtonsContainer.name}.");
         }
     }
 
@@ -188,7 +239,11 @@ public class UIManager : MonoBehaviour
     {
         for (int i = container.childCount - 1; i >= 0; i--)
         {
-            Destroy(container.GetChild(i).gameObject);
+            Transform child = container.GetChild(i);
+            if (child.GetComponent<ChapterButtonItem>() != null)
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
@@ -200,12 +255,55 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void ValidateReferences()
+    {
+        if (mainMenuPanel == null)
+        {
+            Debug.LogError("UIManager: mainMenuPanel no esta asignado.");
+        }
+
+        if (chaptersPanel == null)
+        {
+            Debug.LogError("UIManager: chaptersPanel no esta asignado.");
+        }
+
+        if (chaptersButton == null)
+        {
+            Debug.LogError("UIManager: chaptersButton no esta asignado.");
+        }
+
+        if (backToMainMenuButton == null)
+        {
+            Debug.LogWarning("UIManager: backToMainMenuButton no esta asignado. No podras volver desde panel de capitulos.");
+        }
+    }
+
     private void EnsureMainMenuLabels()
     {
         EnsureButtonLabel(newGameButton, newGameLabel);
         EnsureButtonLabel(continueButton, continueLabel);
         EnsureButtonLabel(chaptersButton, chaptersLabel);
         EnsureButtonLabel(quitButton, quitLabel);
+    }
+
+    private void EnsureTitle()
+    {
+        if (gameTitleText == null)
+        {
+            return;
+        }
+
+        if (gameTitleText.font == null)
+        {
+            TMP_FontAsset fallbackFont = GetSafeTmpFont();
+            if (fallbackFont != null)
+            {
+                gameTitleText.font = fallbackFont;
+            }
+        }
+
+        gameTitleText.text = gameTitle;
+        gameTitleText.gameObject.SetActive(true);
     }
 
     private static void EnsureButtonLabel(Button targetButton, string label)
