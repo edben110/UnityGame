@@ -1,14 +1,17 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SaveSystem
 {
     private readonly ISaveRepository repository;
-    private readonly string fallbackChapterId;
+    private readonly string fallbackSceneName;
+    private readonly List<string> defaultChapterIds;
 
-    public SaveSystem(ISaveRepository repository, string fallbackChapterId)
+    public SaveSystem(ISaveRepository repository, string fallbackSceneName, List<string> defaultChapterIds)
     {
         this.repository = repository;
-        this.fallbackChapterId = fallbackChapterId;
+        this.fallbackSceneName = fallbackSceneName;
+        this.defaultChapterIds = defaultChapterIds ?? new List<string>();
     }
 
     public bool HasSave()
@@ -20,11 +23,11 @@ public class SaveSystem
     {
         SaveData data = new SaveData
         {
-            currentChapterId = fallbackChapterId,
+            lastSceneName = fallbackSceneName,
             basicProgress = 0
         };
 
-        data.EnsureValid(fallbackChapterId);
+        data.EnsureValid(fallbackSceneName, defaultChapterIds);
         return data;
     }
 
@@ -49,7 +52,7 @@ public class SaveSystem
         }
 
         loaded.SyncAfterLoad();
-        loaded.EnsureValid(fallbackChapterId);
+        loaded.EnsureValid(fallbackSceneName, defaultChapterIds);
         return loaded;
     }
 
@@ -61,7 +64,7 @@ public class SaveSystem
             return false;
         }
 
-        data.EnsureValid(fallbackChapterId);
+        data.EnsureValid(fallbackSceneName, defaultChapterIds);
         data.SyncBeforeSave();
         return repository.TrySave(data);
     }

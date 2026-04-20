@@ -6,30 +6,51 @@ using UnityEngine;
 public class SaveData
 {
     [Serializable]
+    public struct ChapterUnlockEntry
+    {
+        public string chapterId;
+        public bool unlocked;
+    }
+
+    [Serializable]
     public struct DecisionEntry
     {
         public string key;
         public string value;
     }
 
-    public string currentChapterId;
+    public string lastSceneName;
     public int basicProgress;
-    public List<string> unlockedChapterIds = new List<string>();
+    public List<string> chapterOrder = new List<string>();
+    public List<ChapterUnlockEntry> serializedChapterUnlocks = new List<ChapterUnlockEntry>();
     public List<DecisionEntry> serializedDecisions = new List<DecisionEntry>();
+
+    [NonSerialized]
+    public Dictionary<string, bool> chapterUnlocks = new Dictionary<string, bool>();
 
     [NonSerialized]
     public Dictionary<string, string> decisions = new Dictionary<string, string>();
 
-    public void EnsureValid(string fallbackChapterId)
+    public void EnsureValid(string fallbackSceneName, List<string> defaultChapterIds)
     {
         if (basicProgress < 0)
         {
             basicProgress = 0;
         }
 
-        if (unlockedChapterIds == null)
+        if (chapterOrder == null)
         {
-            unlockedChapterIds = new List<string>();
+            chapterOrder = new List<string>();
+        }
+
+        if (serializedChapterUnlocks == null)
+        {
+            serializedChapterUnlocks = new List<ChapterUnlockEntry>();
+        }
+
+        if (chapterUnlocks == null)
+        {
+            chapterUnlocks = new Dictionary<string, bool>();
         }
 
         if (serializedDecisions == null)
@@ -42,14 +63,33 @@ public class SaveData
             decisions = new Dictionary<string, string>();
         }
 
-        if (string.IsNullOrWhiteSpace(currentChapterId))
+        if (string.IsNullOrWhiteSpace(lastSceneName))
         {
-            currentChapterId = fallbackChapterId;
+            lastSceneName = fallbackSceneName;
         }
 
-        if (!string.IsNullOrWhiteSpace(fallbackChapterId) && !unlockedChapterIds.Contains(fallbackChapterId))
+        if (defaultChapterIds == null)
         {
-            unlockedChapterIds.Add(fallbackChapterId);
+            return;
+        }
+
+        for (int i = 0; i < defaultChapterIds.Count; i++)
+        {
+            string chapterId = defaultChapterIds[i];
+            if (string.IsNullOrWhiteSpace(chapterId))
+            {
+                continue;
+            }
+
+            if (!chapterOrder.Contains(chapterId))
+            {
+                chapterOrder.Add(chapterId);
+            }
+
+            if (!chapterUnlocks.ContainsKey(chapterId))
+            {
+                chapterUnlocks[chapterId] = i == 0;
+            }
         }
     }
 
@@ -75,9 +115,24 @@ public class SaveData
 
     public void SyncBeforeSave()
     {
+        if (chapterUnlocks == null)
+        {
+            chapterUnlocks = new Dictionary<string, bool>();
+        }
+
         if (decisions == null)
         {
             decisions = new Dictionary<string, string>();
+        }
+
+        serializedChapterUnlocks.Clear();
+        foreach (KeyValuePair<string, bool> pair in chapterUnlocks)
+        {
+            serializedChapterUnlocks.Add(new ChapterUnlockEntry
+            {
+                chapterId = pair.Key,
+                unlocked = pair.Value
+            });
         }
 
         serializedDecisions.Clear();
@@ -93,9 +148,25 @@ public class SaveData
 
     public void SyncAfterLoad()
     {
+        if (serializedChapterUnlocks == null)
+        {
+            serializedChapterUnlocks = new List<ChapterUnlockEntry>();
+        }
+
         if (serializedDecisions == null)
         {
             serializedDecisions = new List<DecisionEntry>();
+        }
+
+        chapterUnlocks = new Dictionary<string, bool>();
+        foreach (ChapterUnlockEntry entry in serializedChapterUnlocks)
+        {
+            if (string.IsNullOrWhiteSpace(entry.chapterId))
+            {
+                continue;
+            }
+
+            chapterUnlocks[entry.chapterId] = entry.unlocked;
         }
 
         decisions = new Dictionary<string, string>();
