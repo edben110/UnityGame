@@ -277,51 +277,37 @@ public class UIManager : MonoBehaviour
         if (mainMenuPanel == null)
             mainMenuPanel = CreateTransparentPanel("MainMenuPanel", rootCanvas.transform);
 
-        // Hacer el panel transparente (la imagen de fondo se ve detras)
         Image panelImg = mainMenuPanel.GetComponent<Image>();
         if (panelImg != null) panelImg.color = transparent;
 
         // Logo arriba a la izquierda
         CreateLogo(mainMenuPanel.transform);
 
-        // Contenedor de botones a la izquierda
-        GameObject buttonsArea = new GameObject("ButtonsArea", typeof(RectTransform));
-        buttonsArea.transform.SetParent(mainMenuPanel.transform, false);
+        // Botones centrados con el logo
+        float leftEdge = 0.075f;
+        float rightEdge = 0.275f;
+        float startY = 0.54f;
+        float btnHeight = 0.05f;
+        float gap = 0.012f;
 
-        RectTransform baRect = buttonsArea.GetComponent<RectTransform>();
-        baRect.anchorMin = new Vector2(0.05f, 0.15f);
-        baRect.anchorMax = new Vector2(0.35f, 0.55f);
-        baRect.offsetMin = Vector2.zero;
-        baRect.offsetMax = Vector2.zero;
+        newGameButton = CreateFixedButton(mainMenuPanel.transform, newGameLabel, 32, ghostWhite,
+            leftEdge, startY - btnHeight, rightEdge, startY);
 
-        VerticalLayoutGroup vlg = buttonsArea.AddComponent<VerticalLayoutGroup>();
-        vlg.spacing = 8;
-        vlg.childAlignment = TextAnchor.UpperLeft;
-        vlg.childControlWidth = true;
-        vlg.childControlHeight = false;
-        vlg.childForceExpandWidth = false;
-        vlg.childForceExpandHeight = false;
+        float y1 = startY - btnHeight - gap;
+        continueButton = CreateFixedButton(mainMenuPanel.transform, continueLabel, 28, ghostWhite,
+            leftEdge, y1 - btnHeight, rightEdge, y1);
 
-        // Crear botones como texto simple (sin fondo)
-        if (newGameButton == null)
-            newGameButton = CreateTextButton(buttonsArea.transform, newGameLabel, 30, bloodRed);
-        else
-            StyleTextButton(newGameButton, newGameLabel, 30, bloodRed);
+        float y2 = y1 - btnHeight - gap;
+        chaptersButton = CreateFixedButton(mainMenuPanel.transform, chaptersLabel, 28, ghostWhite,
+            leftEdge, y2 - btnHeight, rightEdge, y2);
 
-        if (continueButton == null)
-            continueButton = CreateTextButton(buttonsArea.transform, continueLabel, 26, ghostWhite);
-        else
-            StyleTextButton(continueButton, continueLabel, 26, ghostWhite);
+        float y3 = y2 - btnHeight - gap;
+        quitButton = CreateFixedButton(mainMenuPanel.transform, quitLabel, 28, ghostWhite,
+            leftEdge, y3 - btnHeight, rightEdge, y3);
 
-        if (chaptersButton == null)
-            chaptersButton = CreateTextButton(buttonsArea.transform, chaptersLabel, 26, ghostWhite);
-        else
-            StyleTextButton(chaptersButton, chaptersLabel, 26, ghostWhite);
-
-        if (quitButton == null)
-            quitButton = CreateTextButton(buttonsArea.transform, quitLabel, 26, ghostWhite);
-        else
-            StyleTextButton(quitButton, quitLabel, 26, ghostWhite);
+        // Marco decorativo justo debajo del ultimo boton
+        float marcoTop = y3 - btnHeight - 0.005f;
+        CreateMarcoDecorativo(mainMenuPanel.transform, leftEdge, marcoTop);
 
         // Texto de ubicacion abajo a la izquierda
         CreateLocationText(mainMenuPanel.transform);
@@ -365,9 +351,9 @@ public class UIManager : MonoBehaviour
 
         // Boton volver
         if (backToMainMenuButton == null)
-            backToMainMenuButton = CreateTextButton(chaptersPanel.transform, "VOLVER", 26, ghostWhite);
+            backToMainMenuButton = CreateTextButton(chaptersPanel.transform, "VOLVER", 32, ghostWhite);
         else
-            StyleTextButton(backToMainMenuButton, "VOLVER", 26, ghostWhite);
+            StyleTextButton(backToMainMenuButton, "VOLVER", 32, ghostWhite);
 
         RectTransform backRect = backToMainMenuButton.GetComponent<RectTransform>();
         backRect.anchorMin = new Vector2(0.05f, 0.05f);
@@ -426,8 +412,8 @@ public class UIManager : MonoBehaviour
         }
 
         RectTransform rect = logoObj.GetComponent<RectTransform>();
-        rect.anchorMin = new Vector2(0.02f, 0.55f);
-        rect.anchorMax = new Vector2(0.35f, 0.95f);
+        rect.anchorMin = new Vector2(0.01f, 0.55f);
+        rect.anchorMax = new Vector2(0.34f, 0.95f);
         rect.offsetMin = Vector2.zero;
         rect.offsetMax = Vector2.zero;
     }
@@ -474,6 +460,83 @@ public class UIManager : MonoBehaviour
         EnsureFontAsset(tmp);
     }
 
+    private static void CreateMarcoDecorativo(Transform parent, float leftEdge, float topY)
+    {
+        GameObject marcoObj = new GameObject("MarcoDecorativo", typeof(RectTransform), typeof(RawImage));
+        marcoObj.transform.SetParent(parent, false);
+
+        RectTransform rect = marcoObj.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(leftEdge + 0.02f, topY - 0.18f);
+        rect.anchorMax = new Vector2(leftEdge + 0.18f, topY);
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+
+        RawImage img = marcoObj.GetComponent<RawImage>();
+        img.raycastTarget = false;
+
+        Texture2D tex = Resources.Load<Texture2D>("Sprites/MarcoDebajo");
+        if (tex != null)
+        {
+            img.texture = tex;
+            img.color = Color.white;
+            Debug.Log("MarcoDebajo cargado correctamente.");
+        }
+        else
+        {
+            Debug.LogError("NO se encontro MarcoDebajo en Resources/Sprites/. Verifica el nombre del archivo.");
+            img.color = new Color(0.5f, 0.05f, 0.05f, 0.5f); // Rojo visible para debug
+        }
+    }
+
+    private static Button CreateFixedButton(Transform parent, string label, int fontSize, Color color,
+        float anchorMinX, float anchorMinY, float anchorMaxX, float anchorMaxY)
+    {
+        GameObject btnObj = new GameObject(label + "Btn", typeof(RectTransform), typeof(Button));
+        btnObj.transform.SetParent(parent, false);
+
+        Image btnImg = btnObj.AddComponent<Image>();
+        btnImg.color = transparent;
+
+        Button btn = btnObj.GetComponent<Button>();
+        ColorBlock colors = btn.colors;
+        colors.normalColor = Color.white;
+        colors.highlightedColor = Color.white;
+        colors.pressedColor = Color.white;
+        colors.selectedColor = Color.white;
+        colors.disabledColor = new Color(1, 1, 1, 0.4f);
+        btn.colors = colors;
+
+        RectTransform btnRect = btnObj.GetComponent<RectTransform>();
+        btnRect.anchorMin = new Vector2(anchorMinX, anchorMinY);
+        btnRect.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
+        btnRect.offsetMin = Vector2.zero;
+        btnRect.offsetMax = Vector2.zero;
+
+        GameObject textObj = new GameObject("Text (TMP)", typeof(RectTransform), typeof(TextMeshProUGUI));
+        textObj.transform.SetParent(btnObj.transform, false);
+
+        RectTransform textRect = textObj.GetComponent<RectTransform>();
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = Vector2.zero;
+        textRect.offsetMax = Vector2.zero;
+
+        TextMeshProUGUI tmp = textObj.GetComponent<TextMeshProUGUI>();
+        tmp.text = label.ToUpper();
+        tmp.fontSize = fontSize;
+        tmp.fontStyle = FontStyles.Bold;
+        tmp.color = color;
+        tmp.alignment = TextAlignmentOptions.Center;
+        tmp.verticalAlignment = VerticalAlignmentOptions.Middle;
+        tmp.raycastTarget = false;
+        EnsureFontAsset(tmp);
+
+        ButtonHoverEffect hover = btnObj.AddComponent<ButtonHoverEffect>();
+        hover.Init(color, bloodRed, fontSize);
+
+        return btn;
+    }
+
     private static Button CreateTextButton(Transform parent, string label, int fontSize, Color color)
     {
         GameObject btnObj = new GameObject(label + "Btn", typeof(RectTransform), typeof(Button));
@@ -502,7 +565,7 @@ public class UIManager : MonoBehaviour
         textRect.offsetMax = Vector2.zero;
 
         TextMeshProUGUI tmp = textObj.GetComponent<TextMeshProUGUI>();
-        tmp.text = label;
+        tmp.text = label.ToUpper();
         tmp.fontSize = fontSize;
         tmp.fontStyle = FontStyles.Bold;
         tmp.color = color;
@@ -512,11 +575,10 @@ public class UIManager : MonoBehaviour
 
         // Hover effect
         ButtonHoverEffect hover = btnObj.AddComponent<ButtonHoverEffect>();
-        Color hoverColor = color == bloodRed ? new Color(0.9f, 0.15f, 0.15f, 1f) : Color.white;
-        hover.Init(color, hoverColor, fontSize);
+        hover.Init(color, bloodRed, fontSize);
 
         LayoutElement le = btnObj.AddComponent<LayoutElement>();
-        le.preferredHeight = fontSize + 18;
+        le.preferredHeight = fontSize + 22;
         le.flexibleWidth = 1;
 
         return btn;
@@ -545,11 +607,14 @@ public class UIManager : MonoBehaviour
 
     private static TMP_FontAsset GetSafeTmpFont()
     {
-        TMP_FontAsset font = null;
-        if (TMP_Settings.instance != null)
+        TMP_FontAsset font = Resources.Load<TMP_FontAsset>("Fonts/Cinzel-Bold SDF");
+
+        if (font == null && TMP_Settings.instance != null)
             font = TMP_Settings.defaultFontAsset;
+
         if (font == null)
             font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
+
         return font;
     }
 
