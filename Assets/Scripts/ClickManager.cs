@@ -12,7 +12,9 @@ public class ClickManager : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector3 screenPos = Mouse.current.position.ReadValue();
+            screenPos.z = Mathf.Abs(Camera.main.transform.position.z);
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(screenPos);
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
             if (hit.collider != null)
