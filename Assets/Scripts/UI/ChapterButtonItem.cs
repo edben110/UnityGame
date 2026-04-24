@@ -88,8 +88,8 @@ public class ChapterButtonItem : MonoBehaviour
     {
         if (text == null || text.font != null) return;
 
-        TMP_FontAsset font = null;
-        if (TMP_Settings.instance != null)
+        TMP_FontAsset font = Resources.Load<TMP_FontAsset>("Fonts/Cinzel-Bold SDF");
+        if (font == null && TMP_Settings.instance != null)
             font = TMP_Settings.defaultFontAsset;
         if (font == null)
             font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
