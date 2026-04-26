@@ -131,6 +131,7 @@ public class StoryState : MonoBehaviour
         flags.Clear();
         decisions.Clear();
         Save();
+        InventoryState.Clear();
         NotifyStateChanged();
     }
 

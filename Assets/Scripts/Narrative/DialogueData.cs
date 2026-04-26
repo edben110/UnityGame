@@ -10,6 +10,7 @@ public class DialogueLine
     public float anxietyDelta;
     public string requiredFlag;
     public string setFlag;
+    public string addInventoryItemId;
 }
 
 [Serializable]

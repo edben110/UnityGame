@@ -66,6 +66,16 @@ public class DialogueRunner : MonoBehaviour
         return true;
     }
 
+    public bool HasConversation(string conversationId)
+    {
+        if (library == null || string.IsNullOrWhiteSpace(conversationId))
+        {
+            return false;
+        }
+
+        return library.HasConversation(conversationId);
+    }
+
     private void OnContinuePressed()
     {
         if (!IsRunning || activeNode == null)
@@ -201,6 +211,11 @@ public class DialogueRunner : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(line.setFlag))
         {
             StoryState.Instance.SetFlag(line.setFlag, true);
+        }
+
+        if (!string.IsNullOrWhiteSpace(line.addInventoryItemId))
+        {
+            InventoryState.AddItem(line.addInventoryItemId);
         }
     }
 

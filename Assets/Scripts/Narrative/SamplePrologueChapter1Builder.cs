@@ -45,10 +45,15 @@ public class SamplePrologueChapter1Builder : MonoBehaviour
             BuildLobbyCoatConversation(),
             BuildLobbyPhotoConversation(),
             BuildNpcConversation("chapter1_npc_robert", "Robert", "Vine por una carta legal. Hay asuntos de herencia pendientes.", "No confiaria en separarnos. Esta casa tiene mas preguntas que respuestas."),
+            BuildNpcItemQuestionConversation("chapter1_npc_robert_item_foto_padre_hijo", "Robert", "La foto de la chimenea dice 'Padre e hijo, 1987'.", "No sabia que quedaba una copia aqui. Ese hombre era el padre de Simón... y tambien el mio. No estoy listo para contarlo al resto."),
             BuildNpcConversation("chapter1_npc_ana", "Ana", "Simón era un cliente brillante, pero guardaba demasiado silencio.", "Si encontramos mas pistas en el lobby, podriamos entender por que nos llamo."),
+            BuildNpcItemQuestionConversation("chapter1_npc_ana_item_foto_padre_hijo", "Ana", "En la foto antigua Robert aparto la mirada enseguida.", "Lo vi. Esa reaccion no es casualidad. Si esa imagen sigue apareciendo en nuestras pistas, la historia familiar de Simón es mas importante de lo que parece."),
             BuildNpcConversation("chapter1_npc_ben", "Ben", "Yo llevaba las cuentas. No quiero problemas, solo aclarar todo.", "Escucha, si hablas conmigo seguido me mantengo estable. Si me dejas solo, me derrumbo."),
+            BuildNpcItemQuestionConversation("chapter1_npc_ben_item_foto_padre_hijo", "Ben", "Necesito que me digas que sabes de la foto de la chimenea.", "Si la foto menciona al padre de Simón, entonces hay herencias y decisiones viejas metidas en esto. Robert sabe algo, seguro."),
             BuildNpcConversation("chapter1_npc_lisa", "Lisa", "La version oficial de su muerte no me convence.", "Si encontramos evidencia real, podremos proteger al grupo de decisiones ciegas."),
+            BuildNpcItemQuestionConversation("chapter1_npc_lisa_item_foto_padre_hijo", "Lisa", "Encontramos una foto: 'Padre e hijo, 1987'.", "Esa foto conecta con lo que investigaba. Si Robert evita mirarla, es porque teme que alguien ate su nombre al de Simón."),
             BuildNpcConversation("chapter1_npc_lucas", "Lucas", "Trabaje con Simón en el taller. Conozco varios rincones de la mansion.", "Si notas que mi ansiedad sube, hablame antes de explorar otra zona."),
+            BuildNpcItemQuestionConversation("chapter1_npc_lucas_item_foto_padre_hijo", "Lucas", "Quiero preguntarte por la foto de Simón con un hombre mayor.", "Simón nunca hablaba de su familia, pero guardaba esa foto cerca del fuego, como si la mirara seguido. Esa pista importa."),
             BuildChapter1Decision()
         };
 
@@ -163,7 +168,7 @@ public class SamplePrologueChapter1Builder : MonoBehaviour
             lines = new List<DialogueLine>
             {
                 new DialogueLine { speaker = "Narrador", text = "En la chimenea hay una foto antigua de Simón con un hombre mayor." },
-                new DialogueLine { speaker = "Narrador", text = "Al dorso: 'Padre e hijo, 1987'. Robert aparta la mirada.", anxietyDelta = 5f, setFlag = "clue.lobby.photo" }
+                new DialogueLine { speaker = "Narrador", text = "Al dorso: 'Padre e hijo, 1987'. Robert aparta la mirada.", anxietyDelta = 5f, setFlag = "clue.lobby.photo", addInventoryItemId = "foto_padre_hijo" }
             }
         };
 
@@ -185,6 +190,27 @@ public class SamplePrologueChapter1Builder : MonoBehaviour
                 new DialogueLine { speaker = npcName, text = lineA, anxietyDelta = -4f },
                 new DialogueLine { speaker = npcName, text = lineB, anxietyDelta = -3f },
                 new DialogueLine { speaker = "Narrador", text = "La conversacion te ayuda a contener la tension del grupo." }
+            }
+        };
+
+        return new DialogueConversation
+        {
+            id = id,
+            nodes = new List<DialogueNode> { start }
+        };
+    }
+
+    private static DialogueConversation BuildNpcItemQuestionConversation(string id, string npcName, string promptLine, string answerLine)
+    {
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Jugador", text = promptLine },
+                new DialogueLine { speaker = npcName, text = answerLine, anxietyDelta = -2f },
+                new DialogueLine { speaker = "Narrador", text = "La reaccion abre una nueva capa de la historia sin romper el grupo." }
             }
         };
 
