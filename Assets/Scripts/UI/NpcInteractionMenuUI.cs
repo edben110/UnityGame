@@ -123,6 +123,12 @@ public class NpcInteractionMenuUI : MonoBehaviour
         onVerify = null;
         onAskItem = null;
 
+        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+        if (anxietySystem != null)
+        {
+            anxietySystem.HideVerificationOverlay();
+        }
+
         SetAskItemButtonState(false, string.Empty);
 
         if (root != null)

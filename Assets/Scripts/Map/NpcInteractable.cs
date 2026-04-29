@@ -118,10 +118,22 @@ public class NpcInteractable : Interactable
         if (CharacterAnxietySystem.Instance == null)
         {
             NpcInteractionMenuUI.Instance.ShowStatusText("Sistema de ansiedad no configurado.");
+            AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+            if (anxietySystem != null)
+            {
+                anxietySystem.HideVerificationOverlay();
+            }
             return;
         }
 
+        float anxiety = CharacterAnxietySystem.Instance.GetAnxiety(npcId);
         NpcInteractionMenuUI.Instance.ShowStatusText(CharacterAnxietySystem.Instance.GetFormattedStatus(npcId));
+
+        AnxietySystem overlaySystem = FindAnyObjectByType<AnxietySystem>();
+        if (overlaySystem != null)
+        {
+            overlaySystem.ShowVerificationOverlay(anxiety / 100f);
+        }
     }
 
     private void OnAskItemPressed(string conversationId)
@@ -141,6 +153,12 @@ public class NpcInteractable : Interactable
         if (!started)
         {
             return;
+        }
+
+        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+        if (anxietySystem != null)
+        {
+            anxietySystem.HideVerificationOverlay();
         }
 
         NpcInteractionMenuUI.Instance.Hide();

@@ -1549,6 +1549,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba818a6a81075b459bac13ae81f8690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialoguePanelUI
+  choiceButtonHorizontalPadding: 40
+  choiceButtonVerticalPadding: 20
   root: {fileID: 693586089}
   speakerText: {fileID: 1370320892}
   bodyText: {fileID: 312484626}
@@ -2790,7 +2792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1113264209
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2813,8 +2815,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 518.08093, y: 75}
-  m_SizeDelta: {x: -1069.277, y: -644}
+  m_AnchoredPosition: {x: 397, y: 109}
+  m_SizeDelta: {x: -609.83, y: -395.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1113264210
 MonoBehaviour:
@@ -2836,8 +2838,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 1cda968c2870dc3488b5bcee03bb159f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3367,6 +3369,7 @@ MonoBehaviour:
   volume: {fileID: 0}
   overlayAlphaMax: 0.4
   overlayColor: {r: 0.45, g: 0, b: 0, a: 1}
+  verificationOverlayDuration: 1.75
 --- !u!4 &1307022784
 Transform:
   m_ObjectHideFlags: 0
