@@ -293,8 +293,12 @@ public class UIManager : MonoBehaviour
         btn.interactable = unlocked;
         btn.transition = Selectable.Transition.None;
 
+        // Hover en tarjetas desbloqueadas
         if (unlocked)
         {
+            CardHoverEffect hover = cardObj.AddComponent<CardHoverEffect>();
+            hover.Init(cardImage.color);
+
             string capturedId = chapterId;
             btn.onClick.AddListener(() => GameManager.Instance.LoadChapterById(capturedId));
         }
