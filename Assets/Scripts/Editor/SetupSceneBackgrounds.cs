@@ -5,24 +5,35 @@ using UnityEngine.Rendering.Universal;
 
 public class SetupSceneBackgrounds
 {
-    private static readonly (string scenePath, string spriteName)[] sceneBackgrounds = new[]
+    private static readonly string[] spriteNames = new[]
     {
-        ("Assets/Scenes/Chapter01Scene.unity", "Capitulo_1"),
-        ("Assets/Scenes/Chapter02Scene.unity", "Lobby"),
-        ("Assets/Scenes/Chapter03Scene.unity", "Habitacion_Simon"),
-        ("Assets/Scenes/Chapter04Scene.unity", "Estudio_simon"),
-        ("Assets/Scenes/Chapter05Scene.unity", "Galeria_de_arte"),
-        ("Assets/Scenes/PrologueScene.unity",  "Ala_norte"),
+        "Ala_norte",
+        "Capitulo_1",
+        "Estudio_simon",
+        "Galeria_de_arte",
+        "Habitacion_Simon",
+        "Lobby",
     };
 
-    [MenuItem("Tools/Asignar Fondos a Escenas")]
-    public static void AssignBackgrounds()
+    [MenuItem("Tools/Agregar Fondos a MainMapScene")]
+    public static void AddBackgroundsToMainMap()
     {
-        int count = 0;
+        string scenePath = "Assets/Scenes/MainMapScene.unity";
+        var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
 
-        foreach (var (scenePath, spriteName) in sceneBackgrounds)
+        // Crear un padre para organizar los fondos
+        GameObject parent = GameObject.Find("Backgrounds");
+        if (parent == null)
         {
-            string spritePath = $"Assets/Sprites/{spriteName}.png";
+            parent = new GameObject("Backgrounds");
+            parent.transform.position = Vector3.zero;
+        }
+
+        float xOffset = 0f;
+
+        for (int i = 0; i < spriteNames.Length; i++)
+        {
+            string spritePath = $"Assets/Sprites/{spriteNames[i]}.png";
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
 
             if (sprite == null)
@@ -31,65 +42,83 @@ public class SetupSceneBackgrounds
                 continue;
             }
 
-            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-
-            // --- Cámara ---
-            Camera cam = Object.FindFirstObjectByType<Camera>();
-            if (cam == null)
-            {
-                GameObject camGO = new GameObject("Main Camera");
-                camGO.tag = "MainCamera";
-                cam = camGO.AddComponent<Camera>();
-                camGO.AddComponent<UniversalAdditionalCameraData>();
-                cam.orthographic = true;
-                cam.orthographicSize = 5f;
-                cam.nearClipPlane = -10f;
-                cam.farClipPlane = 10f;
-                cam.clearFlags = CameraClearFlags.SolidColor;
-                cam.backgroundColor = Color.black;
-                camGO.transform.position = new Vector3(0, 0, -10);
-                Debug.Log($"Cámara creada en: {scenePath}");
-            }
-            else
-            {
-                cam.orthographic = true;
-                cam.orthographicSize = 5f;
-            }
-
-            // --- Fondo ---
-            GameObject bg = GameObject.Find("Background");
+            string goName = $"BG_{spriteNames[i]}";
+            GameObject bg = GameObject.Find(goName);
             if (bg == null)
             {
-                bg = new GameObject("Background");
-                bg.AddComponent<SpriteRenderer>();
+                bg = new GameObject(goName);
+                bg.transform.SetParent(parent.transform);
             }
 
             var sr = bg.GetComponent<SpriteRenderer>();
+            if (sr == null)
+            {
+                sr = bg.AddComponent<SpriteRenderer>();
+            }
+
             sr.sprite = sprite;
             sr.sortingOrder = -100;
 
-            // Escalar el sprite para que cubra toda la cámara
-            float camHeight = cam.orthographicSize * 2f;
-            float camWidth = camHeight * cam.aspect;
+            // Posicionar cada fondo uno al lado del otro
+            bg.transform.localPosition = new Vector3(xOffset, 0, 0);
+            xOffset += sprite.bounds.size.x + 1f; // espacio entre fondos
 
-            float spriteHeight = sprite.bounds.size.y;
-            float spriteWidth = sprite.bounds.size.x;
-
-            float scaleX = camWidth / spriteWidth;
-            float scaleY = camHeight / spriteHeight;
-            float scale = Mathf.Max(scaleX, scaleY); // cubrir toda la pantalla
-
-            bg.transform.localScale = new Vector3(scale, scale, 1f);
-            bg.transform.position = Vector3.zero;
-
-            EditorSceneManager.SaveScene(scene);
-            count++;
-            Debug.Log($"Escena configurada: {scenePath} -> {spriteName}");
+            Debug.Log($"Fondo agregado: {goName}");
         }
 
-        Debug.Log($"Fondos y cámaras configurados en {count} escenas.");
-        EditorUtility.DisplayDialog("Escenas Configuradas",
-            $"Se configuraron {count} escenas con cámara y fondo.\nRevisa la consola para detalles.",
+        EditorSceneManager.SaveScene(scene);
+        Debug.Log($"Todos los fondos agregados a MainMapScene.");
+        EditorUtility.DisplayDialog("Fondos en MainMapScene",
+            $"Se agregaron {spriteNames.Length} fondos a MainMapScene.",
+            "OK");
+    }
+
+    [MenuItem("Tools/Limpiar Fondos de Escenas de Capitulos")]
+    public static void CleanChapterScenes()
+    {
+        string[] chapterScenes = new[]
+        {
+            "Assets/Scenes/Chapter01Scene.unity",
+            "Assets/Scenes/Chapter02Scene.unity",
+            "Assets/Scenes/Chapter03Scene.unity",
+            "Assets/Scenes/Chapter04Scene.unity",
+            "Assets/Scenes/Chapter05Scene.unity",
+            "Assets/Scenes/PrologueScene.unity",
+        };
+
+        int count = 0;
+        foreach (string scenePath in chapterScenes)
+        {
+            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+
+            bool changed = false;
+
+            GameObject bg = GameObject.Find("Background");
+            if (bg != null)
+            {
+                Object.DestroyImmediate(bg);
+                changed = true;
+                Debug.Log($"Eliminado Background de: {scenePath}");
+            }
+
+            GameObject cam = GameObject.Find("Main Camera");
+            if (cam != null)
+            {
+                Object.DestroyImmediate(cam);
+                changed = true;
+                Debug.Log($"Eliminada Main Camera de: {scenePath}");
+            }
+
+            if (changed)
+            {
+                EditorSceneManager.SaveScene(scene);
+                count++;
+            }
+        }
+
+        Debug.Log($"Limpiadas {count} escenas.");
+        EditorUtility.DisplayDialog("Escenas Limpiadas",
+            $"Se limpiaron {count} escenas de capitulos.\nSe eliminaron Background y Main Camera.",
             "OK");
     }
 }
