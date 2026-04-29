@@ -83,6 +83,21 @@ public class UIManager : MonoBehaviour
         if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
         if (chaptersPanel != null) chaptersPanel.SetActive(false);
         if (gameTitleText != null) gameTitleText.gameObject.SetActive(false);
+
+        // Ocultar TODOS los hijos del canvas que no sean UIManager o Camera
+        if (rootCanvas == null) rootCanvas = GetComponentInParent<Canvas>();
+        if (rootCanvas == null) rootCanvas = FindObjectOfType<Canvas>();
+        if (rootCanvas != null)
+        {
+            for (int i = 0; i < rootCanvas.transform.childCount; i++)
+            {
+                Transform child = rootCanvas.transform.GetChild(i);
+                if (child.GetComponent<UIManager>() == null)
+                {
+                    child.gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     public void ShowMainMenu()
@@ -217,13 +232,13 @@ public class UIManager : MonoBehaviour
         if (marcoTex != null)
         {
             cardImage.texture = marcoTex;
-            cardImage.color = unlocked ? Color.white : new Color(0.3f, 0.3f, 0.3f, 0.7f);
+            cardImage.color = unlocked ? Color.white : new Color(0.4f, 0.4f, 0.4f, 0.85f);
             Debug.Log($"Marco cargado OK para {label}");
         }
         else
         {
             Debug.LogError("NO se pudo cargar Sprites/marcoCapitulos");
-            cardImage.color = unlocked ? new Color(0.25f, 0.08f, 0.08f, 0.8f) : new Color(0.15f, 0.15f, 0.15f, 0.6f);
+            cardImage.color = unlocked ? new Color(0.25f, 0.08f, 0.08f, 0.8f) : new Color(0.2f, 0.2f, 0.2f, 0.7f);
         }
 
         // Tamano flexible
@@ -236,14 +251,14 @@ public class UIManager : MonoBehaviour
         textObj.transform.SetParent(cardObj.transform, false);
 
         RectTransform textRect = textObj.GetComponent<RectTransform>();
-        textRect.anchorMin = new Vector2(0.1f, 0.15f);
+        textRect.anchorMin = new Vector2(0.1f, 0.55f);
         textRect.anchorMax = new Vector2(0.9f, 0.85f);
         textRect.offsetMin = Vector2.zero;
         textRect.offsetMax = Vector2.zero;
 
         TextMeshProUGUI tmp = textObj.GetComponent<TextMeshProUGUI>();
         tmp.text = label.ToUpper();
-        tmp.fontSize = 30;
+        tmp.fontSize = 26;
         tmp.fontStyle = FontStyles.Bold;
         tmp.color = unlocked ? ghostWhite : dimWhite;
         tmp.alignment = TextAlignmentOptions.Center;
@@ -258,17 +273,17 @@ public class UIManager : MonoBehaviour
             lockObj.transform.SetParent(cardObj.transform, false);
 
             RectTransform lockRect = lockObj.GetComponent<RectTransform>();
-            lockRect.anchorMin = new Vector2(0.2f, 0.35f);
-            lockRect.anchorMax = new Vector2(0.8f, 0.65f);
+            lockRect.anchorMin = new Vector2(0.1f, 0.15f);
+            lockRect.anchorMax = new Vector2(0.9f, 0.45f);
             lockRect.offsetMin = Vector2.zero;
             lockRect.offsetMax = Vector2.zero;
 
             TextMeshProUGUI lockTmp = lockObj.GetComponent<TextMeshProUGUI>();
             lockTmp.text = "BLOQUEADO";
-            lockTmp.fontSize = 18;
+            lockTmp.fontSize = 22;
             lockTmp.fontStyle = FontStyles.Italic;
             lockTmp.alignment = TextAlignmentOptions.Center;
-            lockTmp.color = dimWhite;
+            lockTmp.color = new Color(0.7f, 0.3f, 0.3f, 0.9f);
             lockTmp.raycastTarget = false;
             EnsureFontAsset(lockTmp);
         }
@@ -420,18 +435,17 @@ public class UIManager : MonoBehaviour
             container.transform.SetParent(chaptersPanel.transform, false);
 
             RectTransform cRect = container.GetComponent<RectTransform>();
-            cRect.anchorMin = new Vector2(0.02f, 0.12f);
-            cRect.anchorMax = new Vector2(0.98f, 0.82f);
+            cRect.anchorMin = new Vector2(0.10f, 0.10f);
+            cRect.anchorMax = new Vector2(0.90f, 0.80f);
             cRect.offsetMin = Vector2.zero;
             cRect.offsetMax = Vector2.zero;
 
-            HorizontalLayoutGroup hlg = container.AddComponent<HorizontalLayoutGroup>();
-            hlg.spacing = 15;
-            hlg.childAlignment = TextAnchor.MiddleCenter;
-            hlg.childControlWidth = true;
-            hlg.childControlHeight = true;
-            hlg.childForceExpandWidth = true;
-            hlg.childForceExpandHeight = true;
+            GridLayoutGroup glg = container.AddComponent<GridLayoutGroup>();
+            glg.cellSize = new Vector2(380, 380);
+            glg.spacing = new Vector2(30, 20);
+            glg.childAlignment = TextAnchor.MiddleCenter;
+            glg.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            glg.constraintCount = 3;
 
             chapterButtonsContainer = container.transform;
         }
