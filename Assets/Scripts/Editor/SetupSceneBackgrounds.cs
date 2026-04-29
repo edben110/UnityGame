@@ -1,53 +1,77 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine.Rendering.Universal;
 
 public class SetupSceneBackgrounds
 {
-    private static readonly string[] spriteNames = new[]
+    // Salas del juego según el script de Python
+    private static readonly (string roomId, string displayName, string spriteName)[] roomDefinitions = new[]
     {
-        "Ala_norte",
-        "Capitulo_1",
-        "Estudio_simon",
-        "Galeria_de_arte",
-        "Habitacion_Simon",
-        "Lobby",
+        ("lobby",              "Lobby",                  "Lobby"),
+        ("estudio",            "Estudio de Simón",       "Estudio_simon"),
+        ("habitacion",         "Habitación de Simón",    "Habitacion_Simon"),
+        ("galeria",            "Galería de Arte",        "Galeria_de_arte"),
+        ("sala_vigilancia",    "Sala de Vigilancia",     "Ala_norte"),
     };
 
-    [MenuItem("Tools/Agregar Fondos a MainMapScene")]
-    public static void AddBackgroundsToMainMap()
+    // Conexiones entre salas (puertas): sala origen -> sala destino
+    private static readonly (string fromRoom, string toRoom, string doorName, Vector3 position)[] doorConnections = new[]
+    {
+        // Desde el Lobby
+        ("lobby", "estudio",         "Puerta_Estudio",        new Vector3(3f, 0f, 0f)),
+        ("lobby", "galeria",         "Puerta_Galeria",        new Vector3(-3f, 0f, 0f)),
+        ("lobby", "habitacion",      "Puerta_Habitacion",     new Vector3(0f, 3f, 0f)),
+
+        // Desde el Estudio
+        ("estudio", "lobby",         "Puerta_Lobby",          new Vector3(-3f, 0f, 0f)),
+        ("estudio", "sala_vigilancia","Puerta_Vigilancia",    new Vector3(3f, 0f, 0f)),
+
+        // Desde la Habitación
+        ("habitacion", "lobby",      "Puerta_Lobby",          new Vector3(0f, -3f, 0f)),
+        ("habitacion", "galeria",    "Puerta_Galeria",        new Vector3(3f, 0f, 0f)),
+
+        // Desde la Galería
+        ("galeria", "lobby",         "Puerta_Lobby",          new Vector3(3f, 0f, 0f)),
+        ("galeria", "habitacion",    "Puerta_Habitacion",     new Vector3(-3f, 0f, 0f)),
+
+        // Desde la Sala de Vigilancia
+        ("sala_vigilancia", "estudio","Puerta_Estudio",       new Vector3(-3f, 0f, 0f)),
+        ("sala_vigilancia", "lobby",  "Puerta_Lobby",         new Vector3(0f, -3f, 0f)),
+    };
+
+    [MenuItem("Tools/Configurar Salas en MainMapScene")]
+    public static void SetupRooms()
     {
         string scenePath = "Assets/Scenes/MainMapScene.unity";
         var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
 
-        // Crear un padre para organizar los fondos
-        GameObject parent = GameObject.Find("Backgrounds");
-        if (parent == null)
+        // Buscar o crear el contenedor Backgrounds
+        GameObject bgParent = GameObject.Find("Backgrounds");
+        if (bgParent == null)
         {
-            parent = new GameObject("Backgrounds");
-            parent.transform.position = Vector3.zero;
+            bgParent = new GameObject("Backgrounds");
+            bgParent.transform.position = Vector3.zero;
         }
 
-        float xOffset = 0f;
-
-        for (int i = 0; i < spriteNames.Length; i++)
+        // Buscar o crear el contenedor HotsPots
+        GameObject hotspotsParent = GameObject.Find("HotsPots");
+        if (hotspotsParent == null)
         {
-            string spritePath = $"Assets/Sprites/{spriteNames[i]}.png";
-            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
+            hotspotsParent = new GameObject("HotsPots");
+            hotspotsParent.transform.position = Vector3.zero;
+        }
 
-            if (sprite == null)
-            {
-                Debug.LogWarning($"No se encontró el sprite: {spritePath}");
-                continue;
-            }
-
-            string goName = $"BG_{spriteNames[i]}";
-            GameObject bg = GameObject.Find(goName);
+        // Crear fondos y contenedores de hotspots por sala
+        foreach (var (roomId, displayName, spriteName) in roomDefinitions)
+        {
+            // Fondo
+            string bgName = $"BG_{spriteName}";
+            GameObject bg = FindChildByName(bgParent.transform, bgName);
             if (bg == null)
             {
-                bg = new GameObject(goName);
-                bg.transform.SetParent(parent.transform);
+                bg = new GameObject(bgName);
+                bg.transform.SetParent(bgParent.transform);
+                bg.transform.localPosition = Vector3.zero;
             }
 
             var sr = bg.GetComponent<SpriteRenderer>();
@@ -56,20 +80,63 @@ public class SetupSceneBackgrounds
                 sr = bg.AddComponent<SpriteRenderer>();
             }
 
-            sr.sprite = sprite;
-            sr.sortingOrder = -100;
+            string spritePath = $"Assets/Sprites/{spriteName}.png";
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
+            if (sprite != null)
+            {
+                sr.sprite = sprite;
+                sr.sortingOrder = -100;
+                Debug.Log($"Fondo configurado: {bgName} -> {spritePath}");
+            }
+            else
+            {
+                Debug.LogWarning($"Sprite no encontrado: {spritePath}");
+            }
 
-            // Posicionar cada fondo uno al lado del otro
-            bg.transform.localPosition = new Vector3(xOffset, 0, 0);
-            xOffset += sprite.bounds.size.x + 1f; // espacio entre fondos
+            // Contenedor de hotspots para esta sala
+            string hotspotsName = $"Hotspots_{roomId}";
+            GameObject roomHotspots = FindChildByName(hotspotsParent.transform, hotspotsName);
+            if (roomHotspots == null)
+            {
+                roomHotspots = new GameObject(hotspotsName);
+                roomHotspots.transform.SetParent(hotspotsParent.transform);
+                roomHotspots.transform.localPosition = Vector3.zero;
+            }
 
-            Debug.Log($"Fondo agregado: {goName}");
+            // Crear puertas para esta sala
+            foreach (var (fromRoom, toRoom, doorName, position) in doorConnections)
+            {
+                if (fromRoom != roomId)
+                {
+                    continue;
+                }
+
+                string fullDoorName = $"Door_{fromRoom}_to_{toRoom}";
+                GameObject door = FindChildByName(roomHotspots.transform, fullDoorName);
+                if (door == null)
+                {
+                    door = new GameObject(fullDoorName);
+                    door.transform.SetParent(roomHotspots.transform);
+                    door.transform.localPosition = position;
+
+                    // Agregar BoxCollider2D
+                    var collider = door.AddComponent<BoxCollider2D>();
+                    collider.size = new Vector2(1.5f, 2f);
+
+                    // Agregar DoorTrigger
+                    // No podemos agregar el componente aquí porque necesita compilar primero
+                    // Se agrega manualmente o con otro script después
+                    Debug.Log($"Puerta creada: {fullDoorName} (de {fromRoom} a {toRoom})");
+                }
+            }
         }
 
         EditorSceneManager.SaveScene(scene);
-        Debug.Log($"Todos los fondos agregados a MainMapScene.");
-        EditorUtility.DisplayDialog("Fondos en MainMapScene",
-            $"Se agregaron {spriteNames.Length} fondos a MainMapScene.",
+        Debug.Log("Salas configuradas en MainMapScene.");
+        EditorUtility.DisplayDialog("Salas Configuradas",
+            "Se configuraron las salas con fondos y puertas en MainMapScene.\n\n" +
+            "Siguiente paso: Agregar el componente RoomManager al WorldMap\n" +
+            "y configurar las referencias en el Inspector.",
             "OK");
     }
 
@@ -90,7 +157,6 @@ public class SetupSceneBackgrounds
         foreach (string scenePath in chapterScenes)
         {
             var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-
             bool changed = false;
 
             GameObject bg = GameObject.Find("Background");
@@ -98,7 +164,6 @@ public class SetupSceneBackgrounds
             {
                 Object.DestroyImmediate(bg);
                 changed = true;
-                Debug.Log($"Eliminado Background de: {scenePath}");
             }
 
             GameObject cam = GameObject.Find("Main Camera");
@@ -106,7 +171,6 @@ public class SetupSceneBackgrounds
             {
                 Object.DestroyImmediate(cam);
                 changed = true;
-                Debug.Log($"Eliminada Main Camera de: {scenePath}");
             }
 
             if (changed)
@@ -116,9 +180,19 @@ public class SetupSceneBackgrounds
             }
         }
 
-        Debug.Log($"Limpiadas {count} escenas.");
         EditorUtility.DisplayDialog("Escenas Limpiadas",
-            $"Se limpiaron {count} escenas de capitulos.\nSe eliminaron Background y Main Camera.",
-            "OK");
+            $"Se limpiaron {count} escenas de capítulos.", "OK");
+    }
+
+    private static GameObject FindChildByName(Transform parent, string name)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            if (parent.GetChild(i).name == name)
+            {
+                return parent.GetChild(i).gameObject;
+            }
+        }
+        return null;
     }
 }
