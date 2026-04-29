@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class DialoguePanelUI : MonoBehaviour
 {
+    [SerializeField] private float choiceButtonHorizontalPadding = 40f;
+    [SerializeField] private float choiceButtonVerticalPadding = 20f;
+
     [Header("Panel")]
     [SerializeField] private GameObject root;
     [SerializeField] private TMP_Text speakerText;
@@ -86,6 +89,7 @@ public class DialoguePanelUI : MonoBehaviour
             return;
         }
 
+        ConfigureChoicesContainer();
         SetChoicesVisible(true);
 
         for (int i = 0; i < choices.Count; i++)
@@ -100,10 +104,17 @@ public class DialoguePanelUI : MonoBehaviour
             if (label != null)
             {
                 label.text = choice != null ? choice.text : "...";
+                ConfigureChoiceLabel(label);
             }
 
+            ConfigureChoiceButton(button, label);
             button.onClick.AddListener(() => ChoicePressed?.Invoke(capturedIndex));
             activeChoiceButtons.Add(button);
+        }
+
+        if (choicesContainer is RectTransform choicesRect)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(choicesRect);
         }
     }
 
@@ -136,5 +147,83 @@ public class DialoguePanelUI : MonoBehaviour
         {
             choicesContainer.gameObject.SetActive(visible);
         }
+    }
+
+    private void ConfigureChoicesContainer()
+    {
+        if (choicesContainer == null)
+        {
+            return;
+        }
+
+        VerticalLayoutGroup layout = choicesContainer.GetComponent<VerticalLayoutGroup>();
+        if (layout != null)
+        {
+            layout.childAlignment = TextAnchor.UpperCenter;
+            layout.childControlWidth = false;
+            layout.childControlHeight = false;
+            layout.childForceExpandWidth = false;
+            layout.childForceExpandHeight = false;
+            layout.spacing = 8f;
+            layout.padding = new RectOffset(0, 0, 4, 4);
+        }
+
+        ContentSizeFitter fitter = choicesContainer.GetComponent<ContentSizeFitter>();
+        if (fitter != null)
+        {
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        }
+    }
+
+    private void ConfigureChoiceButton(Button button, TMP_Text label)
+    {
+        if (button == null || label == null)
+        {
+            return;
+        }
+
+        RectTransform rect = button.GetComponent<RectTransform>();
+        if (rect == null)
+        {
+            return;
+        }
+
+        Vector2 preferredSize = label.GetPreferredValues(label.text, Mathf.Infinity, Mathf.Infinity);
+        float buttonWidth = Mathf.Ceil(preferredSize.x + choiceButtonHorizontalPadding);
+        float buttonHeight = Mathf.Ceil(Mathf.Max(preferredSize.y + choiceButtonVerticalPadding, 40f));
+
+        LayoutElement layoutElement = button.GetComponent<LayoutElement>();
+        if (layoutElement == null)
+        {
+            layoutElement = button.gameObject.AddComponent<LayoutElement>();
+        }
+
+        layoutElement.minWidth = buttonWidth;
+        layoutElement.minHeight = buttonHeight;
+        layoutElement.preferredWidth = buttonWidth;
+        layoutElement.preferredHeight = buttonHeight;
+        layoutElement.flexibleWidth = 0f;
+        layoutElement.flexibleHeight = 0f;
+
+        ContentSizeFitter buttonFitter = button.GetComponent<ContentSizeFitter>();
+        if (buttonFitter == null)
+        {
+            buttonFitter = button.gameObject.AddComponent<ContentSizeFitter>();
+        }
+
+        buttonFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        buttonFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        rect.sizeDelta = new Vector2(buttonWidth, buttonHeight);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+    }
+
+    private static void ConfigureChoiceLabel(TMP_Text label)
+    {
+        label.enableWordWrapping = false;
+        label.overflowMode = TextOverflowModes.Overflow;
+        label.alignment = TextAlignmentOptions.Center;
+        label.raycastTarget = false;
     }
 }
