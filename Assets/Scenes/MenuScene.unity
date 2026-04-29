@@ -1092,6 +1092,7 @@ MonoBehaviour:
   debugLogs: 1
   gameTitleText: {fileID: 581568016}
   gameTitle: Simon Mansion
+  logoImagePath: Sprites/logojuego
   mainMenuPanel: {fileID: 1613959320}
   chaptersPanel: {fileID: 1439144352}
   newGameButton: {fileID: 279256363}
@@ -1105,6 +1106,7 @@ MonoBehaviour:
   chapterButtonsContainer: {fileID: 914868731}
   chapterButtonPrefab: {fileID: 6204860627717163586, guid: bcf079c6cbf431942bfdf53837bc3c8d, type: 3}
   backToMainMenuButton: {fileID: 763951963}
+  backgroundImagePath: Sprites/InicioSimonsMansion
 --- !u!4 &470142509
 Transform:
   m_ObjectHideFlags: 0
@@ -1479,7 +1481,7 @@ MonoBehaviour:
   - id: Chapter05
     displayName: Capitulo 5
     sceneName: MainMapScene
-  prologueSceneName: PrologueScene
+  prologueSceneName: MainMapScene
   saveFileName: savegame.json
 --- !u!1 &1047011609
 GameObject:
