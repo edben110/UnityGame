@@ -251,7 +251,7 @@ public class UIManager : MonoBehaviour
         textObj.transform.SetParent(cardObj.transform, false);
 
         RectTransform textRect = textObj.GetComponent<RectTransform>();
-        textRect.anchorMin = new Vector2(0.1f, 0.15f);
+        textRect.anchorMin = new Vector2(0.1f, 0.55f);
         textRect.anchorMax = new Vector2(0.9f, 0.85f);
         textRect.offsetMin = Vector2.zero;
         textRect.offsetMax = Vector2.zero;
@@ -273,17 +273,17 @@ public class UIManager : MonoBehaviour
             lockObj.transform.SetParent(cardObj.transform, false);
 
             RectTransform lockRect = lockObj.GetComponent<RectTransform>();
-            lockRect.anchorMin = new Vector2(0.2f, 0.35f);
-            lockRect.anchorMax = new Vector2(0.8f, 0.65f);
+            lockRect.anchorMin = new Vector2(0.1f, 0.15f);
+            lockRect.anchorMax = new Vector2(0.9f, 0.45f);
             lockRect.offsetMin = Vector2.zero;
             lockRect.offsetMax = Vector2.zero;
 
             TextMeshProUGUI lockTmp = lockObj.GetComponent<TextMeshProUGUI>();
             lockTmp.text = "BLOQUEADO";
-            lockTmp.fontSize = 18;
+            lockTmp.fontSize = 22;
             lockTmp.fontStyle = FontStyles.Italic;
             lockTmp.alignment = TextAlignmentOptions.Center;
-            lockTmp.color = dimWhite;
+            lockTmp.color = new Color(0.7f, 0.3f, 0.3f, 0.9f);
             lockTmp.raycastTarget = false;
             EnsureFontAsset(lockTmp);
         }
