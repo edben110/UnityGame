@@ -8,6 +8,7 @@ public class InventoryCatalog : MonoBehaviour
     [SerializeField] private List<InventoryItemDefinition> items = new List<InventoryItemDefinition>();
 
     private readonly Dictionary<string, InventoryItemDefinition> lookup = new Dictionary<string, InventoryItemDefinition>();
+    private readonly Dictionary<string, InventoryItemDefinition> runtimeOverrides = new Dictionary<string, InventoryItemDefinition>();
 
     private void Awake()
     {
@@ -35,7 +36,50 @@ public class InventoryCatalog : MonoBehaviour
             return false;
         }
 
+        if (runtimeOverrides.TryGetValue(normalized, out InventoryItemDefinition runtimeDefinition) && runtimeDefinition != null)
+        {
+            definition = runtimeDefinition;
+            return true;
+        }
+
         return lookup.TryGetValue(normalized, out definition) && definition != null;
+    }
+
+    public void RegisterRuntimeItem(string itemId, string displayName, string description, Sprite icon)
+    {
+        string normalized = Normalize(itemId);
+        if (string.IsNullOrWhiteSpace(normalized))
+        {
+            return;
+        }
+
+        InventoryItemDefinition merged = new InventoryItemDefinition
+        {
+            id = normalized,
+            displayName = string.IsNullOrWhiteSpace(displayName) ? itemId : displayName,
+            description = description ?? string.Empty,
+            icon = icon
+        };
+
+        if (lookup.TryGetValue(normalized, out InventoryItemDefinition existing) && existing != null)
+        {
+            if (string.IsNullOrWhiteSpace(merged.displayName))
+            {
+                merged.displayName = existing.displayName;
+            }
+
+            if (string.IsNullOrWhiteSpace(merged.description))
+            {
+                merged.description = existing.description;
+            }
+
+            if (merged.icon == null)
+            {
+                merged.icon = existing.icon;
+            }
+        }
+
+        runtimeOverrides[normalized] = merged;
     }
 
     public string GetDisplayNameOrFallback(string itemId)

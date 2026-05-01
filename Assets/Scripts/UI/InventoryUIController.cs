@@ -11,15 +11,30 @@ public class InventoryUIController : MonoBehaviour
     [SerializeField] private Transform itemsContainer;
     [SerializeField] private InventoryItemEntryUI itemEntryPrefab;
     [SerializeField] private TMP_Text emptyStateText;
+    [SerializeField] private Button backToMapButton;
+    [SerializeField] private GameObject detailsRoot;
+    [SerializeField] private Image detailsImage;
+    [SerializeField] private TMP_Text detailsNameText;
+    [SerializeField] private TMP_Text detailsDescriptionText;
+    [SerializeField] private Button detailsContinueButton;
 
     [Header("Pruebas")]
     [SerializeField] private bool seedTestItemsOnStart;
     [SerializeField] private List<string> testItemIds = new List<string>();
 
     private readonly List<GameObject> spawnedEntries = new List<GameObject>();
+    private readonly Dictionary<string, InventoryItemDefinition> cachedDefinitions = new Dictionary<string, InventoryItemDefinition>();
+    private string expandedItemId;
 
     private void Awake()
     {
+        // Ensure InventoryCatalog exists in scene
+        if (InventoryCatalog.Instance == null)
+        {
+            GameObject catalogObj = new GameObject("InventoryCatalog");
+            catalogObj.AddComponent<InventoryCatalog>();
+        }
+
         if (toggleButton != null)
         {
             toggleButton.onClick.AddListener(TogglePanel);
@@ -30,6 +45,13 @@ public class InventoryUIController : MonoBehaviour
             inventoryPanelRoot.SetActive(false);
         }
 
+        SetDetailsVisible(false);
+
+        if (detailsContinueButton != null)
+        {
+            detailsContinueButton.onClick.AddListener(HideDetailsAndReturnToInventory);
+        }
+
         SeedTestItems();
 
         Refresh();
@@ -38,12 +60,14 @@ public class InventoryUIController : MonoBehaviour
     private void OnEnable()
     {
         InventoryState.Changed += Refresh;
+        InventoryState.SelectedChanged += OnSelectedChanged;
         Refresh();
     }
 
     private void OnDisable()
     {
         InventoryState.Changed -= Refresh;
+        InventoryState.SelectedChanged -= OnSelectedChanged;
     }
 
     private void OnDestroy()
@@ -51,6 +75,15 @@ public class InventoryUIController : MonoBehaviour
         if (toggleButton != null)
         {
             toggleButton.onClick.RemoveListener(TogglePanel);
+        }
+        if (backToMapButton != null)
+        {
+            backToMapButton.onClick.RemoveListener(ClosePanel);
+        }
+
+        if (detailsContinueButton != null)
+        {
+            detailsContinueButton.onClick.RemoveListener(HideDetailsAndReturnToInventory);
         }
     }
 
@@ -63,15 +96,31 @@ public class InventoryUIController : MonoBehaviour
 
         bool next = !inventoryPanelRoot.activeSelf;
         inventoryPanelRoot.SetActive(next);
+        if (next && backToMapButton != null)
+        {
+            backToMapButton.onClick.RemoveAllListeners();
+            backToMapButton.onClick.AddListener(ClosePanel);
+        }
         if (next)
         {
+            SetDetailsVisible(false);
+            expandedItemId = string.Empty;
             Refresh();
+        }
+    }
+
+    private void ClosePanel()
+    {
+        if (inventoryPanelRoot != null)
+        {
+            inventoryPanelRoot.SetActive(false);
         }
     }
 
     public void Refresh()
     {
         ClearSpawned();
+        cachedDefinitions.Clear();
 
         if (itemsContainer == null || itemEntryPrefab == null)
         {
@@ -99,11 +148,140 @@ public class InventoryUIController : MonoBehaviour
 
             if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(itemId, out InventoryItemDefinition definition))
             {
-                displayName = string.IsNullOrWhiteSpace(definition.displayName) ? itemId : definition.displayName;
+                displayName = !string.IsNullOrWhiteSpace(definition.displayName) ? definition.displayName : itemId.Replace('_', ' ');
                 icon = definition.icon;
+                cachedDefinitions[itemId] = definition;
+            }
+            else if (InventoryCatalog.Instance != null)
+            {
+                displayName = InventoryCatalog.Instance.GetDisplayNameOrFallback(itemId);
+            }
+            else
+            {
+                displayName = itemId.Replace('_', ' ');
             }
 
-            entry.Setup(itemId, displayName, icon);
+            entry.Setup(
+                itemId,
+                displayName,
+                icon,
+                OnEntryClicked,
+                OnEntryViewPressed,
+                OnEntrySelectPressed);
+
+            string selected = InventoryState.GetSelectedItem();
+            entry.SetSelected(!string.IsNullOrEmpty(selected) && selected == itemId);
+            entry.SetExpanded(!string.IsNullOrEmpty(expandedItemId) && expandedItemId == itemId);
+        }
+    }
+
+    private void OnSelectedChanged(string itemId)
+    {
+        for (int i = 0; i < spawnedEntries.Count; i++)
+        {
+            GameObject go = spawnedEntries[i];
+            if (go == null)
+            {
+                continue;
+            }
+
+            InventoryItemEntryUI ui = go.GetComponent<InventoryItemEntryUI>();
+            if (ui == null)
+            {
+                continue;
+            }
+
+            ui.SetSelected(!string.IsNullOrEmpty(itemId) && ui.ItemId == itemId);
+        }
+    }
+
+    private void OnEntryClicked(string itemId)
+    {
+        expandedItemId = expandedItemId == itemId ? string.Empty : itemId;
+        for (int i = 0; i < spawnedEntries.Count; i++)
+        {
+            GameObject go = spawnedEntries[i];
+            if (go == null)
+            {
+                continue;
+            }
+
+            InventoryItemEntryUI ui = go.GetComponent<InventoryItemEntryUI>();
+            if (ui == null)
+            {
+                continue;
+            }
+
+            ui.SetExpanded(!string.IsNullOrEmpty(expandedItemId) && ui.ItemId == expandedItemId);
+        }
+    }
+
+    private void OnEntryViewPressed(string itemId)
+    {
+        if (!cachedDefinitions.TryGetValue(itemId, out InventoryItemDefinition definition) || definition == null)
+        {
+            if (detailsNameText != null)
+            {
+                detailsNameText.text = itemId;
+            }
+
+            if (detailsDescriptionText != null)
+            {
+                detailsDescriptionText.text = "Sin descripcion para este objeto.";
+            }
+
+            if (detailsImage != null)
+            {
+                detailsImage.sprite = null;
+                detailsImage.enabled = false;
+            }
+
+            SetDetailsVisible(true);
+            return;
+        }
+
+        if (detailsNameText != null)
+        {
+            detailsNameText.text = string.IsNullOrWhiteSpace(definition.displayName) ? itemId : definition.displayName;
+        }
+
+        if (detailsDescriptionText != null)
+        {
+            detailsDescriptionText.text = string.IsNullOrWhiteSpace(definition.description)
+                ? "Sin descripcion para este objeto."
+                : definition.description;
+        }
+
+        if (detailsImage != null)
+        {
+            detailsImage.sprite = definition.icon;
+            detailsImage.enabled = definition.icon != null;
+        }
+
+        SetDetailsVisible(true);
+    }
+
+    private void HideDetailsAndReturnToInventory()
+    {
+        SetDetailsVisible(false);
+        if (inventoryPanelRoot != null)
+        {
+            inventoryPanelRoot.SetActive(true);
+        }
+
+        Refresh();
+    }
+
+    private void OnEntrySelectPressed(string itemId)
+    {
+        InventoryState.SetSelectedItem(itemId);
+    }
+
+    private void SetDetailsVisible(bool visible)
+    {
+        if (detailsRoot != null)
+        {
+            detailsRoot.SetActive(visible);
         }
     }
 

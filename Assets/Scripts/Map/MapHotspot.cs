@@ -93,6 +93,15 @@ public class MapHotspot : Interactable
 
         if (HasItemReward())
         {
+            if (InventoryCatalog.Instance != null)
+            {
+                InventoryCatalog.Instance.RegisterRuntimeItem(
+                    grantItemId,
+                    ResolveItemDisplayName(),
+                    ResolveItemDescription(),
+                    ResolveItemSprite());
+            }
+
             InventoryState.AddItem(grantItemId);
         }
 

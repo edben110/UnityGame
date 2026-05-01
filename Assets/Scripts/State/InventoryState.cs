@@ -17,6 +17,7 @@ public static class InventoryState
     private static bool hasUnsyncedChanges;
 
     public static event Action Changed;
+    public static event Action<string> SelectedChanged;
 
     public static bool AddItem(string itemId)
     {
@@ -53,6 +54,12 @@ public static class InventoryState
             return false;
         }
 
+        if (string.Equals(selectedItem, normalized, StringComparison.OrdinalIgnoreCase))
+        {
+            selectedItem = string.Empty;
+            SelectedChanged?.Invoke(selectedItem);
+        }
+
         Persist();
         Changed?.Invoke();
         return true;
@@ -76,6 +83,28 @@ public static class InventoryState
         return new List<string>(items);
     }
 
+    private static string selectedItem;
+
+    public static string GetSelectedItem()
+    {
+        return string.IsNullOrWhiteSpace(selectedItem) ? string.Empty : selectedItem;
+    }
+
+    public static void SetSelectedItem(string itemId)
+    {
+        string normalized = NormalizeItemId(itemId);
+        if (string.Equals(normalized, selectedItem)) return;
+        selectedItem = normalized;
+        SelectedChanged?.Invoke(selectedItem);
+    }
+
+    public static void ClearSelectedItem()
+    {
+        if (string.IsNullOrWhiteSpace(selectedItem)) return;
+        selectedItem = string.Empty;
+        SelectedChanged?.Invoke(selectedItem);
+    }
+
     public static void Clear()
     {
         SyncFromStoryState();
@@ -85,6 +114,11 @@ public static class InventoryState
         }
 
         items.Clear();
+        if (!string.IsNullOrWhiteSpace(selectedItem))
+        {
+            selectedItem = string.Empty;
+            SelectedChanged?.Invoke(selectedItem);
+        }
         Persist();
         Changed?.Invoke();
     }
