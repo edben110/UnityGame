@@ -196,8 +196,19 @@ public static class InventoryState
 
     private static string NormalizeItemId(string itemId)
     {
-        return string.IsNullOrWhiteSpace(itemId)
-            ? string.Empty
-            : itemId.Trim().ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(itemId))
+        {
+            return string.Empty;
+        }
+
+        string normalized = itemId.Trim().ToLowerInvariant();
+
+        // Backward compatibility: versiones anteriores guardaban esta pista como "lobby_photo".
+        if (string.Equals(normalized, "lobby_photo", StringComparison.Ordinal))
+        {
+            return "foto_padre_hijo";
+        }
+
+        return normalized;
     }
 }

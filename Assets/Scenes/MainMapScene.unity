@@ -4668,7 +4668,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 303612376}
   m_HandleRect: {fileID: 303612375}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5310,7 +5310,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1199750619}
   m_HandleRect: {fileID: 1199750618}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5933,11 +5933,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 866.00006
+      value: 736
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 444.2
+      value: 515
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.x
@@ -6430,9 +6430,9 @@ MonoBehaviour:
   detailsNameText: {fileID: 1773777931}
   detailsDescriptionText: {fileID: 0}
   detailsContinueButton: {fileID: 0}
-  seedTestItemsOnStart: 1
+  seedTestItemsOnStart: 0
   testItemIds:
-  - lobby_photo
+  - foto_padre_hijo
 --- !u!4 &1665595493
 Transform:
   m_ObjectHideFlags: 0
@@ -6945,9 +6945,9 @@ MonoBehaviour:
   startNodeId: start
   consumeAfterUse: 1
   setFlagOnInteract: clue.lobby.photo
-  grantItemId: lobby_photo
-  grantItemDisplayName: 
-  grantItemDescription: 
+  grantItemId: foto_padre_hijo
+  grantItemDisplayName: Foto padre e hijo
+  grantItemDescription: 'Fotografia antigua con la leyenda: Padre e hijo, 1987.'
   grantItemSprite: {fileID: 3679947183271315170, guid: 41b97664748549547a4f583efec95ae0, type: 3}
   hideAfterPickup: 1
   showDebugMarkerInGame: 1
