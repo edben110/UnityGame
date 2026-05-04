@@ -26,34 +26,15 @@ public class ClickManager : MonoBehaviour
             Vector3 screenPos = Mouse.current.position.ReadValue();
             screenPos.z = Mathf.Abs(activeCamera.transform.position.z);
             Vector2 mousePos = activeCamera.ScreenToWorldPoint(screenPos);
-            
-            // Raycast que detecta múltiples hits
-            RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
-            // Seleccionar el hit más cercano (menor distance)
-            RaycastHit2D closestHit = new RaycastHit2D();
-            float closestDistance = float.MaxValue;
-
-            foreach (RaycastHit2D hit in hits)
+            if (hit.collider != null)
             {
-                if (hit.collider != null && hit.distance < closestDistance)
-                {
-                    closestDistance = hit.distance;
-                    closestHit = hit;
-                }
-            }
-
-            if (closestHit.collider != null)
-            {
-                Debug.Log($"Click en: {closestHit.collider.name} (distance: {closestDistance:F3})");
-                Interactable obj = closestHit.collider.GetComponent<Interactable>();
+                Debug.Log("Click en: " + hit.collider.name);
+                Interactable obj = hit.collider.GetComponent<Interactable>();
                 if (obj != null)
                 {
                     obj.Interact();
-                }
-                else
-                {
-                    Debug.LogWarning($"No Interactable found on {closestHit.collider.name}");
                 }
             }
         }
@@ -110,15 +91,15 @@ public class ClickManager : MonoBehaviour
                 return true;
             }
 
-            if (currentObject.GetComponent<UnityEngine.UI.Selectable>() != null)
+            if (currentObject.GetComponent<TMPro.TMP_Text>() != null)
+            {
+                continue;
+            }
+
+            if (currentObject.GetComponent<UnityEngine.UI.Image>() != null)
             {
                 CanvasGroup canvasGroup = currentObject.GetComponentInParent<CanvasGroup>();
                 if (canvasGroup != null && canvasGroup.blocksRaycasts)
-                {
-                    return true;
-                }
-
-                if (currentObject.GetComponent<UnityEngine.UI.InputField>() != null || currentObject.GetComponent<TMPro.TMP_InputField>() != null)
                 {
                     return true;
                 }

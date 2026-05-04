@@ -45,7 +45,6 @@ public class InventoryUIController : MonoBehaviour
             inventoryPanelRoot.SetActive(false);
         }
 
-        EnsureItemsContainerLayout();
         SetDetailsVisible(false);
 
         if (detailsContinueButton != null)
@@ -122,8 +121,6 @@ public class InventoryUIController : MonoBehaviour
     {
         ClearSpawned();
         cachedDefinitions.Clear();
-
-        EnsureItemsContainerLayout();
 
         if (itemsContainer == null || itemEntryPrefab == null)
         {
@@ -318,62 +315,5 @@ public class InventoryUIController : MonoBehaviour
         }
 
         spawnedEntries.Clear();
-    }
-
-    private void EnsureItemsContainerLayout()
-    {
-        if (itemsContainer == null)
-        {
-            return;
-        }
-
-        GridLayoutGroup gridLayout = itemsContainer.GetComponent<GridLayoutGroup>();
-        if (gridLayout != null)
-        {
-            RectTransform rectTransform = itemsContainer as RectTransform;
-            float width = rectTransform != null ? rectTransform.rect.width : 360f;
-            float usableWidth = Mathf.Max(240f, width - 12f);
-
-            gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            gridLayout.constraintCount = 1;
-            gridLayout.startAxis = GridLayoutGroup.Axis.Vertical;
-            gridLayout.childAlignment = TextAnchor.UpperCenter;
-            gridLayout.spacing = new Vector2(0f, 8f);
-            gridLayout.cellSize = new Vector2(usableWidth, 80f);
-            gridLayout.padding = new RectOffset(6, 6, 6, 6);
-        }
-        else
-        {
-            VerticalLayoutGroup layout = itemsContainer.GetComponent<VerticalLayoutGroup>();
-            if (layout == null)
-            {
-                layout = itemsContainer.gameObject.AddComponent<VerticalLayoutGroup>();
-            }
-
-            layout.childAlignment = TextAnchor.UpperCenter;
-            layout.childControlWidth = true;
-            layout.childControlHeight = false;
-            layout.childForceExpandWidth = true;
-            layout.childForceExpandHeight = false;
-            layout.spacing = 8f;
-            layout.padding = new RectOffset(6, 6, 6, 6);
-        }
-
-        ContentSizeFitter fitter = itemsContainer.GetComponent<ContentSizeFitter>();
-        if (fitter == null)
-        {
-            fitter = itemsContainer.gameObject.AddComponent<ContentSizeFitter>();
-        }
-
-        fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
-        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-
-        RectTransform containerRectTransform = itemsContainer as RectTransform;
-        if (containerRectTransform != null)
-        {
-            containerRectTransform.anchorMin = new Vector2(0f, 1f);
-            containerRectTransform.anchorMax = new Vector2(1f, 1f);
-            containerRectTransform.pivot = new Vector2(0.5f, 1f);
-        }
     }
 }

@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class DialoguePanelUI : MonoBehaviour
 {
-    private static DialoguePanelUI instance;
-
     [SerializeField] private float choiceButtonHorizontalPadding = 40f;
     [SerializeField] private float choiceButtonVerticalPadding = 20f;
 
@@ -22,26 +20,15 @@ public class DialoguePanelUI : MonoBehaviour
     [SerializeField] private Button choiceButtonPrefab;
 
     private readonly List<Button> activeChoiceButtons = new List<Button>();
-    private Action pendingContinueAction;
-
-    public static DialoguePanelUI Instance => instance;
 
     public event Action ContinuePressed;
     public event Action<int> ChoicePressed;
 
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        instance = this;
-
         if (continueButton != null)
         {
-            continueButton.onClick.AddListener(HandleContinuePressed);
+            continueButton.onClick.AddListener(() => ContinuePressed?.Invoke());
         }
 
         Hide();
@@ -51,7 +38,7 @@ public class DialoguePanelUI : MonoBehaviour
     {
         if (continueButton != null)
         {
-            continueButton.onClick.RemoveListener(HandleContinuePressed);
+            continueButton.onClick.RemoveAllListeners();
         }
 
         ClearChoices();
@@ -59,13 +46,6 @@ public class DialoguePanelUI : MonoBehaviour
 
     public void ShowLine(string speaker, string text)
     {
-        ShowLine(speaker, text, null);
-    }
-
-    public void ShowLine(string speaker, string text, Action continueAction)
-    {
-        pendingContinueAction = continueAction;
-
         if (root != null)
         {
             root.SetActive(true);
@@ -88,20 +68,6 @@ public class DialoguePanelUI : MonoBehaviour
         }
 
         SetChoicesVisible(false);
-    }
-
-    public void ShowSystemMessage(string text, Action continueAction = null)
-    {
-        ShowLine("Narrador", text, continueAction ?? Hide);
-    }
-
-    private void HandleContinuePressed()
-    {
-        ContinuePressed?.Invoke();
-
-        Action action = pendingContinueAction;
-        pendingContinueAction = null;
-        action?.Invoke();
     }
 
     public void ShowChoices(List<DialogueChoice> choices)
@@ -154,8 +120,6 @@ public class DialoguePanelUI : MonoBehaviour
 
     public void Hide()
     {
-        pendingContinueAction = null;
-
         if (root != null)
         {
             root.SetActive(false);

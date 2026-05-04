@@ -13,8 +13,6 @@ public class DoorTrigger : Interactable
 
     [Header("Condiciones opcionales")]
     [SerializeField] private string requiredFlag;
-
-    [SerializeField] private KeyType[] requiredKeys = new KeyType[0];
     [SerializeField] private string requiredChapterId;
 
     [Header("Feedback")]
@@ -58,11 +56,6 @@ public class DoorTrigger : Interactable
             if (StoryState.Instance.CurrentChapterId != requiredChapterId)
             {
                 Debug.Log($"DoorTrigger: Puerta bloqueada, requiere capítulo '{requiredChapterId}'.");
-                DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
-                if (dialoguePanel != null)
-                {
-                    dialoguePanel.ShowSystemMessage(lockedMessage);
-                }
                 return;
             }
         }
@@ -73,75 +66,13 @@ public class DoorTrigger : Interactable
             if (!StoryState.Instance.HasFlag(requiredFlag))
             {
                 Debug.Log($"DoorTrigger: Puerta bloqueada, requiere flag '{requiredFlag}'.");
-                DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
-                if (dialoguePanel != null)
-                {
-                    dialoguePanel.ShowSystemMessage(lockedMessage);
-                }
                 return;
             }
         }
 
-        // Verificar llaves requeridas (consultar inventario)
-        if (requiredKeys != null && requiredKeys.Length > 0)
-        {
-            // Depuración: listar llaves requeridas y contenido del inventario
-            string invContents = string.Join(", ", InventoryState.GetItems().ToArray());
-            Debug.Log($"DoorTrigger '{gameObject.name}': RequiredKeys=[{string.Join(", ", System.Array.ConvertAll(requiredKeys, k => k.ToString()))}] Inventory=[{invContents}] SelectedItem={InventoryState.GetSelectedItem()}");
-
-            bool hasAllKeys = true;
-            foreach (KeyType keyType in requiredKeys)
-            {
-                string itemId = keyType.ToString();
-                bool has = InventoryState.HasItem(itemId);
-                Debug.Log($"DoorTrigger: Checking key '{itemId}' => {has}");
-                if (!has)
-                {
-                    hasAllKeys = false;
-                }
-            }
-
-            if (!hasAllKeys)
-            {
-                Debug.Log($"DoorTrigger: {lockedMessage}");
-                DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
-                if (dialoguePanel != null)
-                {
-                    dialoguePanel.ShowSystemMessage(lockedMessage);
-                }
-                return;
-            }
-        }
-
-        DialoguePanelUI panel = DialoguePanelUI.Instance;
-        if (panel != null)
-        {
-            panel.ShowSystemMessage("¡La puerta se ha abierto!", () =>
-            {
-                panel.Hide();
-                ChangeRoomAfterDialogue();
-            });
-            return;
-        }
-
-        ChangeRoomAfterDialogue();
-    }
-
-    private void ChangeRoomAfterDialogue()
-    {
-        if (RoomManager.Instance == null)
-        {
-            Debug.LogError("DoorTrigger: No hay RoomManager en la escena.");
-            return;
-        }
-
+        // Cambiar de sala
         bool success = RoomManager.Instance.ChangeRoom(targetRoomId);
         Debug.Log($"DoorTrigger: ChangeRoom('{targetRoomId}') resultado: {success}");
-
-        if (success)
-        {
-            Debug.Log("La puerta se ha abierto.");
-        }
     }
 
     private void OnDrawGizmos()
