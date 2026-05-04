@@ -1231,22 +1231,27 @@ MonoBehaviour:
     displayName: Salon Principal
     backgroundObject: {fileID: 813642837}
     hotspotsContainer: {fileID: 745521841}
+    cameraObject: {fileID: 0}
   - roomId: gallery
     displayName: Galeria
     backgroundObject: {fileID: 1672120998}
     hotspotsContainer: {fileID: 745521841}
+    cameraObject: {fileID: 0}
   - roomId: Studio
     displayName: Estudio
     backgroundObject: {fileID: 1968925658}
     hotspotsContainer: {fileID: 745521841}
+    cameraObject: {fileID: 0}
   - roomId: bedroom
     displayName: Habitacion de simon
     backgroundObject: {fileID: 587178100}
     hotspotsContainer: {fileID: 587178100}
+    cameraObject: {fileID: 0}
   - roomId: northstreet
     displayName: Ala Norte
     backgroundObject: {fileID: 1676463941}
     hotspotsContainer: {fileID: 745521841}
+    cameraObject: {fileID: 0}
   startingRoomId: lobby
 --- !u!4 &290049658
 Transform:
@@ -3506,6 +3511,50 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!1 &830560793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 830560795}
+  - component: {fileID: 830560794}
+  m_Layer: 0
+  m_Name: _RoomCameraAutoSetup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &830560794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830560793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19882fa7d777c274b9834fdd4886b687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomCameraAutoSetup
+--- !u!4 &830560795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830560793}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &857736047
 GameObject:
   m_ObjectHideFlags: 0
@@ -5016,17 +5065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49939168689b2d84cbea99573bef5e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioManager
-  scenarios:
-  - scenarioId: Sala
-    displayName: 
-    doors: []
-  - scenarioId: 
-    displayName: 
-    doors: []
-  - scenarioId: 
-    displayName: 
-    doors: []
-  currentScenarioId: 
 --- !u!4 &1218623721
 Transform:
   m_ObjectHideFlags: 0
@@ -10078,3 +10116,4 @@ SceneRoots:
   - {fileID: 720863764}
   - {fileID: 1218623721}
   - {fileID: 290049658}
+  - {fileID: 830560795}

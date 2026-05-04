@@ -16,6 +16,7 @@ public class RoomManager : MonoBehaviour
         public string displayName;
         public GameObject backgroundObject;
         public GameObject hotspotsContainer;
+        public Camera cameraObject;
     }
 
     public static RoomManager Instance { get; private set; }
@@ -91,7 +92,7 @@ public class RoomManager : MonoBehaviour
 
         string previousRoom = currentRoomId;
 
-        // Ocultar TODAS las salas
+        // Ocultar TODAS las salas y sus cámaras
         HideAllRooms();
 
         // Mostrar la nueva
@@ -110,6 +111,17 @@ public class RoomManager : MonoBehaviour
                 targetRoom.hotspotsContainer.transform.GetChild(i).gameObject.SetActive(true);
             }
             Debug.Log($"[RoomManager] Hotspots activados: {targetRoom.hotspotsContainer.name} ({targetRoom.hotspotsContainer.transform.childCount} hijos)");
+        }
+
+        // Cambiar cámara si está asignada
+        if (targetRoom.cameraObject != null)
+        {
+            targetRoom.cameraObject.enabled = true;
+            Debug.Log($"[RoomManager] Cámara activada: {targetRoom.cameraObject.name}");
+        }
+        else
+        {
+            Debug.LogWarning($"[RoomManager] No hay cámara asignada para la sala '{roomId}'");
         }
 
         currentRoomId = roomId;
@@ -147,6 +159,11 @@ public class RoomManager : MonoBehaviour
             if (room.hotspotsContainer != null)
             {
                 room.hotspotsContainer.SetActive(false);
+            }
+
+            if (room.cameraObject != null)
+            {
+                room.cameraObject.enabled = false;
             }
         }
     }
