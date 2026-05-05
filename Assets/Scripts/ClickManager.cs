@@ -8,6 +8,36 @@ public class ClickManager : MonoBehaviour
 {
     private Camera cachedCamera;
 
+    private void OnEnable()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.RoomChanged += OnRoomChanged;
+        }
+    }
+
+    private void Start()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.RoomChanged -= OnRoomChanged;
+            RoomManager.Instance.RoomChanged += OnRoomChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.RoomChanged -= OnRoomChanged;
+        }
+    }
+
+    private void OnRoomChanged(string previousRoomId, string nextRoomId)
+    {
+        cachedCamera = null;
+    }
+
     void Update()
     {
         Camera activeCamera = GetActiveCamera();
@@ -30,31 +60,36 @@ public class ClickManager : MonoBehaviour
             // Raycast que detecta múltiples hits
             RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
 
-            // Seleccionar el hit más cercano (menor distance)
-            RaycastHit2D closestHit = new RaycastHit2D();
-            float closestDistance = float.MaxValue;
+            RaycastHit2D selectedHit = new RaycastHit2D();
+            Interactable selectedInteractable = null;
+            float selectedDepth = float.MaxValue;
 
             foreach (RaycastHit2D hit in hits)
             {
-                if (hit.collider != null && hit.distance < closestDistance)
+                if (hit.collider == null)
                 {
-                    closestDistance = hit.distance;
-                    closestHit = hit;
+                    continue;
+                }
+
+                Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
+                if (!CanInteractWith(interactable))
+                {
+                    continue;
+                }
+
+                float depthFromCamera = Mathf.Abs(hit.collider.transform.position.z - activeCamera.transform.position.z);
+                if (selectedInteractable == null || depthFromCamera < selectedDepth)
+                {
+                    selectedDepth = depthFromCamera;
+                    selectedHit = hit;
+                    selectedInteractable = interactable;
                 }
             }
 
-            if (closestHit.collider != null)
+            if (selectedInteractable != null && selectedHit.collider != null)
             {
-                Debug.Log($"Click en: {closestHit.collider.name} (distance: {closestDistance:F3})");
-                Interactable obj = closestHit.collider.GetComponent<Interactable>();
-                if (obj != null)
-                {
-                    obj.Interact();
-                }
-                else
-                {
-                    Debug.LogWarning($"No Interactable found on {closestHit.collider.name}");
-                }
+                Debug.Log($"Click en: {selectedHit.collider.name}");
+                selectedInteractable.Interact();
             }
         }
     }
@@ -66,9 +101,10 @@ public class ClickManager : MonoBehaviour
             return cachedCamera;
         }
 
-        if (Camera.main != null)
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null && mainCamera.isActiveAndEnabled)
         {
-            cachedCamera = Camera.main;
+            cachedCamera = mainCamera;
             return cachedCamera;
         }
 
@@ -80,6 +116,21 @@ public class ClickManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    private static bool CanInteractWith(Interactable interactable)
+    {
+        if (interactable == null || !interactable.isActiveAndEnabled || !interactable.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        if (RoomManager.Instance == null)
+        {
+            return true;
+        }
+
+        return RoomManager.Instance.IsObjectInCurrentRoom(interactable.gameObject);
     }
 
     private static bool IsPointerOverBlockingUi()

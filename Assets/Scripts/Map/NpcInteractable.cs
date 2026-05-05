@@ -14,6 +14,8 @@ public class NpcInteractable : Interactable
     [SerializeField] private string requiredChapterId = "chapter1";
     [SerializeField] private string talkConversationId;
 
+    public string NpcId => npcId;
+
     public bool OpenInteractionForItem(string itemId)
     {
         if (!CanOpenInteraction(out DialogueRunner runner))
