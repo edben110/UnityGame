@@ -16,6 +16,7 @@ public class RoomManager : MonoBehaviour
         public string displayName;
         public GameObject backgroundObject;
         public GameObject hotspotsContainer;
+        public Camera cameraObject;
     }
 
     public static RoomManager Instance { get; private set; }
@@ -29,6 +30,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private string startingRoomId = "lobby";
 
     private string currentRoomId;
+    private RoomDefinition currentRoomDefinition;
     private readonly Dictionary<string, RoomDefinition> roomLookup = new Dictionary<string, RoomDefinition>();
 
     public string CurrentRoomId => currentRoomId;
@@ -91,7 +93,7 @@ public class RoomManager : MonoBehaviour
 
         string previousRoom = currentRoomId;
 
-        // Ocultar TODAS las salas
+        // Ocultar TODAS las salas y sus cámaras
         HideAllRooms();
 
         // Mostrar la nueva
@@ -112,6 +114,21 @@ public class RoomManager : MonoBehaviour
             Debug.Log($"[RoomManager] Hotspots activados: {targetRoom.hotspotsContainer.name} ({targetRoom.hotspotsContainer.transform.childCount} hijos)");
         }
 
+        // Cambiar cámara si está asignada o puede resolverse
+        Camera roomCamera = ResolveRoomCamera(targetRoom);
+        if (roomCamera != null)
+        {
+            targetRoom.cameraObject = roomCamera;
+            PositionRoomCamera(targetRoom);
+            roomCamera.enabled = true;
+            Debug.Log($"[RoomManager] Cámara activada: {roomCamera.name}");
+        }
+        else
+        {
+            Debug.LogWarning($"[RoomManager] No hay cámara asignada para la sala '{roomId}'");
+        }
+
+        currentRoomDefinition = targetRoom;
         currentRoomId = roomId;
 
         Debug.Log($"[RoomManager] *** CAMBIO DE SALA: [{previousRoom ?? "inicio"}] -> [{roomId}] ({targetRoom.displayName}) ***");
@@ -134,8 +151,81 @@ public class RoomManager : MonoBehaviour
         return room.displayName;
     }
 
+    public string GetRoomDisplayName(string roomId)
+    {
+        if (string.IsNullOrWhiteSpace(roomId))
+        {
+            return string.Empty;
+        }
+
+        if (roomLookup.TryGetValue(roomId, out RoomDefinition room) && !string.IsNullOrWhiteSpace(room.displayName))
+        {
+            return room.displayName;
+        }
+
+        return roomId;
+    }
+
+    public bool IsObjectInCurrentRoom(GameObject target)
+    {
+        if (target == null || !target.activeInHierarchy)
+        {
+            return false;
+        }
+
+        NpcInteractable npc = target.GetComponentInParent<NpcInteractable>();
+        if (npc != null)
+        {
+            return IsNpcInCurrentRoom(npc);
+        }
+
+        if (currentRoomDefinition == null)
+        {
+            return true;
+        }
+
+        Transform targetTransform = target.transform;
+        bool isInHotspots = IsSameOrChildOf(targetTransform, currentRoomDefinition.hotspotsContainer);
+        bool isInBackground = IsSameOrChildOf(targetTransform, currentRoomDefinition.backgroundObject);
+        if (isInHotspots || isInBackground)
+        {
+            return true;
+        }
+
+        bool hasRoomRoots = currentRoomDefinition.hotspotsContainer != null || currentRoomDefinition.backgroundObject != null;
+        if (hasRoomRoots)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool IsNpcInCurrentRoom(NpcInteractable npc)
+    {
+        if (npc == null)
+        {
+            return false;
+        }
+
+        if (NpcLocationManager.Instance == null)
+        {
+            return true;
+        }
+
+        string npcRoom = NpcLocationManager.Instance.GetNpcRoom(npc.NpcId);
+        if (string.IsNullOrWhiteSpace(npcRoom))
+        {
+            return false;
+        }
+
+        return string.Equals(npcRoom, currentRoomId, StringComparison.OrdinalIgnoreCase);
+    }
+
     private void HideAllRooms()
     {
+        currentRoomDefinition = null;
+
         foreach (var pair in roomLookup)
         {
             RoomDefinition room = pair.Value;
@@ -148,6 +238,89 @@ public class RoomManager : MonoBehaviour
             {
                 room.hotspotsContainer.SetActive(false);
             }
+
+            if (room.cameraObject != null)
+            {
+                room.cameraObject.enabled = false;
+            }
         }
+    }
+
+    private Camera ResolveRoomCamera(RoomDefinition room)
+    {
+        if (room == null)
+        {
+            return null;
+        }
+
+        if (room.cameraObject != null)
+        {
+            return room.cameraObject;
+        }
+
+        string cameraName = $"Camera_{room.roomId}";
+        Camera[] cameras = FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < cameras.Length; i++)
+        {
+            Camera candidate = cameras[i];
+            if (candidate != null && candidate.name == cameraName)
+            {
+                return candidate;
+            }
+        }
+
+        if (Camera.main != null)
+        {
+            return Camera.main;
+        }
+
+        if (cameras.Length > 0)
+        {
+            return cameras[0];
+        }
+
+        return null;
+    }
+
+    private void PositionRoomCamera(RoomDefinition room)
+    {
+        if (room == null || room.cameraObject == null)
+        {
+            return;
+        }
+
+        Vector3 focus = GetRoomFocusPosition(room);
+        room.cameraObject.transform.position = focus + Vector3.back * 10f;
+
+        if (room.cameraObject.gameObject.tag != "MainCamera")
+        {
+            room.cameraObject.gameObject.tag = "MainCamera";
+        }
+    }
+
+    private static Vector3 GetRoomFocusPosition(RoomDefinition room)
+    {
+        if (room.backgroundObject != null)
+        {
+            return room.backgroundObject.transform.position;
+        }
+
+        if (room.hotspotsContainer != null)
+        {
+            return room.hotspotsContainer.transform.position;
+        }
+
+        return Vector3.zero;
+    }
+
+    private static bool IsSameOrChildOf(Transform target, GameObject root)
+    {
+        if (target == null || root == null)
+        {
+            return false;
+        }
+
+        Transform rootTransform = root.transform;
+        return target == rootTransform || target.IsChildOf(rootTransform);
     }
 }

@@ -8,6 +8,36 @@ public class ClickManager : MonoBehaviour
 {
     private Camera cachedCamera;
 
+    private void OnEnable()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.RoomChanged += OnRoomChanged;
+        }
+    }
+
+    private void Start()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.RoomChanged -= OnRoomChanged;
+            RoomManager.Instance.RoomChanged += OnRoomChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.RoomChanged -= OnRoomChanged;
+        }
+    }
+
+    private void OnRoomChanged(string previousRoomId, string nextRoomId)
+    {
+        cachedCamera = null;
+    }
+
     void Update()
     {
         Camera activeCamera = GetActiveCamera();
@@ -26,16 +56,40 @@ public class ClickManager : MonoBehaviour
             Vector3 screenPos = Mouse.current.position.ReadValue();
             screenPos.z = Mathf.Abs(activeCamera.transform.position.z);
             Vector2 mousePos = activeCamera.ScreenToWorldPoint(screenPos);
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+            
+            // Raycast que detecta múltiples hits
+            RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
 
-            if (hit.collider != null)
+            RaycastHit2D selectedHit = new RaycastHit2D();
+            Interactable selectedInteractable = null;
+            float selectedDepth = float.MaxValue;
+
+            foreach (RaycastHit2D hit in hits)
             {
-                Debug.Log("Click en: " + hit.collider.name);
-                Interactable obj = hit.collider.GetComponent<Interactable>();
-                if (obj != null)
+                if (hit.collider == null)
                 {
-                    obj.Interact();
+                    continue;
                 }
+
+                Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
+                if (!CanInteractWith(interactable))
+                {
+                    continue;
+                }
+
+                float depthFromCamera = Mathf.Abs(hit.collider.transform.position.z - activeCamera.transform.position.z);
+                if (selectedInteractable == null || depthFromCamera < selectedDepth)
+                {
+                    selectedDepth = depthFromCamera;
+                    selectedHit = hit;
+                    selectedInteractable = interactable;
+                }
+            }
+
+            if (selectedInteractable != null && selectedHit.collider != null)
+            {
+                Debug.Log($"Click en: {selectedHit.collider.name}");
+                selectedInteractable.Interact();
             }
         }
     }
@@ -47,9 +101,10 @@ public class ClickManager : MonoBehaviour
             return cachedCamera;
         }
 
-        if (Camera.main != null)
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null && mainCamera.isActiveAndEnabled)
         {
-            cachedCamera = Camera.main;
+            cachedCamera = mainCamera;
             return cachedCamera;
         }
 
@@ -61,6 +116,21 @@ public class ClickManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    private static bool CanInteractWith(Interactable interactable)
+    {
+        if (interactable == null || !interactable.isActiveAndEnabled || !interactable.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        if (RoomManager.Instance == null)
+        {
+            return true;
+        }
+
+        return RoomManager.Instance.IsObjectInCurrentRoom(interactable.gameObject);
     }
 
     private static bool IsPointerOverBlockingUi()
@@ -91,15 +161,15 @@ public class ClickManager : MonoBehaviour
                 return true;
             }
 
-            if (currentObject.GetComponent<TMPro.TMP_Text>() != null)
-            {
-                continue;
-            }
-
-            if (currentObject.GetComponent<UnityEngine.UI.Image>() != null)
+            if (currentObject.GetComponent<UnityEngine.UI.Selectable>() != null)
             {
                 CanvasGroup canvasGroup = currentObject.GetComponentInParent<CanvasGroup>();
                 if (canvasGroup != null && canvasGroup.blocksRaycasts)
+                {
+                    return true;
+                }
+
+                if (currentObject.GetComponent<UnityEngine.UI.InputField>() != null || currentObject.GetComponent<TMPro.TMP_InputField>() != null)
                 {
                     return true;
                 }
