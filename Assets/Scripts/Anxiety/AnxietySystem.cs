@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -20,11 +19,9 @@ public class AnxietySystem : MonoBehaviour
     [Header("Intensidad")]
     [SerializeField, Range(0f, 1f)] private float overlayAlphaMax = 0.4f;
     [SerializeField] private Color overlayColor = new Color(0.45f, 0f, 0f, 1f);
-    [SerializeField] private float verificationOverlayDuration = 1.75f;
 
     private Vignette vignette;
     private ChromaticAberration chromatic;
-    private Coroutine overlayRoutine;
 
     private void Start()
     {
@@ -105,34 +102,10 @@ public class AnxietySystem : MonoBehaviour
         color.a = clampedIntensity * overlayAlphaMax;
         anxietyOverlay.color = color;
         anxietyOverlay.gameObject.SetActive(color.a > 0.01f);
-
-        if (overlayRoutine != null)
-        {
-            StopCoroutine(overlayRoutine);
-        }
-
-        overlayRoutine = StartCoroutine(HideOverlayAfterDelay(verificationOverlayDuration));
     }
 
     public void HideVerificationOverlay()
     {
-        if (overlayRoutine != null)
-        {
-            StopCoroutine(overlayRoutine);
-            overlayRoutine = null;
-        }
-
-        if (anxietyOverlay != null)
-        {
-            anxietyOverlay.gameObject.SetActive(false);
-        }
-    }
-
-    private IEnumerator HideOverlayAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(Mathf.Max(0f, delay));
-        overlayRoutine = null;
-
         if (anxietyOverlay != null)
         {
             anxietyOverlay.gameObject.SetActive(false);

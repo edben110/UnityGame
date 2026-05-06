@@ -1,0 +1,28 @@
+
+mejoras de prologo y capitulo 1:
+
+el prologo debe dar una introduccion de la historia un poco mas larga 
+durante el prologo debe haber una guia de como jugar el juego
+el jugador(protagonista) es un detective llamado  Franks Keller que vino a investigar el mismo incidente que la periodista en el que simon fue testigo y luego se entero que Simon "Ha muerto"
+e introducir quien es el protagonista al jugador durante el prologo
+el juego ocurre en el año de 1943 en Berna Suiza
+el asesino del juego aunque no se ve durante los eventos del juego es el responsable del incidente que testifico Simon
+los objetos deben tener coherencia con la epoca es decir que los objetos no pueden ser de una epoca mayor
+cada objeto en el juego final debe tener su propia descripcion
+se debe poder preguntar a los npcs sobre todos los objetos es decir que al recoger cualquier objeto y se seleccione se pueda ppreguntar a un npc sobre el objeto
+al hablar con los personajes no se debe reexplicar mecanicas del juego
+deben haber 2 tipos de conversaciones al principio del capitulo 1 por cada npc, una para disminuir la ansiedad del personaje en donde este exprese que tan mal se siente con su ansiedad y otra donde el npc hable sobre lo que vino a buscar a la mansion(se pueden copiar los mismos dialogos del script de python siempre y cuando no rompan las reglas de este txt)
+por ahora los npcs se quedaran en el linving room sin moverse a otros lados
+si un npc muere por la ansiedad, el npc desaparece de la habitacion en la que esta y los demas npcs deben mencionar que ese npc solo se marcho con un aspecto nervioso (mas adelante se implementara un sprite del npc "muerto" y un script que provocara que el npc aparezca fallecido en otra habitacion de la mansion ) 
+despues de haber hablado con los npc e interactuado con los objetos de la sala de estar (living room) el jugador ya podra recoger la llave del estudio de simon el cual es el principio del capitulo 2, mientras no haga el resto de cosas el protagonista(jugador) dira que es mejor investigar la zona e interrogar a los npcs
+
+mejoras tecnicas:
+
+el mensaje de "¡la puerta se ha abierto!" debe especificar de a que habitacion dirige esa puerta, por ejemplo si va al estudio de simon podria decir "la puerta del estudio se ha abierto" la mension del escenario al que lleva la puerta debe ser por su Display Name y no por su ID de room manager
+el mensaje de "¡esta puerta esta cerrada, requiere una llave!" debe especificar de a que habitacion dirige esa puerta, por ejemplo si va al estudio de simon podria decir "la puerta del estudio esta cerrada, requiere una llave" la mension del escenario al que lleva la puerta debe ser por su Display Name y no por su ID de room manager
+todas las puertas que den regreso al lobby deben tener un texto que diga volver lobby
+todos los objetos de hotspots deben tener una descripcion en el dialogue que aparece al darles click, dicha descripcion debe ser la misma que hay en el videojuego de python, si el objeto existe pero no tiene su descripcion o tiene la descripcion de otro objeto, debe de asignarsele su descripcion segun el juego de terminal en python
+el overlay de color rojo al verificar la ansiedad de un npc debe mantenerse hasta cerrar el panel de interaccion con el npc
+si un npc tiene el 100% de ansiedad, al hablar con el la ansiedad ya no dismunuira y debera de decir dialogos entre nerviosos y delirantes sobre su malestar
+si un npc tiene el 100% de ansiedad, este debe morir despues de que el jugador salga del escenario y cambie de camara, solo se sabra que ha muerto si se regresa a hablar con los npc y este no esta, posterior a hablar con todos los npc sobre la desaparicion del compañero el "cadaver ya podra salir en otra habitacion que este desbloqueada
+despues de recoger la llave del estudio(biblioteca) y abrir la puerta de este lugar se debe aparecer un dialogo que de a entender el comienzo del capitulo 2

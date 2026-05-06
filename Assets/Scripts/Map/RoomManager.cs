@@ -151,6 +151,21 @@ public class RoomManager : MonoBehaviour
         return room.displayName;
     }
 
+    public string GetRoomDisplayName(string roomId)
+    {
+        if (string.IsNullOrWhiteSpace(roomId))
+        {
+            return string.Empty;
+        }
+
+        if (roomLookup.TryGetValue(roomId, out RoomDefinition room) && !string.IsNullOrWhiteSpace(room.displayName))
+        {
+            return room.displayName;
+        }
+
+        return roomId;
+    }
+
     public bool IsObjectInCurrentRoom(GameObject target)
     {
         if (target == null || !target.activeInHierarchy)

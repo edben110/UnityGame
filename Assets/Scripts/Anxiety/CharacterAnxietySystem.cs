@@ -106,6 +106,54 @@ public class CharacterAnxietySystem : MonoBehaviour
         return $"{GetDisplayName(entry)} - Ansiedad {Mathf.RoundToInt(entry.anxiety)}/100 ({mood})";
     }
 
+    public bool IsAtMaxAnxiety(string characterId)
+    {
+        return GetAnxiety(characterId) >= 99.9f;
+    }
+
+    public bool IsDead(string characterId)
+    {
+        if (StoryState.Instance == null || string.IsNullOrWhiteSpace(characterId))
+        {
+            return false;
+        }
+
+        return StoryState.Instance.HasFlag($"npc.dead.{characterId}");
+    }
+
+    public string GetCharacterDisplayName(string characterId)
+    {
+        if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null)
+        {
+            return characterId;
+        }
+
+        return GetDisplayName(entry);
+    }
+
+    public List<string> GetCharacterIds()
+    {
+        List<string> ids = new List<string>(lookup.Count);
+        foreach (var pair in lookup)
+        {
+            ids.Add(pair.Key);
+        }
+
+        return ids;
+    }
+
+    public List<string> GetAliveCharacterIds()
+    {
+        List<string> ids = GetCharacterIds();
+        if (StoryState.Instance == null)
+        {
+            return ids;
+        }
+
+        ids.RemoveAll(IsDead);
+        return ids;
+    }
+
     public void ApplyTalkRelief(string characterId)
     {
         if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null)

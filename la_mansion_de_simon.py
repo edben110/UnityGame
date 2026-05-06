@@ -321,28 +321,37 @@ def prologo():
 
     titulo("P R E M I S A")
     print(f"\033[2m{'Europa, 1943. La guerra devora el continente.':^{W}}\033[0m")
-    print(f"\033[2m{'Pero aquí, lejos del frente, hay otros tipos de guerra.':^{W}}\033[0m")
+    print(f"\033[2m{'Berna, Suiza. Lejos del frente, pero no del miedo.':^{W}}\033[0m")
+    print(f"\033[2m{'Aquí, lejos del frente, hay otros tipos de guerra.':^{W}}\033[0m")
     print()
     time.sleep(1)
     escribir_lento("Son las tres de la tarde.")
     time.sleep(0.5)
     narrar("Una mansión antigua, de paredes que huelen a barniz viejo "
-           "y a secretos acumulados durante décadas, recibe a cinco "
+           "y a secretos acumulados durante décadas, recibe a 6 "
            "desconocidos que, sin embargo, no lo son del todo entre sí.")
     narrar("Los une un nombre: Simón. Un pintor. Un hombre que, según "
            "les comunicaron hace pocos días, ha muerto.")
+        narrar("Simón fue testigo de un incidente que nunca llegó a los diarios. "
+            "Alguien se aseguró de que no llegara. Ese mismo alguien es quien "
+            "hoy controla la sombra sobre esta casa.")
     pausa()
 
     narrar("Pero cada uno llegó con algo más que condolencias. Cada uno "
            "llegó con una razón propia, silenciosa, que no piensa "
            "compartir con nadie. Y todos, sin excepción, buscan algo "
            "dentro de esa mansión.")
-    narrar("Lo que ninguno sabe es que no están solos. En algún rincón "
+        narrar("Lo que ninguno sabe es que no están solos. En algún rincón "
            "de la casa, alguien más aguarda. Alguien cuya razón para "
            "estar ahí es mucho más oscura que todas las demás juntas.")
-    print()
-    escribir_lento("El jugador observa. El jugador explora.")
-    escribir_lento("El jugador decide quién sobrevive.")
+        narrar("El detective Franks Keller recibió la misma noticia que Lisa: "
+            "Simón ha muerto. Keller vino a Berna a investigar el incidente "
+            "del que Simón fue testigo, y a descubrir qué se oculta en esta "
+            "mansión.")
+        print()
+        escribir_lento("Eres el detective Franks Keller. Observa, explora y "
+                 "descubre qué ocurrió en esta mansión.")
+        escribir_lento("Interroga. Conecta pistas. Decide quién sobrevive.")
     pausa()
 
     # Presentación de personajes
@@ -368,6 +377,9 @@ def prologo():
            "descubres, y cómo termina esta historia.")
     narrar("Explora cada escenario. Habla con todos. Encuentra a Simón "
            "antes de que sea demasiado tarde.")
+        narrar("Guía rápida: examina objetos, escucha las reacciones de cada "
+            "persona y pregunta por lo que llevan oculto. Tus elecciones "
+            "definen el ritmo del grupo.")
     pausa()
 
 # ══════════════════════════════════════════════════════════════
@@ -383,7 +395,7 @@ def capitulo_1():
            "adelanto, como hacía siempre, como si la puntualidad fuera una "
            "forma de demostrar que tenía el control de algo.")
     narrar("El lobby olía a polvo y a rosas secas. Techos altos con molduras "
-           "de yeso amarillento, una escalera central de madera oscura, "
+           "de yeso amarillento, una escalera de madera oscura, "
            "sillones de cuero rojo envejecido, una chimenea apagada. "
            "Un gramófono de latón descansaba en la esquina, con un disco "
            "puesto que nadie recordaba haber colocado. En la radio de "
@@ -407,53 +419,115 @@ def capitulo_1():
            "lentamente, a intercambiar palabras que no decían nada real.")
     pausa()
 
-    # ── Exploración del Lobby ──
-    explorar_lobby()
+    narrar("Por ahora, nadie se mueve del lobby. La sala de estar se "
+           "convierte en un territorio común: todos a la vista, todos "
+           "midiendo a los demás.")
 
-    # ── Interacciones ──
-    titulo("E L   L O B B Y", "Interacciones — Capítulo 1")
-    narrar("Los cinco están dispersos por el lobby. Puedes hablar con "
-           "quien quieras. Cada conversación importa.")
-    interacciones_c1()
+    visto_lobby = set()
+    estado_c1 = {n: {"ansiedad": False, "motivo": False} for n in G.presentes()}
+    decision_tomada = False
 
-    # ── Decisión ──
-    titulo("D E C I S I Ó N", "Capítulo 1")
-    narrar("Llevan una hora en el lobby. La tensión es palpable. "
-           "Nadie ha dicho por qué está realmente aquí. "
-           "El silencio empieza a pesar.")
-    e = elegir([
-        "Proponer explorar la mansión juntos, como grupo",
-        "Sugerir que cada uno explore por su cuenta",
-        "Intentar que el grupo hable abiertamente sobre Simón",
-    ])
-    if e == 1:
-        G.decidir("grupo_unido_c1")
-        narrar("El grupo acepta, aunque con reservas. Hay algo reconfortante "
-               "en moverse juntos por una casa que ninguno conoce del todo. "
-               "Los pasos de cinco personas suenan distintos a los de una sola.")
-        for n in G.presentes(): G.p(n).conectar(10)
-    elif e == 2:
-        G.decidir("separados_c1")
-        narrar("Cada uno toma una dirección distinta. La mansión los absorbe "
-               "en silencio. La distancia entre ellos crece con cada paso. "
-               "Desde algún lugar de la casa, alguien observa cómo se separan.")
-        for n in G.presentes(): G.p(n).aislar(15)
-    else:
-        G.decidir("hablar_c1")
-        narrar("Las respuestas son vagas, calculadas. Pero en los silencios "
-               "entre las palabras hay más información que en las palabras mismas. "
-               "Algo se mueve debajo de la superficie de cada frase.")
-        for n in G.presentes(): G.p(n).conectar(5)
+    while True:
+        titulo("E L   L O B B Y", "Capítulo 1 — Sala de estar")
+        narrar("Puedes explorar la sala, hablar con el grupo o intentar "
+               "avanzar hacia el estudio.")
+        ops = [
+            "Explorar el lobby",
+            "Hablar con el grupo",
+        ]
+        if not decision_tomada:
+            ops.append("Reunir al grupo y decidir el siguiente paso")
+        ops.append("Intentar tomar la llave del estudio")
+        e = elegir(ops)
+        sel = ops[e - 1]
+
+        if "Explorar" in sel:
+            explorar_lobby(visto_lobby)
+            continue
+
+        if "Hablar" in sel:
+            interacciones_c1(estado_c1)
+            continue
+
+        if "decidir" in sel:
+            if not _c1_listo_para_llave(visto_lobby, estado_c1):
+                narrar("Franks Keller piensa que es mejor investigar la "
+                       "zona e interrogar a todos antes de decidir.")
+                pausa()
+                continue
+
+            titulo("D E C I S I Ó N", "Capítulo 1")
+            narrar("Llevan una hora en el lobby. La tensión es palpable. "
+                   "Nadie ha dicho por qué está realmente aquí. "
+                   "El silencio empieza a pesar.")
+            e = elegir([
+                "Proponer explorar la mansión juntos, como grupo",
+                "Sugerir que cada uno explore por su cuenta",
+                "Intentar que el grupo hable abiertamente sobre Simón",
+            ])
+            if e == 1:
+                G.decidir("grupo_unido_c1")
+                narrar("El grupo acepta, aunque con reservas. Hay algo "
+                       "reconfortante en moverse juntos por una casa que "
+                       "ninguno conoce del todo. Los pasos de cinco "
+                       "personas suenan distintos a los de una sola.")
+                for n in G.presentes():
+                    G.p(n).conectar(10)
+            elif e == 2:
+                G.decidir("separados_c1")
+                narrar("Cada uno toma una dirección distinta. La mansión "
+                       "los absorbe en silencio. La distancia entre ellos "
+                       "crece con cada paso. Desde algún lugar de la casa, "
+                       "alguien observa cómo se separan.")
+                for n in G.presentes():
+                    G.p(n).aislar(15)
+            else:
+                G.decidir("hablar_c1")
+                narrar("Las respuestas son vagas, calculadas. Pero en los "
+                       "silencios entre las palabras hay más información "
+                       "que en las palabras mismas. Algo se mueve debajo de "
+                       "la superficie de cada frase.")
+                for n in G.presentes():
+                    G.p(n).conectar(5)
+            decision_tomada = True
+            continue
+
+        # Intentar tomar la llave del estudio
+        if not _c1_listo_para_llave(visto_lobby, estado_c1):
+            narrar("Franks Keller piensa que es mejor investigar la zona "
+                   "e interrogar a los NPCs antes de seguir.")
+            pausa()
+            continue
+
+        narrar("Entre los cojines del sillón cercano a la chimenea, "
+               "encuentras una llave de latón con una etiqueta gastada: "
+               "'Estudio de Simón'.")
+        narrar("El metal está frío. La puerta del estudio espera al fondo "
+               "del pasillo.")
+        G.guardar_pista("llave_estudio")
+        pausa("Has obtenido la llave del estudio.")
+        break
 
     _cierre_capitulo()
 
 
-def explorar_lobby():
+def _c1_listo_para_llave(visto_lobby, estado_c1):
+    requeridos = {"libro", "abrigo", "foto", "periodico"}
+    if not requeridos.issubset(visto_lobby):
+        return False
+    for nombre, flags in estado_c1.items():
+        if G.p(nombre).presente and (not flags["ansiedad"] or not flags["motivo"]):
+            return False
+    return True
+
+
+def explorar_lobby(visto=None):
     titulo("E L   L O B B Y", "Exploración libre")
     narrar("La luz entra por ventanas emplomadas que filtran el sol de la "
            "tarde en franjas anaranjadas. Hay flores secas en un jarrón "
            "sobre la repisa. Un abrigo cuelga del perchero cerca de la puerta.")
-    visto = set()
+    if visto is None:
+        visto = set()
     while True:
         ops = []
         if "libro" not in visto:
@@ -509,27 +583,79 @@ def explorar_lobby():
 
         else:
             break
+    return visto
 
 
-def interacciones_c1():
-    hablados = set()
+def interacciones_c1(estado_c1):
+    titulo("E L   L O B B Y", "Interacciones — Capítulo 1")
+    narrar("Los cinco permanecen en la sala de estar. Puedes hablar con "
+           "cada uno para calmar su ansiedad o preguntar por sus motivos.")
     while True:
-        vivos = [n for n in G.presentes() if n not in hablados]
-        if not vivos:
+        opciones = []
+        mapa = []
+        for nombre in G.presentes():
+            if not estado_c1[nombre]["ansiedad"]:
+                opciones.append(f"Hablar con {nombre} (ansiedad)")
+                mapa.append((nombre, "ansiedad"))
+            if not estado_c1[nombre]["motivo"]:
+                opciones.append(f"Preguntar a {nombre} por lo que vino a buscar")
+                mapa.append((nombre, "motivo"))
+        opciones.append("No hablar con nadie más")
+
+        if len(opciones) == 1:
             narrar("Ya hablaste con todos los presentes.")
             break
-        ops = [f"Hablar con {n} — {G.p(n).rol}" for n in vivos]
-        ops.append("No hablar con nadie más")
-        e = elegir(ops)
-        if e > len(vivos):
+
+        e = elegir(opciones)
+        if e == len(opciones):
             break
-        nombre = vivos[e - 1]
-        hablados.add(nombre)
-        G.p(nombre).conectar(20)
-        _dialogo_c1(nombre)
+
+        nombre, tipo = mapa[e - 1]
+        if tipo == "ansiedad":
+            G.p(nombre).conectar(15)
+            _dialogo_c1_ansiedad(nombre)
+            estado_c1[nombre]["ansiedad"] = True
+        else:
+            G.p(nombre).conectar(10)
+            _dialogo_c1_motivo(nombre)
+            estado_c1[nombre]["motivo"] = True
 
 
-def _dialogo_c1(nombre):
+def _dialogo_c1_ansiedad(nombre):
+    separador()
+    if nombre == "Robert":
+        dialogo("ROBERT", "No me gusta este lugar. El silencio pesa. "
+                "Me cuesta respirar con tanta madera y tanto pasado encima.")
+        acotacion("Ajusta el nudo de su corbata con manos firmes.")
+        dialogo("ROBERT", "No es miedo. Es una sensación de deuda.", False)
+
+    elif nombre == "Ana":
+        dialogo("ANA", "Pensé que lo tenía todo bajo control, pero este "
+                "lobby me hace sentir observada.")
+        acotacion("No mira a los ojos cuando lo dice.")
+        dialogo("ANA", "Como si cada cuadro tuviera memoria.", False)
+
+    elif nombre == "Ben":
+        dialogo("BEN", "No he dormido en días. En serio. Me tiembla la mano "
+                "y no sé si es el frío o los nervios.")
+        acotacion("Se frota los nudillos con la otra mano.")
+        dialogo("BEN", "Este sitio me aprieta el pecho.", False)
+
+    elif nombre == "Lisa":
+        dialogo("LISA", "El silencio me pone alerta. Demasiado quieto, "
+                "demasiado perfecto.")
+        acotacion("Mira la puerta como si esperara que alguien entrara.")
+        dialogo("LISA", "No suelo admitirlo, pero estoy tensa.", False)
+
+    elif nombre == "Lucas":
+        dialogo("LUCAS", "Siento que no debería estar aquí. Me cuesta "
+                "quitarme esa sensación.")
+        acotacion("Aprieta el maletín contra su pecho.")
+        dialogo("LUCAS", "La casa me conoce. Y eso me pone nervioso.", False)
+    pausa()
+
+
+def _dialogo_c1_motivo(nombre):
     separador()
     if nombre == "Robert":
         dialogo("ROBERT", "Vine porque me lo pidieron. Un abogado, no sé "
@@ -592,11 +718,14 @@ def capitulo_2():
     time.sleep(0.5)
 
     narrar("La luz había cambiado. El sol de la tarde se había movido y "
-           "ahora entraba por el lado opuesto, proyectando sombras más "
-           "largas sobre el suelo de madera del lobby.")
-    narrar("Fue Ana quien descubrió que la puerta del estudio no estaba "
-           "cerrada con llave. La empujó sin pensar demasiado y la encontró "
-           "abierta. Nadie protestó cuando el grupo comenzó a explorar.")
+        "ahora entraba por el lado opuesto, proyectando sombras más "
+        "largas sobre el suelo de madera del lobby.")
+    narrar("Con la llave del estudio en la mano, Franks Keller abre la "
+        "puerta. El mecanismo cede con un clic seco. El aire del cuarto "
+        "huele a papel húmedo y café viejo.")
+    narrar("El grupo duda un segundo, pero al cruzar el umbral queda claro "
+        "que la investigación ha cambiado de fase. Comienza el "
+        "capítulo 2.")
     pausa()
 
     explorar_estudio()

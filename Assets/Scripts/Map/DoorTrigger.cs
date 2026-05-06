@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -61,7 +62,7 @@ public class DoorTrigger : Interactable
                 DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
                 if (dialoguePanel != null)
                 {
-                    dialoguePanel.ShowSystemMessage(lockedMessage);
+                    dialoguePanel.ShowSystemMessage(BuildLockedMessage(false));
                 }
                 return;
             }
@@ -76,7 +77,7 @@ public class DoorTrigger : Interactable
                 DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
                 if (dialoguePanel != null)
                 {
-                    dialoguePanel.ShowSystemMessage(lockedMessage);
+                    dialoguePanel.ShowSystemMessage(BuildLockedMessage(false));
                 }
                 return;
             }
@@ -107,7 +108,7 @@ public class DoorTrigger : Interactable
                 DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
                 if (dialoguePanel != null)
                 {
-                    dialoguePanel.ShowSystemMessage(lockedMessage);
+                    dialoguePanel.ShowSystemMessage(BuildLockedMessage(true));
                 }
                 return;
             }
@@ -116,7 +117,7 @@ public class DoorTrigger : Interactable
         DialoguePanelUI panel = DialoguePanelUI.Instance;
         if (panel != null)
         {
-            panel.ShowSystemMessage("¡La puerta se ha abierto!", () =>
+            panel.ShowSystemMessage(BuildOpenMessage(), () =>
             {
                 panel.Hide();
                 ChangeRoomAfterDialogue();
@@ -140,8 +141,60 @@ public class DoorTrigger : Interactable
 
         if (success)
         {
-            Debug.Log("La puerta se ha abierto.");
+            Debug.Log(BuildOpenMessage());
         }
+    }
+
+    private bool IsLobbyTarget()
+    {
+        return string.Equals(targetRoomId, "lobby", System.StringComparison.OrdinalIgnoreCase);
+    }
+
+    private string GetTargetDisplayName()
+    {
+        if (RoomManager.Instance == null)
+        {
+            return targetRoomId;
+        }
+
+        return RoomManager.Instance.GetRoomDisplayName(targetRoomId);
+    }
+
+    private string BuildLockedMessage(bool needsKey)
+    {
+        if (IsLobbyTarget())
+        {
+            if (needsKey)
+            {
+                return "Volver lobby. La puerta está cerrada, requiere una llave.";
+            }
+
+            return "Volver lobby. La puerta está cerrada.";
+        }
+
+        string displayName = GetTargetDisplayName();
+        if (needsKey)
+        {
+            return $"La puerta del {displayName} está cerrada, requiere una llave.";
+        }
+
+        if (!string.IsNullOrWhiteSpace(lockedMessage))
+        {
+            return $"La puerta del {displayName} está cerrada.";
+        }
+
+        return $"La puerta del {displayName} está cerrada.";
+    }
+
+    private string BuildOpenMessage()
+    {
+        if (IsLobbyTarget())
+        {
+            return "Volver lobby.";
+        }
+
+        string displayName = GetTargetDisplayName();
+        return $"La puerta del {displayName} se ha abierto.";
     }
 
     private void OnDrawGizmos()

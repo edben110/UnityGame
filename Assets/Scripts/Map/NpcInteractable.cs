@@ -13,6 +13,7 @@ public class NpcInteractable : Interactable
     [Header("Flujo")]
     [SerializeField] private string requiredChapterId = "chapter1";
     [SerializeField] private string talkConversationId;
+    [SerializeField] private string criticalTalkConversationId;
 
     public string NpcId => npcId;
 
@@ -34,6 +35,7 @@ public class NpcInteractable : Interactable
         bool hasItemAction = TryBuildSpecificItemQuestionAction(runner, itemId, out askItemAction, out askItemLabel);
 
         NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, hasItemAction ? askItemAction : null, hasItemAction ? askItemLabel : string.Empty);
+        TryHandlePendingDisappearances();
 
         if (!hasItemAction)
         {
@@ -63,6 +65,7 @@ public class NpcInteractable : Interactable
         TryBuildItemQuestionAction(runner, out askItemAction, out askItemLabel);
 
         NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, askItemAction, askItemLabel);
+        TryHandlePendingDisappearances();
     }
 
     private bool CanOpenInteraction(out DialogueRunner runner)
@@ -75,6 +78,11 @@ public class NpcInteractable : Interactable
         }
 
         if (!string.IsNullOrWhiteSpace(requiredChapterId) && StoryState.Instance.CurrentChapterId != requiredChapterId)
+        {
+            return false;
+        }
+
+        if (StoryState.Instance.HasFlag($"npc.dead.{npcId}"))
         {
             return false;
         }
@@ -96,6 +104,23 @@ public class NpcInteractable : Interactable
             return;
         }
 
+        if (CharacterAnxietySystem.Instance != null && CharacterAnxietySystem.Instance.IsAtMaxAnxiety(npcId))
+        {
+            string criticalConversationId = ResolveCriticalConversationId();
+            bool startedCritical = !string.IsNullOrWhiteSpace(criticalConversationId)
+                                 && runner.HasConversation(criticalConversationId)
+                                 && runner.StartConversation(criticalConversationId, "start");
+
+            if (!startedCritical)
+            {
+                NpcInteractionMenuUI.Instance.ShowStatusText("Su ansiedad es extrema. Solo balbucea frases nerviosas e incoherentes.");
+                return;
+            }
+
+            NpcInteractionMenuUI.Instance.Hide();
+            return;
+        }
+
         bool started = runner.StartConversation(talkConversationId, "start");
         if (!started)
         {
@@ -108,6 +133,21 @@ public class NpcInteractable : Interactable
         }
 
         NpcInteractionMenuUI.Instance.Hide();
+    }
+
+    private string ResolveCriticalConversationId()
+    {
+        if (!string.IsNullOrWhiteSpace(criticalTalkConversationId))
+        {
+            return criticalTalkConversationId;
+        }
+
+        if (string.IsNullOrWhiteSpace(talkConversationId))
+        {
+            return string.Empty;
+        }
+
+        return $"{talkConversationId}_critical";
     }
 
     private void OnVerifyPressed()
@@ -262,5 +302,73 @@ public class NpcInteractable : Interactable
         }
 
         return gameObject.name;
+    }
+
+    private void TryHandlePendingDisappearances()
+    {
+        if (StoryState.Instance == null || CharacterAnxietySystem.Instance == null || NpcInteractionMenuUI.Instance == null)
+        {
+            return;
+        }
+
+        List<string> allIds = CharacterAnxietySystem.Instance.GetCharacterIds();
+        for (int i = 0; i < allIds.Count; i++)
+        {
+            string missingId = allIds[i];
+            if (!StoryState.Instance.HasFlag($"npc.disappearance.pending.{missingId}"))
+            {
+                continue;
+            }
+
+            if (string.Equals(missingId, npcId, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            string reportFlag = $"npc.disappearance.reported.{missingId}.{npcId}";
+            if (StoryState.Instance.HasFlag(reportFlag))
+            {
+                continue;
+            }
+
+            string missingName = CharacterAnxietySystem.Instance.GetCharacterDisplayName(missingId);
+            NpcInteractionMenuUI.Instance.ShowStatusText($"{missingName} se marcho con un aspecto nervioso. Nadie lo vio volver.");
+            StoryState.Instance.SetFlag(reportFlag, true);
+            EvaluateDisappearanceConsensus(missingId);
+            return;
+        }
+    }
+
+    private void EvaluateDisappearanceConsensus(string missingId)
+    {
+        if (StoryState.Instance == null || CharacterAnxietySystem.Instance == null)
+        {
+            return;
+        }
+
+        List<string> alive = CharacterAnxietySystem.Instance.GetAliveCharacterIds();
+        bool everyoneReported = true;
+        for (int i = 0; i < alive.Count; i++)
+        {
+            string reporterId = alive[i];
+            if (string.Equals(reporterId, missingId, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            if (!StoryState.Instance.HasFlag($"npc.disappearance.reported.{missingId}.{reporterId}"))
+            {
+                everyoneReported = false;
+                break;
+            }
+        }
+
+        if (!everyoneReported)
+        {
+            return;
+        }
+
+        StoryState.Instance.SetFlag($"npc.disappearance.pending.{missingId}", false);
+        StoryState.Instance.SetFlag($"npc.cadaver.ready.{missingId}", true);
     }
 }

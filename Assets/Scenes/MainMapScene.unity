@@ -585,7 +585,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.15, y: -2.93}
+  m_AnchoredPosition: {x: 1, y: 1}
   m_SizeDelta: {x: 0.6148, y: 0.7491}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &108415573
@@ -647,7 +647,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 0.0001, y: 0.0001}
   m_EdgeRadius: 0
 --- !u!212 &108415575
 SpriteRenderer:
@@ -2467,7 +2467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.79, y: 2.54}
+  m_AnchoredPosition: {x: 5.3, y: -3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &404231389
@@ -2529,7 +2529,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!212 &404231391
 SpriteRenderer:
@@ -2590,280 +2590,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!1 &417603525
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 417603526}
-  - component: {fileID: 417603528}
-  - component: {fileID: 417603527}
-  m_Layer: 0
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &417603526
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417603525}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2146881996}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &417603527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417603525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: OK
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &417603528
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417603525}
-  m_CullTransparentMesh: 1
---- !u!1 &421197669
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 421197670}
-  - component: {fileID: 421197672}
-  - component: {fileID: 421197671}
-  m_Layer: 0
-  m_Name: MessageText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &421197670
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421197669}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1341609680}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 20}
-  m_SizeDelta: {x: -40, y: -80}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &421197671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421197669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: "Mensaje de notificaci\xF3n"
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &421197672
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421197669}
-  m_CullTransparentMesh: 1
 --- !u!1 &432681104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3712,7 +3438,887 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a5c9291e6aecb4880e21f1c693ac88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueLibrary
-  conversations: []
+  conversations:
+  - id: prologue_intro
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: Europa, 1943. La mansion de Simon recibe a cinco visitantes unidos
+          por secretos.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: No estan aqui solo por duelo. Todos buscan algo.
+        anxietyDelta: 5
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: 'Tu rol: observar, hablar y evitar que la ansiedad rompa al grupo.'
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices:
+      - id: focus_group
+        text: Prometer mantener unido al grupo
+        nextNodeId: end
+        anxietyDelta: -5
+        requiredAnxietyMin: 0
+        requiredAnxietyMax: 100
+        requiredFlag: 
+        setFlag: choice.prologue.unity
+      - id: focus_truth
+        text: Prometer buscar la verdad a cualquier costo
+        nextNodeId: end
+        anxietyDelta: 5
+        requiredAnxietyMin: 0
+        requiredAnxietyMax: 100
+        requiredFlag: 
+        setFlag: choice.prologue.truth
+      nextNodeIdIfNoChoices: 
+      endsConversation: 0
+    - id: end
+      lines:
+      - speaker: Narrador
+        text: 'Prologo completado. Comienza el Capitulo 1: La Llegada.'
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_intro
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: Capitulo 1, 3:00 PM. El lobby esta en silencio.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: Llegue por una carta. No confio en esta reunion.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: La noticia de la muerte de Simon fue demasiado vaga.
+        anxietyDelta: 3
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: Explora el mapa. Cada objeto puede alterar la ansiedad y la historia.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_lobby_book
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: Examinas el libro de visitas. Una entrada esta tachada con tinta roja.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: 'Fecha: hace tres semanas. Nombre ilegible.'
+        anxietyDelta: 8
+        requiredFlag: 
+        setFlag: clue.lobby.book
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_lobby_coat
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: Revisas un abrigo colgado en el perchero. En el bolsillo hay una nota.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Nota
+        text: No confies en nadie que haya llegado antes que tu.
+        anxietyDelta: 6
+        requiredFlag: 
+        setFlag: clue.lobby.coat
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_lobby_photo
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: "En la chimenea hay una foto antigua de Sim\xF3n con un hombre mayor."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: 'Al dorso: ''Padre e hijo, 1987''. Robert aparta la mirada.'
+        anxietyDelta: 5
+        requiredFlag: 
+        setFlag: clue.lobby.photo
+        addInventoryItemId: foto_padre_hijo
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_lobby_newspaper
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: El periodico local esta doblado en la pagina de sucesos.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Titular
+        text: Incendio en almacen del puerto, investigacion reabierta.
+        anxietyDelta: 6
+        requiredFlag: 
+        setFlag: clue.lobby.newspaper
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_robert
+    nodes:
+    - id: start
+      lines:
+      - speaker: Robert
+        text: Vine por una carta legal. Hay asuntos de herencia pendientes.
+        anxietyDelta: -4
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: No confiaria en separarnos. Esta casa tiene mas preguntas que respuestas.
+        anxietyDelta: -3
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La conversacion te ayuda a contener la tension del grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_robert_item_foto_padre_hijo
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: La foto de la chimenea dice 'Padre e hijo, 1987'.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: "No sabia que quedaba una copia aqui. Ese hombre era el padre de Sim\xF3n...
+          y tambien el mio. No estoy listo para contarlo al resto."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_robert_item_lobby_book
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: En el libro de visitas hay una entrada tachada.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: Esa clase de tachadura no es casual. En tiempos asi, la gente borra
+          nombres cuando teme represalias.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_robert_item_lobby_coat
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: 'En el abrigo encontre una nota: ''No confies en nadie que haya llegado
+          antes''.'
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: Suena a advertencia de alguien que conoce esta casa mejor que nosotros.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_robert_item_lobby_newspaper
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: El periodico habla de un incendio en el puerto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: Si reabrieron esa investigacion, alguien aqui va a ponerse nervioso.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ana
+    nodes:
+    - id: start
+      lines:
+      - speaker: Ana
+        text: "Sim\xF3n era un cliente brillante, pero guardaba demasiado silencio."
+        anxietyDelta: -4
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: Si encontramos mas pistas en el lobby, podriamos entender por que nos
+          llamo.
+        anxietyDelta: -3
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La conversacion te ayuda a contener la tension del grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ana_item_foto_padre_hijo
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: En la foto antigua Robert aparto la mirada enseguida.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: "Lo vi. Esa reaccion no es casualidad. Si esa imagen sigue apareciendo
+          en nuestras pistas, la historia familiar de Sim\xF3n es mas importante
+          de lo que parece."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ana_item_lobby_book
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: El libro de visitas tiene una entrada tachada.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: En el arte, borrar un nombre es un mensaje. Alguien quiso que ese visitante
+          no existiera.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ana_item_lobby_coat
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: Hay una nota escondida en un abrigo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: Alguien dejo esa advertencia con tiempo. Eso significa premeditacion.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ana_item_lobby_newspaper
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: El periodico menciona un incendio reabierto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: "Si Sim\xF3n fue testigo, ese caso explica por que nos reunieron."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ben
+    nodes:
+    - id: start
+      lines:
+      - speaker: Ben
+        text: Yo llevaba las cuentas. No quiero problemas, solo aclarar todo.
+        anxietyDelta: -4
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: Escucha, si hablas conmigo seguido me mantengo estable. Si me dejas
+          solo, me derrumbo.
+        anxietyDelta: -3
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La conversacion te ayuda a contener la tension del grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ben_item_foto_padre_hijo
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: Necesito que me digas que sabes de la foto de la chimenea.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: "Si la foto menciona al padre de Sim\xF3n, entonces hay herencias y
+          decisiones viejas metidas en esto. Robert sabe algo, seguro."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ben_item_lobby_book
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: El libro de visitas tiene una entrada tachada.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: Ese tipo de detalle es lo que termina costando dinero... y vidas.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ben_item_lobby_coat
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: Una nota escondida en un abrigo dice que no confiemos en quien llego
+          antes.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: Si alguien llego antes, tuvo tiempo de preparar algo. Eso me inquieta.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_ben_item_lobby_newspaper
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: El periodico habla de un incendio y una investigacion reabierta.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: Ese incendio fue un desastre financiero. Si alguien insiste en reabrirlo,
+          es porque hay culpables.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lisa
+    nodes:
+    - id: start
+      lines:
+      - speaker: Lisa
+        text: La version oficial de su muerte no me convence.
+        anxietyDelta: -4
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: Si encontramos evidencia real, podremos proteger al grupo de decisiones
+          ciegas.
+        anxietyDelta: -3
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La conversacion te ayuda a contener la tension del grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lisa_item_foto_padre_hijo
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: 'Encontramos una foto: ''Padre e hijo, 1987''.'
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: "Esa foto conecta con lo que investigaba. Si Robert evita mirarla,
+          es porque teme que alguien ate su nombre al de Sim\xF3n."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lisa_item_lobby_book
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: El libro de visitas tiene un nombre borrado.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: Eso es lo primero que revisaria si estuviera investigando. Ocultar
+          un nombre es una pista en si misma.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lisa_item_lobby_coat
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: En el abrigo hay una nota de advertencia.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: Eso suena a alguien intentando salvarnos sin exponerse. Quiero saber
+          quien la escribio.
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lisa_item_lobby_newspaper
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: El periodico menciona un incendio reabierto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: "Ese es el incidente que vengo siguiendo. Sim\xF3n estaba ahi."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lucas
+    nodes:
+    - id: start
+      lines:
+      - speaker: Lucas
+        text: "Trabaje con Sim\xF3n en el taller. Conozco varios rincones de la mansion."
+        anxietyDelta: -4
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lucas
+        text: Si notas que mi ansiedad sube, hablame antes de explorar otra zona.
+        anxietyDelta: -3
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La conversacion te ayuda a contener la tension del grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lucas_item_foto_padre_hijo
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: "Quiero preguntarte por la foto de Sim\xF3n con un hombre mayor."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lucas
+        text: "Sim\xF3n nunca hablaba de su familia, pero guardaba esa foto cerca
+          del fuego, como si la mirara seguido. Esa pista importa."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lucas_item_lobby_book
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: En el libro de visitas hay una entrada tachada.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lucas
+        text: "Sim\xF3n era cuidadoso con sus visitas. Si borro a alguien, ese alguien
+          tenia peso."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lucas_item_lobby_coat
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: En el abrigo hay una nota que advierte desconfiar.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lucas
+        text: "Suena a Sim\xF3n. Siempre dejaba pistas como si no pudiera hablar
+          directo."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_npc_lucas_item_lobby_newspaper
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: El periodico habla del incendio del puerto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lucas
+        text: "Sim\xF3n menciono ese incendio una vez. Dijo que alguien miente sobre
+          lo que paso."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La reaccion abre una nueva capa de la historia sin romper el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter1_decision
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: La tension en el lobby sube. Debes decidir como continua el grupo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices:
+      - id: go_together
+        text: Explorar juntos la mansion
+        nextNodeId: result_together
+        anxietyDelta: -12
+        requiredAnxietyMin: 0
+        requiredAnxietyMax: 100
+        requiredFlag: 
+        setFlag: chapter1.choice.together
+      - id: split
+        text: Separarse para cubrir mas terreno
+        nextNodeId: result_split
+        anxietyDelta: 14
+        requiredAnxietyMin: 0
+        requiredAnxietyMax: 100
+        requiredFlag: 
+        setFlag: chapter1.choice.split
+      - id: talk
+        text: Forzar una conversacion sincera sobre Simon
+        nextNodeId: result_talk
+        anxietyDelta: -4
+        requiredAnxietyMin: 0
+        requiredAnxietyMax: 100
+        requiredFlag: 
+        setFlag: chapter1.choice.talk
+      nextNodeIdIfNoChoices: 
+      endsConversation: 0
+    - id: result_together
+      lines:
+      - speaker: Narrador
+        text: El grupo avanza unido. El miedo sigue, pero nadie queda solo.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+    - id: result_split
+      lines:
+      - speaker: Narrador
+        text: Cada quien toma una direccion. La mansion traga el sonido de los pasos.
+        anxietyDelta: 6
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: Se desbloquea una ruta mas oscura para capitulo 2.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: route.dark
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+    - id: result_talk
+      lines:
+      - speaker: Narrador
+        text: Nadie dice toda la verdad, pero el silencio deja de ser absoluto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
 --- !u!114 &650944588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3828,7 +4434,6 @@ RectTransform:
   - {fileID: 1814602347}
   - {fileID: 39416063}
   - {fileID: 996581746}
-  - {fileID: 2002084548}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3982,6 +4587,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1416465144}
+  - {fileID: 1260874353}
   - {fileID: 1074313678}
   - {fileID: 1797940306}
   - {fileID: 90893717}
@@ -5396,9 +6002,10 @@ MonoBehaviour:
   startNodeId: start
   consumeAfterUse: 1
   setFlagOnInteract: clue.lobby.coat
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
+  grantItemId: lobby_coat
+  grantItemDisplayName: Nota del abrigo
+  grantItemDescription: 'Una nota oculta en el bolsillo: ''No confies en nadie que
+    haya llegado antes que tu''.'
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
   showDebugMarkerInGame: 1
@@ -5680,7 +6287,7 @@ Transform:
   m_GameObject: {fileID: 1125818762}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.95, y: 0.73, z: 0}
+  m_LocalPosition: {x: -2.71, y: 0.76, z: 0}
   m_LocalScale: {x: 0.65234447, y: 0.7878367, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6012,7 +6619,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1218623721}
-  - component: {fileID: 1218623720}
   m_Layer: 0
   m_Name: ScenarioManager
   m_TagString: Untagged
@@ -6020,18 +6626,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1218623720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1218623719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49939168689b2d84cbea99573bef5e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScenarioManager
 --- !u!4 &1218623721
 Transform:
   m_ObjectHideFlags: 0
@@ -6346,6 +6940,112 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1260874352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1260874353}
+  - component: {fileID: 1260874355}
+  - component: {fileID: 1260874354}
+  m_Layer: 0
+  m_Name: HS_Lobby_NewsPaper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1260874353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260874352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.9, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1260874354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260874352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: lobby_newspaper
+  requiredChapterId: chapter1
+  conversationId: chapter1_lobby_newspaper
+  startNodeId: start
+  consumeAfterUse: 1
+  setFlagOnInteract: clue.lobby.book
+  grantItemId: lobby_newspaper
+  grantItemDisplayName: Periodico del puerto
+  grantItemDescription: 'Periodico local con un titular doblado: incendio en el puerto,
+    investigacion reabierta.'
+  grantItemSprite: {fileID: 0}
+  hideAfterPickup: 1
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 6, y: 6}
+--- !u!61 &1260874355
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260874352}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1307022782
 GameObject:
   m_ObjectHideFlags: 0
@@ -6415,7 +7115,7 @@ MonoBehaviour:
   - id: robert
     displayName: Robert
     anxiety: 5
-    increasePerMinute: 5
+    increasePerMinute: 20
     talkReduction: 18
     criticalThreshold: 75
   - id: ana
@@ -6579,83 +7279,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313074862}
-  m_CullTransparentMesh: 1
---- !u!1 &1341609679
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1341609680}
-  - component: {fileID: 1341609682}
-  - component: {fileID: 1341609681}
-  m_Layer: 0
-  m_Name: PopupPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1341609680
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341609679}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 421197670}
-  - {fileID: 2146881996}
-  m_Father: {fileID: 2002084548}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 300}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1341609681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341609679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1341609682
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341609679}
   m_CullTransparentMesh: 1
 --- !u!1 &1363283584
 GameObject:
@@ -7477,9 +8100,10 @@ MonoBehaviour:
   startNodeId: start
   consumeAfterUse: 1
   setFlagOnInteract: clue.lobby.book
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
+  grantItemId: lobby_book
+  grantItemDisplayName: Libro de visitas
+  grantItemDescription: Un libro con firmas antiguas. Una entrada reciente esta tachada
+    con tinta roja.
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
   showDebugMarkerInGame: 1
@@ -8499,19 +9123,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 265299863651016848, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 265299863651016848, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 265299863651016848, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 212
       objectReference: {fileID: 0}
     - target: {fileID: 265299863651016848, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 844363246143369226, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_Color.a
@@ -8519,11 +9143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8535,35 +9159,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 773.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 428.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8575,19 +9199,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4209006980825025153, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4209006980825025153, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4209006980825025153, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: 4209006980825025153, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 4248576587593086894, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_Pivot.x
@@ -8675,19 +9299,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5350617941786847863, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5350617941786847863, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5350617941786847863, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 452
       objectReference: {fileID: 0}
     - target: {fileID: 5350617941786847863, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 5646347304080740160, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8865,7 +9489,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1661077254}
   - component: {fileID: 1661077253}
-  - component: {fileID: 1661077252}
   - component: {fileID: 1661077251}
   m_Layer: 0
   m_Name: MainCamera
@@ -8918,14 +9541,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1661077252
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1661077250}
-  m_Enabled: 1
 --- !u!20 &1661077253
 Camera:
   m_ObjectHideFlags: 0
@@ -9405,7 +10020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   targetRoomId: studio
   requiredFlag: 
-  requiredKeys: 
+  requiredKeys: 03000000
   requiredChapterId: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
@@ -9829,7 +10444,7 @@ Transform:
   m_GameObject: {fileID: 1810990861}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.55, y: -1.28, z: 0}
+  m_LocalPosition: {x: -5.04, y: -1.18, z: 0}
   m_LocalScale: {x: 1.2425092, y: 1.0760729, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10212,7 +10827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   targetRoomId: bedroom
   requiredFlag: 
-  requiredKeys: 
+  requiredKeys: 02000000
   requiredChapterId: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
@@ -11039,60 +11654,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &2002084547
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2002084548}
-  - component: {fileID: 2002084549}
-  m_Layer: 0
-  m_Name: NotificationSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2002084548
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002084547}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.3940148, y: 2.3940148, z: 2.3940148}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1341609680}
-  m_Father: {fileID: 677537228}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2002084549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002084547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e243c8e880294124084c27d2b32af14c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NotificationPopup
-  popupPanel: {fileID: 1341609679}
-  notificationImage: {fileID: 0}
-  messageText: {fileID: 421197671}
-  confirmButton: {fileID: 2146881999}
-  autoCloseDelay: 3
 --- !u!1 &2035133693
 GameObject:
   m_ObjectHideFlags: 0
@@ -11486,127 +12047,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2143162113}
   m_CullTransparentMesh: 1
---- !u!1 &2146881995
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2146881996}
-  - component: {fileID: 2146881999}
-  - component: {fileID: 2146881998}
-  - component: {fileID: 2146881997}
-  m_Layer: 0
-  m_Name: ConfirmButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2146881996
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146881995}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 417603526}
-  m_Father: {fileID: 1341609680}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 100, y: 50}
-  m_Pivot: {x: 0.5, y: 0}
---- !u!114 &2146881997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146881995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &2146881998
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146881995}
-  m_CullTransparentMesh: 1
---- !u!114 &2146881999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146881995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
