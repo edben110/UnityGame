@@ -37,9 +37,20 @@ public class DoorTrigger : Interactable
         Debug.Log($"DoorTrigger '{gameObject.name}' inicializado. Destino: '{targetRoomId}'. Collider: {(col != null ? "OK" : "FALTA")}");
     }
 
-    public override void Interact()
+    private void HideAnxietyOverlayIfVisible()
+    {
+        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+        if (anxietySystem != null)
+        {
+            anxietySystem.HideVerificationOverlay();
+        }
+    }
+
+    
+public override void Interact()
     {
         Debug.Log($"DoorTrigger '{gameObject.name}' clickeado! Destino: '{targetRoomId}'");
+        HideAnxietyOverlayIfVisible();
 
         if (string.IsNullOrWhiteSpace(targetRoomId))
         {
@@ -86,7 +97,6 @@ public class DoorTrigger : Interactable
         // Verificar llaves requeridas (consultar inventario)
         if (requiredKeys != null && requiredKeys.Length > 0)
         {
-            // Depuración: listar llaves requeridas y contenido del inventario
             string invContents = string.Join(", ", InventoryState.GetItems().ToArray());
             Debug.Log($"DoorTrigger '{gameObject.name}': RequiredKeys=[{string.Join(", ", System.Array.ConvertAll(requiredKeys, k => k.ToString()))}] Inventory=[{invContents}] SelectedItem={InventoryState.GetSelectedItem()}");
 
@@ -145,7 +155,7 @@ public class DoorTrigger : Interactable
         }
     }
 
-    private bool IsLobbyTarget()
+private bool IsLobbyTarget()
     {
         return string.Equals(targetRoomId, "lobby", System.StringComparison.OrdinalIgnoreCase);
     }
@@ -160,37 +170,26 @@ public class DoorTrigger : Interactable
         return RoomManager.Instance.GetRoomDisplayName(targetRoomId);
     }
 
-    private string BuildLockedMessage(bool needsKey)
+private string BuildLockedMessage(bool needsKey)
     {
         if (IsLobbyTarget())
         {
-            if (needsKey)
-            {
-                return "Volver lobby. La puerta está cerrada, requiere una llave.";
-            }
-
-            return "Volver lobby. La puerta está cerrada.";
+            return needsKey
+                ? "La puerta para Volver al Lobby está cerrada, requiere una llave."
+                : "La puerta para Volver al Lobby está cerrada.";
         }
 
         string displayName = GetTargetDisplayName();
-        if (needsKey)
-        {
-            return $"La puerta del {displayName} está cerrada, requiere una llave.";
-        }
-
-        if (!string.IsNullOrWhiteSpace(lockedMessage))
-        {
-            return $"La puerta del {displayName} está cerrada.";
-        }
-
-        return $"La puerta del {displayName} está cerrada.";
+        return needsKey
+            ? $"La puerta del {displayName} está cerrada, requiere una llave."
+            : $"La puerta del {displayName} está cerrada.";
     }
 
-    private string BuildOpenMessage()
+private string BuildOpenMessage()
     {
         if (IsLobbyTarget())
         {
-            return "Volver lobby.";
+            return "Volver al Lobby.";
         }
 
         string displayName = GetTargetDisplayName();

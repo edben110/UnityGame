@@ -6309,6 +6309,8 @@ MonoBehaviour:
   npcDisplayName: Ana
   requiredChapterId: chapter1
   talkConversationId: chapter1_npc_ana
+  motivoConversationId: chapter1_npc_ana_motivo
+  criticalTalkConversationId: 
 --- !u!61 &1125818765
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7082,7 +7084,6 @@ MonoBehaviour:
   volume: {fileID: 0}
   overlayAlphaMax: 0.4
   overlayColor: {r: 0.45, g: 0, b: 0, a: 1}
-  verificationOverlayDuration: 1.75
 --- !u!4 &1307022784
 Transform:
   m_ObjectHideFlags: 0
@@ -7330,6 +7331,8 @@ MonoBehaviour:
   npcDisplayName: Lisa
   requiredChapterId: chapter1
   talkConversationId: chapter1_npc_lisa
+  motivoConversationId: chapter1_npc_lisa_motivo
+  criticalTalkConversationId: 
 --- !u!61 &1363283587
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10466,6 +10469,8 @@ MonoBehaviour:
   npcDisplayName: Robert
   requiredChapterId: chapter1
   talkConversationId: chapter1_npc_robert
+  motivoConversationId: chapter1_npc_robert_motivo
+  criticalTalkConversationId: 
 --- !u!61 &1810990864
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11024,6 +11029,8 @@ MonoBehaviour:
   npcDisplayName: Lucas
   requiredChapterId: chapter1
   talkConversationId: chapter1_npc_lucas
+  motivoConversationId: chapter1_npc_lucas_motivo
+  criticalTalkConversationId: 
 --- !u!61 &1902851356
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11179,6 +11186,8 @@ MonoBehaviour:
   npcDisplayName: Ben
   requiredChapterId: chapter1
   talkConversationId: chapter1_npc_ben
+  motivoConversationId: chapter1_npc_ben_motivo
+  criticalTalkConversationId: 
 --- !u!61 &1923278499
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -37,9 +37,20 @@ public class MapHotspot : Interactable
         RefreshAvailability();
     }
 
-    public override void Interact()
+    private void HideAnxietyOverlayIfVisible()
+    {
+        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+        if (anxietySystem != null)
+        {
+            anxietySystem.HideVerificationOverlay();
+        }
+    }
+
+    
+public override void Interact()
     {
         base.Interact();
+        HideAnxietyOverlayIfVisible();
 
         if (StoryState.Instance == null)
         {

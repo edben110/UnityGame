@@ -13,6 +13,7 @@ public class NpcInteractable : Interactable
     [Header("Flujo")]
     [SerializeField] private string requiredChapterId = "chapter1";
     [SerializeField] private string talkConversationId;
+    [SerializeField] private string motivoConversationId;
     [SerializeField] private string criticalTalkConversationId;
 
     public string NpcId => npcId;
@@ -45,7 +46,7 @@ public class NpcInteractable : Interactable
         return true;
     }
 
-    public override void Interact()
+public override void Interact()
     {
         base.Interact();
 
@@ -64,7 +65,20 @@ public class NpcInteractable : Interactable
         string askItemLabel;
         TryBuildItemQuestionAction(runner, out askItemAction, out askItemLabel);
 
-        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, askItemAction, askItemLabel);
+        // Construir accion de motivo si aun no se ha visto
+        Action motivoAction = null;
+        string motivoLabel = string.Empty;
+        if (!string.IsNullOrWhiteSpace(motivoConversationId)
+            && runner.HasConversation(motivoConversationId)
+            && StoryState.Instance != null
+            && !StoryState.Instance.HasFlag($"npc.motivo.seen.{npcId}"))
+        {
+            string capturedMotivoId = motivoConversationId;
+            motivoAction = () => OnMotivoPressed(capturedMotivoId);
+            motivoLabel = "\u00bfPor qu\u00e9 est\u00e1s aqu\u00ed?";
+        }
+
+        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, askItemAction ?? motivoAction, askItemLabel.Length > 0 ? askItemLabel : motivoLabel);
         TryHandlePendingDisappearances();
     }
 
@@ -96,7 +110,35 @@ public class NpcInteractable : Interactable
         return true;
     }
 
-    private void OnTalkPressed()
+    private void OnMotivoPressed(string conversationId)
+    {
+        if (string.IsNullOrWhiteSpace(conversationId))
+        {
+            return;
+        }
+
+        DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
+        if (runner == null)
+        {
+            return;
+        }
+
+        bool started = runner.StartConversation(conversationId, "start");
+        if (!started)
+        {
+            return;
+        }
+
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.SetFlag($"npc.motivo.seen.{npcId}", true);
+        }
+
+        NpcInteractionMenuUI.Instance.Hide();
+    }
+
+    
+private void OnTalkPressed()
     {
         DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
         if (runner == null)

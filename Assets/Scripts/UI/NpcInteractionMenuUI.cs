@@ -117,17 +117,15 @@ public class NpcInteractionMenuUI : MonoBehaviour
         }
     }
 
-    public void Hide()
+public void Hide()
     {
         onTalk = null;
         onVerify = null;
         onAskItem = null;
 
-        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
-        if (anxietySystem != null)
-        {
-            anxietySystem.HideVerificationOverlay();
-        }
+        // NO ocultamos el overlay de ansiedad aqui;
+        // el overlay se gestiona independientemente y debe
+        // permanecer hasta que el jugador cambie de contexto.
 
         SetAskItemButtonState(false, string.Empty);
 

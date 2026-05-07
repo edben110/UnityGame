@@ -1,0 +1,58 @@
+======================================================
+REPORTE DE ESTADO Y PLANIFICACIÓN: LA MANSIÓN DE SIMÓN
+======================================================
+
+1. ESTADO ACTUAL Y PORCENTAJE DE AVANCE
+------------------------------------------------------
+Al comparar el script original en Python (`la_mansion_de_simon.py`) con el proyecto de Unity, se observa que:
+- Los sistemas base (AnxietySystem, InventoryState, DialogueRunner, RoomManager, SaveSystem) están implementados sólidamente.
+- En cuanto a contenido narrativo, únicamente están integrados el Prólogo y el Capítulo 1 (El Lobby).
+- Faltan por implementar los Capítulos 2, 3, 4, 5, y el Final (El rescate/muertes).
+
+Porcentaje de avance estimado: 
+- Sistemas Core: 80% (Faltan mecánicas de muerte de NPCs y cambio de habitaciones).
+- Contenido / Historia: 25% (Se ha implementado 1 capítulo de 5, más el prólogo).
+- TOTAL ESTIMADO: 35% - 40% del juego completo.
+
+2. MEJORAS Y MECÁNICAS FALTANTES (A Desarrollar)
+------------------------------------------------------
+A. Mecánicas de NPCs y Mundo:
+- Sistema de movimiento de NPCs: Que puedan cambiar de habitación.
+- Sistema de Cadáveres: Si un NPC muere por ansiedad (100%), debe desaparecer y aparecer como un cadáver en otra sala.
+- Reacciones dinámicas: Diálogos de los sobrevivientes al notar la desaparición.
+
+B. Mejoras de UI y Experiencia:
+- Mostrar el "Display Name" en mensajes de interacción de puertas en lugar del ID.
+- Descripciones detalladas en los hotspots que coincidan exacto con el texto en Python.
+- Interfaz de Ansiedad: Mantenimiento del overlay rojo y diálogos delirantes al 100% de ansiedad donde no disminuye el nivel.
+
+C. Contenido Narrativo Faltante:
+- Capítulo 2: El Estudio (Llave, libro de contabilidad, confrontar a Ben).
+- Capítulo 3: Habitación de Simón (Agenda, secretos familiares de Robert).
+- Capítulo 4: Galería (Cuadros, diario oculto).
+- Capítulo 5: Sala de Cámaras.
+- Finales: El Rescate y conclusión de la investigación del detective Franks Keller.
+
+3. TIEMPO ESTIMADO PARA TERMINAR EL VIDEOJUEGO
+------------------------------------------------------
+Considerando que la estructura de Unity ya está lista, el enfoque será añadir contenido:
+- Tiempo estimado: 2 a 3 semanas de trabajo iterativo. El tiempo dependerá de la creación de arte (sprites y fondos), ya que el código y la narrativa ya existen.
+
+4. PROMPTS POR PARTES PARA DESARROLLO
+------------------------------------------------------
+Copia y pega cada prompt en el chat de IA cuando estés listo para avanzar en esa fase:
+
+--- PROMPT FASE 1: Mejoras Técnicas y UI ---
+"Implementa las mejoras técnicas pendientes del Capítulo 1 en Unity: 1) Haz que los mensajes de puertas muestren el Display Name en lugar del ID. 2) Asegúrate de que las puertas que regresen al lobby digan 'Volver al Lobby'. 3) Actualiza el Dialogue de todos los hotspots con la descripción exacta de Python. 4) Mantén el overlay rojo de ansiedad al interactuar. 5) Si un NPC tiene 100% de ansiedad, la ansiedad no baja al hablarle y reproduce un diálogo delirante."
+
+--- PROMPT FASE 2: Sistema de Cadáveres ---
+"Desarrolla el sistema de muertes por ansiedad. Requerimientos: 1) Si la ansiedad de un NPC llega a 100%, al salir de la habitación, este desaparece. 2) Crea la mecánica para que tras hablar con el grupo sobre su desaparición, su sprite de cadáver aparezca en otra habitación desbloqueada. 3) Añade las conversaciones de 'reacción a la muerte' para los NPCs vivos."
+
+--- PROMPT FASE 3: Capítulo 2 (El Estudio) ---
+"Crea el contenido del Capítulo 2 en Unity basándote en la función `capitulo_2` y `explorar_estudio` del script de Python. 1) Lógica en ChapterFlowController para iniciarlo al abrir el Estudio. 2) Crea Hotspots: Agenda, Libro de contabilidad, Nota, Tablero de corcho y Archivador. 3) Genera diálogos que permitan confrontar a Ben y Lisa."
+
+--- PROMPT FASE 4: Capítulos 3 y 4 ---
+"Construye los Capítulos 3 y 4 según el script de Python. 1) Crea las habitaciones 'Habitación de Simón' y 'Galería' con sus hotspots. 2) Implementa el sistema para que algunos NPCs se trasladen a estas nuevas salas y dales nuevas líneas de diálogo sobre sus motivos."
+
+--- PROMPT FASE 5: Capítulo 5 y Finales ---
+"Desarrolla el Capítulo 5 (Sala de Cámaras) y los finales del juego en Unity. 1) Implementa la sala y las cintas de vigilancia. 2) Lógica final que evalúe quiénes siguen vivos. 3) Muestra el desenlace de la historia del detective Franks Keller y los sobrevivientes basado en la función `determinar_final` de Python."

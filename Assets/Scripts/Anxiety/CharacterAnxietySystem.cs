@@ -154,10 +154,18 @@ public class CharacterAnxietySystem : MonoBehaviour
         return ids;
     }
 
-    public void ApplyTalkRelief(string characterId)
+public void ApplyTalkRelief(string characterId)
     {
         if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null)
         {
+            return;
+        }
+
+        // Si la ansiedad ya esta al maximo (100%), no se puede reducir hablando.
+        // El personaje esta demasiado perturbado para responder con normalidad.
+        if (entry.anxiety >= 99.9f)
+        {
+            Debug.Log($"[CharacterAnxietySystem] {GetDisplayName(entry)}: ansiedad maxima, hablar no ayuda.");
             return;
         }
 

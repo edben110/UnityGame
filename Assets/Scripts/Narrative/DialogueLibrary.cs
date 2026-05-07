@@ -15,6 +15,18 @@ public class DialogueLibrary : MonoBehaviour
         conversations = newConversations ?? new List<DialogueConversation>();
     }
 
+    public void ClearAll()
+    {
+        if (conversations == null)
+        {
+            conversations = new List<DialogueConversation>();
+            return;
+        }
+
+        conversations.Clear();
+        Debug.Log("[DialogueLibrary] Cleared all conversations. Library now empty.");
+    }
+
     public DialogueConversation GetConversation(string conversationId)
     {
         for (int i = 0; i < conversations.Count; i++)
@@ -37,5 +49,18 @@ public class DialogueLibrary : MonoBehaviour
         }
 
         return GetConversation(conversationId) != null;
+    }
+
+    public List<string> GetAllConversationIds()
+    {
+        List<string> ids = new List<string>();
+        for (int i = 0; i < conversations.Count; i++)
+        {
+            if (conversations[i] != null)
+            {
+                ids.Add(conversations[i].id);
+            }
+        }
+        return ids;
     }
 }
