@@ -374,43 +374,82 @@ private void OnTalkPressed()
             }
 
             string missingName = CharacterAnxietySystem.Instance.GetCharacterDisplayName(missingId);
-            NpcInteractionMenuUI.Instance.ShowStatusText($"{missingName} se marcho con un aspecto nervioso. Nadie lo vio volver.");
+            NpcInteractionMenuUI.Instance.ShowStatusText($"{missingName} se march\u00f3 con un aspecto nervioso. Nadie lo vio volver.");
             StoryState.Instance.SetFlag(reportFlag, true);
             EvaluateDisappearanceConsensus(missingId);
+
+            TryStartReactionConversation(missingId);
             return;
         }
     }
 
-    private void EvaluateDisappearanceConsensus(string missingId)
+    private void TryStartReactionConversation(string missingId)
+    {
+        string conversationId = $"chapter1_npc_{npcId}_reaction_{missingId}";
+
+        DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
+        if (runner == null || runner.IsRunning)
+        {
+            return;
+        }
+
+        if (!runner.HasConversation(conversationId))
+        {
+            conversationId = $"chapter1_npc_reaction_generic_{missingId}";
+            if (!runner.HasConversation(conversationId))
+            {
+                return;
+            }
+        }
+
+        NpcInteractionMenuUI.Instance.Hide();
+        runner.StartConversation(conversationId, "start");
+    }
+
+    private static void EvaluateDisappearanceConsensus(string missingId)
     {
         if (StoryState.Instance == null || CharacterAnxietySystem.Instance == null)
         {
             return;
         }
 
-        List<string> alive = CharacterAnxietySystem.Instance.GetAliveCharacterIds();
-        bool everyoneReported = true;
-        for (int i = 0; i < alive.Count; i++)
+        List<string> aliveIds = CharacterAnxietySystem.Instance.GetAliveCharacterIds();
+        bool allReported = true;
+        for (int i = 0; i < aliveIds.Count; i++)
         {
-            string reporterId = alive[i];
-            if (string.Equals(reporterId, missingId, StringComparison.OrdinalIgnoreCase))
+            string aliveId = aliveIds[i];
+            if (string.Equals(aliveId, missingId, StringComparison.OrdinalIgnoreCase))
             {
                 continue;
             }
 
-            if (!StoryState.Instance.HasFlag($"npc.disappearance.reported.{missingId}.{reporterId}"))
+            string reportFlag = $"npc.disappearance.reported.{missingId}.{aliveId}";
+            if (!StoryState.Instance.HasFlag(reportFlag))
             {
-                everyoneReported = false;
+                allReported = false;
                 break;
             }
         }
 
-        if (!everyoneReported)
+        if (!allReported)
         {
             return;
         }
 
-        StoryState.Instance.SetFlag($"npc.disappearance.pending.{missingId}", false);
         StoryState.Instance.SetFlag($"npc.cadaver.ready.{missingId}", true);
+        StoryState.Instance.SetFlag($"npc.disappearance.pending.{missingId}", false);
+
+        if (CadaverManager.Instance != null)
+        {
+            string cadaverRoom = CadaverManager.Instance.GetCadaverRoom(missingId);
+            if (string.IsNullOrWhiteSpace(cadaverRoom) || cadaverRoom == "missing")
+            {
+                string resolvedRoom = CadaverManager.ResolvePreferredCadaverRoom(missingId);
+                CadaverManager.Instance.AssignCadaverRoom(missingId, resolvedRoom);
+            }
+        }
+
+        string displayName = CharacterAnxietySystem.Instance.GetCharacterDisplayName(missingId);
+        Debug.Log($"[NpcInteractable] Consenso alcanzado: cadaver de '{displayName}' listo para aparecer.");
     }
 }

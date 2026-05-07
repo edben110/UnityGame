@@ -154,6 +154,33 @@ public void EnsureData()
             BuildNpcItemQuestionConversation("chapter1_npc_lucas_item_lobby_book", "Lucas", "En el libro de visitas hay una entrada tachada.", "Sim\u00f3n era cuidadoso con sus visitas. Si borr\u00f3 a alguien, ese alguien ten\u00eda peso."),
             BuildNpcItemQuestionConversation("chapter1_npc_lucas_item_lobby_coat", "Lucas", "En el abrigo hay una nota que advierte desconfiar.", "Suena a Sim\u00f3n. Siempre dejaba pistas como si no pudiera hablar directo."),
             BuildNpcItemQuestionConversation("chapter1_npc_lucas_item_lobby_newspaper", "Lucas", "El peri\u00f3dico habla del incendio del puerto.", "Sim\u00f3n mencion\u00f3 ese incendio una vez. Dijo que alguien miente sobre lo que pas\u00f3."),
+            // Reacciones a la muerte
+            BuildReactionConversation("chapter1_npc_ana_reaction_robert", "Ana", "robert", "Robert"),
+            BuildReactionConversation("chapter1_npc_ben_reaction_robert", "Ben", "robert", "Robert"),
+            BuildReactionConversation("chapter1_npc_lisa_reaction_robert", "Lisa", "robert", "Robert"),
+            BuildReactionConversation("chapter1_npc_lucas_reaction_robert", "Lucas", "robert", "Robert"),
+            BuildReactionConversation("chapter1_npc_robert_reaction_ana", "Robert", "ana", "Ana"),
+            BuildReactionConversation("chapter1_npc_ben_reaction_ana", "Ben", "ana", "Ana"),
+            BuildReactionConversation("chapter1_npc_lisa_reaction_ana", "Lisa", "ana", "Ana"),
+            BuildReactionConversation("chapter1_npc_lucas_reaction_ana", "Lucas", "ana", "Ana"),
+            BuildReactionConversation("chapter1_npc_robert_reaction_ben", "Robert", "ben", "Ben"),
+            BuildReactionConversation("chapter1_npc_ana_reaction_ben", "Ana", "ben", "Ben"),
+            BuildReactionConversation("chapter1_npc_lisa_reaction_ben", "Lisa", "ben", "Ben"),
+            BuildReactionConversation("chapter1_npc_lucas_reaction_ben", "Lucas", "ben", "Ben"),
+            BuildReactionConversation("chapter1_npc_robert_reaction_lisa", "Robert", "lisa", "Lisa"),
+            BuildReactionConversation("chapter1_npc_ana_reaction_lisa", "Ana", "lisa", "Lisa"),
+            BuildReactionConversation("chapter1_npc_ben_reaction_lisa", "Ben", "lisa", "Lisa"),
+            BuildReactionConversation("chapter1_npc_lucas_reaction_lisa", "Lucas", "lisa", "Lisa"),
+            BuildReactionConversation("chapter1_npc_robert_reaction_lucas", "Robert", "lucas", "Lucas"),
+            BuildReactionConversation("chapter1_npc_ana_reaction_lucas", "Ana", "lucas", "Lucas"),
+            BuildReactionConversation("chapter1_npc_ben_reaction_lucas", "Ben", "lucas", "Lucas"),
+            BuildReactionConversation("chapter1_npc_lisa_reaction_lucas", "Lisa", "lucas", "Lucas"),
+            // Descubrimiento de cadaveres
+            BuildCadaverDiscoveryConversation("chapter1_cadaver_discovery_robert", "Robert"),
+            BuildCadaverDiscoveryConversation("chapter1_cadaver_discovery_ana", "Ana"),
+            BuildCadaverDiscoveryConversation("chapter1_cadaver_discovery_ben", "Ben"),
+            BuildCadaverDiscoveryConversation("chapter1_cadaver_discovery_lisa", "Lisa"),
+            BuildCadaverDiscoveryConversation("chapter1_cadaver_discovery_lucas", "Lucas"),
             BuildChapter1Decision()
         };
 
@@ -542,7 +569,81 @@ private static DialogueConversation BuildNpcConversation(string id, string npcNa
         };
     }
 
-    private static DialogueConversation BuildChapter1Decision()
+    // ======= REACCIONES A LA MUERTE =======
+
+    private static DialogueConversation BuildReactionConversation(
+        string convId, string speakerName, string deadId, string deadName)
+    {
+        // Diferentes plantillas de reacción según la combinación de personaje vivo/muerto
+        string reactionLine = BuildReactionLine(speakerName, deadName);
+
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = speakerName, text = reactionLine, anxietyDelta = 12f },
+                new DialogueLine { speaker = "Narrador", text = $"El nombre de {deadName} pesa en el aire. Nadie quiere ser el próximo en desaparecer." }
+            }
+        };
+
+        return new DialogueConversation { id = convId, nodes = new List<DialogueNode> { start } };
+    }
+
+    private static string BuildReactionLine(string speaker, string deadName)
+    {
+        switch (speaker)
+        {
+            case "Robert":
+                return $"{deadName} se fue sin decir nada. Así no se hace. ¿Quién abandona a los demás en un sitio como este?";
+            case "Ana":
+                return $"No lo vi irse. ¿Cómo es posible que {deadName} simplemente... no esté? Eso no es normal.";
+            case "Ben":
+                return $"Primero {deadName}, ¿y después quién? Esta casa no es segura. Tenemos que hacer algo.";
+            case "Lisa":
+                return $"Desaparecido. Así, sin rastro. Si esto fuera una investigación, {deadName} sería el primer nombre en la lista de víctimas.";
+            case "Lucas":
+                return $"{deadName} siempre pareció al borde de algo. Que no esté aquí me hace pensar que la casa se lo llevó.";
+            default:
+                return $"{deadName} ya no está. Y eso cambia todo.";
+        }
+    }
+
+    // ======= DESCUBRIMIENTO DE CADÁVERES =======
+
+    private static DialogueConversation BuildCadaverDiscoveryConversation(string convId, string npcName)
+    {
+        string npcNameLower = npcName.ToLowerInvariant();
+
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine {
+                    speaker = "Narrador",
+                    text = $"En el suelo, entre las sombras, está {npcName}.",
+                    anxietyDelta = 20f,
+                    setFlag = $"npc.cadaver.discovered.{npcNameLower}"
+                },
+                new DialogueLine {
+                    speaker = "Narrador",
+                    text = "No se mueve. No respira. Los ojos abiertos parecen mirar un punto fijo en el techo. Su expresión es la de alguien que vio algo que ningún ser humano debería ver."
+                },
+                new DialogueLine {
+                    speaker = "Narrador",
+                    text = $"Franks Keller anota en su libreta: '{npcName}. Sin signos de violencia externa. Sin huella de lucha. La mente puede matar, dicen. Ahora lo creo.'"
+                }
+            }
+        };
+
+        return new DialogueConversation { id = convId, nodes = new List<DialogueNode> { start } };
+    }
+
+    
+private static DialogueConversation BuildChapter1Decision()
     {
         DialogueNode start = new DialogueNode
         {
