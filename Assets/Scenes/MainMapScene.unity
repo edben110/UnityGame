@@ -2731,7 +2731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e95c9b3d3acedd458c86cae66c92e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyItem
-  keyType: 5
+  keyType: 4
   pickupMessage: Has recogido una llave!
   playSound: 1
 --- !u!61 &404231390
