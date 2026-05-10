@@ -7,26 +7,18 @@ using UnityEngine;
 /// 
 /// Capítulo 1: Después de explorar al menos 2 hotspots del lobby
 ///             Y hablar con al menos 2 NPCs, se dispara chapter1_decision.
-/// Capítulo 2: Después de explorar al menos 2 hotspots del estudio
-///             se dispara chapter2_decision.
-/// Capítulo 3: Después de encontrar la carta (simon_vivo)
-///             se dispara chapter3_decision.
+/// IMPORTANTE:
+/// Este trigger legacy solo se mantiene para Capítulo 1.
+/// Capítulo 2 y Capítulo 3 están controlados por ChapterFlowController + DoorTrigger
+/// para evitar disparos prematuros y softlocks.
 /// </summary>
 public class ChapterProgressTrigger : MonoBehaviour
 {
     [Header("Configuración Cap 1")]
     [SerializeField] private int chapter1RequiredHotspots = 2;
 
-    [Header("Configuración Cap 2")]
-    [SerializeField] private int chapter2RequiredHotspots = 2;
-
-    [Header("Configuración Cap 3")]
-    [SerializeField] private string chapter3RequiredFlag = "simon_vivo";
-
     private DialogueRunner dialogueRunner;
     private bool chapter1DecisionTriggered;
-    private bool chapter2DecisionTriggered;
-    private bool chapter3DecisionTriggered;
 
     // Flags de hotspots del lobby (Cap 1)
     private static readonly string[] chapter1HotspotFlags = new[]
@@ -35,16 +27,6 @@ public class ChapterProgressTrigger : MonoBehaviour
         "clue.lobby.coat",
         "clue.lobby.photo",
         "clue.lobby.newspaper"
-    };
-
-    // Flags de hotspots del estudio (Cap 2)
-    private static readonly string[] chapter2HotspotFlags = new[]
-    {
-        "clue.estudio.agenda",
-        "clue.estudio.libro_contabilidad",
-        "clue.estudio.nota_tablon",
-        "clue.estudio.tablero_corcho",
-        "clue.estudio.archivador_visto"
     };
 
     private void Start()
@@ -79,12 +61,6 @@ public class ChapterProgressTrigger : MonoBehaviour
             case "chapter1":
                 TryTriggerChapter1Decision();
                 break;
-            case "chapter2":
-                TryTriggerChapter2Decision();
-                break;
-            case "chapter3":
-                TryTriggerChapter3Decision();
-                break;
         }
     }
 
@@ -110,59 +86,11 @@ public class ChapterProgressTrigger : MonoBehaviour
         }
     }
 
-    private void TryTriggerChapter2Decision()
-    {
-        if (chapter2DecisionTriggered)
-        {
-            return;
-        }
-
-        int hotspotsFound = CountFlags(chapter2HotspotFlags);
-
-        if (hotspotsFound >= chapter2RequiredHotspots)
-        {
-            chapter2DecisionTriggered = true;
-            Debug.Log($"[ChapterProgressTrigger] Cap 2 decisión disparada. Hotspots: {hotspotsFound}");
-            Invoke(nameof(LaunchChapter2Decision), 0.5f);
-        }
-    }
-
-    private void TryTriggerChapter3Decision()
-    {
-        if (chapter3DecisionTriggered)
-        {
-            return;
-        }
-
-        if (StoryState.Instance.HasFlag(chapter3RequiredFlag))
-        {
-            chapter3DecisionTriggered = true;
-            Debug.Log("[ChapterProgressTrigger] Cap 3 decisión disparada. Carta de Simón encontrada.");
-            Invoke(nameof(LaunchChapter3Decision), 0.5f);
-        }
-    }
-
     private void LaunchChapter1Decision()
     {
         if (dialogueRunner != null && !dialogueRunner.IsRunning)
         {
             dialogueRunner.StartConversation("chapter1_decision", "start");
-        }
-    }
-
-    private void LaunchChapter2Decision()
-    {
-        if (dialogueRunner != null && !dialogueRunner.IsRunning)
-        {
-            dialogueRunner.StartConversation("chapter2_decision", "start");
-        }
-    }
-
-    private void LaunchChapter3Decision()
-    {
-        if (dialogueRunner != null && !dialogueRunner.IsRunning)
-        {
-            dialogueRunner.StartConversation("chapter3_decision", "start");
         }
     }
 

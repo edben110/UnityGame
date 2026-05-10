@@ -144,10 +144,9 @@ public class Chapter3Builder : MonoBehaviour
             {
                 new DialogueLine { speaker = "Narrador", text = "Capítulo 3 — La Habitación de Simón. 6:00 PM." },
                 new DialogueLine { speaker = "Narrador", text = "La puerta se abre sin resistencia. No estaba cerrada con llave. Como si alguien quisiera que entraras." },
-                new DialogueLine { speaker = "Narrador", text = "El cuarto es espartano. Una cama individual, una mesita de noche, un escritorio contra la pared. Un mapa clavado con chinchetas. Un vaso de agua.", anxietyDelta = 6f },
-                new DialogueLine { speaker = "Narrador", text = "Y un olor. Sutil pero inconfundible. Alguien estuvo aquí hace muy poco.", anxietyDelta = 8f },
-                new DialogueLine { speaker = "Ana", text = "Esto no huele a habitación cerrada. Huele a alguien que acaba de irse.", anxietyDelta = 5f },
-                new DialogueLine { speaker = "Lucas", text = "Es su olor. Es Simón. Estoy seguro.", anxietyDelta = 10f, setFlag = "chapter3.intro.seen" }
+                new DialogueLine { speaker = "Jugador", text = "Aquí es donde Simón pasaba más tiempo. Si escondía algo, probablemente esté aquí.", anxietyDelta = 6f },
+                new DialogueLine { speaker = "Narrador", text = "El cuarto es espartano: una cama, una mesita de noche, un escritorio y un mapa clavado en la pared. Un vaso de agua descansa en la mesita.", anxietyDelta = 8f },
+                new DialogueLine { speaker = "Jugador", text = "Tal vez aquí encuentre lo que explique por qué todo esto fue preparado.", setFlag = "chapter3.intro.seen" }
             }
         };
 

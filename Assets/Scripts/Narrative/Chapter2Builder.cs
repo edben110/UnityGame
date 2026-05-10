@@ -73,7 +73,9 @@ public class Chapter2Builder : MonoBehaviour
         }
 
         // Verificar si ya existen las conversaciones del Cap 2
-        if (targetLibrary.HasConversation("chapter2_intro") && targetLibrary.HasConversation("chapter2_decision"))
+        if (targetLibrary.HasConversation("chapter2_intro")
+            && targetLibrary.HasConversation("chapter2_initial_decision")
+            && targetLibrary.HasConversation("chapter2_book_decision"))
         {
             Debug.Log("Chapter2Builder: Conversaciones del Cap 2 ya presentes. Saltando generación.");
             return;
@@ -155,10 +157,9 @@ public class Chapter2Builder : MonoBehaviour
             {
                 new DialogueLine { speaker = "Narrador", text = "Capítulo 2 — El Estudio. 4:30 PM." },
                 new DialogueLine { speaker = "Narrador", text = "La puerta del estudio se abre con un chirrido lento. El aire dentro está quieto, cargado de olor a papel viejo y tinta seca." },
-                new DialogueLine { speaker = "Narrador", text = "Simón pasaba horas aquí. Hay documentos, una agenda, un tablero de corcho con fotografías. Todo está demasiado ordenado para alguien que supuestamente murió de forma repentina.", anxietyDelta = 5f },
-                new DialogueLine { speaker = "Lisa", text = "Esto no es el escritorio de un muerto. Es el de alguien que se preparó para irse.", anxietyDelta = 3f },
-                new DialogueLine { speaker = "Robert", text = "No toquen nada hasta que sepamos qué estamos buscando." },
-                new DialogueLine { speaker = "Narrador", text = "El grupo entra con cautela. Cada objeto en este estudio podría cambiar la historia.", setFlag = "chapter2.intro.seen" }
+                new DialogueLine { speaker = "Jugador", text = "Qué extraño... todo está demasiado ordenado para alguien que murió tan repentinamente.", anxietyDelta = 5f },
+                new DialogueLine { speaker = "Jugador", text = "Si Simón realmente murió de forma inesperada, esta habitación no tiene sentido. Tal vez aquí haya pistas importantes sobre lo que realmente está ocurriendo." },
+                new DialogueLine { speaker = "Narrador", text = "Comienzas a examinar el lugar en silencio. Cada objeto podría ser una pista.", setFlag = "chapter2.intro.seen" }
             }
         };
 
@@ -205,7 +206,7 @@ public class Chapter2Builder : MonoBehaviour
                 new DialogueLine { speaker = "Narrador", text = "Un libro de contabilidad grueso, encuadernado en tela verde oscura. Simón registraba cada transacción con precisión obsesiva." },
                 new DialogueLine { speaker = "Narrador", text = "Varias entradas están marcadas con tinta roja. Junto a cada una, una inicial: 'B'. Los montos son significativos. Algunos tienen anotaciones al margen:", anxietyDelta = 8f },
                 new DialogueLine { speaker = "Narrador", text = "'Discrepancia. Verificar con banco. No coincide con lo reportado por B.'", anxietyDelta = 6f },
-                new DialogueLine { speaker = "Narrador", text = "Ben, al otro lado del estudio, nota que examinas el libro. Su expresión cambia imperceptiblemente.", setFlag = "clue.estudio.libro_contabilidad", addInventoryItemId = "libro_contabilidad" }
+                new DialogueLine { speaker = "Jugador", text = "Esto podría aclarar algunas cosas... mejor lo guardo por ahora.", setFlag = "clue.estudio.libro_contabilidad", addInventoryItemId = "libro_contabilidad" }
             }
         };
 
@@ -390,9 +391,7 @@ public class Chapter2Builder : MonoBehaviour
             lines = new List<DialogueLine>
             {
                 new DialogueLine { speaker = "Jugador", text = "Necesitamos hablar sinceramente. ¿Qué saben realmente sobre Simon? ¿Alguien sabe más de lo que ha dicho?" },
-                new DialogueLine { speaker = "Lisa", text = "Aquí hay algo que no cuadra. Las fotos en el tablero... la sexta persona. Simón estaba investigando a alguien.", anxietyDelta = 8f },
-                new DialogueLine { speaker = "Robert", text = "No sé de qué hablan. Yo solo vinimos por el funeral." },
-                new DialogueLine { speaker = "Narrador", text = "Las respuestas no llegan. Pero todos saben que el interrogatorio acaba de comenzar.", setFlag = "chapter2.npc_talked_sincere" }
+                new DialogueLine { speaker = "Narrador", text = "Las respuestas no llegan. Has arrancado la conversación que necesitabas; ahora sigues investigando por tu cuenta.", setFlag = "chapter2.npc_talked_sincere" }
             }
         };
 
@@ -402,9 +401,8 @@ public class Chapter2Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Decides que es mejor no presionar a nadie ahora. El silencio es más elocuente que cualquier palabra." },
-                new DialogueLine { speaker = "Narrador", text = "El grupo se dispersa en el estudio. Cada uno toma distancia del otro." },
-                new DialogueLine { speaker = "Narrador", text = "Ahora tienes libertad para explorar lo que quieras.", setFlag = "chapter2.npc_separated" }
+                new DialogueLine { speaker = "Narrador", text = "Decides que es mejor no presionar a nadie ahora. El silencio te permite concentrarte en las pistas." },
+                new DialogueLine { speaker = "Narrador", text = "Te dispersas por la habitación y comienzas a revisar los objetos con calma.", setFlag = "chapter2.npc_separated" }
             }
         };
 
@@ -470,7 +468,7 @@ public class Chapter2Builder : MonoBehaviour
             {
                 new DialogueLine { speaker = "Narrador", text = "Ben empalidece. Sabe que evitaste la confrontación." },
                 new DialogueLine { speaker = "Narrador", text = "Guardas el libro por ahora. Hay preguntas más urgentes en la habitación de Simón." },
-                new DialogueLine { speaker = "Narrador", text = "Subes solo. Los escalones crujen bajo tus pies. El grupo permanece en la sala de abajo.", anxietyDelta = 5f, setFlag = "chapter2.choosing_bedroom_route" }
+                new DialogueLine { speaker = "Narrador", text = "Subes solo. Los escalones crujen bajo tus pies. Sigues con la investigación en solitario.", anxietyDelta = 5f, setFlag = "chapter2.choosing_bedroom_route" }
             }
         };
 

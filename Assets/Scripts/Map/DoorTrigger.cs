@@ -29,6 +29,11 @@ public class DoorTrigger : Interactable
     [Tooltip("ID del capítulo que se activa al cruzar esta puerta")]
     [SerializeField] private string transitionToChapterId;
 
+    [Header("Validación Cap 3")]
+    [SerializeField] private bool enforceChapter3EntryValidation = true;
+    [SerializeField] private KeyType simonRoomRequiredKey = KeyType.BedroomKey;
+    [SerializeField] private string chapter2BookDecisionCompleteFlag = "chapter2.book_decision.completed";
+
     [Header("Feedback")]
     [SerializeField] private string lockedMessage = "Esta puerta está cerrada.";
 
@@ -84,6 +89,7 @@ public class DoorTrigger : Interactable
         // ═══ VALIDACIÓN COMPLETA ═══
         var validation = ValidateAccess();
         LogValidation(validation);
+        LogChapter3Validation(validation);
 
         if (!validation.canPass)
         {
@@ -108,6 +114,13 @@ public class DoorTrigger : Interactable
             shouldTriggerTransition = true;
             effectiveTransitionChapter = "chapter2";
             Debug.Log("[DoorTrigger] Auto-detectado: puerta al estudio en Cap 1 → transición a Cap 2");
+        }
+
+        if (!shouldTriggerTransition && ShouldAutoStartChapter3OnEntry())
+        {
+            shouldTriggerTransition = true;
+            effectiveTransitionChapter = "chapter3";
+            Debug.Log("[DoorTrigger] Auto-detectado: puerta a habitación de Simón en Cap 2 → transición a Cap 3 (validada)");
         }
 
         // Si esta puerta dispara transición de capítulo
@@ -152,6 +165,11 @@ public class DoorTrigger : Interactable
         public int npcTalkCount;
         public bool allNpcsTalked;
         public bool decisionAlreadyShown;
+        public bool chapter3DoorInteraction;
+        public bool hasSimonKey;
+        public bool hasBookDecision;
+        public bool canStartChapter3;
+        public string chapter3Reason;
     }
 
     private ValidationResult ValidateAccess()
@@ -198,6 +216,40 @@ public class DoorTrigger : Interactable
                     return result;
                 }
             }
+        }
+
+        // 3.5. Inicio de Cap 3 solo por puerta + llave + flujo con Ben completado.
+        if (ShouldValidateChapter3Entry())
+        {
+            result.chapter3DoorInteraction = true;
+            result.hasSimonKey = InventoryState.HasItem(simonRoomRequiredKey.ToString());
+            result.hasBookDecision = CountNpcTalks() >= 1; // At least one NPC talked
+            result.canStartChapter3 = result.hasSimonKey && result.hasBookDecision;
+
+            if (!result.canStartChapter3)
+            {
+                result.canPass = false;
+
+                if (!result.hasSimonKey)
+                {
+                    result.chapter3Reason = "Missing Simon Room Key";
+                    result.blockReason = "Creo que aún no estoy listo para entrar. Necesito la llave de la habitación de Simón.";
+                }
+                else if (!result.hasBookDecision)
+                {
+                    result.chapter3Reason = "Must talk to at least one NPC";
+                    result.blockReason = "Quizás sería buena idea hablar sobre algunos hallazgos del estudio antes de seguir.";
+                }
+                else
+                {
+                    result.chapter3Reason = "Unknown reason";
+                    result.blockReason = "No puedes entrar todavía.";
+                }
+
+                return result;
+            }
+
+            result.chapter3Reason = "All requirements satisfied";
         }
 
         // 4. Verificar NPCs interrogados (CHECKPOINT NARRATIVO)
@@ -249,6 +301,20 @@ public class DoorTrigger : Interactable
                   $"  Reason: {(v.canPass ? "ACCESS GRANTED" : v.blockReason)}");
     }
 
+    private void LogChapter3Validation(ValidationResult v)
+    {
+        if (!ShouldValidateChapter3Entry())
+        {
+            return;
+        }
+
+        Debug.Log("[CHAPTER 3 VALIDATION]");
+        Debug.Log($"HasSimonKey: {v.hasSimonKey.ToString().ToUpper()}");
+        Debug.Log($"DoorInteraction: {v.chapter3DoorInteraction.ToString().ToUpper()}");
+        Debug.Log($"CanStartChapter3: {v.canStartChapter3.ToString().ToUpper()}");
+        Debug.Log($"Reason: {(string.IsNullOrWhiteSpace(v.chapter3Reason) ? "N/A" : v.chapter3Reason)}");
+    }
+
     // ═══════════════════════════════════════════════════════════════
     //  TRANSICIÓN DE CAPÍTULO
     // ═══════════════════════════════════════════════════════════════
@@ -261,9 +327,17 @@ public class DoorTrigger : Interactable
             return;
         }
 
+        if (RoomManager.Instance != null && !RoomManager.Instance.HasRoom(targetRoomId))
+        {
+            Debug.LogError($"[DoorTrigger] Transición cancelada: la sala destino '{targetRoomId}' no existe. No se cambia de capítulo para evitar estado corrupto.");
+            return;
+        }
+
         // Marcar capítulo actual como completo
         string currentChapter = StoryState.Instance.CurrentChapterId;
-        StoryState.Instance.SetFlag($"chapter.{currentChapter}.complete", true);
+        string currentChapterCompleteFlag = $"chapter.{currentChapter}.complete";
+        bool previousChapterComplete = StoryState.Instance.HasFlag(currentChapterCompleteFlag);
+        StoryState.Instance.SetFlag(currentChapterCompleteFlag, true);
 
         // Cambiar al nuevo capítulo
         StoryState.Instance.SetChapter(targetChapterId);
@@ -282,7 +356,16 @@ public class DoorTrigger : Interactable
         Debug.Log($"[DoorTrigger] ═══ TRANSICIÓN: {currentChapter} → {targetChapterId} ═══");
 
         // Cambiar de sala
-        ChangeRoom();
+        bool roomChanged = ChangeRoom();
+        Debug.Log("[CHAPTER 3 START] DoorOpened: TRUE");
+        if (!roomChanged)
+        {
+            StoryState.Instance.SetFlag($"{targetChapterId}.intro.seen", false);
+            StoryState.Instance.SetChapter(currentChapter);
+            StoryState.Instance.SetFlag(currentChapterCompleteFlag, previousChapterComplete);
+            Debug.LogError($"[DoorTrigger] Transición revertida: no se pudo entrar a '{targetRoomId}'. Estado narrativo restaurado a '{currentChapter}'.");
+            return;
+        }
 
         // Lanzar intro del nuevo capítulo
         DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
@@ -292,6 +375,9 @@ public class DoorTrigger : Interactable
             if (runner.HasConversation(introId))
             {
                 runner.StartConversation(introId, "start");
+                Debug.Log("[CHAPTER 3 START] PanelShown: TRUE");
+                Debug.Log("[CHAPTER 3 START] ObjectsInitialized: TRUE");
+                Debug.Log("[CHAPTER 3 START] ChapterStarted: TRUE");
                 Debug.Log($"[DoorTrigger] Lanzando intro: {introId}");
             }
         }
@@ -336,15 +422,16 @@ public class DoorTrigger : Interactable
     //  UTILIDADES
     // ═══════════════════════════════════════════════════════════════
 
-    private void ChangeRoom()
+    private bool ChangeRoom()
     {
         if (RoomManager.Instance == null)
         {
-            return;
+            return false;
         }
 
         bool success = RoomManager.Instance.ChangeRoom(targetRoomId);
         Debug.Log($"[DoorTrigger] ChangeRoom('{targetRoomId}') => {success}");
+        return success;
     }
 
     private static int CountNpcTalks()
@@ -389,6 +476,33 @@ public class DoorTrigger : Interactable
         }
 
         return false;
+    }
+
+    private bool ShouldValidateChapter3Entry()
+    {
+        if (!enforceChapter3EntryValidation || StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        if (StoryState.Instance.CurrentChapterId != "chapter2")
+        {
+            return false;
+        }
+
+        // Accept both localized and English room ids
+        if (string.Equals(targetRoomId, "habitacion", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "bedroom", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool ShouldAutoStartChapter3OnEntry()
+    {
+        return ShouldValidateChapter3Entry();
     }
 
     private bool IsLobbyTarget()

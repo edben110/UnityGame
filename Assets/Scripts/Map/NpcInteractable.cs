@@ -61,21 +61,6 @@ public class NpcInteractable : Interactable
             return;
         }
 
-        // CASO ESPECIAL: Si es Ben en Cap 2 y el jugador tiene el libro de contabilidad
-        if (npcId == "ben" && StoryState.Instance != null && StoryState.Instance.CurrentChapterId == "chapter2")
-        {
-            if (InventoryState.HasItem("libro_contabilidad"))
-            {
-                // Disparar la decisión del libro de contabilidad
-                bool started = runner.StartConversation("chapter2_book_decision", "start");
-                if (started)
-                {
-                    NpcInteractionMenuUI.Instance.Hide();
-                    return;
-                }
-            }
-        }
-
         Action askItemAction;
         string askItemLabel;
         TryBuildItemQuestionAction(runner, out askItemAction, out askItemLabel);
@@ -299,6 +284,18 @@ private void OnTalkPressed()
             return;
         }
 
+        if (conversationId == "chapter2_book_decision")
+        {
+            bool accountingBookSelected = InventoryState.HasItem("libro_contabilidad");
+            bool talkedToBen = StoryState.Instance != null && StoryState.Instance.HasFlag("npc.talked.ben");
+
+            Debug.Log("[BEN CONFRONTATION]");
+            Debug.Log($"AccountingBookSelected: {accountingBookSelected.ToString().ToUpper()}");
+            Debug.Log($"TalkedToBen: {talkedToBen.ToString().ToUpper()}");
+            Debug.Log("DecisionPanelOpened: TRUE");
+            Debug.Log("StartChapter3: FALSE");
+        }
+
         AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
         if (anxietySystem != null)
         {
@@ -347,6 +344,16 @@ private void OnTalkPressed()
         }
 
         string conversationId = BuildItemConversationId(itemId);
+        if (IsBenBookDecisionContext(itemId))
+        {
+            if (StoryState.Instance != null && StoryState.Instance.HasFlag("chapter2.book_decision.completed"))
+            {
+                return false;
+            }
+
+            conversationId = "chapter2_book_decision";
+        }
+
         if (!runner.HasConversation(conversationId))
         {
             return false;
@@ -361,6 +368,21 @@ private void OnTalkPressed()
     private string BuildItemConversationId(string itemId)
     {
         return $"{talkConversationId}{ItemConversationSeparator}{NormalizeItemId(itemId)}";
+    }
+
+    private bool IsBenBookDecisionContext(string itemId)
+    {
+        if (!string.Equals(npcId, "ben", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        if (StoryState.Instance == null || StoryState.Instance.CurrentChapterId != "chapter2")
+        {
+            return false;
+        }
+
+        return string.Equals(NormalizeItemId(itemId), "libro_contabilidad", StringComparison.Ordinal);
     }
 
     private static string NormalizeItemId(string itemId)

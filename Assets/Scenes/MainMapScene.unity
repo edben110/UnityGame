@@ -902,6 +902,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: 
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -1123,6 +1126,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -1420,8 +1426,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChapterProgressTrigger
   chapter1RequiredHotspots: 2
-  chapter2RequiredHotspots: 2
-  chapter3RequiredFlag: simon_vivo
 --- !u!1 &266363895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1600,6 +1604,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -1846,6 +1853,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -3289,6 +3299,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -3823,6 +3836,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -7992,6 +8008,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -10389,6 +10408,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -11605,6 +11627,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -12492,6 +12517,9 @@ MonoBehaviour:
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -13208,8 +13236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.839, y: 2.446}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -5.57, y: -58.25}
+  m_SizeDelta: {x: 0.5227, y: 0.5301}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945706832
 MonoBehaviour:
@@ -13270,7 +13298,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!212 &1945706834
 SpriteRenderer:

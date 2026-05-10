@@ -49,7 +49,6 @@ public class ChapterFlowController : MonoBehaviour
 
     private DialogueRunner dialogueRunner;
     private bool chapter2DecisionLaunched;
-    private bool chapter3DecisionLaunched;
     private bool pendingProgressCheck;
 
     // Flags que setean los hotspots del Cap 2
@@ -193,7 +192,7 @@ public class ChapterFlowController : MonoBehaviour
     ///   3. Cuando chapter2_book_decision termina → Avanza a Cap 3
     /// 
     /// CAP 3:
-    ///   Cuando encuentra la llave de Simon y accede a su habitación → Avanza a Cap 4 (o mantiene en Cap 3)
+    ///   El inicio se valida por puerta/llave (DoorTrigger). No se lanza de forma automática desde decisiones.
     /// </summary>
     private void CheckAutoDecisions()
     {
@@ -220,16 +219,6 @@ public class ChapterFlowController : MonoBehaviour
                 }
             }
         }
-        // CAP 3: decisión cuando encuentra la carta de Simón
-        else if (chapter == chapter3Id && !chapter3DecisionLaunched && !StoryState.Instance.HasFlag(chapter3CompleteFlag))
-        {
-            if (StoryState.Instance.HasFlag("simon_vivo"))
-            {
-                chapter3DecisionLaunched = true;
-                Debug.Log("[ChapterFlow] ★ Cap 3: Carta encontrada. Lanzando decisión...");
-                Invoke(nameof(LaunchChapter3Decision), 1.5f);
-            }
-        }
     }
 
     private void LaunchChapter2InitialDecision()
@@ -242,18 +231,6 @@ public class ChapterFlowController : MonoBehaviour
         else
         {
             Invoke(nameof(LaunchChapter2InitialDecision), 1f);
-        }
-    }
-
-    private void LaunchChapter3Decision()
-    {
-        if (dialogueRunner != null && !dialogueRunner.IsRunning)
-        {
-            dialogueRunner.StartConversation(chapter3DecisionConversationId, "start");
-        }
-        else
-        {
-            Invoke(nameof(LaunchChapter3Decision), 1f);
         }
     }
 
@@ -303,30 +280,23 @@ public class ChapterFlowController : MonoBehaviour
             return;
         }
 
-        // ─── Cap 2 DECISIÓN DEL LIBRO completada → Cap 3 ───
+        // ─── Cap 2 DECISIÓN DEL LIBRO completada (sin transición automática) ───
         if (conversationId == chapter2BookDecisionConversationId)
         {
-            StoryState.Instance.SetFlag(chapter2CompleteFlag, true);
-            StoryState.Instance.SetChapter(chapter3Id);
-            StoryState.Instance.SetFlag("chapter3.intro.seen", true);
+            bool accountingBookSelected = InventoryState.HasItem("libro_contabilidad");
+            bool talkedToBen = StoryState.Instance.HasFlag("npc.talked.ben");
+            bool searchBedroom = StoryState.Instance.HasFlag("chapter2.choice.search_bedroom");
+            bool confrontBen = StoryState.Instance.HasFlag("chapter2.choice.confront_ben");
 
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.UnlockChapter(chapter3Id);
-            }
+            StoryState.Instance.SetFlag("chapter2.book_decision.completed", true);
+            StoryState.Instance.SetFlag("chapter2.objective.go_to_simon_room", searchBedroom || confrontBen);
 
-            if (NpcLocationManager.Instance != null)
-            {
-                NpcLocationManager.Instance.UpdateNpcPositionsForChapter(chapter3Id);
-            }
-
-            if (RoomManager.Instance != null)
-            {
-                RoomManager.Instance.ChangeRoom("habitacion");
-            }
-
-            Debug.Log("[ChapterFlow] ═══ CAP 2 → CAP 3 ═══");
-            dialogueRunner.StartConversation(chapter3IntroConversationId, "start");
+            Debug.Log("[BEN CONFRONTATION]");
+            Debug.Log($"AccountingBookSelected: {accountingBookSelected.ToString().ToUpper()}");
+            Debug.Log($"TalkedToBen: {talkedToBen.ToString().ToUpper()}");
+            Debug.Log("DecisionPanelOpened: TRUE");
+            Debug.Log("StartChapter3: FALSE");
+            Debug.Log("[ChapterFlow] Cap 2 decisión del libro completada. El jugador mantiene control y debe abrir la habitación de Simón manualmente.");
             return;
         }
 
