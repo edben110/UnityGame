@@ -186,6 +186,8 @@ public class ChapterFlowController : MonoBehaviour
     /// <summary>
     /// Verifica si se deben lanzar decisiones automáticas para Cap 2 y Cap 3.
     /// Cap 1 ya no usa auto-decisión (lo maneja DoorTrigger del estudio).
+    /// Cap 2: Se dispara cuando el jugador pregunta a Ben sobre el libro (flag: chapter2.asked_ben_about_book)
+    /// Cap 3: Se dispara cuando encuentra la carta de Simón (flag: simon_vivo)
     /// </summary>
     private void CheckAutoDecisions()
     {
@@ -196,18 +198,23 @@ public class ChapterFlowController : MonoBehaviour
 
         string chapter = StoryState.Instance.CurrentChapterId;
 
-        // Cap 2: decisión automática cuando explora suficientes hotspots del estudio
+        // Cap 2: decisión se dispara cuando el jugador pregunta a Ben sobre el libro
+        // Y está en la sala de NPCs (lobby)
         if (chapter == chapter2Id && !chapter2DecisionLaunched && !StoryState.Instance.HasFlag(chapter2CompleteFlag))
         {
-            int clues = CountFlags(chapter2ClueFlags);
-            if (clues >= chapter2RequiredClues)
+            if (StoryState.Instance.HasFlag("chapter2.asked_ben_about_book"))
             {
-                chapter2DecisionLaunched = true;
-                Debug.Log($"[ChapterFlow] ★ Cap 2: {clues} pistas. Lanzando decisión...");
-                Invoke(nameof(LaunchChapter2Decision), 1.5f);
+                // Verificar que el jugador está en la sala de NPCs
+                bool inNpcRoom = RoomManager.Instance == null || RoomManager.Instance.CurrentRoomId == "lobby";
+                if (inNpcRoom)
+                {
+                    chapter2DecisionLaunched = true;
+                    Debug.Log("[ChapterFlow] ★ Cap 2: Ben confrontado con el libro en la sala. Lanzando decisión...");
+                    Invoke(nameof(LaunchChapter2Decision), 1.5f);
+                }
             }
         }
-        // Cap 3: decisión automática cuando encuentra la carta de Simón
+        // Cap 3: decisión cuando encuentra la carta de Simón
         else if (chapter == chapter3Id && !chapter3DecisionLaunched && !StoryState.Instance.HasFlag(chapter3CompleteFlag))
         {
             if (StoryState.Instance.HasFlag("simon_vivo"))

@@ -382,7 +382,7 @@ public class DoorTrigger : Interactable
             return false;
         }
 
-        // Detectar por targetRoomId
+        // Detectar por targetRoomId (puede ser "estudio" o "studio")
         if (targetRoomId == "estudio" || targetRoomId == "studio")
         {
             return true;

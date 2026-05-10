@@ -651,34 +651,12 @@ private static DialogueConversation BuildChapter1Decision()
             endsConversation = false,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "La tension en el lobby sube. Debes decidir como continua el grupo." }
+                new DialogueLine { speaker = "Narrador", text = "La tensión en el lobby es palpable. Todos se miran sin decir lo que realmente piensan. Es momento de decidir." }
             },
             choices = new List<DialogueChoice>
             {
-                new DialogueChoice { id = "go_together", text = "Explorar juntos la mansion", nextNodeId = "result_together", anxietyDelta = -12f, setFlag = "chapter1.choice.together" },
-                new DialogueChoice { id = "split", text = "Separarse para cubrir mas terreno", nextNodeId = "result_split", anxietyDelta = 14f, setFlag = "chapter1.choice.split" },
-                new DialogueChoice { id = "talk", text = "Forzar una conversacion sincera sobre Simon", nextNodeId = "result_talk", anxietyDelta = -4f, setFlag = "chapter1.choice.talk" }
-            }
-        };
-
-        DialogueNode resultTogether = new DialogueNode
-        {
-            id = "result_together",
-            endsConversation = true,
-            lines = new List<DialogueLine>
-            {
-                new DialogueLine { speaker = "Narrador", text = "El grupo avanza unido. El miedo sigue, pero nadie queda solo." }
-            }
-        };
-
-        DialogueNode resultSplit = new DialogueNode
-        {
-            id = "result_split",
-            endsConversation = true,
-            lines = new List<DialogueLine>
-            {
-                new DialogueLine { speaker = "Narrador", text = "Cada quien toma una direccion. La mansion traga el sonido de los pasos.", anxietyDelta = 6f },
-                new DialogueLine { speaker = "Narrador", text = "Se desbloquea una ruta mas oscura para capitulo 2.", setFlag = "route.dark" }
+                new DialogueChoice { id = "talk_simon", text = "Hablar sinceramente sobre Simón", nextNodeId = "result_talk", anxietyDelta = -8f, setFlag = "chapter1.choice.talk_simon" },
+                new DialogueChoice { id = "split", text = "Separarse", nextNodeId = "result_split", anxietyDelta = 14f, setFlag = "chapter1.choice.split" }
             }
         };
 
@@ -688,14 +666,27 @@ private static DialogueConversation BuildChapter1Decision()
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Nadie dice toda la verdad, pero el silencio deja de ser absoluto." }
+                new DialogueLine { speaker = "Narrador", text = "El grupo se mira. Por primera vez, alguien dice en voz alta lo que todos piensan." },
+                new DialogueLine { speaker = "Lisa", text = "Ninguno de nosotros está aquí solo por duelo. Todos buscamos algo." },
+                new DialogueLine { speaker = "Narrador", text = "Nadie dice toda la verdad, pero el silencio deja de ser absoluto. Es un comienzo.", anxietyDelta = -5f }
+            }
+        };
+
+        DialogueNode resultSplit = new DialogueNode
+        {
+            id = "result_split",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "Cada quien toma una dirección distinta. La mansión absorbe el sonido de los pasos.", anxietyDelta = 6f },
+                new DialogueLine { speaker = "Narrador", text = "Decides investigar solo. El estudio de Simón espera al final del pasillo." }
             }
         };
 
         return new DialogueConversation
         {
             id = "chapter1_decision",
-            nodes = new List<DialogueNode> { start, resultTogether, resultSplit, resultTalk }
+            nodes = new List<DialogueNode> { start, resultTalk, resultSplit }
         };
     }
 }

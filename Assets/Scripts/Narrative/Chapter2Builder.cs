@@ -108,7 +108,8 @@ public class Chapter2Builder : MonoBehaviour
                 "Si Simón canceló una reunión por 'peligro', sabía que algo iba a pasar. Y no hizo nada para evitarlo."),
             BuildNpcItemQuestion("chapter2_npc_ben_item_libro_contabilidad", "Ben",
                 "Hay un libro de contabilidad con entradas marcadas con una 'B' roja.",
-                "Eso no significa nada. Podría ser cualquier inicial. Hay muchos nombres con B."),
+                "Eso no significa nada. Podría ser cualquier inicial. Hay muchos nombres con B.",
+                "chapter2.asked_ben_about_book"),
             BuildNpcItemQuestion("chapter2_npc_lisa_item_tablero_corcho", "Lisa",
                 "En el tablero de corcho hay fotos de todos nosotros. Y una persona con el rostro tapado.",
                 "Lo sabía. Simón nos estaba investigando. Y esa sexta persona... es la clave de todo."),
@@ -304,16 +305,29 @@ public class Chapter2Builder : MonoBehaviour
 
     private static DialogueConversation BuildNpcItemQuestion(string id, string npcName, string promptLine, string answerLine)
     {
+        return BuildNpcItemQuestion(id, npcName, promptLine, answerLine, null);
+    }
+
+    private static DialogueConversation BuildNpcItemQuestion(string id, string npcName, string promptLine, string answerLine, string additionalFlag)
+    {
+        var lines = new List<DialogueLine>
+        {
+            new DialogueLine { speaker = "Jugador", text = promptLine },
+            new DialogueLine { speaker = npcName, text = answerLine, anxietyDelta = -2f },
+            new DialogueLine { speaker = "Narrador", text = "La revelación abre una nueva grieta en la historia. Alguien aquí sabe más de lo que dice." }
+        };
+
+        // Si hay un flag adicional, agregarlo a la última línea
+        if (!string.IsNullOrWhiteSpace(additionalFlag))
+        {
+            lines[lines.Count - 1].setFlag = additionalFlag;
+        }
+
         DialogueNode start = new DialogueNode
         {
             id = "start",
             endsConversation = true,
-            lines = new List<DialogueLine>
-            {
-                new DialogueLine { speaker = "Jugador", text = promptLine },
-                new DialogueLine { speaker = npcName, text = answerLine, anxietyDelta = -2f },
-                new DialogueLine { speaker = "Narrador", text = "La revelación abre una nueva grieta en la historia. Alguien aquí sabe más de lo que dice." }
-            }
+            lines = lines
         };
 
         return new DialogueConversation { id = id, nodes = new List<DialogueNode> { start } };
@@ -331,82 +345,60 @@ public class Chapter2Builder : MonoBehaviour
             endsConversation = false,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Has visto lo suficiente en el estudio. La tensión crece. Debes decidir el siguiente paso." }
+                new DialogueLine { speaker = "Narrador", text = "Ben te mira con los ojos muy abiertos. Sabe que encontraste el libro. La tensión es insoportable." },
+                new DialogueLine { speaker = "Narrador", text = "Debes decidir qué hacer con esta información." }
             },
             choices = new List<DialogueChoice>
             {
                 new DialogueChoice
                 {
-                    id = "confront_ben",
-                    text = "Confrontar a Ben con el libro de contabilidad",
-                    nextNodeId = "result_confront_ben",
+                    id = "confront",
+                    text = "Confrontar a Ben directamente",
+                    nextNodeId = "result_confront",
                     anxietyDelta = 15f,
-                    setFlag = "chapter2.choice.confront_ben",
-                    requiredFlag = "clue.estudio.libro_contabilidad"
+                    setFlag = "chapter2.choice.confront"
                 },
                 new DialogueChoice
                 {
-                    id = "ask_lisa",
-                    text = "Preguntar a Lisa sobre la sexta persona en el tablero",
-                    nextNodeId = "result_ask_lisa",
-                    anxietyDelta = 5f,
-                    setFlag = "chapter2.choice.ask_lisa",
-                    requiredFlag = "clue.estudio.tablero_corcho"
-                },
-                new DialogueChoice
-                {
-                    id = "go_upstairs",
-                    text = "Subir al piso superior para buscar la habitación de Simón",
-                    nextNodeId = "result_go_upstairs",
+                    id = "search_bedroom",
+                    text = "Subir a buscar la habitación de Simón",
+                    nextNodeId = "result_search_bedroom",
                     anxietyDelta = 8f,
-                    setFlag = "chapter2.choice.go_upstairs"
+                    setFlag = "chapter2.choice.search_bedroom"
                 }
             }
         };
 
-        DialogueNode resultConfrontBen = new DialogueNode
+        DialogueNode resultConfront = new DialogueNode
         {
-            id = "result_confront_ben",
+            id = "result_confront",
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Jugador", text = "Ben. Necesito que me expliques las entradas marcadas con 'B' en el libro de Simón." },
+                new DialogueLine { speaker = "Jugador", text = "Ben. Las entradas marcadas con 'B' en el libro de Simón. Necesito una explicación." },
                 new DialogueLine { speaker = "Ben", text = "¿Qué...? No sé de qué hablas. Esas iniciales podrían ser de cualquiera.", anxietyDelta = 10f },
                 new DialogueLine { speaker = "Narrador", text = "Sus manos tiemblan. La negación es demasiado rápida. Demasiado practicada." },
-                new DialogueLine { speaker = "Ben", text = "Simón y yo teníamos un acuerdo informal. Si hay discrepancias, es porque él no llevaba bien sus cuentas. No yo.", anxietyDelta = 8f },
-                new DialogueLine { speaker = "Narrador", text = "Robert observa la escena sin intervenir. Lisa toma nota mental. La confianza del grupo se ha fracturado.", setFlag = "chapter2.ben_confronted" }
+                new DialogueLine { speaker = "Ben", text = "Simón y yo teníamos un acuerdo informal. Si hay discrepancias, es porque él no llevaba bien sus cuentas.", anxietyDelta = 8f },
+                new DialogueLine { speaker = "Narrador", text = "La confrontación deja un silencio pesado. Pero ahora todos saben que Ben oculta algo.", setFlag = "chapter2.ben_confronted" }
             }
         };
 
-        DialogueNode resultAskLisa = new DialogueNode
+        DialogueNode resultSearchBedroom = new DialogueNode
         {
-            id = "result_ask_lisa",
+            id = "result_search_bedroom",
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Jugador", text = "Lisa, la sexta foto en el tablero... ¿la reconoces?" },
-                new DialogueLine { speaker = "Lisa", text = "No. Pero he visto esa técnica antes. Simón tapaba rostros en sus bocetos cuando quería proteger identidades.", anxietyDelta = 4f },
-                new DialogueLine { speaker = "Lisa", text = "Lo que me preocupa es el hilo rojo que conecta a esa persona con TODOS nosotros. No solo con Simón.", anxietyDelta = 7f },
-                new DialogueLine { speaker = "Narrador", text = "La periodista tiene razón. El tablero no muestra una investigación sobre Simón. Muestra una investigación sobre todos los presentes. Y sobre alguien más.", setFlag = "chapter2.lisa_asked" }
-            }
-        };
-
-        DialogueNode resultGoUpstairs = new DialogueNode
-        {
-            id = "result_go_upstairs",
-            endsConversation = true,
-            lines = new List<DialogueLine>
-            {
-                new DialogueLine { speaker = "Narrador", text = "Decides avanzar. El segundo piso espera." },
-                new DialogueLine { speaker = "Robert", text = "Si subimos, no sabemos qué encontraremos. Pero quedarnos aquí tampoco nos da respuestas." },
-                new DialogueLine { speaker = "Narrador", text = "Las escaleras crujen bajo tus pasos. Cada peldaño te acerca a la verdad de Simón.", anxietyDelta = 5f, setFlag = "chapter2.completed" }
+                new DialogueLine { speaker = "Narrador", text = "Decides no confrontar a Ben todavía. Hay más por descubrir arriba." },
+                new DialogueLine { speaker = "Narrador", text = "El segundo piso espera. La habitación de Simón podría tener las respuestas que faltan." },
+                new DialogueLine { speaker = "Narrador", text = "Dejas al grupo en la sala y subes solo. Los escalones crujen bajo tus pies.", anxietyDelta = 5f }
             }
         };
 
         return new DialogueConversation
         {
             id = "chapter2_decision",
-            nodes = new List<DialogueNode> { start, resultConfrontBen, resultAskLisa, resultGoUpstairs }
+            nodes = new List<DialogueNode> { start, resultConfront, resultSearchBedroom }
         };
     }
 }

@@ -101,6 +101,10 @@ public override void Interact()
             return false;
         }
 
+        // Restricción espacial deshabilitada temporalmente
+        // TODO: Reimplementar cuando el sistema de salas esté estable
+        // Los NPCs solo deberían responder en la sala donde están físicamente
+
         runner = FindAnyObjectByType<DialogueRunner>();
         if (runner == null || runner.IsRunning)
         {
