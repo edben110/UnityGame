@@ -313,7 +313,7 @@ private static DialogueConversation BuildLobbyPhotoConversation()
             lines = new List<DialogueLine>
             {
                 new DialogueLine { speaker = "Narrador", text = "Una fotograf\u00eda en blanco y negro de Sim\u00f3n joven, junto a un hombre mayor de rasgos severos. Al dorso, escrito a l\u00e1piz:" },
-                new DialogueLine { speaker = "Dorso", text = "Padre e hijo. 1987.", anxietyDelta = 5f },
+                new DialogueLine { speaker = "Dorso", text = "Padre e hijo. 1927.", anxietyDelta = 5f },
                 new DialogueLine { speaker = "Narrador", text = "Robert, al otro lado de la sala, desv\u00eda la mirada cuando notas que examinas la fotograf\u00eda.", setFlag = "clue.lobby.photo", addInventoryItemId = "foto_padre_hijo" }
             }
         };

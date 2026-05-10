@@ -193,7 +193,7 @@ public class Chapter3Builder : MonoBehaviour
 
         return new DialogueConversation
         {
-            id = "chapter3_habitacion_mapa_pared",
+            id = "chapter3_Map_Wall",
             nodes = new List<DialogueNode> { start }
         };
     }
@@ -237,7 +237,7 @@ public class Chapter3Builder : MonoBehaviour
 
         return new DialogueConversation
         {
-            id = "chapter3_habitacion_mesita_noche",
+            id = "chapter3_Bedside_Table",
             nodes = new List<DialogueNode> { start }
         };
     }
@@ -258,7 +258,7 @@ public class Chapter3Builder : MonoBehaviour
 
         return new DialogueConversation
         {
-            id = "chapter3_habitacion_cama",
+            id = "chapter3_Bed",
             nodes = new List<DialogueNode> { start }
         };
     }
