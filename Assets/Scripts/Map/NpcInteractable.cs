@@ -171,6 +171,13 @@ private void OnTalkPressed()
             return;
         }
 
+        // Registrar que el jugador habló con este NPC
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.SetFlag($"npc.talked.{npcId}", true);
+            Debug.Log($"[NPC] Jugador habló con {npcId}. Flag 'npc.talked.{npcId}' seteado.");
+        }
+
         if (CharacterAnxietySystem.Instance != null)
         {
             CharacterAnxietySystem.Instance.ApplyTalkRelief(npcId);

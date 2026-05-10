@@ -2,14 +2,23 @@ using UnityEngine;
 
 /// <summary>
 /// Controla el flujo narrativo entre capítulos.
-/// Escucha el fin de conversaciones clave y avanza el capítulo
-/// cuando el jugador completa las decisiones requeridas.
+/// 
+/// RESPONSABILIDADES:
+///   1. Iniciar el prólogo al comenzar el juego
+///   2. Escuchar cuando terminan conversaciones clave (decisiones)
+///   3. Avanzar el capítulo cuando corresponde
+///   4. Proveer información de progreso para otros sistemas (DoorTrigger)
 ///
-/// Flujo soportado:
-///   Prólogo → Cap 1 → Cap 2 → Cap 3 → (Cap 4, Cap 5 futuro)
+/// FLUJO:
+///   Prólogo → Cap 1 intro → [jugador explora] → DoorTrigger dispara transición → Cap 2
+///   
+/// NOTA: La transición Cap1→Cap2 ahora la maneja DoorTrigger del estudio.
+///       Este controller solo maneja prólogo→cap1 y las decisiones de cap2/cap3.
 /// </summary>
 public class ChapterFlowController : MonoBehaviour
 {
+    public static ChapterFlowController Instance { get; private set; }
+
     [Header("Conversaciones clave")]
     [SerializeField] private string prologueIntroConversationId = "prologue_intro";
     [SerializeField] private string chapter1IntroConversationId = "chapter1_intro";
@@ -31,17 +40,51 @@ public class ChapterFlowController : MonoBehaviour
     [SerializeField] private string chapter2CompleteFlag = "chapter.chapter2.complete";
     [SerializeField] private string chapter3CompleteFlag = "chapter.chapter3.complete";
 
+    [Header("Progreso Cap 2 y 3 (auto-decisión)")]
+    [SerializeField] private int chapter2RequiredClues = 2;
+
     [Header("Prueba")]
     [SerializeField] private bool forceFreshStartOnPlay = true;
 
     private DialogueRunner dialogueRunner;
+    private bool chapter2DecisionLaunched;
+    private bool chapter3DecisionLaunched;
+    private bool pendingProgressCheck;
+
+    // Flags que setean los hotspots del Cap 2
+    private static readonly string[] chapter2ClueFlags = {
+        "clue.estudio.agenda",
+        "clue.estudio.libro_contabilidad",
+        "clue.estudio.nota_tablon",
+        "clue.estudio.tablero_corcho",
+        "clue.estudio.archivador_visto"
+    };
+
+    // Flags de NPCs hablados
+    private static readonly string[] npcTalkFlags = {
+        "npc.talked.robert",
+        "npc.talked.ana",
+        "npc.talked.ben",
+        "npc.talked.lisa",
+        "npc.talked.lucas"
+    };
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     private void Start()
     {
         dialogueRunner = FindAnyObjectByType<DialogueRunner>();
         if (dialogueRunner == null)
         {
-            Debug.LogError("ChapterFlowController necesita un DialogueRunner en la escena.");
+            Debug.LogError("[ChapterFlow] ERROR: No hay DialogueRunner.");
             return;
         }
 
@@ -49,13 +92,16 @@ public class ChapterFlowController : MonoBehaviour
 
         if (StoryState.Instance == null)
         {
-            Debug.LogError("ChapterFlowController necesita StoryState en la escena.");
+            Debug.LogError("[ChapterFlow] ERROR: No hay StoryState.");
             return;
         }
+
+        StoryState.Instance.StateChanged += OnStateChanged;
 
         if (forceFreshStartOnPlay)
         {
             StoryState.Instance.ResetForNewGame(prologueChapterId);
+            Debug.Log("[ChapterFlow] Fresh start → Prólogo");
         }
 
         if (!StoryState.Instance.HasFlag("session.started"))
@@ -66,7 +112,216 @@ public class ChapterFlowController : MonoBehaviour
             return;
         }
 
-        // Reanudar según el capítulo actual
+        ResumeFromCurrentChapter();
+    }
+
+    private void OnDestroy()
+    {
+        if (dialogueRunner != null)
+        {
+            dialogueRunner.ConversationEnded -= OnConversationEnded;
+        }
+
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.StateChanged -= OnStateChanged;
+        }
+    }
+
+    private void Update()
+    {
+        // Verificar progreso cuando el diálogo termina
+        if (pendingProgressCheck && dialogueRunner != null && !dialogueRunner.IsRunning)
+        {
+            pendingProgressCheck = false;
+            CheckAutoDecisions();
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  API PÚBLICA (usada por DoorTrigger)
+    // ═══════════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// Retorna cuántos NPCs ha interrogado el jugador.
+    /// </summary>
+    public int GetNpcTalkCount()
+    {
+        return CountFlags(npcTalkFlags);
+    }
+
+    /// <summary>
+    /// Retorna mensaje de qué le falta al jugador para avanzar.
+    /// </summary>
+    public string GetMissingRequirementsMessage()
+    {
+        if (StoryState.Instance == null)
+        {
+            return string.Empty;
+        }
+
+        string chapter = StoryState.Instance.CurrentChapterId;
+
+        if (chapter == chapter1Id)
+        {
+            int npcTalks = CountFlags(npcTalkFlags);
+            if (npcTalks == 0)
+            {
+                return "Sería mejor interrogar a alguien antes de avanzar. Habla con los personajes usando el botón 'Hablar'.";
+            }
+        }
+
+        return string.Empty;
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  AUTO-DECISIONES (Cap 2 y Cap 3)
+    // ═══════════════════════════════════════════════════════════════
+
+    private void OnStateChanged()
+    {
+        pendingProgressCheck = true;
+    }
+
+    /// <summary>
+    /// Verifica si se deben lanzar decisiones automáticas para Cap 2 y Cap 3.
+    /// Cap 1 ya no usa auto-decisión (lo maneja DoorTrigger del estudio).
+    /// </summary>
+    private void CheckAutoDecisions()
+    {
+        if (StoryState.Instance == null || dialogueRunner == null || dialogueRunner.IsRunning)
+        {
+            return;
+        }
+
+        string chapter = StoryState.Instance.CurrentChapterId;
+
+        // Cap 2: decisión automática cuando explora suficientes hotspots del estudio
+        if (chapter == chapter2Id && !chapter2DecisionLaunched && !StoryState.Instance.HasFlag(chapter2CompleteFlag))
+        {
+            int clues = CountFlags(chapter2ClueFlags);
+            if (clues >= chapter2RequiredClues)
+            {
+                chapter2DecisionLaunched = true;
+                Debug.Log($"[ChapterFlow] ★ Cap 2: {clues} pistas. Lanzando decisión...");
+                Invoke(nameof(LaunchChapter2Decision), 1.5f);
+            }
+        }
+        // Cap 3: decisión automática cuando encuentra la carta de Simón
+        else if (chapter == chapter3Id && !chapter3DecisionLaunched && !StoryState.Instance.HasFlag(chapter3CompleteFlag))
+        {
+            if (StoryState.Instance.HasFlag("simon_vivo"))
+            {
+                chapter3DecisionLaunched = true;
+                Debug.Log("[ChapterFlow] ★ Cap 3: Carta encontrada. Lanzando decisión...");
+                Invoke(nameof(LaunchChapter3Decision), 1.5f);
+            }
+        }
+    }
+
+    private void LaunchChapter2Decision()
+    {
+        if (dialogueRunner != null && !dialogueRunner.IsRunning)
+        {
+            dialogueRunner.StartConversation(chapter2DecisionConversationId, "start");
+        }
+        else
+        {
+            Invoke(nameof(LaunchChapter2Decision), 1f);
+        }
+    }
+
+    private void LaunchChapter3Decision()
+    {
+        if (dialogueRunner != null && !dialogueRunner.IsRunning)
+        {
+            dialogueRunner.StartConversation(chapter3DecisionConversationId, "start");
+        }
+        else
+        {
+            Invoke(nameof(LaunchChapter3Decision), 1f);
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  CONVERSACIONES TERMINADAS
+    // ═══════════════════════════════════════════════════════════════
+
+    private void OnConversationEnded(string conversationId)
+    {
+        if (StoryState.Instance == null)
+        {
+            return;
+        }
+
+        Debug.Log($"[ChapterFlow] Conversación terminada: '{conversationId}'");
+
+        // ─── Prólogo → Cap 1 ───
+        if (conversationId == prologueIntroConversationId)
+        {
+            StoryState.Instance.SetFlag(prologueCompleteFlag, true);
+            StoryState.Instance.SetChapter(chapter1Id);
+            StoryState.Instance.SetFlag("chapter1.intro.seen", true);
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.UnlockChapter(chapter1Id);
+            }
+
+            Debug.Log("[ChapterFlow] ═══ PRÓLOGO → CAP 1 ═══");
+            dialogueRunner.StartConversation(chapter1IntroConversationId, "start");
+            return;
+        }
+
+        // ─── Cap 1 decisión completada (si se lanzó desde DoorTrigger) ───
+        if (conversationId == chapter1DecisionConversationId)
+        {
+            // La transición real la maneja DoorTrigger.ExecuteChapterTransition()
+            Debug.Log("[ChapterFlow] Cap 1 decisión completada.");
+            return;
+        }
+
+        // ─── Cap 2 decisión → Cap 3 ───
+        if (conversationId == chapter2DecisionConversationId)
+        {
+            StoryState.Instance.SetFlag(chapter2CompleteFlag, true);
+            StoryState.Instance.SetChapter(chapter3Id);
+            StoryState.Instance.SetFlag("chapter3.intro.seen", true);
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.UnlockChapter(chapter3Id);
+            }
+
+            if (NpcLocationManager.Instance != null)
+            {
+                NpcLocationManager.Instance.UpdateNpcPositionsForChapter(chapter3Id);
+            }
+
+            if (RoomManager.Instance != null)
+            {
+                RoomManager.Instance.ChangeRoom("habitacion");
+            }
+
+            Debug.Log("[ChapterFlow] ═══ CAP 2 → CAP 3 ═══");
+            dialogueRunner.StartConversation(chapter3IntroConversationId, "start");
+            return;
+        }
+
+        // ─── Cap 3 decisión completada ───
+        if (conversationId == chapter3DecisionConversationId)
+        {
+            StoryState.Instance.SetFlag(chapter3CompleteFlag, true);
+            Debug.Log("[ChapterFlow] ═══ CAP 3 COMPLETADO ═══");
+            return;
+        }
+
+        // Después de cualquier conversación, verificar auto-decisiones
+        pendingProgressCheck = true;
+    }
+
+    private void ResumeFromCurrentChapter()
+    {
         string currentChapter = StoryState.Instance.CurrentChapterId;
 
         if (currentChapter == prologueChapterId && !StoryState.Instance.HasFlag(prologueCompleteFlag))
@@ -93,85 +348,16 @@ public class ChapterFlowController : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private static int CountFlags(string[] flags)
     {
-        if (dialogueRunner != null)
+        int count = 0;
+        for (int i = 0; i < flags.Length; i++)
         {
-            dialogueRunner.ConversationEnded -= OnConversationEnded;
-        }
-    }
-
-    private void OnConversationEnded(string conversationId)
-    {
-        if (StoryState.Instance == null)
-        {
-            return;
-        }
-
-        // ─── Prólogo completado → Cap 1 ───
-        if (conversationId == prologueIntroConversationId)
-        {
-            StoryState.Instance.SetFlag(prologueCompleteFlag, true);
-            StoryState.Instance.SetChapter(chapter1Id);
-            StoryState.Instance.SetFlag("chapter1.intro.seen", true);
-
-            if (GameManager.Instance != null)
+            if (StoryState.Instance.HasFlag(flags[i]))
             {
-                GameManager.Instance.UnlockChapter(chapter1Id);
+                count++;
             }
-
-            dialogueRunner.StartConversation(chapter1IntroConversationId, "start");
-            return;
         }
-
-        // ─── Cap 1 decisión completada → Cap 2 ───
-        if (conversationId == chapter1DecisionConversationId)
-        {
-            StoryState.Instance.SetFlag(chapter1CompleteFlag, true);
-            StoryState.Instance.SetChapter(chapter2Id);
-
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.UnlockChapter(chapter2Id);
-            }
-
-            // Mover NPCs al estudio para Cap 2
-            if (NpcLocationManager.Instance != null)
-            {
-                NpcLocationManager.Instance.UpdateNpcPositionsForChapter(chapter2Id);
-            }
-
-            Debug.Log("[ChapterFlowController] Capítulo 2 desbloqueado.");
-            return;
-        }
-
-        // ─── Cap 2 decisión completada → Cap 3 ───
-        if (conversationId == chapter2DecisionConversationId)
-        {
-            StoryState.Instance.SetFlag(chapter2CompleteFlag, true);
-            StoryState.Instance.SetChapter(chapter3Id);
-
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.UnlockChapter(chapter3Id);
-            }
-
-            // Dispersar NPCs para Cap 3
-            if (NpcLocationManager.Instance != null)
-            {
-                NpcLocationManager.Instance.UpdateNpcPositionsForChapter(chapter3Id);
-            }
-
-            Debug.Log("[ChapterFlowController] Capítulo 3 desbloqueado.");
-            return;
-        }
-
-        // ─── Cap 3 decisión completada → (futuro Cap 4) ───
-        if (conversationId == chapter3DecisionConversationId)
-        {
-            StoryState.Instance.SetFlag(chapter3CompleteFlag, true);
-            Debug.Log("[ChapterFlowController] Capítulo 3 completado. Cap 4 pendiente de implementación.");
-            return;
-        }
+        return count;
     }
 }

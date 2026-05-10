@@ -1373,6 +1373,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 257989750}
+  - component: {fileID: 257989751}
   m_Layer: 0
   m_Name: WorldMap
   m_TagString: Untagged
@@ -1400,6 +1401,21 @@ Transform:
   - {fileID: 1902851354}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &257989751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257989749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6293557e23772e4e8c47fedf25f4341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterProgressTrigger
+  chapter1RequiredHotspots: 2
+  chapter2RequiredHotspots: 2
+  chapter3RequiredFlag: simon_vivo
 --- !u!1 &266363895
 GameObject:
   m_ObjectHideFlags: 0
@@ -12180,6 +12196,8 @@ MonoBehaviour:
   chapter1CompleteFlag: chapter.chapter1.complete
   chapter2CompleteFlag: chapter.chapter2.complete
   chapter3CompleteFlag: chapter.chapter3.complete
+  chapter1RequiredClues: 0
+  chapter2RequiredClues: 2
   forceFreshStartOnPlay: 1
 --- !u!114 &1820128883
 MonoBehaviour:

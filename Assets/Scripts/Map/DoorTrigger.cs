@@ -3,8 +3,12 @@ using UnityEngine;
 
 /// <summary>
 /// Puerta/trigger que al ser clickeada cambia de sala.
-/// Hereda de Interactable para funcionar con el ClickManager existente.
-/// Requiere un BoxCollider2D para detectar clics.
+/// Actúa como checkpoint narrativo: valida condiciones antes de permitir el paso.
+/// 
+/// VALIDACIÓN PARA PUERTA DEL ESTUDIO (Cap 1 → Cap 2):
+///   - Sin NPC interrogados → BLOQUEADA (aunque tenga llave)
+///   - Con 1+ NPC interrogados + llave → PERMITIDA (inicia Cap 2)
+///   - Con TODOS los NPC interrogados + llave → Muestra decisión antes de avanzar
 /// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
 public class DoorTrigger : Interactable
@@ -14,9 +18,16 @@ public class DoorTrigger : Interactable
 
     [Header("Condiciones opcionales")]
     [SerializeField] private string requiredFlag;
-
     [SerializeField] private KeyType[] requiredKeys = new KeyType[0];
     [SerializeField] private string requiredChapterId;
+
+    [Header("Validación NPC (checkpoint narrativo)")]
+    [Tooltip("Mínimo de NPCs con los que se debe haber hablado para abrir esta puerta")]
+    [SerializeField] private int requiredNpcTalkCount = 0;
+    [Tooltip("Si true, al abrir esta puerta se dispara la transición de capítulo")]
+    [SerializeField] private bool triggersChapterTransition = false;
+    [Tooltip("ID del capítulo que se activa al cruzar esta puerta")]
+    [SerializeField] private string transitionToChapterId;
 
     [Header("Feedback")]
     [SerializeField] private string lockedMessage = "Esta puerta está cerrada.";
@@ -25,16 +36,24 @@ public class DoorTrigger : Interactable
     [SerializeField] private bool showDebugGizmo = true;
     [SerializeField] private Color gizmoColor = new Color(0f, 1f, 0f, 0.3f);
 
+    // Flags de NPCs hablados
+    private static readonly string[] npcTalkFlags = {
+        "npc.talked.robert",
+        "npc.talked.ana",
+        "npc.talked.ben",
+        "npc.talked.lisa",
+        "npc.talked.lucas"
+    };
+
     private void Start()
     {
-        // Asegurar que el collider esté habilitado
         BoxCollider2D col = GetComponent<BoxCollider2D>();
         if (col != null && !col.enabled)
         {
             col.enabled = true;
         }
 
-        Debug.Log($"DoorTrigger '{gameObject.name}' inicializado. Destino: '{targetRoomId}'. Collider: {(col != null ? "OK" : "FALTA")}");
+        Debug.Log($"[DoorTrigger] '{gameObject.name}' inicializado. Destino: '{targetRoomId}', RequiereNPC: {requiredNpcTalkCount}, TransiciónCap: {triggersChapterTransition}");
     }
 
     private void HideAnxietyOverlayIfVisible()
@@ -46,118 +65,335 @@ public class DoorTrigger : Interactable
         }
     }
 
-    
-public override void Interact()
+    public override void Interact()
     {
-        Debug.Log($"DoorTrigger '{gameObject.name}' clickeado! Destino: '{targetRoomId}'");
         HideAnxietyOverlayIfVisible();
 
         if (string.IsNullOrWhiteSpace(targetRoomId))
         {
-            Debug.LogError($"DoorTrigger '{gameObject.name}': targetRoomId está vacío!");
+            Debug.LogError($"[DoorTrigger] '{gameObject.name}': targetRoomId vacío!");
             return;
         }
 
         if (RoomManager.Instance == null)
         {
-            Debug.LogError("DoorTrigger: No hay RoomManager en la escena.");
+            Debug.LogError("[DoorTrigger] No hay RoomManager en la escena.");
             return;
         }
 
-        // Verificar condición de capítulo
-        if (!string.IsNullOrWhiteSpace(requiredChapterId) && StoryState.Instance != null)
+        // ═══ VALIDACIÓN COMPLETA ═══
+        var validation = ValidateAccess();
+        LogValidation(validation);
+
+        if (!validation.canPass)
         {
-            if (StoryState.Instance.CurrentChapterId != requiredChapterId)
+            // Mostrar feedback narrativo
+            DialoguePanelUI panel = DialoguePanelUI.Instance;
+            if (panel != null)
             {
-                Debug.Log($"DoorTrigger: Puerta bloqueada, requiere capítulo '{requiredChapterId}'.");
-                DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
-                if (dialoguePanel != null)
-                {
-                    dialoguePanel.ShowSystemMessage(BuildLockedMessage(false));
-                }
-                return;
+                panel.ShowSystemMessage(validation.blockReason);
             }
+            return;
         }
 
-        // Verificar condición de flag
-        if (!string.IsNullOrWhiteSpace(requiredFlag) && StoryState.Instance != null)
+        // ═══ ACCESO PERMITIDO ═══
+
+        // Determinar si esta puerta debe disparar transición de capítulo
+        bool shouldTriggerTransition = triggersChapterTransition;
+        string effectiveTransitionChapter = transitionToChapterId;
+
+        // Auto-detectar: puerta al estudio en Cap 1 siempre dispara transición a Cap 2
+        if (!shouldTriggerTransition && IsStudioTransitionDoor())
         {
-            if (!StoryState.Instance.HasFlag(requiredFlag))
-            {
-                Debug.Log($"DoorTrigger: Puerta bloqueada, requiere flag '{requiredFlag}'.");
-                DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
-                if (dialoguePanel != null)
-                {
-                    dialoguePanel.ShowSystemMessage(BuildLockedMessage(false));
-                }
-                return;
-            }
+            shouldTriggerTransition = true;
+            effectiveTransitionChapter = "chapter2";
+            Debug.Log("[DoorTrigger] Auto-detectado: puerta al estudio en Cap 1 → transición a Cap 2");
         }
 
-        // Verificar llaves requeridas (consultar inventario)
-        if (requiredKeys != null && requiredKeys.Length > 0)
+        // Si esta puerta dispara transición de capítulo
+        if (shouldTriggerTransition && !string.IsNullOrWhiteSpace(effectiveTransitionChapter))
         {
-            string invContents = string.Join(", ", InventoryState.GetItems().ToArray());
-            Debug.Log($"DoorTrigger '{gameObject.name}': RequiredKeys=[{string.Join(", ", System.Array.ConvertAll(requiredKeys, k => k.ToString()))}] Inventory=[{invContents}] SelectedItem={InventoryState.GetSelectedItem()}");
-
-            bool hasAllKeys = true;
-            foreach (KeyType keyType in requiredKeys)
+            // Verificar si debe mostrar panel de decisión primero (todos los NPC hablados)
+            if (validation.allNpcsTalked && !validation.decisionAlreadyShown)
             {
-                string itemId = keyType.ToString();
-                bool has = InventoryState.HasItem(itemId);
-                Debug.Log($"DoorTrigger: Checking key '{itemId}' => {has}");
-                if (!has)
-                {
-                    hasAllKeys = false;
-                }
-            }
-
-            if (!hasAllKeys)
-            {
-                Debug.Log($"DoorTrigger: {lockedMessage}");
-                DialoguePanelUI dialoguePanel = DialoguePanelUI.Instance;
-                if (dialoguePanel != null)
-                {
-                    dialoguePanel.ShowSystemMessage(BuildLockedMessage(true));
-                }
+                LaunchChapterDecisionThenTransition(effectiveTransitionChapter);
                 return;
             }
+
+            // Transición directa al nuevo capítulo
+            ExecuteChapterTransition(effectiveTransitionChapter);
+            return;
         }
 
-        DialoguePanelUI panel = DialoguePanelUI.Instance;
-        if (panel != null)
+        // Puerta normal (sin transición de capítulo)
+        DialoguePanelUI normalPanel = DialoguePanelUI.Instance;
+        if (normalPanel != null)
         {
-            panel.ShowSystemMessage(BuildOpenMessage(), () =>
+            normalPanel.ShowSystemMessage(BuildOpenMessage(), () =>
             {
-                panel.Hide();
-                ChangeRoomAfterDialogue();
+                normalPanel.Hide();
+                ChangeRoom();
             });
             return;
         }
 
-        ChangeRoomAfterDialogue();
+        ChangeRoom();
     }
 
-    private void ChangeRoomAfterDialogue()
+    // ═══════════════════════════════════════════════════════════════
+    //  VALIDACIÓN
+    // ═══════════════════════════════════════════════════════════════
+
+    private struct ValidationResult
+    {
+        public bool canPass;
+        public string blockReason;
+        public bool hasKey;
+        public int npcTalkCount;
+        public bool allNpcsTalked;
+        public bool decisionAlreadyShown;
+    }
+
+    private ValidationResult ValidateAccess()
+    {
+        var result = new ValidationResult();
+        result.canPass = true;
+        result.npcTalkCount = CountNpcTalks();
+        result.allNpcsTalked = result.npcTalkCount >= 5;
+        result.hasKey = true;
+
+        // 1. Verificar capítulo requerido
+        if (!string.IsNullOrWhiteSpace(requiredChapterId) && StoryState.Instance != null)
+        {
+            if (StoryState.Instance.CurrentChapterId != requiredChapterId)
+            {
+                result.canPass = false;
+                result.blockReason = "No puedes acceder a esta zona en este momento.";
+                return result;
+            }
+        }
+
+        // 2. Verificar flag requerido
+        if (!string.IsNullOrWhiteSpace(requiredFlag) && StoryState.Instance != null)
+        {
+            if (!StoryState.Instance.HasFlag(requiredFlag))
+            {
+                result.canPass = false;
+                result.blockReason = BuildLockedMessage(false);
+                return result;
+            }
+        }
+
+        // 3. Verificar llaves
+        if (requiredKeys != null && requiredKeys.Length > 0)
+        {
+            foreach (KeyType keyType in requiredKeys)
+            {
+                string itemId = keyType.ToString();
+                if (!InventoryState.HasItem(itemId))
+                {
+                    result.hasKey = false;
+                    result.canPass = false;
+                    result.blockReason = BuildLockedMessage(true);
+                    return result;
+                }
+            }
+        }
+
+        // 4. Verificar NPCs interrogados (CHECKPOINT NARRATIVO)
+        //    Si esta puerta va al estudio Y estamos en chapter1, SIEMPRE requiere mínimo 1 NPC
+        //    Esto funciona incluso si triggersChapterTransition no está configurado en el Inspector
+        int effectiveNpcRequired = requiredNpcTalkCount;
+        bool isStudioDoorInChapter1 = IsStudioTransitionDoor();
+        
+        if (isStudioDoorInChapter1 && effectiveNpcRequired < 1)
+        {
+            effectiveNpcRequired = 1;
+        }
+        
+        if (triggersChapterTransition && effectiveNpcRequired < 1)
+        {
+            effectiveNpcRequired = 1;
+        }
+
+        if (effectiveNpcRequired > 0)
+        {
+            if (result.npcTalkCount < effectiveNpcRequired)
+            {
+                result.canPass = false;
+                result.blockReason = "Sería mejor interrogar a alguien antes de avanzar. Habla con los personajes usando el botón 'Hablar'.";
+                return result;
+            }
+        }
+
+        // 5. Verificar si la decisión ya se mostró
+        if (StoryState.Instance != null)
+        {
+            string currentChapter = StoryState.Instance.CurrentChapterId;
+            result.decisionAlreadyShown = StoryState.Instance.HasFlag($"chapter.{currentChapter}.complete");
+        }
+
+        return result;
+    }
+
+    private void LogValidation(ValidationResult v)
+    {
+        string keyStatus = (requiredKeys != null && requiredKeys.Length > 0) ? v.hasKey.ToString().ToUpper() : "N/A";
+        Debug.Log($"[CHAPTER VALIDATION] Door: {gameObject.name}\n" +
+                  $"  HasKey: {keyStatus}\n" +
+                  $"  NPCInterrogatedCount: {v.npcTalkCount}/5\n" +
+                  $"  CanEnterStudio: {v.canPass.ToString().ToUpper()}\n" +
+                  $"  AllNPCsTalked: {v.allNpcsTalked}\n" +
+                  $"  ShowDecisionPanel: {(v.allNpcsTalked && !v.decisionAlreadyShown).ToString().ToUpper()}\n" +
+                  $"  TriggerChapterTransition: {triggersChapterTransition.ToString().ToUpper()}\n" +
+                  $"  Reason: {(v.canPass ? "ACCESS GRANTED" : v.blockReason)}");
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  TRANSICIÓN DE CAPÍTULO
+    // ═══════════════════════════════════════════════════════════════
+
+    private void ExecuteChapterTransition(string targetChapterId)
+    {
+        if (StoryState.Instance == null)
+        {
+            ChangeRoom();
+            return;
+        }
+
+        // Marcar capítulo actual como completo
+        string currentChapter = StoryState.Instance.CurrentChapterId;
+        StoryState.Instance.SetFlag($"chapter.{currentChapter}.complete", true);
+
+        // Cambiar al nuevo capítulo
+        StoryState.Instance.SetChapter(targetChapterId);
+        StoryState.Instance.SetFlag($"{targetChapterId}.intro.seen", true);
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.UnlockChapter(targetChapterId);
+        }
+
+        if (NpcLocationManager.Instance != null)
+        {
+            NpcLocationManager.Instance.UpdateNpcPositionsForChapter(targetChapterId);
+        }
+
+        Debug.Log($"[DoorTrigger] ═══ TRANSICIÓN: {currentChapter} → {targetChapterId} ═══");
+
+        // Cambiar de sala
+        ChangeRoom();
+
+        // Lanzar intro del nuevo capítulo
+        DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
+        if (runner != null && !runner.IsRunning)
+        {
+            string introId = $"{targetChapterId}_intro";
+            if (runner.HasConversation(introId))
+            {
+                runner.StartConversation(introId, "start");
+                Debug.Log($"[DoorTrigger] Lanzando intro: {introId}");
+            }
+        }
+    }
+
+    private void LaunchChapterDecisionThenTransition(string targetChapterId)
+    {
+        DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
+        if (runner == null || runner.IsRunning)
+        {
+            ExecuteChapterTransition(targetChapterId);
+            return;
+        }
+
+        string currentChapter = StoryState.Instance != null ? StoryState.Instance.CurrentChapterId : "chapter1";
+        string decisionId = $"{currentChapter}_decision";
+
+        if (!runner.HasConversation(decisionId))
+        {
+            ExecuteChapterTransition(targetChapterId);
+            return;
+        }
+
+        Debug.Log($"[DoorTrigger] Lanzando decisión '{decisionId}' antes de transición a '{targetChapterId}'.");
+
+        string capturedTarget = targetChapterId;
+        Action<string> onDecisionEnd = null;
+        onDecisionEnd = (endedId) =>
+        {
+            if (endedId == decisionId)
+            {
+                runner.ConversationEnded -= onDecisionEnd;
+                ExecuteChapterTransition(capturedTarget);
+            }
+        };
+
+        runner.ConversationEnded += onDecisionEnd;
+        runner.StartConversation(decisionId, "start");
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  UTILIDADES
+    // ═══════════════════════════════════════════════════════════════
+
+    private void ChangeRoom()
     {
         if (RoomManager.Instance == null)
         {
-            Debug.LogError("DoorTrigger: No hay RoomManager en la escena.");
             return;
         }
 
         bool success = RoomManager.Instance.ChangeRoom(targetRoomId);
-        Debug.Log($"DoorTrigger: ChangeRoom('{targetRoomId}') resultado: {success}");
-
-        if (success)
-        {
-            Debug.Log(BuildOpenMessage());
-        }
+        Debug.Log($"[DoorTrigger] ChangeRoom('{targetRoomId}') => {success}");
     }
 
-private bool IsLobbyTarget()
+    private static int CountNpcTalks()
     {
-        return string.Equals(targetRoomId, "lobby", System.StringComparison.OrdinalIgnoreCase);
+        if (StoryState.Instance == null)
+        {
+            return 0;
+        }
+
+        int count = 0;
+        for (int i = 0; i < npcTalkFlags.Length; i++)
+        {
+            if (StoryState.Instance.HasFlag(npcTalkFlags[i]))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /// <summary>
+    /// Detecta si esta puerta es la del estudio durante el capítulo 1.
+    /// Funciona por convención de nombres sin necesidad de configuración manual.
+    /// </summary>
+    private bool IsStudioTransitionDoor()
+    {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        // Solo aplica durante el capítulo 1
+        if (StoryState.Instance.CurrentChapterId != "chapter1")
+        {
+            return false;
+        }
+
+        // Detectar por targetRoomId
+        if (targetRoomId == "estudio" || targetRoomId == "studio")
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsLobbyTarget()
+    {
+        return string.Equals(targetRoomId, "lobby", StringComparison.OrdinalIgnoreCase);
     }
 
     private string GetTargetDisplayName()
@@ -170,7 +406,7 @@ private bool IsLobbyTarget()
         return RoomManager.Instance.GetRoomDisplayName(targetRoomId);
     }
 
-private string BuildLockedMessage(bool needsKey)
+    private string BuildLockedMessage(bool needsKey)
     {
         if (IsLobbyTarget())
         {
@@ -185,7 +421,7 @@ private string BuildLockedMessage(bool needsKey)
             : $"La puerta a {displayName} está cerrada.";
     }
 
-private string BuildOpenMessage()
+    private string BuildOpenMessage()
     {
         if (IsLobbyTarget())
         {

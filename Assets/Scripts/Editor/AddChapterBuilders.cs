@@ -69,6 +69,25 @@ public class AddChapterBuilders
             Debug.Log("Chapter3Builder ya existe.");
         }
 
+        // Agregar ChapterProgressTrigger al WorldMap si no existe
+        GameObject worldMap = GameObject.Find("WorldMap");
+        if (worldMap == null)
+        {
+            worldMap = dialogueSystem;
+        }
+
+        var progressTrigger = worldMap.GetComponent<ChapterProgressTrigger>();
+        if (progressTrigger == null)
+        {
+            progressTrigger = worldMap.AddComponent<ChapterProgressTrigger>();
+            added++;
+            Debug.Log("ChapterProgressTrigger agregado al WorldMap.");
+        }
+        else
+        {
+            Debug.Log("ChapterProgressTrigger ya existe.");
+        }
+
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
 
