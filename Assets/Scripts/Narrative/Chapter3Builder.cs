@@ -64,11 +64,11 @@ public class Chapter3Builder : MonoBehaviour
             return;
         }
 
-        if (targetLibrary.HasConversation("chapter3_intro") && targetLibrary.HasConversation("chapter3_decision"))
-        {
-            Debug.Log("Chapter3Builder: Conversaciones del Cap 3 ya presentes. Saltando generación.");
-            return;
-        }
+        // if (targetLibrary.HasConversation("chapter3_intro") && targetLibrary.HasConversation("chapter3_decision"))
+        // {
+        //     Debug.Log("Chapter3Builder: Conversaciones del Cap 3 ya presentes. Saltando generación.");
+        //     return;
+        // }
 
         List<DialogueConversation> chapter3 = new List<DialogueConversation>
         {
@@ -79,22 +79,27 @@ public class Chapter3Builder : MonoBehaviour
             BuildHabitacionCartaInconclusa(),
             BuildHabitacionMesitaNoche(),
             BuildHabitacionCama(),
+            // ─── Hotspots de la Galería ───
+            BuildGaleriaPinturaMisteriosa(),
+            BuildGaleriaCajaPuzzle2(),
+            BuildGaleriaCajaPuzzle3(),
+            BuildGaleriaAlfombraSospechosa(),
             // ─── NPC: diálogos de ansiedad Cap 3 ───
             BuildNpcAnxiety("chapter3_npc_robert", "Robert",
-                "Esta habitación... tiene un olor particular. A vida reciente. No a muerte.",
-                "Si Simón estuvo aquí hace poco, entonces todo lo que nos dijeron fue mentira."),
+                "Tardas demasiado allí dentro. ¿Encontraste algo en su habitación o solo estás perdiendo el tiempo?",
+                "Mientras tú juegas a ser detective, nosotros seguimos atrapados aquí."),
             BuildNpcAnxiety("chapter3_npc_ana", "Ana",
-                "Mira la cama. Mira el vaso. Esto no es un cuarto abandonado.",
+                "¿Cómo estaba la habitación? Por favor dime que no tocaste nada que no debías.",
                 "Me estoy empezando a preguntar si realmente vine por un funeral o por una trampa."),
             BuildNpcAnxiety("chapter3_npc_ben", "Ben",
-                "Tenemos que irnos. Ya. Esto está mal. Todo está demasiado fresco.",
-                "Si Simón está vivo y nos atrajo aquí... ¿qué quiere de nosotros?"),
+                "No me gusta que te separes del grupo. Deberíamos mantenernos juntos.",
+                "Cualquier cosa que encuentres ahí, espero que nos lo digas."),
             BuildNpcAnxiety("chapter3_npc_lisa", "Lisa",
-                "Periodísticamente hablando, esto es una escena manipulada. No hay duda.",
-                "La carta, el mapa, el vaso... todo está puesto para que lo encontremos."),
+                "¿Algún hallazgo periodístico en su santuario privado? Cuéntamelo todo.",
+                "Seguro que Simón dejó migajas para que las sigas. Es su estilo."),
             BuildNpcAnxiety("chapter3_npc_lucas", "Lucas",
-                "Simón siempre dormía con la ventana abierta. Mira, está cerrada con llave por dentro.",
-                "Él no se fue por voluntad propia. Alguien lo encerró. O él mismo se encerró."),
+                "Simón nunca dejaba a nadie entrar ahí. Qué ironía que ahora revolvamos sus cosas.",
+                "Solo espero que no encuentres algo que sea mejor dejar enterrado."),
             // ─── NPC: diálogos críticos Cap 3 ───
             BuildNpcCritical("chapter3_npc_robert_critical", "Robert",
                 "Es mi hermano. Simón es mi hermano y nunca se lo dije a nadie. Y ahora puede que esté muerto de verdad."),
@@ -108,20 +113,20 @@ public class Chapter3Builder : MonoBehaviour
                 "El relicario. Robé el relicario y Simón lo sabe. Siempre lo supo. Esta es mi condena."),
             // ─── NPC: preguntar sobre items del Cap 3 ───
             BuildNpcItemQuestion("chapter3_npc_robert_item_carta", "Robert",
-                "La carta dice que Simón podría estar vivo.",
-                "Si está vivo... entonces esto no es un funeral. Es una trampa. Y todos caímos en ella."),
+                "Encontré esta carta en su habitación. Dice que podría estar vivo.",
+                "¿Vivo? Eso... eso cambia todo. Si está vivo... entonces esto no es un funeral. Es una trampa."),
             BuildNpcItemQuestion("chapter3_npc_ana_item_mapa", "Ana",
-                "El mapa señala el Ala Norte. ¿Sabías que existía?",
-                "No. Nunca vi esa parte de la mansión. Simón nunca la mencionó en nuestros tratos."),
-            BuildNpcItemQuestion("chapter3_npc_ben_item_llave_pequena", "Ben",
-                "Encontré una llave pequeña en la mesita de noche.",
-                "¿Una llave pequeña? Eso... eso podría abrir el archivador del estudio. No, no vayas. No abras eso."),
+                "Encontré un mapa en su habitación. Señala el Ala Norte. ¿Sabías que existía?",
+                "¿Un mapa? No. Nunca vi esa parte de la mansión. Simón nunca la mencionó."),
+            BuildNpcItemQuestion("chapter3_npc_ben_item_papeles", "Ben",
+                "Encontré unos borradores de testificación bajo su cama. Iba a hacer una declaración.",
+                "¿Testificación? ¿Contra quién? Dios, si tiene que ver con los fondos de la empresa..."),
             BuildNpcItemQuestion("chapter3_npc_lisa_item_vaso", "Lisa",
-                "El vaso de agua todavía tiene condensación. Simón estuvo aquí hace muy poco.",
-                "Horas. Tal vez menos. Esto confirma mi teoría. La muerte fue un montaje."),
-            BuildNpcItemQuestion("chapter3_npc_lucas_item_cama", "Lucas",
-                "La cama está deshecha y todavía tibia.",
-                "Era su costumbre. Nunca hacía la cama. Decía que era un ritual inútil para gente que no vive de verdad."),
+                "Encontré un vaso de agua en su cuarto. Todavía tenía condensación. Alguien estuvo ahí hace muy poco.",
+                "¿Condensación? Horas. Tal vez menos. Esto confirma mi teoría. La muerte fue un montaje."),
+            BuildNpcItemQuestion("chapter3_npc_lucas_item_caja", "Lucas",
+                "Encontré esta caja puzzle bajo su cama. ¿Te resulta familiar?",
+                "¿Una caja puzzle? A Simón siempre le gustaron esos artilugios. Seguro esconde algo importante."),
             // ─── Decisión del Capítulo 3 ───
             BuildChapter3Decision()
         };
@@ -143,10 +148,11 @@ public class Chapter3Builder : MonoBehaviour
             lines = new List<DialogueLine>
             {
                 new DialogueLine { speaker = "Narrador", text = "Capítulo 3 — La Habitación de Simón. 6:00 PM." },
-                new DialogueLine { speaker = "Narrador", text = "La puerta se abre sin resistencia. No estaba cerrada con llave. Como si alguien quisiera que entraras." },
-                new DialogueLine { speaker = "Jugador", text = "Aquí es donde Simón pasaba más tiempo. Si escondía algo, probablemente esté aquí.", anxietyDelta = 6f },
+                new DialogueLine { speaker = "Jugador", text = "Por fin… esta llave debería abrir la habitación de Simón." },
+                new DialogueLine { speaker = "Narrador", text = "La cerradura cede con un chasquido mecánico. La puerta se abre, revelando el santuario del fallecido." },
+                new DialogueLine { speaker = "Jugador", text = "Aquí es donde Simón pasaba más tiempo. Veamos qué escondía aquí dentro.", anxietyDelta = 6f },
                 new DialogueLine { speaker = "Narrador", text = "El cuarto es espartano: una cama, una mesita de noche, un escritorio y un mapa clavado en la pared. Un vaso de agua descansa en la mesita.", anxietyDelta = 8f },
-                new DialogueLine { speaker = "Jugador", text = "Tal vez aquí encuentre lo que explique por qué todo esto fue preparado.", setFlag = "chapter3.intro.seen" }
+                new DialogueLine { speaker = "Jugador", text = "Debo investigar rápido antes de que los demás empiecen a hacer preguntas.", setFlag = "chapter3.intro.seen" }
             }
         };
 
@@ -234,15 +240,107 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "La mesita de noche tiene un solo cajón. Lo abres con cuidado. Dentro, envuelta en un pañuelo de seda:" },
-                new DialogueLine { speaker = "Narrador", text = "Una llave pequeña y oxidada. No es para una puerta. Es para algo más íntimo. Un cajón. Un archivador.", anxietyDelta = 3f, setFlag = "clue.habitacion.llave_pequena" },
-                new DialogueLine { speaker = "Narrador", text = "Recuerdas el archivador cerrado del estudio. Esta llave podría abrirlo." }
+                new DialogueLine { speaker = "Narrador", text = "La mesita de noche tiene un solo cajón. Lo abres con cuidado. Dentro, encuentras algunas notas esparcidas." },
+                new DialogueLine { speaker = "Jugador", text = "Parecen registros médicos. 'Dosis incrementada... alucinaciones recurrentes'. Simón estaba medicado.", anxietyDelta = 8f },
+                new DialogueLine { speaker = "Narrador", text = "También hay una foto antigua de la familia, pero la cara de Robert está tachada con un bolígrafo negro.", setFlag = "clue.habitacion.mesita_noche", addInventoryItemId = "notas_medicas" }
             }
         };
 
         return new DialogueConversation
         {
             id = "chapter3_Bedside_Table",
+            nodes = new List<DialogueNode> { start }
+        };
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // HOTSPOTS DE LA GALERÍA
+    // ═══════════════════════════════════════════════════════════════
+
+    private static DialogueConversation BuildGaleriaPinturaMisteriosa()
+    {
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "Un retrato familiar antiguo. Los rostros están desgastados, excepto uno que parece haber sido retocado recientemente." },
+                new DialogueLine { speaker = "Jugador", text = "Hay algo detrás del marco.", anxietyDelta = 5f },
+                new DialogueLine { speaker = "Narrador", text = "Al mover el cuadro, encuentras un compartimento hueco.", setFlag = "clue.galeria.pintura_misteriosa" }
+            }
+        };
+
+        return new DialogueConversation
+        {
+            id = "chapter3_Gallery_Painting",
+            nodes = new List<DialogueNode> { start }
+        };
+    }
+
+    private static DialogueConversation BuildGaleriaCajaPuzzle2()
+    {
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "Una segunda caja puzzle descansa sobre una peana de mármol. El mecanismo es similar a la primera, pero los símbolos son diferentes." },
+                new DialogueLine { speaker = "Jugador", text = "Si uso el mismo razonamiento que con la primera caja, podría abrirla." },
+                new DialogueLine { speaker = "Narrador", text = "Tras manipular los engranajes por unos minutos, el compartimento se abre con un clic.", requiredFlag = "clue.habitacion.caja_puzzle_1", setFlag = "clue.galeria.caja_puzzle_2", addInventoryItemId = "llave_pequena" },
+                new DialogueLine { speaker = "Jugador", text = "Dentro hay una llave pequeña de bronce. Parece la llave de un archivador.", requiredFlag = "clue.galeria.caja_puzzle_2" }
+            }
+        };
+
+        return new DialogueConversation
+        {
+            id = "chapter3_Gallery_PuzzleBox2",
+            nodes = new List<DialogueNode> { start }
+        };
+    }
+
+    private static DialogueConversation BuildGaleriaCajaPuzzle3()
+    {
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "En un rincón apartado de la galería descansa la tercera y última caja puzzle." },
+                new DialogueLine { speaker = "Jugador", text = "Si las dos primeras escondían llaves, esta debe tener algo importante." },
+                new DialogueLine { speaker = "Narrador", text = "El intrincado mecanismo cede tras aplicar la lógica de los anteriores.", requiredFlag = "clue.galeria.caja_puzzle_2", setFlag = "clue.galeria.caja_puzzle_3", addInventoryItemId = "BasementKey" },
+                new DialogueLine { speaker = "Jugador", text = "Una llave pesada de hierro negro. Tiene una etiqueta desgastada que apenas se lee: 'Sótano'.", requiredFlag = "clue.galeria.caja_puzzle_3", anxietyDelta = 10f }
+            }
+        };
+
+        return new DialogueConversation
+        {
+            id = "chapter3_Gallery_PuzzleBox3",
+            nodes = new List<DialogueNode> { start }
+        };
+    }
+
+    private static DialogueConversation BuildGaleriaAlfombraSospechosa()
+    {
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "Una gran alfombra persa cubre el centro de la galería. Al pisarla, suena ligeramente hueco." },
+                new DialogueLine { speaker = "Jugador", text = "El sonido no es consistente con el resto del suelo de madera maciza." },
+                new DialogueLine { speaker = "Narrador", text = "Acorralando el mueble cercano y retirando la pesada alfombra, revelas una puerta de madera oscura incrustada en el suelo. Una cerradura de hierro negro bloquea el acceso." },
+                new DialogueLine { speaker = "Jugador", text = "Una trampilla oculta. Debe llevar al sótano.", anxietyDelta = 15f },
+                new DialogueLine { speaker = "Narrador", text = "Has descubierto la entrada oculta al sótano.", setFlag = "BasementDiscovered" }
+            }
+        };
+
+        return new DialogueConversation
+        {
+            id = "chapter3_Gallery_SuspectCarpet",
             nodes = new List<DialogueNode> { start }
         };
     }
@@ -255,9 +353,9 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "La cama está deshecha. Las sábanas todavía conservan la forma de un cuerpo. La almohada tiene una marca de cabeza." },
-                new DialogueLine { speaker = "Narrador", text = "Pasas la mano sobre la tela. Está tibia. No caliente, pero tampoco fría. Como si alguien se hubiera levantado hace no mucho.", anxietyDelta = 8f },
-                new DialogueLine { speaker = "Narrador", text = "Debajo de la almohada, un mechón de cabello oscuro. De Simón, probablemente.", setFlag = "clue.habitacion.cama" }
+                new DialogueLine { speaker = "Narrador", text = "Te arrodillas y revisas debajo de la cama. Está oscuro, pero alcanzas a tocar algo sólido." },
+                new DialogueLine { speaker = "Narrador", text = "Sacas una caja de madera con un extraño mecanismo en la tapa. Parece un rompecabezas.", setFlag = "clue.habitacion.caja_puzzle_1", addInventoryItemId = "caja_puzzle_1" },
+                new DialogueLine { speaker = "Narrador", text = "Junto a la caja, hay unos papeles sueltos. Parecen ser borradores de testificación. Simón estaba preparando una declaración legal antes de morir.", anxietyDelta = 5f, setFlag = "clue.habitacion.papeles_testificacion" }
             }
         };
 
@@ -334,62 +432,38 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = false,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "La habitación de Simón ha revelado la verdad. Simón está vivo. Hay alguien más en la mansión. Y tienes una llave que podría abrir respuestas." },
-                new DialogueLine { speaker = "Narrador", text = "¿Cuál es tu próximo paso?" }
+                new DialogueLine { speaker = "Jugador", text = "Esta carta lo cambia todo. Simón podría estar vivo... o alguien quiere hacérmelo creer." },
+                new DialogueLine { speaker = "Jugador", text = "¿Qué debería hacer con esta información?" }
             },
             choices = new List<DialogueChoice>
             {
                 new DialogueChoice
                 {
-                    id = "return_archivador",
-                    text = "Volver al estudio con la llave pequeña para abrir el archivador",
-                    nextNodeId = "result_archivador",
-                    anxietyDelta = 4f,
-                    setFlag = "chapter3.choice.archivador",
-                    requiredFlag = "clue.habitacion.llave_pequena"
-                },
-                new DialogueChoice
-                {
-                    id = "go_north_wing",
-                    text = "Buscar el Ala Norte marcada en el mapa",
-                    nextNodeId = "result_north_wing",
-                    anxietyDelta = 12f,
-                    setFlag = "chapter3.choice.north_wing",
-                    requiredFlag = "clue.habitacion.mapa_ala_norte"
-                },
-                new DialogueChoice
-                {
                     id = "confront_group",
-                    text = "Mostrar la carta de Simón a todos",
+                    text = "Mostrar la carta al grupo y proponer buscar a Simón ahora mismo",
                     nextNodeId = "result_confront_group",
-                    anxietyDelta = 10f,
+                    anxietyDelta = 12f,
                     setFlag = "chapter3.choice.confront_group",
                     requiredFlag = "clue.habitacion.carta_inconclusa"
+                },
+                new DialogueChoice
+                {
+                    id = "keep_hidden",
+                    text = "Guardar la carta y seguir recopilando información antes de actuar",
+                    nextNodeId = "result_keep_hidden",
+                    anxietyDelta = 4f,
+                    setFlag = "chapter3.choice.keep_hidden",
+                    requiredFlag = "clue.habitacion.carta_inconclusa"
+                },
+                new DialogueChoice
+                {
+                    id = "ask_robert",
+                    text = "Preguntarle a Robert directamente sobre su relación con Simón",
+                    nextNodeId = "result_ask_robert",
+                    anxietyDelta = 8f,
+                    setFlag = "chapter3.choice.ask_robert",
+                    requiredFlag = "clue.habitacion.carta_inconclusa"
                 }
-            }
-        };
-
-        DialogueNode resultArchivador = new DialogueNode
-        {
-            id = "result_archivador",
-            endsConversation = true,
-            lines = new List<DialogueLine>
-            {
-                new DialogueLine { speaker = "Narrador", text = "Decides volver al estudio. El archivador guarda los secretos que Simón quería proteger. La llave pequeña encaja perfectamente." },
-                new DialogueLine { speaker = "Narrador", text = "Dentro encuentras carpetas, documentos, fotografías. Todo apunta a una verdad más grande que la que imaginabas.", anxietyDelta = 5f },
-                new DialogueLine { speaker = "Narrador", text = "Simón no murió por accidente. Fue deliberado.", anxietyDelta = 8f, setFlag = "chapter3.archivador_abierto" }
-            }
-        };
-
-        DialogueNode resultNorthWing = new DialogueNode
-        {
-            id = "result_north_wing",
-            endsConversation = true,
-            lines = new List<DialogueLine>
-            {
-                new DialogueLine { speaker = "Narrador", text = "Decides seguir el mapa hacia el Ala Norte. Es la sección más antigua de la mansión. Simón dijo estar ahí." },
-                new DialogueLine { speaker = "Narrador", text = "Los pasillos son cada vez más estrechos. Las paredes weep agua. La estructura chirría bajo tus pies.", anxietyDelta = 10f },
-                new DialogueLine { speaker = "Narrador", text = "Encuentras una puerta. Está abierta. Y adentro...", anxietyDelta = 15f, setFlag = "chapter3.ala_norte_explorada" }
             }
         };
 
@@ -399,18 +473,41 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Jugador", text = "Escuchen todos. Encontré una carta de Simón. Dice que no está muerto. Y que hay alguien más aquí en la mansión." },
+                new DialogueLine { speaker = "Jugador", text = "Escuchen todos. Encontré una carta de Simón en su habitación. Dice que no está muerto." },
                 new DialogueLine { speaker = "Ana", text = "¿Qué? No... eso no tiene sentido. Vimos el cuerpo.", anxietyDelta = 12f },
                 new DialogueLine { speaker = "Ben", text = "Nos mintieron. Todo esto es una trampa. ¿Por qué nos trajeron aquí?", anxietyDelta = 15f },
                 new DialogueLine { speaker = "Lisa", text = "Lo sabía. Desde el principio supe que algo no cuadraba. La escena era demasiado perfecta.", anxietyDelta = 5f },
-                new DialogueLine { speaker = "Narrador", text = "El grupo estalla en caos. La confianza que quedaba se desmorona. Todos miran a los demás con sospecha. Alguien en esta habitación sabe la verdad. Y está aquí contigo.", anxietyDelta = 10f, setFlag = "chapter3.group_confronted" }
+                new DialogueLine { speaker = "Narrador", text = "El grupo estalla en caos. La confianza que quedaba se desmorona. Alguien en esta habitación sabe la verdad. Y está aquí contigo.", anxietyDelta = 10f, setFlag = "chapter3.group_confronted" }
+            }
+        };
+
+        DialogueNode resultKeepHidden = new DialogueNode
+        {
+            id = "result_keep_hidden",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Jugador", text = "No puedo confiar en nadie todavía. Guardaré la carta hasta que sepa más." },
+                new DialogueLine { speaker = "Narrador", text = "Escondes la carta en tu bolsillo. Cada sombra en la casa ahora parece ocultar un secreto más oscuro.", anxietyDelta = 5f, setFlag = "chapter3.kept_hidden" }
+            }
+        };
+
+        DialogueNode resultAskRobert = new DialogueNode
+        {
+            id = "result_ask_robert",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Jugador", text = "Robert, encontré algo. Una carta. Necesito que me digas la verdad sobre ti y Simón." },
+                new DialogueLine { speaker = "Robert", text = "¿Qué estás insinuando? Él era mi hermano, aunque nunca se lo dije a nadie. ¿Crees que yo...?", anxietyDelta = 15f },
+                new DialogueLine { speaker = "Narrador", text = "La tensión corta el aire. Acabas de revelar una carta que quizás no debías, pero tienes una pieza vital de información.", anxietyDelta = 5f, setFlag = "chapter3.asked_robert" }
             }
         };
 
         return new DialogueConversation
         {
             id = "chapter3_decision",
-            nodes = new List<DialogueNode> { start, resultArchivador, resultNorthWing, resultConfrontGroup }
+            nodes = new List<DialogueNode> { start, resultConfrontGroup, resultKeepHidden, resultAskRobert }
         };
     }
 }

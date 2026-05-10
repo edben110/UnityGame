@@ -123,6 +123,13 @@ public class DoorTrigger : Interactable
             Debug.Log("[DoorTrigger] Auto-detectado: puerta a habitación de Simón en Cap 2 → transición a Cap 3 (validada)");
         }
 
+        if (!shouldTriggerTransition && ShouldAutoStartChapter4OnEntry())
+        {
+            shouldTriggerTransition = true;
+            effectiveTransitionChapter = "chapter4";
+            Debug.Log("[DoorTrigger] Auto-detectado: puerta al sótano en Cap 3 → transición a Cap 4 (validada)");
+        }
+
         // Si esta puerta dispara transición de capítulo
         if (shouldTriggerTransition && !string.IsNullOrWhiteSpace(effectiveTransitionChapter))
         {
@@ -170,6 +177,12 @@ public class DoorTrigger : Interactable
         public bool hasBookDecision;
         public bool canStartChapter3;
         public string chapter3Reason;
+        public bool chapter4DoorInteraction;
+        public bool hasBasementDiscovered;
+        public bool hasBasementKey;
+        public bool hasChapter3Decision;
+        public bool canStartChapter4;
+        public string chapter4Reason;
     }
 
     private ValidationResult ValidateAccess()
@@ -250,6 +263,46 @@ public class DoorTrigger : Interactable
             }
 
             result.chapter3Reason = "All requirements satisfied";
+        }
+
+        // 3.6. Inicio de Cap 4 solo por puerta + llave de sótano + alfombra movida + flujo
+        if (ShouldValidateChapter4Entry())
+        {
+            result.chapter4DoorInteraction = true;
+            result.hasBasementKey = InventoryState.HasItem("BasementKey");
+            result.hasBasementDiscovered = StoryState.Instance.HasFlag("BasementDiscovered");
+            result.hasChapter3Decision = CountNpcTalks() >= 1; // At least one NPC talked after chapter 3
+            result.canStartChapter4 = result.hasBasementKey && result.hasBasementDiscovered && result.hasChapter3Decision;
+
+            if (!result.canStartChapter4)
+            {
+                result.canPass = false;
+
+                if (!result.hasBasementDiscovered)
+                {
+                    result.chapter4Reason = "Basement Not Discovered";
+                    result.blockReason = "No hay nada aquí."; // La puerta en sí ni debería ser visible si no está descubierta, pero por si acaso.
+                }
+                else if (!result.hasBasementKey)
+                {
+                    result.chapter4Reason = "Missing Basement Key";
+                    result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                }
+                else if (!result.hasChapter3Decision)
+                {
+                    result.chapter4Reason = "Must talk to at least one NPC";
+                    result.blockReason = "Debería hablar con los demás sobre mis hallazgos antes de bajar.";
+                }
+                else
+                {
+                    result.chapter4Reason = "Unknown reason";
+                    result.blockReason = "No puedes entrar todavía.";
+                }
+
+                return result;
+            }
+
+            result.chapter4Reason = "All requirements satisfied";
         }
 
         // 4. Verificar NPCs interrogados (CHECKPOINT NARRATIVO)
@@ -503,6 +556,32 @@ public class DoorTrigger : Interactable
     private bool ShouldAutoStartChapter3OnEntry()
     {
         return ShouldValidateChapter3Entry();
+    }
+
+    private bool ShouldValidateChapter4Entry()
+    {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        if (StoryState.Instance.CurrentChapterId != "chapter3")
+        {
+            return false;
+        }
+
+        if (string.Equals(targetRoomId, "sotano", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "basement", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool ShouldAutoStartChapter4OnEntry()
+    {
+        return ShouldValidateChapter4Entry();
     }
 
     private bool IsLobbyTarget()

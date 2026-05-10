@@ -3962,6 +3962,7 @@ GameObject:
   - component: {fileID: 650944588}
   - component: {fileID: 650944590}
   - component: {fileID: 650944589}
+  - component: {fileID: 650944591}
   m_Layer: 0
   m_Name: DialogueSystem
   m_TagString: Untagged
@@ -4911,6 +4912,698 @@ MonoBehaviour:
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
+  - id: chapter3_intro
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: "Cap\xEDtulo 3 \u2014 La Habitaci\xF3n de Sim\xF3n. 6:00 PM."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La puerta se abre sin resistencia. No estaba cerrada con llave. Como
+          si alguien quisiera que entraras.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Jugador
+        text: "Aqu\xED es donde Sim\xF3n pasaba m\xE1s tiempo. Si escond\xEDa algo,
+          probablemente est\xE9 aqu\xED."
+        anxietyDelta: 6
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: 'El cuarto es espartano: una cama, una mesita de noche, un escritorio
+          y un mapa clavado en la pared. Un vaso de agua descansa en la mesita.'
+        anxietyDelta: 8
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Jugador
+        text: "Tal vez aqu\xED encuentre lo que explique por qu\xE9 todo esto fue
+          preparado."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: chapter3.intro.seen
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_Water_Glass
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: "Un vaso de vidrio sobre la mesita. Hay agua dentro. La superficie
+          del vidrio est\xE1 empa\xF1ada por la condensaci\xF3n."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Tocas el vidrio. Est\xE1 fr\xEDo. Pero la condensaci\xF3n es reciente.
+          Alguien sirvi\xF3 este vaso hace no m\xE1s de dos horas."
+        anxietyDelta: 10
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: Los muertos no beben agua.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: clue.habitacion.vaso_agua
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_Wall_Map
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: "Un mapa antiguo de la mansi\xF3n y sus alrededores, clavado en la
+          pared con cuatro chinchetas. Est\xE1 amarillento por el tiempo."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Una zona est\xE1 marcada con un c\xEDrculo rojo grueso: el 'Ala Norte'.
+          Es una secci\xF3n de la mansi\xF3n que no aparece en ning\xFAn plano moderno."
+        anxietyDelta: 8
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Debajo del c\xEDrculo, con letra peque\xF1a: 'Aqu\xED termina todo.
+          O empieza.'"
+        anxietyDelta: 6
+        requiredFlag: 
+        setFlag: clue.habitacion.mapa_ala_norte
+        addInventoryItemId: mapa_ala_norte
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_Unfinished_Letter
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: "Sobre el escritorio hay una carta a medio escribir. La tinta todav\xEDa
+          huele fresca. La pluma est\xE1 junto a ella, como si el autor hubiera sido
+          interrumpido."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: 'La carta dice:'
+        anxietyDelta: 5
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Carta
+        text: "Si alguien lee esto, no estoy muerto. Estoy en el Ala Norte. No vine
+          por voluntad propia. Hay alguien m\xE1s en esta casa que no deber\xEDa
+          estar. No conf\xEDen en\u2014"
+        anxietyDelta: 15
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "La frase se corta abruptamente. Una mancha de tinta marca el punto
+          donde la pluma resbal\xF3."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: clue.habitacion.carta_inconclusa
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Sim\xF3n est\xE1 vivo. Y est\xE1 atrapado."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: simon_vivo
+        addInventoryItemId: carta_inconclusa
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_Bedside_Table
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: "La mesita de noche tiene un solo caj\xF3n. Lo abres con cuidado. Dentro,
+          envuelta en un pa\xF1uelo de seda:"
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Una llave peque\xF1a y oxidada. No es para una puerta. Es para algo
+          m\xE1s \xEDntimo. Un caj\xF3n. Un archivador."
+        anxietyDelta: 3
+        requiredFlag: 
+        setFlag: clue.habitacion.llave_pequena
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Recuerdas el archivador cerrado del estudio. Esta llave podr\xEDa
+          abrirlo."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_Bed
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: "La cama est\xE1 deshecha. Las s\xE1banas todav\xEDa conservan la forma
+          de un cuerpo. La almohada tiene una marca de cabeza."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Pasas la mano sobre la tela. Est\xE1 tibia. No caliente, pero tampoco
+          fr\xEDa. Como si alguien se hubiera levantado hace no mucho."
+        anxietyDelta: 8
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Debajo de la almohada, un mech\xF3n de cabello oscuro. De Sim\xF3n,
+          probablemente."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: clue.habitacion.cama
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_robert
+    nodes:
+    - id: start
+      lines:
+      - speaker: Robert
+        text: "Esta habitaci\xF3n... tiene un olor particular. A vida reciente. No
+          a muerte."
+        anxietyDelta: -8
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: "Si Sim\xF3n estuvo aqu\xED hace poco, entonces todo lo que nos dijeron
+          fue mentira."
+        anxietyDelta: -7
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_ana
+    nodes:
+    - id: start
+      lines:
+      - speaker: Ana
+        text: Mira la cama. Mira el vaso. Esto no es un cuarto abandonado.
+        anxietyDelta: -8
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: Me estoy empezando a preguntar si realmente vine por un funeral o por
+          una trampa.
+        anxietyDelta: -7
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_ben
+    nodes:
+    - id: start
+      lines:
+      - speaker: Ben
+        text: "Tenemos que irnos. Ya. Esto est\xE1 mal. Todo est\xE1 demasiado fresco."
+        anxietyDelta: -8
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: "Si Sim\xF3n est\xE1 vivo y nos atrajo aqu\xED... \xBFqu\xE9 quiere
+          de nosotros?"
+        anxietyDelta: -7
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_lisa
+    nodes:
+    - id: start
+      lines:
+      - speaker: Lisa
+        text: "Period\xEDsticamente hablando, esto es una escena manipulada. No hay
+          duda."
+        anxietyDelta: -8
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: "La carta, el mapa, el vaso... todo est\xE1 puesto para que lo encontremos."
+        anxietyDelta: -7
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_lucas
+    nodes:
+    - id: start
+      lines:
+      - speaker: Lucas
+        text: "Sim\xF3n siempre dorm\xEDa con la ventana abierta. Mira, est\xE1 cerrada
+          con llave por dentro."
+        anxietyDelta: -8
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lucas
+        text: "\xC9l no se fue por voluntad propia. Alguien lo encerr\xF3. O \xE9l
+          mismo se encerr\xF3."
+        anxietyDelta: -7
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_robert_critical
+    nodes:
+    - id: start
+      lines:
+      - speaker: Robert
+        text: "Es mi hermano. Sim\xF3n es mi hermano y nunca se lo dije a nadie.
+          Y ahora puede que est\xE9 muerto de verdad."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: Ya no importa nada. Ya no importa.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: Ha llegado a un punto sin retorno. La casa lo ha roto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_ana_critical
+    nodes:
+    - id: start
+      lines:
+      - speaker: Ana
+        text: "Las joyas. Las joyas que us\xE9 como garant\xEDa. Si Sim\xF3n est\xE1
+          vivo, vendr\xE1 a cobrar. No puedo pagar."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: Ya no importa nada. Ya no importa.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: Ha llegado a un punto sin retorno. La casa lo ha roto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_ben_critical
+    nodes:
+    - id: start
+      lines:
+      - speaker: Ben
+        text: "El libro de cuentas. Si Sim\xF3n hizo una copia y est\xE1 en ese archivador,
+          estoy acabado."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: Ya no importa nada. Ya no importa.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: Ha llegado a un punto sin retorno. La casa lo ha roto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_lisa_critical
+    nodes:
+    - id: start
+      lines:
+      - speaker: Lisa
+        text: "Hay alguien m\xE1s en la casa. Lo siento. Lo huelo. La sexta persona
+          est\xE1 aqu\xED."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: Ya no importa nada. Ya no importa.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: Ha llegado a un punto sin retorno. La casa lo ha roto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_lucas_critical
+    nodes:
+    - id: start
+      lines:
+      - speaker: Lucas
+        text: "El relicario. Rob\xE9 el relicario y Sim\xF3n lo sabe. Siempre lo
+          supo. Esta es mi condena."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lucas
+        text: Ya no importa nada. Ya no importa.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: Ha llegado a un punto sin retorno. La casa lo ha roto.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_robert_item_carta
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: "La carta dice que Sim\xF3n podr\xEDa estar vivo."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Robert
+        text: "Si est\xE1 vivo... entonces esto no es un funeral. Es una trampa.
+          Y todos ca\xEDmos en ella."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La verdad se acerca. Y con ella, el peligro.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_ana_item_mapa
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: "El mapa se\xF1ala el Ala Norte. \xBFSab\xEDas que exist\xEDa?"
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: "No. Nunca vi esa parte de la mansi\xF3n. Sim\xF3n nunca la mencion\xF3
+          en nuestros tratos."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La verdad se acerca. Y con ella, el peligro.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_ben_item_llave_pequena
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: "Encontr\xE9 una llave peque\xF1a en la mesita de noche."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: "\xBFUna llave peque\xF1a? Eso... eso podr\xEDa abrir el archivador
+          del estudio. No, no vayas. No abras eso."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La verdad se acerca. Y con ella, el peligro.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_lisa_item_vaso
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: "El vaso de agua todav\xEDa tiene condensaci\xF3n. Sim\xF3n estuvo
+          aqu\xED hace muy poco."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: "Horas. Tal vez menos. Esto confirma mi teor\xEDa. La muerte fue un
+          montaje."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La verdad se acerca. Y con ella, el peligro.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_npc_lucas_item_cama
+    nodes:
+    - id: start
+      lines:
+      - speaker: Jugador
+        text: "La cama est\xE1 deshecha y todav\xEDa tibia."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lucas
+        text: "Era su costumbre. Nunca hac\xEDa la cama. Dec\xEDa que era un ritual
+          in\xFAtil para gente que no vive de verdad."
+        anxietyDelta: -2
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: La verdad se acerca. Y con ella, el peligro.
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+  - id: chapter3_decision
+    nodes:
+    - id: start
+      lines:
+      - speaker: Narrador
+        text: "La habitaci\xF3n de Sim\xF3n ha revelado la verdad. Sim\xF3n est\xE1
+          vivo. Hay alguien m\xE1s en la mansi\xF3n. Y tienes una llave que podr\xEDa
+          abrir respuestas."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "\xBFCu\xE1l es tu pr\xF3ximo paso?"
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      choices:
+      - id: return_archivador
+        text: "Volver al estudio con la llave peque\xF1a para abrir el archivador"
+        nextNodeId: result_archivador
+        anxietyDelta: 4
+        requiredAnxietyMin: 0
+        requiredAnxietyMax: 100
+        requiredFlag: clue.habitacion.llave_pequena
+        setFlag: chapter3.choice.archivador
+      - id: go_north_wing
+        text: Buscar el Ala Norte marcada en el mapa
+        nextNodeId: result_north_wing
+        anxietyDelta: 12
+        requiredAnxietyMin: 0
+        requiredAnxietyMax: 100
+        requiredFlag: clue.habitacion.mapa_ala_norte
+        setFlag: chapter3.choice.north_wing
+      - id: confront_group
+        text: "Mostrar la carta de Sim\xF3n a todos"
+        nextNodeId: result_confront_group
+        anxietyDelta: 10
+        requiredAnxietyMin: 0
+        requiredAnxietyMax: 100
+        requiredFlag: clue.habitacion.carta_inconclusa
+        setFlag: chapter3.choice.confront_group
+      nextNodeIdIfNoChoices: 
+      endsConversation: 0
+    - id: result_archivador
+      lines:
+      - speaker: Narrador
+        text: "Decides volver al estudio. El archivador guarda los secretos que Sim\xF3n
+          quer\xEDa proteger. La llave peque\xF1a encaja perfectamente."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Dentro encuentras carpetas, documentos, fotograf\xEDas. Todo apunta
+          a una verdad m\xE1s grande que la que imaginabas."
+        anxietyDelta: 5
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Sim\xF3n no muri\xF3 por accidente. Fue deliberado."
+        anxietyDelta: 8
+        requiredFlag: 
+        setFlag: chapter3.archivador_abierto
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+    - id: result_north_wing
+      lines:
+      - speaker: Narrador
+        text: "Decides seguir el mapa hacia el Ala Norte. Es la secci\xF3n m\xE1s
+          antigua de la mansi\xF3n. Sim\xF3n dijo estar ah\xED."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Los pasillos son cada vez m\xE1s estrechos. Las paredes weep agua.
+          La estructura chirr\xEDa bajo tus pies."
+        anxietyDelta: 10
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "Encuentras una puerta. Est\xE1 abierta. Y adentro..."
+        anxietyDelta: 15
+        requiredFlag: 
+        setFlag: chapter3.ala_norte_explorada
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
+    - id: result_confront_group
+      lines:
+      - speaker: Jugador
+        text: "Escuchen todos. Encontr\xE9 una carta de Sim\xF3n. Dice que no est\xE1
+          muerto. Y que hay alguien m\xE1s aqu\xED en la mansi\xF3n."
+        anxietyDelta: 0
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ana
+        text: "\xBFQu\xE9? No... eso no tiene sentido. Vimos el cuerpo."
+        anxietyDelta: 12
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Ben
+        text: "Nos mintieron. Todo esto es una trampa. \xBFPor qu\xE9 nos trajeron
+          aqu\xED?"
+        anxietyDelta: 15
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Lisa
+        text: "Lo sab\xEDa. Desde el principio supe que algo no cuadraba. La escena
+          era demasiado perfecta."
+        anxietyDelta: 5
+        requiredFlag: 
+        setFlag: 
+        addInventoryItemId: 
+      - speaker: Narrador
+        text: "El grupo estalla en caos. La confianza que quedaba se desmorona. Todos
+          miran a los dem\xE1s con sospecha. Alguien en esta habitaci\xF3n sabe la
+          verdad. Y est\xE1 aqu\xED contigo."
+        anxietyDelta: 10
+        requiredFlag: 
+        setFlag: chapter3.group_confronted
+        addInventoryItemId: 
+      choices: []
+      nextNodeIdIfNoChoices: 
+      endsConversation: 1
 --- !u!114 &650944588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4952,6 +5645,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chapter2Builder
   targetLibrary: {fileID: 650944587}
+  generateOnStartIfEmpty: 1
+--- !u!114 &650944591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650944583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06833fecf57307b4aa48e160f9f54c1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chapter4Builder
+  targetLibrary: {fileID: 0}
   generateOnStartIfEmpty: 1
 --- !u!1 &664234941
 GameObject:
@@ -10565,7 +11272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 774.80005
+      value: 770
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
@@ -12443,7 +13150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b76dcb6fbe9aa469d47c392ca88351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoryState
-  currentChapterId: prologue
+  currentChapterId: chapter3
   anxiety: 0
 --- !u!4 &1820128884
 Transform:

@@ -219,6 +219,18 @@ public class ChapterFlowController : MonoBehaviour
                 }
             }
         }
+
+        // CAP 3: Disparar decisión al tener la carta y entrar a la sala de NPCs
+        if (chapter == chapter3Id && !StoryState.Instance.HasFlag("chapter3.decision.shown") && InventoryState.HasItem("carta_inconclusa"))
+        {
+            bool inNpcRoom = RoomManager.Instance == null || RoomManager.Instance.CurrentRoomId == "lobby";
+            if (inNpcRoom)
+            {
+                StoryState.Instance.SetFlag("chapter3.decision.shown", true);
+                Debug.Log("[ChapterFlow] ★ Cap 3: Carta encontrada. En Lobby. Lanzando decisión...");
+                Invoke(nameof(LaunchChapter3Decision), 1.5f);
+            }
+        }
     }
 
     private void LaunchChapter2InitialDecision()
@@ -231,6 +243,18 @@ public class ChapterFlowController : MonoBehaviour
         else
         {
             Invoke(nameof(LaunchChapter2InitialDecision), 1f);
+        }
+    }
+
+    private void LaunchChapter3Decision()
+    {
+        if (dialogueRunner != null && !dialogueRunner.IsRunning)
+        {
+            dialogueRunner.StartConversation(chapter3DecisionConversationId, "start");
+        }
+        else
+        {
+            Invoke(nameof(LaunchChapter3Decision), 1f);
         }
     }
 
