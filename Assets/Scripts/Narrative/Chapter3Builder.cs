@@ -5,7 +5,18 @@ using UnityEngine;
 /// Builder de contenido narrativo para el Capítulo 3: Habitación de Simón.
 /// Inyecta conversaciones en la DialogueLibrary usando AddConversations (no destructivo).
 ///
-/// Contenido basado en la_mansion_de_simon.py → capitulo_3() / explorar_habitacion().
+/// FLUJO NARRATIVO REFACTORIZADO:
+/// 1. Jugador obtiene acceso a la habitación de Simón
+/// 2. Interactúa con hotspots para obtener evidencia
+/// 3. Obtiene la llave pequeña (requisito para avanzar)
+/// 4. Puede intentar abrir el archivador del estudio O
+/// 5. Puede buscar el Ala Norte
+/// 
+/// VALIDACIONES CRÍTICAS:
+///   - El jugador solo puede avanzar si tiene la llave pequeña
+///   - Debe haber obtenido la carta de Simón
+///   - Decisión controlada (no automática)
+///   - Mismo nivel de robustez que Capítulo 2
 ///
 /// Hotspots de la Habitación:
 ///   - Vaso de agua (condensación → Simón estuvo aquí hace poco)
@@ -13,11 +24,6 @@ using UnityEngine;
 ///   - Carta inconclusa ("Si alguien lee esto, no estoy muerto...")
 ///   - Mesita de noche (contiene la llave pequeña del archivador)
 ///   - Cama deshecha (evidencia de uso reciente)
-///
-/// Decisión crítica:
-///   - Volver al estudio a abrir el archivador
-///   - Ir al Ala Norte siguiendo el mapa
-///   - Confrontar al grupo con la carta
 /// </summary>
 public class Chapter3Builder : MonoBehaviour
 {
@@ -329,7 +335,8 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = false,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "La habitación de Simón ha revelado más de lo esperado. Simón podría estar vivo. Y hay alguien más en la casa. ¿Qué harás?" }
+                new DialogueLine { speaker = "Narrador", text = "La habitación de Simón ha revelado la verdad. Simón está vivo. Hay alguien más en la mansión. Y tienes una llave que podría abrir respuestas." },
+                new DialogueLine { speaker = "Narrador", text = "¿Cuál es tu próximo paso?" }
             },
             choices = new List<DialogueChoice>
             {
@@ -369,8 +376,9 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Decides volver al estudio. El archivador guarda los secretos que Simón quería proteger." },
-                new DialogueLine { speaker = "Narrador", text = "La llave gira en la cerradura con un clic satisfactorio. La respuesta está dentro.", setFlag = "chapter3.completed" }
+                new DialogueLine { speaker = "Narrador", text = "Decides volver al estudio. El archivador guarda los secretos que Simón quería proteger. La llave pequeña encaja perfectamente." },
+                new DialogueLine { speaker = "Narrador", text = "Dentro encuentras carpetas, documentos, fotografías. Todo apunta a una verdad más grande que la que imaginabas.", anxietyDelta = 5f },
+                new DialogueLine { speaker = "Narrador", text = "Simón no murió por accidente. Fue deliberado.", anxietyDelta = 8f, setFlag = "chapter3.archivador_abierto" }
             }
         };
 
@@ -380,9 +388,9 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Decides seguir el mapa hacia el Ala Norte. Si Simón está ahí, lo encontrarás." },
-                new DialogueLine { speaker = "Robert", text = "No vayamos solos. Si hay alguien más en la casa, necesitamos estar juntos." },
-                new DialogueLine { speaker = "Narrador", text = "El pasillo hacia el Ala Norte es más oscuro de lo esperado. Las paredes se estrechan.", anxietyDelta = 8f, setFlag = "chapter3.completed" }
+                new DialogueLine { speaker = "Narrador", text = "Decides seguir el mapa hacia el Ala Norte. Es la sección más antigua de la mansión. Simón dijo estar ahí." },
+                new DialogueLine { speaker = "Narrador", text = "Los pasillos son cada vez más estrechos. Las paredes weep agua. La estructura chirría bajo tus pies.", anxietyDelta = 10f },
+                new DialogueLine { speaker = "Narrador", text = "Encuentras una puerta. Está abierta. Y adentro...", anxietyDelta = 15f, setFlag = "chapter3.ala_norte_explorada" }
             }
         };
 
@@ -392,11 +400,11 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Jugador", text = "Escuchen todos. Encontré una carta de Simón. Dice que no está muerto. Y que hay alguien más aquí." },
-                new DialogueLine { speaker = "Ana", text = "¿Qué? No... eso no tiene sentido.", anxietyDelta = 12f },
-                new DialogueLine { speaker = "Ben", text = "Nos mintieron. Todo esto es una trampa.", anxietyDelta = 15f },
-                new DialogueLine { speaker = "Lisa", text = "Lo sabía. Lo sabía desde el principio.", anxietyDelta = 5f },
-                new DialogueLine { speaker = "Narrador", text = "El grupo estalla. La confianza se rompe definitivamente. Pero ahora todos saben la verdad.", setFlag = "chapter3.completed" }
+                new DialogueLine { speaker = "Jugador", text = "Escuchen todos. Encontré una carta de Simón. Dice que no está muerto. Y que hay alguien más aquí en la mansión." },
+                new DialogueLine { speaker = "Ana", text = "¿Qué? No... eso no tiene sentido. Vimos el cuerpo.", anxietyDelta = 12f },
+                new DialogueLine { speaker = "Ben", text = "Nos mintieron. Todo esto es una trampa. ¿Por qué nos trajeron aquí?", anxietyDelta = 15f },
+                new DialogueLine { speaker = "Lisa", text = "Lo sabía. Desde el principio supe que algo no cuadraba. La escena era demasiado perfecta.", anxietyDelta = 5f },
+                new DialogueLine { speaker = "Narrador", text = "El grupo estalla en caos. La confianza que quedaba se desmorona. Todos miran a los demás con sospecha. Alguien en esta habitación sabe la verdad. Y está aquí contigo.", anxietyDelta = 10f, setFlag = "chapter3.group_confronted" }
             }
         };
 

@@ -24,7 +24,8 @@ public class ChapterFlowController : MonoBehaviour
     [SerializeField] private string chapter1IntroConversationId = "chapter1_intro";
     [SerializeField] private string chapter1DecisionConversationId = "chapter1_decision";
     [SerializeField] private string chapter2IntroConversationId = "chapter2_intro";
-    [SerializeField] private string chapter2DecisionConversationId = "chapter2_decision";
+    [SerializeField] private string chapter2InitialDecisionConversationId = "chapter2_initial_decision";
+    [SerializeField] private string chapter2BookDecisionConversationId = "chapter2_book_decision";
     [SerializeField] private string chapter3IntroConversationId = "chapter3_intro";
     [SerializeField] private string chapter3DecisionConversationId = "chapter3_decision";
 
@@ -184,10 +185,15 @@ public class ChapterFlowController : MonoBehaviour
     }
 
     /// <summary>
-    /// Verifica si se deben lanzar decisiones automáticas para Cap 2 y Cap 3.
-    /// Cap 1 ya no usa auto-decisión (lo maneja DoorTrigger del estudio).
-    /// Cap 2: Se dispara cuando el jugador pregunta a Ben sobre el libro (flag: chapter2.asked_ben_about_book)
-    /// Cap 3: Se dispara cuando encuentra la carta de Simón (flag: simon_vivo)
+    /// Verifica si se deben lanzar decisiones para Cap 2 y Cap 3.
+    /// 
+    /// CAP 2 - NUEVO FLUJO:
+    ///   1. Cuando jugador ha hablado con los 5 NPCs → Dispara chapter2_initial_decision
+    ///   2. Cuando jugador interactúa con Ben + tiene el libro → Dispara chapter2_book_decision (desde NpcInteractable)
+    ///   3. Cuando chapter2_book_decision termina → Avanza a Cap 3
+    /// 
+    /// CAP 3:
+    ///   Cuando encuentra la llave de Simon y accede a su habitación → Avanza a Cap 4 (o mantiene en Cap 3)
     /// </summary>
     private void CheckAutoDecisions()
     {
@@ -198,23 +204,23 @@ public class ChapterFlowController : MonoBehaviour
 
         string chapter = StoryState.Instance.CurrentChapterId;
 
-        // Cap 2: decisión se dispara cuando el jugador pregunta a Ben sobre el libro
-        // Y está en la sala de NPCs (lobby)
+        // CAP 2: Disparar PRIMERA decisión cuando se han hablado con los 5 NPCs
         if (chapter == chapter2Id && !chapter2DecisionLaunched && !StoryState.Instance.HasFlag(chapter2CompleteFlag))
         {
-            if (StoryState.Instance.HasFlag("chapter2.asked_ben_about_book"))
+            int npcTalkCount = GetNpcTalkCount();
+            if (npcTalkCount >= 5)  // Se han hablado con TODOS los NPCs
             {
                 // Verificar que el jugador está en la sala de NPCs
                 bool inNpcRoom = RoomManager.Instance == null || RoomManager.Instance.CurrentRoomId == "lobby";
-                if (inNpcRoom)
+                if (inNpcRoom && !StoryState.Instance.HasFlag("chapter2.initial_decision.shown"))
                 {
                     chapter2DecisionLaunched = true;
-                    Debug.Log("[ChapterFlow] ★ Cap 2: Ben confrontado con el libro en la sala. Lanzando decisión...");
-                    Invoke(nameof(LaunchChapter2Decision), 1.5f);
+                    Debug.Log("[ChapterFlow] ★ Cap 2: Hablado con los 5 NPCs. Lanzando decisión inicial...");
+                    Invoke(nameof(LaunchChapter2InitialDecision), 1.5f);
                 }
             }
         }
-        // Cap 3: decisión cuando encuentra la carta de Simón
+        // CAP 3: decisión cuando encuentra la carta de Simón
         else if (chapter == chapter3Id && !chapter3DecisionLaunched && !StoryState.Instance.HasFlag(chapter3CompleteFlag))
         {
             if (StoryState.Instance.HasFlag("simon_vivo"))
@@ -226,15 +232,16 @@ public class ChapterFlowController : MonoBehaviour
         }
     }
 
-    private void LaunchChapter2Decision()
+    private void LaunchChapter2InitialDecision()
     {
         if (dialogueRunner != null && !dialogueRunner.IsRunning)
         {
-            dialogueRunner.StartConversation(chapter2DecisionConversationId, "start");
+            StoryState.Instance.SetFlag("chapter2.initial_decision.shown", true);
+            dialogueRunner.StartConversation(chapter2InitialDecisionConversationId, "start");
         }
         else
         {
-            Invoke(nameof(LaunchChapter2Decision), 1f);
+            Invoke(nameof(LaunchChapter2InitialDecision), 1f);
         }
     }
 
@@ -288,8 +295,16 @@ public class ChapterFlowController : MonoBehaviour
             return;
         }
 
-        // ─── Cap 2 decisión → Cap 3 ───
-        if (conversationId == chapter2DecisionConversationId)
+        // ─── Cap 2 DECISIÓN INICIAL completada ───
+        if (conversationId == chapter2InitialDecisionConversationId)
+        {
+            Debug.Log("[ChapterFlow] Cap 2 decisión inicial completada. El jugador puede continuar explorando.");
+            // No hacemos transición automática. El jugador continúa investigando.
+            return;
+        }
+
+        // ─── Cap 2 DECISIÓN DEL LIBRO completada → Cap 3 ───
+        if (conversationId == chapter2BookDecisionConversationId)
         {
             StoryState.Instance.SetFlag(chapter2CompleteFlag, true);
             StoryState.Instance.SetChapter(chapter3Id);

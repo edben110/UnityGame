@@ -46,7 +46,7 @@ public class NpcInteractable : Interactable
         return true;
     }
 
-public override void Interact()
+    public override void Interact()
     {
         base.Interact();
 
@@ -59,6 +59,21 @@ public override void Interact()
         {
             Debug.LogError("No se encontro NpcInteractionMenuUI en la escena.");
             return;
+        }
+
+        // CASO ESPECIAL: Si es Ben en Cap 2 y el jugador tiene el libro de contabilidad
+        if (npcId == "ben" && StoryState.Instance != null && StoryState.Instance.CurrentChapterId == "chapter2")
+        {
+            if (InventoryState.HasItem("libro_contabilidad"))
+            {
+                // Disparar la decisión del libro de contabilidad
+                bool started = runner.StartConversation("chapter2_book_decision", "start");
+                if (started)
+                {
+                    NpcInteractionMenuUI.Instance.Hide();
+                    return;
+                }
+            }
         }
 
         Action askItemAction;
@@ -75,7 +90,7 @@ public override void Interact()
         {
             string capturedMotivoId = motivoConversationId;
             motivoAction = () => OnMotivoPressed(capturedMotivoId);
-            motivoLabel = "\u00bfPor qu\u00e9 est\u00e1s aqu\u00ed?";
+            motivoLabel = "¿Por qué estás aquí?";
         }
 
         NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, askItemAction ?? motivoAction, askItemLabel.Length > 0 ? askItemLabel : motivoLabel);
@@ -101,9 +116,15 @@ public override void Interact()
             return false;
         }
 
-        // Restricción espacial deshabilitada temporalmente
-        // TODO: Reimplementar cuando el sistema de salas esté estable
-        // Los NPCs solo deberían responder en la sala donde están físicamente
+        // VALIDACIÓN ESPACIAL: El jugador debe estar en la misma habitación que el NPC
+        if (RoomContextValidator.Instance != null)
+        {
+            if (!RoomContextValidator.Instance.CanNpcDialogue(npcId, StoryState.Instance.CurrentChapterId))
+            {
+                Debug.LogWarning($"[NPC] {npcId} no puede dialogar: jugador no está en la habitación correcta.");
+                return false;
+            }
+        }
 
         runner = FindAnyObjectByType<DialogueRunner>();
         if (runner == null || runner.IsRunning)

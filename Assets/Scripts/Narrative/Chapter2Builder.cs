@@ -8,6 +8,18 @@ using UnityEngine;
 ///
 /// Contenido basado en la_mansion_de_simon.py → capitulo_2() / explorar_estudio().
 ///
+/// FLUJO NARRATIVO REFACTORIZADO:
+/// 1. Jugador entra al estudio con los 5 NPCs
+/// 2. Jugador habla con cada NPC (solo disponible en la sala de NPCs)
+/// 3. Después de hablar con los 5 NPCs → PRIMERA DECISIÓN:
+///    - Opción A: "Hablar sinceramente sobre Simon"
+///    - Opción B: "Separarse"
+/// 4. Jugador obtiene el libro de contabilidad
+/// 5. Jugador regresa a la sala de NPCs
+/// 6. Jugador interactúa con Ben sobre el libro → SEGUNDA DECISIÓN:
+///    - Opción A: "Confrontar"
+///    - Opción B: "Subir a buscar la habitación de Simon"
+///
 /// Hotspots del Estudio:
 ///   - Agenda de Simón
 ///   - Libro de contabilidad (evidencia contra Ben)
@@ -15,10 +27,11 @@ using UnityEngine;
 ///   - Tablero de corcho (fotos + sexta persona)
 ///   - Archivador (bloqueado, requiere llave pequeña del Cap 3)
 ///
-/// Decisión crítica al final del Cap 2:
-///   - Confrontar a Ben con el libro de contabilidad
-///   - Preguntar a Lisa sobre la foto del tablero
-///   - Subir al piso superior (avanzar a Cap 3)
+/// VALIDACIONES CRÍTICAS:
+///   - Diálogos de NPC SOLO cuando jugador está en la sala de NPCs (lobby)
+///   - Decisiones SOLO cuando jugador está en la sala de NPCs
+///   - El protagonista investiga SOLO en el estudio
+///   - Los NPCs permanecen SIEMPRE en la sala de NPCs
 /// </summary>
 public class Chapter2Builder : MonoBehaviour
 {
@@ -119,8 +132,9 @@ public class Chapter2Builder : MonoBehaviour
             BuildNpcItemQuestion("chapter2_npc_lucas_item_archivador", "Lucas",
                 "El archivador está cerrado. ¿Sabes algo de la llave?",
                 "Simón guardaba algo importante ahí. Una vez lo vi meter un sobre con lacre. Nunca me dijo qué contenía."),
-            // ─── Decisión del Capítulo 2 ───
-            BuildChapter2Decision()
+            // ─── Decisiones del Capítulo 2 ───
+            BuildChapter2InitialDecision(),
+            BuildChapter2BookDecision()
         };
 
         targetLibrary.AddConversations(chapter2);
@@ -334,10 +348,10 @@ public class Chapter2Builder : MonoBehaviour
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // DECISIÓN DEL CAPÍTULO 2
+    // DECISIONES DEL CAPÍTULO 2
     // ═══════════════════════════════════════════════════════════════
 
-    private static DialogueConversation BuildChapter2Decision()
+    private static DialogueConversation BuildChapter2InitialDecision()
     {
         DialogueNode start = new DialogueNode
         {
@@ -345,23 +359,88 @@ public class Chapter2Builder : MonoBehaviour
             endsConversation = false,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Ben te mira con los ojos muy abiertos. Sabe que encontraste el libro. La tensión es insoportable." },
-                new DialogueLine { speaker = "Narrador", text = "Debes decidir qué hacer con esta información." }
+                new DialogueLine { speaker = "Narrador", text = "Los cinco se miran unos a otros en el silencio del estudio. La tensión es casi visible en el aire." },
+                new DialogueLine { speaker = "Narrador", text = "¿Qué haces ahora?" }
             },
             choices = new List<DialogueChoice>
             {
                 new DialogueChoice
                 {
-                    id = "confront",
-                    text = "Confrontar a Ben directamente",
-                    nextNodeId = "result_confront",
+                    id = "talk_sincere",
+                    text = "Hablar sinceramente sobre Simon",
+                    nextNodeId = "result_talk_sincere",
+                    anxietyDelta = 5f,
+                    setFlag = "chapter2.choice.talk_sincere"
+                },
+                new DialogueChoice
+                {
+                    id = "separate",
+                    text = "Separarse",
+                    nextNodeId = "result_separate",
+                    anxietyDelta = -3f,
+                    setFlag = "chapter2.choice.separate"
+                }
+            }
+        };
+
+        DialogueNode resultTalkSincere = new DialogueNode
+        {
+            id = "result_talk_sincere",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Jugador", text = "Necesitamos hablar sinceramente. ¿Qué saben realmente sobre Simon? ¿Alguien sabe más de lo que ha dicho?" },
+                new DialogueLine { speaker = "Lisa", text = "Aquí hay algo que no cuadra. Las fotos en el tablero... la sexta persona. Simón estaba investigando a alguien.", anxietyDelta = 8f },
+                new DialogueLine { speaker = "Robert", text = "No sé de qué hablan. Yo solo vinimos por el funeral." },
+                new DialogueLine { speaker = "Narrador", text = "Las respuestas no llegan. Pero todos saben que el interrogatorio acaba de comenzar.", setFlag = "chapter2.npc_talked_sincere" }
+            }
+        };
+
+        DialogueNode resultSeparate = new DialogueNode
+        {
+            id = "result_separate",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "Decides que es mejor no presionar a nadie ahora. El silencio es más elocuente que cualquier palabra." },
+                new DialogueLine { speaker = "Narrador", text = "El grupo se dispersa en el estudio. Cada uno toma distancia del otro." },
+                new DialogueLine { speaker = "Narrador", text = "Ahora tienes libertad para explorar lo que quieras.", setFlag = "chapter2.npc_separated" }
+            }
+        };
+
+        return new DialogueConversation
+        {
+            id = "chapter2_initial_decision",
+            nodes = new List<DialogueNode> { start, resultTalkSincere, resultSeparate }
+        };
+    }
+
+    private static DialogueConversation BuildChapter2BookDecision()
+    {
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = false,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "Ben nota que regresas con el libro de contabilidad en la mano. Su expresión cambia dramáticamente." },
+                new DialogueLine { speaker = "Ben", text = "De dónde sacaste eso? Eso es... eso es propiedad privada de Simón." },
+                new DialogueLine { speaker = "Narrador", text = "¿Qué haces ahora?" }
+            },
+            choices = new List<DialogueChoice>
+            {
+                new DialogueChoice
+                {
+                    id = "confront_ben",
+                    text = "Confrontar",
+                    nextNodeId = "result_confront_ben",
                     anxietyDelta = 15f,
-                    setFlag = "chapter2.choice.confront"
+                    setFlag = "chapter2.choice.confront_ben"
                 },
                 new DialogueChoice
                 {
                     id = "search_bedroom",
-                    text = "Subir a buscar la habitación de Simón",
+                    text = "Subir a buscar la habitación de Simon",
                     nextNodeId = "result_search_bedroom",
                     anxietyDelta = 8f,
                     setFlag = "chapter2.choice.search_bedroom"
@@ -369,17 +448,17 @@ public class Chapter2Builder : MonoBehaviour
             }
         };
 
-        DialogueNode resultConfront = new DialogueNode
+        DialogueNode resultConfrontBen = new DialogueNode
         {
-            id = "result_confront",
+            id = "result_confront_ben",
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Jugador", text = "Ben. Las entradas marcadas con 'B' en el libro de Simón. Necesito una explicación." },
-                new DialogueLine { speaker = "Ben", text = "¿Qué...? No sé de qué hablas. Esas iniciales podrían ser de cualquiera.", anxietyDelta = 10f },
-                new DialogueLine { speaker = "Narrador", text = "Sus manos tiemblan. La negación es demasiado rápida. Demasiado practicada." },
-                new DialogueLine { speaker = "Ben", text = "Simón y yo teníamos un acuerdo informal. Si hay discrepancias, es porque él no llevaba bien sus cuentas.", anxietyDelta = 8f },
-                new DialogueLine { speaker = "Narrador", text = "La confrontación deja un silencio pesado. Pero ahora todos saben que Ben oculta algo.", setFlag = "chapter2.ben_confronted" }
+                new DialogueLine { speaker = "Jugador", text = "Las entradas marcadas con 'B'. Los montos desaparecidos. Necesito saber qué pasó entre Simón y tú." },
+                new DialogueLine { speaker = "Ben", text = "Eso... eso no es lo que parece. Simón y yo teníamos un arreglo. Un préstamo informal.", anxietyDelta = 10f },
+                new DialogueLine { speaker = "Narrador", text = "Sus manos tiemblan visiblemente. La mentira es transparente." },
+                new DialogueLine { speaker = "Ben", text = "Pero todo fue devuelto. Todo. Simón debe tener mis pagos anotados en otro lugar.", anxietyDelta = 8f },
+                new DialogueLine { speaker = "Narrador", text = "Pero no los tiene. Y Ben lo sabe. La confrontación deja un silencio devastador. Ahora todos en la sala entienden que Ben oculta algo más profundo.", setFlag = "chapter2.ben_confronted" }
             }
         };
 
@@ -389,16 +468,16 @@ public class Chapter2Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Decides no confrontar a Ben todavía. Hay más por descubrir arriba." },
-                new DialogueLine { speaker = "Narrador", text = "El segundo piso espera. La habitación de Simón podría tener las respuestas que faltan." },
-                new DialogueLine { speaker = "Narrador", text = "Dejas al grupo en la sala y subes solo. Los escalones crujen bajo tus pies.", anxietyDelta = 5f }
+                new DialogueLine { speaker = "Narrador", text = "Ben empalidece. Sabe que evitaste la confrontación." },
+                new DialogueLine { speaker = "Narrador", text = "Guardas el libro por ahora. Hay preguntas más urgentes en la habitación de Simón." },
+                new DialogueLine { speaker = "Narrador", text = "Subes solo. Los escalones crujen bajo tus pies. El grupo permanece en la sala de abajo.", anxietyDelta = 5f, setFlag = "chapter2.choosing_bedroom_route" }
             }
         };
 
         return new DialogueConversation
         {
-            id = "chapter2_decision",
-            nodes = new List<DialogueNode> { start, resultConfront, resultSearchBedroom }
+            id = "chapter2_book_decision",
+            nodes = new List<DialogueNode> { start, resultConfrontBen, resultSearchBedroom }
         };
     }
 }
