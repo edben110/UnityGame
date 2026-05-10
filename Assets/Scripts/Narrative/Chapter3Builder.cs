@@ -193,7 +193,7 @@ public class Chapter3Builder : MonoBehaviour
 
         return new DialogueConversation
         {
-            id = "chapter3_Map_Wall",
+            id = "chapter3_Wall_Map",
             nodes = new List<DialogueNode> { start }
         };
     }
