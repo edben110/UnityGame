@@ -19,7 +19,7 @@ public class CharacterAnxietySystem : MonoBehaviour
     public static CharacterAnxietySystem Instance { get; private set; }
 
     [Header("Configuracion")]
-    [SerializeField] private string activeChapterId = "chapter1";
+    [SerializeField] private List<string> activeChapterIds = new List<string> { "chapter1", "chapter2", "chapter3", "chapter4", "chapter5" };
     [SerializeField] private List<CharacterAnxietyEntry> characters = new List<CharacterAnxietyEntry>();
     [SerializeField] private TMP_Text debugStatusText;
 
@@ -47,7 +47,7 @@ public class CharacterAnxietySystem : MonoBehaviour
             return;
         }
 
-        if (!string.IsNullOrWhiteSpace(activeChapterId) && StoryState.Instance.CurrentChapterId != activeChapterId)
+        if (activeChapterIds != null && activeChapterIds.Count > 0 && !activeChapterIds.Contains(StoryState.Instance.CurrentChapterId))
         {
             return;
         }
@@ -154,7 +154,7 @@ public class CharacterAnxietySystem : MonoBehaviour
         return ids;
     }
 
-public void ApplyTalkRelief(string characterId)
+    public void ApplyTalkRelief(string characterId)
     {
         if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null)
         {

@@ -51,6 +51,47 @@ public class DialogueLibrary : MonoBehaviour
         return GetConversation(conversationId) != null;
     }
 
+    public void AddConversations(List<DialogueConversation> newConversations)
+    {
+        if (newConversations == null)
+        {
+            return;
+        }
+
+        if (conversations == null)
+        {
+            conversations = new List<DialogueConversation>();
+        }
+
+        for (int i = 0; i < newConversations.Count; i++)
+        {
+            DialogueConversation conv = newConversations[i];
+            if (conv == null || string.IsNullOrWhiteSpace(conv.id))
+            {
+                continue;
+            }
+
+            // Replace if exists, add if not
+            bool replaced = false;
+            for (int j = 0; j < conversations.Count; j++)
+            {
+                if (conversations[j] != null && conversations[j].id == conv.id)
+                {
+                    conversations[j] = conv;
+                    replaced = true;
+                    break;
+                }
+            }
+
+            if (!replaced)
+            {
+                conversations.Add(conv);
+            }
+        }
+
+        Debug.Log($"[DialogueLibrary] Added/updated {newConversations.Count} conversations. Total: {conversations.Count}");
+    }
+
     public List<string> GetAllConversationIds()
     {
         List<string> ids = new List<string>();

@@ -227,7 +227,7 @@ public class CadaverManager : MonoBehaviour
     public static string ResolvePreferredCadaverRoom(string npcId)
     {
         // Orden de preferencia de salas para colocar cadáveres (de más oscura a más accesible)
-        string[] candidates = { "studio", "bedroom", "gallery", "northstreet", "livingroom" };
+        string[] candidates = { "estudio", "habitacion", "galeria", "ala_norte", "sala_vigilancia" };
 
         // Evitar sala del lobby (start room)
         foreach (string candidate in candidates)
@@ -238,6 +238,6 @@ public class CadaverManager : MonoBehaviour
             }
         }
 
-        return "studio"; // fallback
+        return "estudio"; // fallback
     }
 }

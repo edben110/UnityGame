@@ -181,8 +181,8 @@ private string BuildLockedMessage(bool needsKey)
 
         string displayName = GetTargetDisplayName();
         return needsKey
-            ? $"La puerta del {displayName} está cerrada, requiere una llave."
-            : $"La puerta del {displayName} está cerrada.";
+            ? $"La puerta a {displayName} está cerrada, requiere una llave."
+            : $"La puerta a {displayName} está cerrada.";
     }
 
 private string BuildOpenMessage()

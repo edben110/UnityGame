@@ -11,7 +11,7 @@ public class NpcInteractable : Interactable
     [SerializeField] private string npcDisplayName;
 
     [Header("Flujo")]
-    [SerializeField] private string requiredChapterId = "chapter1";
+    [SerializeField] private List<string> validChapterIds = new List<string> { "chapter1", "chapter2", "chapter3", "chapter4", "chapter5" };
     [SerializeField] private string talkConversationId;
     [SerializeField] private string motivoConversationId;
     [SerializeField] private string criticalTalkConversationId;
@@ -91,7 +91,7 @@ public override void Interact()
             return false;
         }
 
-        if (!string.IsNullOrWhiteSpace(requiredChapterId) && StoryState.Instance.CurrentChapterId != requiredChapterId)
+        if (validChapterIds != null && validChapterIds.Count > 0 && !validChapterIds.Contains(StoryState.Instance.CurrentChapterId))
         {
             return false;
         }
@@ -148,7 +148,7 @@ private void OnTalkPressed()
 
         if (CharacterAnxietySystem.Instance != null && CharacterAnxietySystem.Instance.IsAtMaxAnxiety(npcId))
         {
-            string criticalConversationId = ResolveCriticalConversationId();
+            string criticalConversationId = ResolveCriticalConversationId(runner);
             bool startedCritical = !string.IsNullOrWhiteSpace(criticalConversationId)
                                  && runner.HasConversation(criticalConversationId)
                                  && runner.StartConversation(criticalConversationId, "start");
@@ -163,7 +163,9 @@ private void OnTalkPressed()
             return;
         }
 
-        bool started = runner.StartConversation(talkConversationId, "start");
+        // Intentar primero la conversación específica del capítulo actual
+        string resolvedTalkId = ResolveTalkConversationId(runner);
+        bool started = runner.StartConversation(resolvedTalkId, "start");
         if (!started)
         {
             return;
@@ -177,8 +179,34 @@ private void OnTalkPressed()
         NpcInteractionMenuUI.Instance.Hide();
     }
 
-    private string ResolveCriticalConversationId()
+    /// <summary>
+    /// Resuelve el ID de conversación de ansiedad según el capítulo actual.
+    /// Intenta chapter2_npc_robert, luego cae a chapter1_npc_robert.
+    /// </summary>
+    private string ResolveTalkConversationId(DialogueRunner runner)
     {
+        string currentChapter = StoryState.Instance != null ? StoryState.Instance.CurrentChapterId : "chapter1";
+        string chapterSpecific = $"{currentChapter}_npc_{npcId}";
+
+        if (runner.HasConversation(chapterSpecific))
+        {
+            return chapterSpecific;
+        }
+
+        return talkConversationId;
+    }
+
+    private string ResolveCriticalConversationId(DialogueRunner runner)
+    {
+        // Intentar primero el crítico del capítulo actual
+        string currentChapter = StoryState.Instance != null ? StoryState.Instance.CurrentChapterId : "chapter1";
+        string chapterCritical = $"{currentChapter}_npc_{npcId}_critical";
+
+        if (runner.HasConversation(chapterCritical))
+        {
+            return chapterCritical;
+        }
+
         if (!string.IsNullOrWhiteSpace(criticalTalkConversationId))
         {
             return criticalTalkConversationId;
@@ -385,7 +413,8 @@ private void OnTalkPressed()
 
     private void TryStartReactionConversation(string missingId)
     {
-        string conversationId = $"chapter1_npc_{npcId}_reaction_{missingId}";
+        string currentChapter = StoryState.Instance != null ? StoryState.Instance.CurrentChapterId : "chapter1";
+        string conversationId = $"{currentChapter}_npc_{npcId}_reaction_{missingId}";
 
         DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
         if (runner == null || runner.IsRunning)
