@@ -35,6 +35,56 @@ public class MapHotspot : Interactable
     {
         EnsureDebugMarker();
         RefreshAvailability();
+        RefreshChapterVisibility();
+
+        // Escuchar cambios de capítulo para mostrar/ocultar
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.StateChanged += RefreshChapterVisibility;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.StateChanged -= RefreshChapterVisibility;
+        }
+    }
+
+    /// <summary>
+    /// Oculta el hotspot si el capítulo actual no coincide con requiredChapterId.
+    /// Así los hotspots de Cap 4 no se ven durante Cap 1.
+    /// </summary>
+    private void RefreshChapterVisibility()
+    {
+        if (string.IsNullOrWhiteSpace(requiredChapterId) || StoryState.Instance == null)
+        {
+            return;
+        }
+
+        bool shouldBeVisible = StoryState.Instance.CurrentChapterId == requiredChapterId;
+
+        // Solo ocultar el renderer, no el GameObject completo
+        // (para que siga recibiendo eventos de StateChanged)
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.enabled = shouldBeVisible;
+        }
+
+        // Ocultar/mostrar el collider para que no sea clickeable fuera de su capítulo
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+        {
+            col.enabled = shouldBeVisible;
+        }
+
+        // Ocultar marcador de debug también
+        if (debugMarkerInstance != null)
+        {
+            debugMarkerInstance.SetActive(shouldBeVisible);
+        }
     }
 
     private void HideAnxietyOverlayIfVisible()
