@@ -53,12 +53,62 @@ public class DoorTrigger : Interactable
     private void Start()
     {
         BoxCollider2D col = GetComponent<BoxCollider2D>();
-        if (col != null && !col.enabled)
+        if (col != null)
         {
-            col.enabled = true;
+            if (IsSecretBasementDoor())
+            {
+                col.enabled = ShouldSecretBasementColliderBeEnabled();
+            }
+            else if (!col.enabled)
+            {
+                col.enabled = true;
+            }
+        }
+
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.StateChanged += OnStoryStateChanged;
         }
 
         Debug.Log($"[DoorTrigger] '{gameObject.name}' inicializado. Destino: '{targetRoomId}', RequiereNPC: {requiredNpcTalkCount}, TransiciónCap: {triggersChapterTransition}");
+    }
+
+    private void OnDestroy()
+    {
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.StateChanged -= OnStoryStateChanged;
+        }
+    }
+
+    private void OnStoryStateChanged()
+    {
+        RefreshDoorAvailability();
+    }
+
+    private void RefreshDoorAvailability()
+    {
+        if (!IsSecretBasementDoor())
+        {
+            return;
+        }
+
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col != null)
+        {
+            col.enabled = ShouldSecretBasementColliderBeEnabled();
+        }
+    }
+
+    private bool ShouldSecretBasementColliderBeEnabled()
+    {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        return StoryState.Instance.CurrentChapterId == "chapter3"
+            && InventoryState.HasItem(KeyType.SmallKey.ToString());
     }
 
     private void HideAnxietyOverlayIfVisible()
@@ -189,9 +239,24 @@ public class DoorTrigger : Interactable
     {
         var result = new ValidationResult();
         result.canPass = true;
-        result.npcTalkCount = CountNpcTalks();
+        result.npcTalkCount = CountNpcTalksInCurrentChapter();
         result.allNpcsTalked = result.npcTalkCount >= 5;
         result.hasKey = true;
+
+        if (IsSecretBasementDoor())
+        {
+            bool canOpenSecretBasement = StoryState.Instance != null
+                && StoryState.Instance.CurrentChapterId == "chapter3"
+                && InventoryState.HasItem(KeyType.BasementKey.ToString())
+                && result.npcTalkCount >= 1;
+
+            if (!canOpenSecretBasement)
+            {
+                result.canPass = false;
+                result.blockReason = "Creo que aún no debería bajar ahí.";
+                return result;
+            }
+        }
 
         // 1. Verificar capítulo requerido
         if (!string.IsNullOrWhiteSpace(requiredChapterId) && StoryState.Instance != null)
@@ -236,7 +301,7 @@ public class DoorTrigger : Interactable
         {
             result.chapter3DoorInteraction = true;
             result.hasSimonKey = InventoryState.HasItem(simonRoomRequiredKey.ToString());
-            result.hasBookDecision = CountNpcTalks() >= 1; // At least one NPC talked
+            result.hasBookDecision = CountNpcTalksInCurrentChapter() >= 1 && StoryState.Instance.HasFlag(chapter2BookDecisionCompleteFlag);
             result.canStartChapter3 = result.hasSimonKey && result.hasBookDecision;
 
             if (!result.canStartChapter3)
@@ -271,7 +336,7 @@ public class DoorTrigger : Interactable
             result.chapter4DoorInteraction = true;
             result.hasBasementKey = InventoryState.HasItem("BasementKey");
             result.hasBasementDiscovered = StoryState.Instance.HasFlag("BasementDiscovered");
-            result.hasChapter3Decision = CountNpcTalks() >= 1; // At least one NPC talked after chapter 3
+            result.hasChapter3Decision = CountNpcTalksInCurrentChapter() >= 1; // At least one NPC talked in chapter 3
             result.canStartChapter4 = result.hasBasementKey && result.hasBasementDiscovered && result.hasChapter3Decision;
 
             if (!result.canStartChapter4)
@@ -487,17 +552,24 @@ public class DoorTrigger : Interactable
         return success;
     }
 
-    private static int CountNpcTalks()
+    private static int CountNpcTalksInCurrentChapter()
     {
+        if (ChapterFlowController.Instance != null)
+        {
+            return ChapterFlowController.Instance.GetNpcTalkCount();
+        }
+
         if (StoryState.Instance == null)
         {
             return 0;
         }
 
         int count = 0;
+        string currentChapter = StoryState.Instance.CurrentChapterId;
         for (int i = 0; i < npcTalkFlags.Length; i++)
         {
-            if (StoryState.Instance.HasFlag(npcTalkFlags[i]))
+            string npcId = npcTalkFlags[i].Replace("npc.talked.", string.Empty);
+            if (StoryState.Instance.HasFlag($"chapter.{currentChapter}.npc.talked.{npcId}") || StoryState.Instance.HasFlag(npcTalkFlags[i]))
             {
                 count++;
             }
@@ -529,6 +601,12 @@ public class DoorTrigger : Interactable
         }
 
         return false;
+    }
+
+    private bool IsSecretBasementDoor()
+    {
+        return string.Equals(targetRoomId, "secretBasement", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_SecretBasement", StringComparison.OrdinalIgnoreCase);
     }
 
     private bool ShouldValidateChapter3Entry()

@@ -88,7 +88,19 @@ public class KeyItem : Interactable
         // Registrar en el catálogo con display name legible
         if (InventoryCatalog.Instance != null)
         {
-            InventoryCatalog.Instance.RegisterRuntimeItem(itemId, displayName, description, null);
+            Sprite worldSprite = null;
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null)
+            {
+                spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            }
+
+            if (spriteRenderer != null)
+            {
+                worldSprite = spriteRenderer.sprite;
+            }
+
+            InventoryCatalog.Instance.RegisterRuntimeItem(itemId, displayName, description, worldSprite);
             Debug.Log($"[KeyItem] Registrado en catálogo: '{itemId}' -> '{displayName}'");
         }
 

@@ -134,7 +134,7 @@ public void EnsureData()
             BuildNpcMotivoConversation_Lisa(),
             BuildNpcMotivoConversation_Lucas(),
             // Items
-            BuildNpcItemQuestionConversation("chapter1_npc_robert_item_foto_padre_hijo", "Robert", "La foto de la chimenea dice 'Padre e hijo, 1987'.", "No sab\u00eda que quedaba una copia aqu\u00ed. Ese hombre era el padre de Sim\u00f3n... y tambi\u00e9n el m\u00edo. No estoy listo para contarlo al resto."),
+            BuildNpcItemQuestionConversation("chapter1_npc_robert_item_foto_padre_hijo", "Robert", "La foto de la chimenea dice 'Padre e hijo, 1927'.", "No sab\u00eda que quedaba una copia aqu\u00ed. Ese hombre era el padre de Sim\u00f3n... y tambi\u00e9n el m\u00edo. No estoy listo para contarlo al resto."),
             BuildNpcItemQuestionConversation("chapter1_npc_robert_item_lobby_book", "Robert", "En el libro de visitas hay una entrada tachada.", "Esa clase de tachadura no es casual. En tiempos as\u00ed, la gente borra nombres cuando teme represalias."),
             BuildNpcItemQuestionConversation("chapter1_npc_robert_item_lobby_coat", "Robert", "En el abrigo encontr\u00e9 una nota: 'No conf\u00edes en nadie que haya llegado antes'.", "Suena a advertencia de alguien que conoce esta casa mejor que nosotros."),
             BuildNpcItemQuestionConversation("chapter1_npc_robert_item_lobby_newspaper", "Robert", "El peri\u00f3dico habla de un incendio en el puerto.", "Si reabrieron esa investigaci\u00f3n, alguien aqu\u00ed va a ponerse nervioso."),
@@ -146,7 +146,7 @@ public void EnsureData()
             BuildNpcItemQuestionConversation("chapter1_npc_ben_item_lobby_book", "Ben", "El libro de visitas tiene una entrada tachada.", "Ese tipo de detalle es lo que termina costando dinero... y vidas."),
             BuildNpcItemQuestionConversation("chapter1_npc_ben_item_lobby_coat", "Ben", "Una nota escondida en un abrigo dice que no confiemos en quien lleg\u00f3 antes.", "Si alguien lleg\u00f3 antes, tuvo tiempo de preparar algo. Eso me inquieta."),
             BuildNpcItemQuestionConversation("chapter1_npc_ben_item_lobby_newspaper", "Ben", "El peri\u00f3dico habla de un incendio y una investigaci\u00f3n reabierta.", "Ese incendio fue un desastre financiero. Si alguien insiste en reabrirlo, es porque hay culpables."),
-            BuildNpcItemQuestionConversation("chapter1_npc_lisa_item_foto_padre_hijo", "Lisa", "Encontramos una foto: 'Padre e hijo, 1987'.", "Esa foto conecta con lo que investigaba. Si Robert evita mirarla, es porque teme que alguien ate su nombre al de Sim\u00f3n."),
+            BuildNpcItemQuestionConversation("chapter1_npc_lisa_item_foto_padre_hijo", "Lisa", "Encontramos una foto: 'Padre e hijo, 1927'.", "Esa foto conecta con lo que investigaba. Si Robert evita mirarla, es porque teme que alguien ate su nombre al de Sim\u00f3n."),
             BuildNpcItemQuestionConversation("chapter1_npc_lisa_item_lobby_book", "Lisa", "El libro de visitas tiene un nombre borrado.", "Eso es lo primero que revisar\u00eda si estuviera investigando. Ocultar un nombre es una pista en s\u00ed misma."),
             BuildNpcItemQuestionConversation("chapter1_npc_lisa_item_lobby_coat", "Lisa", "En el abrigo hay una nota de advertencia.", "Eso suena a alguien intentando salvarnos sin exponerse. Quiero saber qui\u00e9n la escribi\u00f3."),
             BuildNpcItemQuestionConversation("chapter1_npc_lisa_item_lobby_newspaper", "Lisa", "El peri\u00f3dico menciona un incendio reabierto.", "Ese es el incidente que vengo siguiendo. Sim\u00f3n estaba ah\u00ed."),

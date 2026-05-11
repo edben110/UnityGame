@@ -112,19 +112,19 @@ public class Chapter3Builder : MonoBehaviour
             BuildNpcCritical("chapter3_npc_lucas_critical", "Lucas",
                 "El relicario. Robé el relicario y Simón lo sabe. Siempre lo supo. Esta es mi condena."),
             // ─── NPC: preguntar sobre items del Cap 3 ───
-            BuildNpcItemQuestion("chapter3_npc_robert_item_carta", "Robert",
+            BuildNpcItemQuestion("chapter3_npc_robert_item_carta_inconclusa", "Robert",
                 "Encontré esta carta en su habitación. Dice que podría estar vivo.",
                 "¿Vivo? Eso... eso cambia todo. Si está vivo... entonces esto no es un funeral. Es una trampa."),
-            BuildNpcItemQuestion("chapter3_npc_ana_item_mapa", "Ana",
+            BuildNpcItemQuestion("chapter3_npc_ana_item_mapa_ala_norte", "Ana",
                 "Encontré un mapa en su habitación. Señala el Ala Norte. ¿Sabías que existía?",
                 "¿Un mapa? No. Nunca vi esa parte de la mansión. Simón nunca la mencionó."),
-            BuildNpcItemQuestion("chapter3_npc_ben_item_papeles", "Ben",
-                "Encontré unos borradores de testificación bajo su cama. Iba a hacer una declaración.",
-                "¿Testificación? ¿Contra quién? Dios, si tiene que ver con los fondos de la empresa..."),
-            BuildNpcItemQuestion("chapter3_npc_lisa_item_vaso", "Lisa",
+            BuildNpcItemQuestion("chapter3_npc_ben_item_papeles_lisa", "Ben",
+                "Encontré unos papeles de Lisa bajo su cama. Los estaba buscando alguien más.",
+                "¿Papeles de Lisa? Eso ya es más serio. Si estaban escondidos, es porque no debían verse todavía."),
+            BuildNpcItemQuestion("chapter3_npc_lisa_item_vaso_agua", "Lisa",
                 "Encontré un vaso de agua en su cuarto. Todavía tenía condensación. Alguien estuvo ahí hace muy poco.",
                 "¿Condensación? Horas. Tal vez menos. Esto confirma mi teoría. La muerte fue un montaje."),
-            BuildNpcItemQuestion("chapter3_npc_lucas_item_caja", "Lucas",
+            BuildNpcItemQuestion("chapter3_npc_lucas_item_caja_puzzle_1", "Lucas",
                 "Encontré esta caja puzzle bajo su cama. ¿Te resulta familiar?",
                 "¿Una caja puzzle? A Simón siempre le gustaron esos artilugios. Seguro esconde algo importante."),
             // ─── Decisión del Capítulo 3 ───
@@ -221,7 +221,7 @@ public class Chapter3Builder : MonoBehaviour
                 new DialogueLine { speaker = "Narrador", text = "La carta dice:", anxietyDelta = 5f },
                 new DialogueLine { speaker = "Carta", text = "Si alguien lee esto, no estoy muerto. Estoy en el Ala Norte. No vine por voluntad propia. Hay alguien más en esta casa que no debería estar. No confíen en—", anxietyDelta = 15f },
                 new DialogueLine { speaker = "Narrador", text = "La frase se corta abruptamente. Una mancha de tinta marca el punto donde la pluma resbaló.", setFlag = "clue.habitacion.carta_inconclusa" },
-                new DialogueLine { speaker = "Narrador", text = "Simón está vivo. Y está atrapado.", setFlag = "simon_vivo", addInventoryItemId = "carta_inconclusa" }
+                new DialogueLine { speaker = "Narrador", text = "Simón está vivo. Y está atrapado.", setFlag = "simon_vivo", addInventoryItemId = "HS_Unfinished_Letter" }
             }
         };
 
@@ -242,7 +242,7 @@ public class Chapter3Builder : MonoBehaviour
             {
                 new DialogueLine { speaker = "Narrador", text = "La mesita de noche tiene un solo cajón. Lo abres con cuidado. Dentro, encuentras algunas notas esparcidas." },
                 new DialogueLine { speaker = "Jugador", text = "Parecen registros médicos. 'Dosis incrementada... alucinaciones recurrentes'. Simón estaba medicado.", anxietyDelta = 8f },
-                new DialogueLine { speaker = "Narrador", text = "También hay una foto antigua de la familia, pero la cara de Robert está tachada con un bolígrafo negro.", setFlag = "clue.habitacion.mesita_noche", addInventoryItemId = "notas_medicas" }
+                new DialogueLine { speaker = "Narrador", text = "También hay una llave pequeña envuelta en un pañuelo doblado. Es la clase de llave que Simón no dejaría a la vista.", setFlag = "clue.habitacion.mesita_noche", addInventoryItemId = "llave_pequena" }
             }
         };
 
@@ -288,8 +288,8 @@ public class Chapter3Builder : MonoBehaviour
             {
                 new DialogueLine { speaker = "Narrador", text = "Una segunda caja puzzle descansa sobre una peana de mármol. El mecanismo es similar a la primera, pero los símbolos son diferentes." },
                 new DialogueLine { speaker = "Jugador", text = "Si uso el mismo razonamiento que con la primera caja, podría abrirla." },
-                new DialogueLine { speaker = "Narrador", text = "Tras manipular los engranajes por unos minutos, el compartimento se abre con un clic.", requiredFlag = "clue.habitacion.caja_puzzle_1", setFlag = "clue.galeria.caja_puzzle_2", addInventoryItemId = "llave_pequena" },
-                new DialogueLine { speaker = "Jugador", text = "Dentro hay una llave pequeña de bronce. Parece la llave de un archivador.", requiredFlag = "clue.galeria.caja_puzzle_2" }
+                new DialogueLine { speaker = "Narrador", text = "Tras manipular los engranajes por unos minutos, el compartimento se abre con un clic.", requiredFlag = "clue.habitacion.caja_puzzle_1", setFlag = "clue.galeria.caja_puzzle_2", addInventoryItemId = "GalleryKey" },
+                new DialogueLine { speaker = "Jugador", text = "Dentro hay una llave de la galería. La caja del dormitorio tenía que esconder algo más grande.", requiredFlag = "clue.galeria.caja_puzzle_2" }
             }
         };
 
@@ -355,7 +355,8 @@ public class Chapter3Builder : MonoBehaviour
             {
                 new DialogueLine { speaker = "Narrador", text = "Te arrodillas y revisas debajo de la cama. Está oscuro, pero alcanzas a tocar algo sólido." },
                 new DialogueLine { speaker = "Narrador", text = "Sacas una caja de madera con un extraño mecanismo en la tapa. Parece un rompecabezas.", setFlag = "clue.habitacion.caja_puzzle_1", addInventoryItemId = "caja_puzzle_1" },
-                new DialogueLine { speaker = "Narrador", text = "Junto a la caja, hay unos papeles sueltos. Parecen ser borradores de testificación. Simón estaba preparando una declaración legal antes de morir.", anxietyDelta = 5f, setFlag = "clue.habitacion.papeles_testificacion" }
+                new DialogueLine { speaker = "Narrador", text = "Si consigues abrirla más tarde, quizá esconda algo útil para la galería.", anxietyDelta = 5f },
+                new DialogueLine { speaker = "Narrador", text = "Junto a la caja, hay unos papeles sueltos. Lisa los estaba buscando. Los guardas porque pueden cambiar el final.", anxietyDelta = 5f, setFlag = "FoundLisaDocuments", addInventoryItemId = "papeles_lisa" }
             }
         };
 

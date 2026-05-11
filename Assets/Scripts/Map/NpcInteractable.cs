@@ -61,9 +61,12 @@ public class NpcInteractable : Interactable
             return;
         }
 
-        Action askItemAction;
-        string askItemLabel;
-        TryBuildItemQuestionAction(runner, out askItemAction, out askItemLabel);
+        Action askItemAction = null;
+        string askItemLabel = string.Empty;
+        if (TryBuildSelectedItemQuestionAction(runner, out askItemLabel))
+        {
+            askItemAction = OnAskItemPressedCurrentSelection;
+        }
 
         // Construir accion de motivo si aun no se ha visto
         Action motivoAction = null;
@@ -185,6 +188,17 @@ private void OnTalkPressed()
         if (StoryState.Instance != null)
         {
             StoryState.Instance.SetFlag($"npc.talked.{npcId}", true);
+            string currentChapter = StoryState.Instance.CurrentChapterId;
+            if (!string.IsNullOrWhiteSpace(currentChapter))
+            {
+                StoryState.Instance.SetFlag($"chapter.{currentChapter}.npc.talked.{npcId}", true);
+            }
+
+            if (ChapterFlowController.Instance != null)
+            {
+                ChapterFlowController.Instance.RegisterNpcTalked(npcId);
+            }
+
             Debug.Log($"[NPC] Jugador habló con {npcId}. Flag 'npc.talked.{npcId}' seteado.");
         }
 
@@ -305,32 +319,17 @@ private void OnTalkPressed()
         NpcInteractionMenuUI.Instance.Hide();
     }
 
-    private void TryBuildItemQuestionAction(DialogueRunner runner, out Action action, out string label)
+    private bool TryBuildSelectedItemQuestionAction(DialogueRunner runner, out string label)
     {
-        action = null;
         label = string.Empty;
 
-        if (runner == null || string.IsNullOrWhiteSpace(talkConversationId))
+        string selectedItem = InventoryState.CurrentlySelectedInventoryItem;
+        if (string.IsNullOrWhiteSpace(selectedItem))
         {
-            return;
+            return false;
         }
 
-        List<string> items = InventoryState.GetItems();
-        for (int i = 0; i < items.Count; i++)
-        {
-            string itemId = items[i];
-            if (string.IsNullOrWhiteSpace(itemId))
-            {
-                continue;
-            }
-
-            if (!TryBuildSpecificItemQuestionAction(runner, itemId, out action, out label))
-            {
-                continue;
-            }
-
-            return;
-        }
+        return TryBuildSpecificItemQuestionAction(runner, selectedItem, out _, out label);
     }
 
     private bool TryBuildSpecificItemQuestionAction(DialogueRunner runner, string itemId, out Action action, out string label)
@@ -362,6 +361,44 @@ private void OnTalkPressed()
         string capturedConversationId = conversationId;
         action = () => OnAskItemPressed(capturedConversationId);
         label = BuildItemQuestionLabel(itemId);
+        return true;
+    }
+
+    private void OnAskItemPressedCurrentSelection()
+    {
+        DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
+        if (runner == null)
+        {
+            return;
+        }
+
+        string selectedItem = InventoryState.CurrentlySelectedInventoryItem;
+        if (string.IsNullOrWhiteSpace(selectedItem))
+        {
+            if (NpcInteractionMenuUI.Instance != null)
+            {
+                NpcInteractionMenuUI.Instance.ShowStatusText("Selecciona un objeto del inventario primero.");
+            }
+            return;
+        }
+
+        if (!TryStartItemConversationForItem(runner, selectedItem))
+        {
+            if (NpcInteractionMenuUI.Instance != null)
+            {
+                NpcInteractionMenuUI.Instance.ShowStatusText("Este personaje no puede responder sobre ese objeto todavía.");
+            }
+        }
+    }
+
+    private bool TryStartItemConversationForItem(DialogueRunner runner, string itemId)
+    {
+        if (!TryBuildSpecificItemQuestionAction(runner, itemId, out Action action, out _))
+        {
+            return false;
+        }
+
+        action?.Invoke();
         return true;
     }
 
@@ -402,15 +439,15 @@ private void OnTalkPressed()
         if (InventoryCatalog.Instance != null)
         {
             string displayName = InventoryCatalog.Instance.GetDisplayNameOrFallback(itemId);
-            return $"Preguntar por {displayName}";
+            return $"Preguntar por: {displayName}";
         }
 
         if (itemId.Contains("foto", StringComparison.OrdinalIgnoreCase))
         {
-            return "Preguntar por la foto";
+            return "Preguntar por: la foto";
         }
 
-        return $"Preguntar por {itemId.Replace('_', ' ')}";
+        return $"Preguntar por: {itemId.Replace('_', ' ')}";
     }
 
     private string GetDisplayName()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -52,6 +53,9 @@ public class ChapterFlowController : MonoBehaviour
     private bool pendingProgressCheck;
 
     // Flags que setean los hotspots del Cap 2
+    private string lastObservedChapterId = string.Empty;
+    private readonly HashSet<string> talkedNpcIdsInCurrentChapter = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+    private int npcTalkedCountInCurrentChapter;
     private static readonly string[] chapter2ClueFlags = {
         "clue.estudio.agenda",
         "clue.estudio.libro_contabilidad",
@@ -98,6 +102,11 @@ public class ChapterFlowController : MonoBehaviour
 
         StoryState.Instance.StateChanged += OnStateChanged;
 
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.RoomChanged += OnRoomChanged;
+        }
+
         if (forceFreshStartOnPlay)
         {
             StoryState.Instance.ResetForNewGame(prologueChapterId);
@@ -125,6 +134,11 @@ public class ChapterFlowController : MonoBehaviour
         if (StoryState.Instance != null)
         {
             StoryState.Instance.StateChanged -= OnStateChanged;
+
+            if (RoomManager.Instance != null)
+            {
+                RoomManager.Instance.RoomChanged -= OnRoomChanged;
+            }
         }
     }
 
@@ -147,7 +161,7 @@ public class ChapterFlowController : MonoBehaviour
     /// </summary>
     public int GetNpcTalkCount()
     {
-        return CountFlags(npcTalkFlags);
+        return npcTalkedCountInCurrentChapter;
     }
 
     /// <summary>
@@ -164,7 +178,7 @@ public class ChapterFlowController : MonoBehaviour
 
         if (chapter == chapter1Id)
         {
-            int npcTalks = CountFlags(npcTalkFlags);
+            int npcTalks = GetNpcTalkCount();
             if (npcTalks == 0)
             {
                 return "Sería mejor interrogar a alguien antes de avanzar. Habla con los personajes usando el botón 'Hablar'.";
@@ -180,19 +194,97 @@ public class ChapterFlowController : MonoBehaviour
 
     private void OnStateChanged()
     {
+        SyncChapterTracking(false);
         pendingProgressCheck = true;
+    }
+
+    private void OnRoomChanged(string previousRoom, string newRoom)
+    {
+        if (StoryState.Instance == null || StoryState.Instance.CurrentChapterId != chapter3Id)
+        {
+            return;
+        }
+
+        if (!string.Equals(newRoom, "lobby", System.StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        StoryState.Instance.SetFlag("PlayerEnteredNpcRoom", true);
+        StoryState.Instance.SetFlag("chapter3.npc_room.entered", true);
+    }
+
+    private void SyncChapterTracking(bool forceRebuild)
+    {
+        if (StoryState.Instance == null)
+        {
+            return;
+        }
+
+        string currentChapter = StoryState.Instance.CurrentChapterId;
+        if (!forceRebuild && string.Equals(currentChapter, lastObservedChapterId, System.StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        lastObservedChapterId = currentChapter;
+        ResetNpcTalkProgress();
+        RebuildNpcTalkProgressForCurrentChapter();
+    }
+
+    private void ResetNpcTalkProgress()
+    {
+        talkedNpcIdsInCurrentChapter.Clear();
+        npcTalkedCountInCurrentChapter = 0;
+    }
+
+    private void RebuildNpcTalkProgressForCurrentChapter()
+    {
+        if (StoryState.Instance == null || string.IsNullOrWhiteSpace(StoryState.Instance.CurrentChapterId))
+        {
+            return;
+        }
+
+        string currentChapter = StoryState.Instance.CurrentChapterId;
+        for (int i = 0; i < npcTalkFlags.Length; i++)
+        {
+            string npcId = npcTalkFlags[i].Replace("npc.talked.", string.Empty);
+            if (StoryState.Instance.HasFlag($"chapter.{currentChapter}.npc.talked.{npcId}"))
+            {
+                talkedNpcIdsInCurrentChapter.Add(npcId);
+            }
+        }
+
+        npcTalkedCountInCurrentChapter = talkedNpcIdsInCurrentChapter.Count;
+    }
+
+    public bool HasTalkedToNpcInCurrentChapter(string npcId)
+    {
+        return !string.IsNullOrWhiteSpace(npcId) && talkedNpcIdsInCurrentChapter.Contains(npcId);
+    }
+
+    public void RegisterNpcTalked(string npcId)
+    {
+        if (StoryState.Instance == null || string.IsNullOrWhiteSpace(npcId))
+        {
+            return;
+        }
+
+        string normalizedNpcId = npcId.Trim().ToLowerInvariant();
+        if (talkedNpcIdsInCurrentChapter.Add(normalizedNpcId))
+        {
+            npcTalkedCountInCurrentChapter = talkedNpcIdsInCurrentChapter.Count;
+        }
+
+        string currentChapter = StoryState.Instance.CurrentChapterId;
+        if (!string.IsNullOrWhiteSpace(currentChapter))
+        {
+            StoryState.Instance.SetFlag($"chapter.{currentChapter}.npc.talked.{normalizedNpcId}", true);
+        }
     }
 
     /// <summary>
     /// Verifica si se deben lanzar decisiones para Cap 2 y Cap 3.
-    /// 
-    /// CAP 2 - NUEVO FLUJO:
-    ///   1. Cuando jugador ha hablado con los 5 NPCs → Dispara chapter2_initial_decision
-    ///   2. Cuando jugador interactúa con Ben + tiene el libro → Dispara chapter2_book_decision (desde NpcInteractable)
-    ///   3. Cuando chapter2_book_decision termina → Avanza a Cap 3
-    /// 
-    /// CAP 3:
-    ///   El inicio se valida por puerta/llave (DoorTrigger). No se lanza de forma automática desde decisiones.
     /// </summary>
     private void CheckAutoDecisions()
     {
@@ -221,7 +313,7 @@ public class ChapterFlowController : MonoBehaviour
         }
 
         // CAP 3: Disparar decisión al tener la carta y entrar a la sala de NPCs
-        if (chapter == chapter3Id && !StoryState.Instance.HasFlag("chapter3.decision.shown") && InventoryState.HasItem("carta_inconclusa"))
+        if (chapter == chapter3Id && !StoryState.Instance.HasFlag("chapter3.decision.shown") && InventoryState.HasItem("HS_Unfinished_Letter") && StoryState.Instance.HasFlag("PlayerEnteredNpcRoom"))
         {
             bool inNpcRoom = RoomManager.Instance == null || RoomManager.Instance.CurrentRoomId == "lobby";
             if (inNpcRoom)
@@ -308,7 +400,7 @@ public class ChapterFlowController : MonoBehaviour
         if (conversationId == chapter2BookDecisionConversationId)
         {
             bool accountingBookSelected = InventoryState.HasItem("libro_contabilidad");
-            bool talkedToBen = StoryState.Instance.HasFlag("npc.talked.ben");
+            bool talkedToBen = HasTalkedToNpcInCurrentChapter("ben");
             bool searchBedroom = StoryState.Instance.HasFlag("chapter2.choice.search_bedroom");
             bool confrontBen = StoryState.Instance.HasFlag("chapter2.choice.confront_ben");
 
