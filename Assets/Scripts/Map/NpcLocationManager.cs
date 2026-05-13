@@ -145,17 +145,13 @@ public class NpcLocationManager : MonoBehaviour
                 break;
 
             case "chapter2":
-                // Se mueven al estudio
-                SetAllNpcsToRoom("estudio");
+                // Regla narrativa: los NPCs permanecen en lobby.
+                SetAllNpcsToRoom("lobby");
                 break;
 
             case "chapter3":
-                // Se dispersan
-                MoveNpcSilent("robert", "lobby");
-                MoveNpcSilent("ana", "galeria");
-                MoveNpcSilent("ben", "estudio");
-                MoveNpcSilent("lisa", "habitacion");
-                MoveNpcSilent("lucas", "sala_vigilancia");
+                // Regla narrativa: los NPCs permanecen en lobby.
+                SetAllNpcsToRoom("lobby");
                 break;
 
             case "chapter4":

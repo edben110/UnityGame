@@ -7,6 +7,8 @@ public enum KeyType
     LobbyKey,      // Llave del lobby
     GalleryKey,    // Llave de la galería
     BedroomKey,    // Llave de la habitación
-    LibraryKey,    // Llave de la biblioteca
-    BasementKey    // Llave del sótano
+    BasementKey,   // Llave del sótano
+    StudyKey,      // Llave del estudio (Cap 1 → Cap 2)
+    SmallKey      // Llave pequeña del archivador (Cap 3 → Estudio archivador)
+    // Llave de la biblioteca
 }

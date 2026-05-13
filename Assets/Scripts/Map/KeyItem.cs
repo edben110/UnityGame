@@ -38,7 +38,7 @@ public class KeyItem : Interactable
     {
         string normalizedName = objectName.ToLowerInvariant();
 
-        if (normalizedName.Contains("gallery"))
+        if (normalizedName.Contains("gallery") || normalizedName.Contains("galeria"))
         {
             return KeyType.GalleryKey;
         }
@@ -48,12 +48,18 @@ public class KeyItem : Interactable
             return KeyType.BedroomKey;
         }
 
-        if (normalizedName.Contains("library") || normalizedName.Contains("studio") || normalizedName.Contains("estudio"))
+        // StudyKey antes de LibraryKey para evitar ambigüedad con "estudio"
+        if (normalizedName.Contains("study") || normalizedName.Contains("estudio"))
         {
-            return KeyType.LibraryKey;
+            return KeyType.StudyKey;
         }
 
-        if (normalizedName.Contains("basement") || normalizedName.Contains("north"))
+        if (normalizedName.Contains("small") || normalizedName.Contains("pequena") || normalizedName.Contains("archivador"))
+        {
+            return KeyType.SmallKey;
+        }
+
+        if (normalizedName.Contains("basement") || normalizedName.Contains("north") || normalizedName.Contains("sotano"))
         {
             return KeyType.BasementKey;
         }
@@ -82,7 +88,19 @@ public class KeyItem : Interactable
         // Registrar en el catálogo con display name legible
         if (InventoryCatalog.Instance != null)
         {
-            InventoryCatalog.Instance.RegisterRuntimeItem(itemId, displayName, description, null);
+            Sprite worldSprite = null;
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null)
+            {
+                spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            }
+
+            if (spriteRenderer != null)
+            {
+                worldSprite = spriteRenderer.sprite;
+            }
+
+            InventoryCatalog.Instance.RegisterRuntimeItem(itemId, displayName, description, worldSprite);
             Debug.Log($"[KeyItem] Registrado en catálogo: '{itemId}' -> '{displayName}'");
         }
 

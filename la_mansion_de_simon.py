@@ -332,7 +332,7 @@ def prologo():
            "desconocidos que, sin embargo, no lo son del todo entre sí.")
     narrar("Los une un nombre: Simón. Un pintor. Un hombre que, según "
            "les comunicaron hace pocos días, ha muerto.")
-        narrar("Simón fue testigo de un incidente que nunca llegó a los diarios. "
+    narrar("Simón fue testigo de un incidente que nunca llegó a los diarios. "
             "Alguien se aseguró de que no llegara. Ese mismo alguien es quien "
             "hoy controla la sombra sobre esta casa.")
     pausa()
@@ -341,17 +341,17 @@ def prologo():
            "llegó con una razón propia, silenciosa, que no piensa "
            "compartir con nadie. Y todos, sin excepción, buscan algo "
            "dentro de esa mansión.")
-        narrar("Lo que ninguno sabe es que no están solos. En algún rincón "
+    narrar("Lo que ninguno sabe es que no están solos. En algún rincón "
            "de la casa, alguien más aguarda. Alguien cuya razón para "
            "estar ahí es mucho más oscura que todas las demás juntas.")
-        narrar("El detective Franks Keller recibió la misma noticia que Lisa: "
+    narrar("El detective Franks Keller recibió la misma noticia que Lisa: "
             "Simón ha muerto. Keller vino a Berna a investigar el incidente "
             "del que Simón fue testigo, y a descubrir qué se oculta en esta "
             "mansión.")
-        print()
-        escribir_lento("Eres el detective Franks Keller. Observa, explora y "
+    print()
+    escribir_lento("Eres el detective Franks Keller. Observa, explora y "
                  "descubre qué ocurrió en esta mansión.")
-        escribir_lento("Interroga. Conecta pistas. Decide quién sobrevive.")
+    escribir_lento("Interroga. Conecta pistas. Decide quién sobrevive.")
     pausa()
 
     # Presentación de personajes
@@ -377,9 +377,9 @@ def prologo():
            "descubres, y cómo termina esta historia.")
     narrar("Explora cada escenario. Habla con todos. Encuentra a Simón "
            "antes de que sea demasiado tarde.")
-        narrar("Guía rápida: examina objetos, escucha las reacciones de cada "
-            "persona y pregunta por lo que llevan oculto. Tus elecciones "
-            "definen el ritmo del grupo.")
+    narrar("Guía rápida: examina objetos, escucha las reacciones de cada "
+           "persona y pregunta por lo que llevan oculto. Tus elecciones "
+           "definen el ritmo del grupo.")
     pausa()
 
 # ══════════════════════════════════════════════════════════════
