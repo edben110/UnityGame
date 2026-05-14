@@ -23,6 +23,8 @@ public class NpcInteractionMenuUI : MonoBehaviour
     private Action onTalk;
     private Action onVerify;
     private Action onAskItem;
+    private string askItemLabelOverride = string.Empty;
+    private bool askItemVisible;
 
     private void Awake()
     {
@@ -55,6 +57,16 @@ public class NpcInteractionMenuUI : MonoBehaviour
         }
 
         Hide();
+    }
+
+    private void OnEnable()
+    {
+        InventoryState.SelectedChanged += OnSelectedItemChanged;
+    }
+
+    private void OnDisable()
+    {
+        InventoryState.SelectedChanged -= OnSelectedItemChanged;
     }
 
     private void OnDestroy()
@@ -90,6 +102,8 @@ public class NpcInteractionMenuUI : MonoBehaviour
         onTalk = talkAction;
         onVerify = verifyAction;
         onAskItem = askItemAction;
+        askItemLabelOverride = askItemLabel ?? string.Empty;
+        askItemVisible = askItemAction != null;
 
         if (titleText != null)
         {
@@ -101,7 +115,8 @@ public class NpcInteractionMenuUI : MonoBehaviour
             statusText.text = "Elige una opcion.";
         }
 
-        SetAskItemButtonState(askItemAction != null, askItemLabel);
+        SetAskItemButtonState(askItemVisible);
+        RefreshAskItemButtonLabel();
 
         if (root != null)
         {
@@ -117,19 +132,19 @@ public class NpcInteractionMenuUI : MonoBehaviour
         }
     }
 
-    public void Hide()
+public void Hide()
     {
         onTalk = null;
         onVerify = null;
         onAskItem = null;
+        askItemLabelOverride = string.Empty;
+        askItemVisible = false;
 
-        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
-        if (anxietySystem != null)
-        {
-            anxietySystem.HideVerificationOverlay();
-        }
+        // NO ocultamos el overlay de ansiedad aqui;
+        // el overlay se gestiona independientemente y debe
+        // permanecer hasta que el jugador cambie de contexto.
 
-        SetAskItemButtonState(false, string.Empty);
+        SetAskItemButtonState(false);
 
         if (root != null)
         {
@@ -152,7 +167,7 @@ public class NpcInteractionMenuUI : MonoBehaviour
         onAskItem?.Invoke();
     }
 
-    private void SetAskItemButtonState(bool visible, string askItemLabel)
+    private void SetAskItemButtonState(bool visible)
     {
         Button button = GetAskButton();
         if (button == null)
@@ -161,16 +176,52 @@ public class NpcInteractionMenuUI : MonoBehaviour
         }
 
         button.gameObject.SetActive(visible);
-        if (!visible)
+    }
+
+    private void RefreshAskItemButtonLabel()
+    {
+        if (!askItemVisible)
+        {
+            return;
+        }
+
+        Button button = GetAskButton();
+        if (button == null)
         {
             return;
         }
 
         TMP_Text buttonLabel = askItemButtonText != null ? askItemButtonText : button.GetComponentInChildren<TMP_Text>(true);
-        if (buttonLabel != null)
+        if (buttonLabel == null)
         {
-            buttonLabel.text = string.IsNullOrWhiteSpace(askItemLabel) ? "Preguntar por objeto" : askItemLabel;
+            return;
         }
+
+        if (!string.IsNullOrWhiteSpace(askItemLabelOverride))
+        {
+            buttonLabel.text = askItemLabelOverride;
+            return;
+        }
+
+        string selectedItem = InventoryState.CurrentlySelectedInventoryItem;
+        if (string.IsNullOrWhiteSpace(selectedItem))
+        {
+            buttonLabel.text = "Preguntar por objeto";
+            return;
+        }
+
+        string displayName = selectedItem.Replace('_', ' ');
+        if (InventoryCatalog.Instance != null)
+        {
+            displayName = InventoryCatalog.Instance.GetDisplayNameOrFallback(selectedItem);
+        }
+
+        buttonLabel.text = $"Preguntar por: {displayName}";
+    }
+
+    private void OnSelectedItemChanged(string _)
+    {
+        RefreshAskItemButtonLabel();
     }
 
     private Button GetAskButton()

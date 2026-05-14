@@ -87,15 +87,27 @@ public class InventoryItemEntryUI : MonoBehaviour, IPointerClickHandler
         {
             viewButton.onClick.RemoveAllListeners();
             viewButton.onClick.AddListener(() => onViewPressed?.Invoke(this.itemId));
-            ConfigureButtonVisual(viewButton);
+            ConfigureButtonVisual(viewButton, "Ver");
         }
 
         if (selectButton != null)
         {
             selectButton.onClick.RemoveAllListeners();
             selectButton.onClick.AddListener(() => onSelectPressed?.Invoke(this.itemId));
-            ConfigureButtonVisual(selectButton);
+            ConfigureButtonVisual(selectButton, "Seleccionar");
         }
+
+        // Añadir LayoutElement al entry root para mejor spacing
+        LayoutElement layout = GetComponent<LayoutElement>();
+        if(layout == null)
+        {
+            layout = gameObject.AddComponent<LayoutElement>();
+        }
+        layout.preferredHeight = 80f;
+        layout.minHeight = 70f;
+        layout.preferredWidth = -1f;
+        layout.minWidth = 0f;
+        layout.flexibleWidth = 1f;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -169,6 +181,11 @@ public class InventoryItemEntryUI : MonoBehaviour, IPointerClickHandler
         if (viewButton != null)
         {
             viewButton.transform.SetParent(actionsRoot.transform, false);
+            // Ajusta tamaño dinámico según el contenido
+            LayoutElement viewLayout = viewButton.GetComponent<LayoutElement>();
+            if(viewLayout == null) viewLayout = viewButton.gameObject.AddComponent<LayoutElement>();
+            viewLayout.preferredWidth = -1; // Auto
+            viewLayout.preferredHeight = 34f;
         }
 
         if (selectButton == null)
@@ -179,6 +196,11 @@ public class InventoryItemEntryUI : MonoBehaviour, IPointerClickHandler
         if (selectButton != null)
         {
             selectButton.transform.SetParent(actionsRoot.transform, false);
+            // Ajusta tamaño dinámico según el contenido
+            LayoutElement selectLayout = selectButton.GetComponent<LayoutElement>();
+            if(selectLayout == null) selectLayout = selectButton.gameObject.AddComponent<LayoutElement>();
+            selectLayout.preferredWidth = -1; // Auto
+            selectLayout.preferredHeight = 34f;
         }
 
         Transform strayCanvas = actionsRoot.transform.Find("Canvas");
@@ -207,13 +229,14 @@ public class InventoryItemEntryUI : MonoBehaviour, IPointerClickHandler
         rect.sizeDelta = new Vector2(110f, 34f);
 
         LayoutElement layoutElement = buttonObject.AddComponent<LayoutElement>();
-        layoutElement.preferredWidth = 110f;
         layoutElement.preferredHeight = 34f;
-        layoutElement.minWidth = 90f;
         layoutElement.minHeight = 30f;
+        layoutElement.preferredWidth = -1; // Auto
+        layoutElement.minWidth = 70f;
 
         Image background = buttonObject.GetComponent<Image>();
-        background.color = new Color(0.05f, 0.05f, 0.05f, 0.95f);
+        // Botones blancos para mejor legibilidad
+        background.color = Color.white;
 
         Button button = buttonObject.GetComponent<Button>();
 
@@ -230,9 +253,9 @@ public class InventoryItemEntryUI : MonoBehaviour, IPointerClickHandler
         text.alignment = TextAlignmentOptions.Center;
         text.fontSize = 24f;
         text.enableAutoSizing = true;
-        text.fontSizeMin = 16f;
-        text.fontSizeMax = 28f;
-        text.color = Color.white;
+        text.fontSizeMin = 14f;
+        text.fontSizeMax = 24f;
+        text.color = Color.black;
         text.raycastTarget = false;
 
         return button;
@@ -262,7 +285,7 @@ public class InventoryItemEntryUI : MonoBehaviour, IPointerClickHandler
         rootButton.onClick.AddListener(() => onEntryClicked?.Invoke(itemId));
     }
 
-    private static void ConfigureButtonVisual(Button button)
+    private static void ConfigureButtonVisual(Button button, string label)
     {
         if (button == null)
         {
@@ -275,15 +298,29 @@ public class InventoryItemEntryUI : MonoBehaviour, IPointerClickHandler
             layoutElement = button.gameObject.AddComponent<LayoutElement>();
         }
 
-        layoutElement.preferredWidth = 110f;
+        // Altura fija, ancho adaptable
         layoutElement.preferredHeight = 34f;
-        layoutElement.minWidth = 90f;
         layoutElement.minHeight = 30f;
+        layoutElement.preferredWidth = -1; // Auto según contenido
+        layoutElement.minWidth = 70f;
 
         Image background = button.GetComponent<Image>();
         if (background != null)
         {
-            background.color = new Color(0.12f, 0.12f, 0.12f, 0.88f);
+            // Botones blancos consistentes
+            background.color = Color.white;
+        }
+
+        // Asegurar que el texto sea dinámico
+        TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+        if(buttonText != null)
+        {
+            buttonText.text = label;
+            buttonText.enableAutoSizing = true;
+            buttonText.fontSizeMin = 14f;
+            buttonText.fontSizeMax = 24f;
+            buttonText.color = Color.black;
+            buttonText.alignment = TextAlignmentOptions.Center;
         }
     }
 }

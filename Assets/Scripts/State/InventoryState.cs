@@ -90,6 +90,10 @@ public static class InventoryState
         return string.IsNullOrWhiteSpace(selectedItem) ? string.Empty : selectedItem;
     }
 
+    public static string CurrentSelectedInventoryItem => GetSelectedItem();
+
+    public static string CurrentlySelectedInventoryItem => GetSelectedItem();
+
     public static void SetSelectedItem(string itemId)
     {
         string normalized = NormalizeItemId(itemId);
@@ -202,6 +206,12 @@ public static class InventoryState
         }
 
         string normalized = itemId.Trim().ToLowerInvariant();
+
+        if (string.Equals(normalized, "hs_unfinished_letter", StringComparison.Ordinal) ||
+            string.Equals(normalized, "unfinished_letter", StringComparison.Ordinal))
+        {
+            return "carta_inconclusa";
+        }
 
         // Backward compatibility: versiones anteriores guardaban esta pista como "lobby_photo".
         if (string.Equals(normalized, "lobby_photo", StringComparison.Ordinal))

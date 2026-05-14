@@ -145,17 +145,13 @@ public class NpcLocationManager : MonoBehaviour
                 break;
 
             case "chapter2":
-                // Se mueven al estudio
-                SetAllNpcsToRoom("estudio");
+                // Regla narrativa: los NPCs permanecen en lobby.
+                SetAllNpcsToRoom("lobby");
                 break;
 
             case "chapter3":
-                // Se dispersan
-                MoveNpcSilent("robert", "lobby");
-                MoveNpcSilent("ana", "galeria");
-                MoveNpcSilent("ben", "estudio");
-                MoveNpcSilent("lisa", "habitacion");
-                MoveNpcSilent("lucas", "sala_vigilancia");
+                // Regla narrativa: los NPCs permanecen en lobby.
+                SetAllNpcsToRoom("lobby");
                 break;
 
             case "chapter4":
@@ -193,7 +189,53 @@ public class NpcLocationManager : MonoBehaviour
 
     private void OnRoomChanged(string previousRoom, string newRoom)
     {
+        ProcessAnxietyDropouts(previousRoom);
         RefreshNpcVisibility();
+    }
+
+    private void ProcessAnxietyDropouts(string previousRoom)
+    {
+        if (string.IsNullOrWhiteSpace(previousRoom)
+            || CharacterAnxietySystem.Instance == null
+            || StoryState.Instance == null)
+        {
+            return;
+        }
+
+        foreach (var pair in npcLookup)
+        {
+            string npcId = pair.Key;
+            NpcRoomAssignment assignment = pair.Value;
+            if (assignment == null || string.IsNullOrWhiteSpace(npcId))
+            {
+                continue;
+            }
+
+            if (StoryState.Instance.HasFlag($"npc.dead.{npcId}"))
+            {
+                continue;
+            }
+
+            if (!CharacterAnxietySystem.Instance.IsAtMaxAnxiety(npcId))
+            {
+                continue;
+            }
+
+            if (!string.Equals(assignment.currentRoomId, previousRoom, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            assignment.currentRoomId = "missing";
+            StoryState.Instance.SetDecision($"npc.location.{npcId}", "missing");
+            StoryState.Instance.SetFlag($"npc.dead.{npcId}", true);
+            StoryState.Instance.SetFlag("npc.dead.any", true);
+            StoryState.Instance.SetFlag($"npc.disappearance.pending.{npcId}", true);
+            StoryState.Instance.SetFlag($"npc.cadaver.ready.{npcId}", false);
+
+            string displayName = CharacterAnxietySystem.Instance.GetCharacterDisplayName(npcId);
+            Debug.Log($"NpcLocationManager: {displayName} desaparecio tras cambiar de sala desde [{previousRoom}].");
+        }
     }
 
     private void RefreshNpcVisibility()
