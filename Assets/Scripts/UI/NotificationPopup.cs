@@ -18,6 +18,8 @@ public class NotificationPopup : MonoBehaviour
     private Coroutine autoCloseRoutine;
     private static NotificationPopup instance;
 
+    public bool IsNotificationOpen => popupPanel != null && popupPanel.activeInHierarchy;
+
     public static NotificationPopup Instance
     {
         get

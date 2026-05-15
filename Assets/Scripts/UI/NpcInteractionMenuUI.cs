@@ -8,6 +8,8 @@ public class NpcInteractionMenuUI : MonoBehaviour
 {
     public static NpcInteractionMenuUI Instance { get; private set; }
 
+    public bool IsOpen => root != null && root.activeInHierarchy;
+
     [Header("UI")]
     [SerializeField] private GameObject root;
     [SerializeField] private TMP_Text titleText;

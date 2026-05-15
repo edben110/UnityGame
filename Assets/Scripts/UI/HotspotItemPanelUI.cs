@@ -7,6 +7,8 @@ public class HotspotItemPanelUI : MonoBehaviour
 {
     public static HotspotItemPanelUI Instance { get; private set; }
 
+    public bool IsOpen => root != null && root.activeInHierarchy;
+
     [SerializeField] private GameObject root;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text statusText;
