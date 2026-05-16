@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class InventoryUIController : MonoBehaviour
 {
+    public static InventoryUIController Instance { get; private set; }
+
     [Header("UI")]
     [SerializeField] private Button toggleButton;
     [SerializeField] private GameObject inventoryPanelRoot;
@@ -26,8 +28,19 @@ public class InventoryUIController : MonoBehaviour
     private readonly Dictionary<string, InventoryItemDefinition> cachedDefinitions = new Dictionary<string, InventoryItemDefinition>();
     private string expandedItemId;
 
+    public bool IsInventoryPanelOpen =>
+        inventoryPanelRoot != null && inventoryPanelRoot.activeInHierarchy;
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         // Ensure InventoryCatalog exists in scene
         if (InventoryCatalog.Instance == null)
         {
@@ -104,6 +117,11 @@ public class InventoryUIController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+
         if (toggleButton != null)
         {
             toggleButton.onClick.RemoveListener(TogglePanel);

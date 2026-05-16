@@ -107,6 +107,11 @@ public class InventoryItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragH
         screenPoint.z = Mathf.Abs(activeCamera.transform.position.z);
         Vector2 worldPoint = activeCamera.ScreenToWorldPoint(screenPoint);
 
+        if (WorldInteractionGate.BlocksInventoryDragToWorldInteractables)
+        {
+            return;
+        }
+
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
         if (hit.collider == null)
         {
