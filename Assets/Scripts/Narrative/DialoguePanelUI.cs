@@ -26,6 +26,8 @@ public class DialoguePanelUI : MonoBehaviour
 
     public static DialoguePanelUI Instance => instance;
 
+    public bool IsOpen => root != null && root.activeInHierarchy;
+
     public event Action ContinuePressed;
     public event Action<int> ChoicePressed;
 

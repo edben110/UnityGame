@@ -120,6 +120,11 @@ public class ClickManager : MonoBehaviour
 
     private static bool CanInteractWith(Interactable interactable)
     {
+        if (WorldInteractionGate.BlocksMapPointAndClick)
+        {
+            return false;
+        }
+
         if (interactable == null || !interactable.isActiveAndEnabled || !interactable.gameObject.activeInHierarchy)
         {
             return false;
