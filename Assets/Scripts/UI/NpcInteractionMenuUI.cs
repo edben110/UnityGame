@@ -39,24 +39,36 @@ public class NpcInteractionMenuUI : MonoBehaviour
         if (talkButton != null)
         {
             talkButton.onClick.AddListener(HandleTalk);
+            EnsureCursorHover(talkButton.gameObject);
         }
 
         if (verifyAnxietyButton != null)
         {
             verifyAnxietyButton.onClick.AddListener(HandleVerify);
+            EnsureCursorHover(verifyAnxietyButton.gameObject);
         }
 
         if (GetAskButton() != null)
         {
             GetAskButton().onClick.AddListener(HandleAskItem);
+            EnsureCursorHover(GetAskButton().gameObject);
         }
 
         if (closeButton != null)
         {
             closeButton.onClick.AddListener(Hide);
+            EnsureCursorHover(closeButton.gameObject);
         }
 
         Hide();
+    }
+
+    private static void EnsureCursorHover(GameObject obj)
+    {
+        if (obj != null && obj.GetComponent<CursorHoverUI>() == null)
+        {
+            obj.AddComponent<CursorHoverUI>();
+        }
     }
 
     private void OnEnable()
@@ -150,6 +162,9 @@ public void Hide()
         {
             root.SetActive(false);
         }
+
+        // Restaurar cursor al cerrar el menú
+        CursorManager.SetDefault();
     }
 
     private void HandleTalk()

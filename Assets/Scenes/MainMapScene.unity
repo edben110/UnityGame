@@ -15004,9 +15004,27 @@ MonoBehaviour:
   darkOverlay: {fileID: 0}
   inventoryContainer: {fileID: 0}
   inventoryBackgroundImage: {fileID: 0}
+  zonaGrilla: {fileID: 0}
+  zonaPreview: {fileID: 0}
+  zonaDescripcion: {fileID: 0}
+  zonaMochila: {fileID: 0}
+  zonaCerrar: {fileID: 0}
   overlayColor: {r: 0, g: 0, b: 0, a: 0.75}
   sortingOrder: 100
+  showDebugZones: 1
   inventorySpritePath: Sprites/Inventario.png
+  inventorySlotPrefab: {fileID: 0}
+  gridColumns: 8
+  gridRows: 6
+  cellSize: {x: 64, y: 64}
+  cellSpacing: {x: 4, y: 4}
+  gridPadding:
+    m_Left: 16
+    m_Right: 4
+    m_Top: 16
+    m_Bottom: 4
+  gridOffsetX: 6
+  gridOffsetY: 6
 --- !u!1 &1902851353
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,6 +38,10 @@ public class InventoryUIController : MonoBehaviour
         if (toggleButton != null)
         {
             toggleButton.onClick.AddListener(TogglePanel);
+            if (toggleButton.GetComponent<CursorHoverUI>() == null)
+            {
+                toggleButton.gameObject.AddComponent<CursorHoverUI>();
+            }
         }
 
         if (inventoryPanelRoot != null)
@@ -58,8 +62,35 @@ public class InventoryUIController : MonoBehaviour
         Refresh();
     }
 
+    private void Start()
+    {
+        // Verificación tardía: si el nuevo overlay se inicializó después de OnEnable,
+        // desuscribir la UI vieja y desactivar su panel visual.
+        if (InventoryOverlayCanvas.Instance != null)
+        {
+            InventoryState.Changed -= Refresh;
+            InventoryState.SelectedChanged -= OnSelectedChanged;
+
+            if (inventoryPanelRoot != null)
+            {
+                inventoryPanelRoot.SetActive(false);
+            }
+        }
+    }
     private void OnEnable()
     {
+        // Si el nuevo InventoryOverlayCanvas está activo, no suscribirse a eventos
+        // para evitar refrescar la UI antigua innecesariamente.
+        if (InventoryOverlayCanvas.Instance != null)
+        {
+            // Mantener el toggle button funcional pero no refrescar la UI vieja
+            if (inventoryPanelRoot != null)
+            {
+                inventoryPanelRoot.SetActive(false);
+            }
+            return;
+        }
+
         InventoryState.Changed += Refresh;
         InventoryState.SelectedChanged += OnSelectedChanged;
         Refresh();
@@ -90,6 +121,14 @@ public class InventoryUIController : MonoBehaviour
 
     public void TogglePanel()
     {
+        // Delegar al nuevo InventoryOverlayCanvas si está disponible
+        if (InventoryOverlayCanvas.Instance != null)
+        {
+            InventoryOverlayCanvas.Instance.Toggle();
+            return;
+        }
+
+        // Fallback: comportamiento antiguo (solo si el nuevo overlay no existe)
         if (inventoryPanelRoot == null)
         {
             return;
@@ -267,6 +306,13 @@ public class InventoryUIController : MonoBehaviour
     private void HideDetailsAndReturnToInventory()
     {
         SetDetailsVisible(false);
+
+        // Si el nuevo overlay está activo, no reactivar el panel viejo
+        if (InventoryOverlayCanvas.Instance != null)
+        {
+            return;
+        }
+
         if (inventoryPanelRoot != null)
         {
             inventoryPanelRoot.SetActive(true);

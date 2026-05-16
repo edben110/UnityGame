@@ -42,6 +42,11 @@ public class DialoguePanelUI : MonoBehaviour
         if (continueButton != null)
         {
             continueButton.onClick.AddListener(HandleContinuePressed);
+            // Cursor hover para el botón continuar
+            if (continueButton.GetComponent<CursorHoverUI>() == null)
+            {
+                continueButton.gameObject.AddComponent<CursorHoverUI>();
+            }
         }
 
         Hide();
@@ -143,6 +148,13 @@ public class DialoguePanelUI : MonoBehaviour
 
             ConfigureChoiceButton(button, label);
             button.onClick.AddListener(() => ChoicePressed?.Invoke(capturedIndex));
+
+            // Cursor hover para botones de elección
+            if (button.GetComponent<CursorHoverUI>() == null)
+            {
+                button.gameObject.AddComponent<CursorHoverUI>();
+            }
+
             activeChoiceButtons.Add(button);
         }
 
@@ -162,6 +174,9 @@ public class DialoguePanelUI : MonoBehaviour
         }
 
         ClearChoices();
+
+        // Restaurar cursor al cerrar el panel de diálogo
+        CursorManager.SetDefault();
     }
 
     private void ClearChoices()

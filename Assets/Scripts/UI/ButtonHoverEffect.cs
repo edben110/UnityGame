@@ -58,6 +58,8 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
         if (glowImage != null)
             glowImage.color = new Color(0.55f, 0.04f, 0.04f, 0.30f);
+
+        CursorManager.SetHand();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -69,6 +71,14 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
         if (glowImage != null)
             glowImage.color = Color.clear;
+
+        CursorManager.SetDefault();
+    }
+
+    private void OnDisable()
+    {
+        // Restaurar cursor si el botón se desactiva mientras el mouse está encima
+        CursorManager.SetDefault();
     }
 
     private static Texture2D CreateRoundedGradient()
