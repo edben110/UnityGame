@@ -137,9 +137,6 @@ public class InventoryOverlayCanvas : MonoBehaviour
 
         BuildUI();
 
-        // --- Botón HUD toggle: se construye SIEMPRE, independientemente del guard de BuildUI ---
-        BuildToggleButton();
-
         // --- Diagnóstico temporal: verificar estado de zonaGrilla antes de BuildInventoryGrid ---
         if (zonaGrilla == null)
         {
@@ -367,10 +364,6 @@ public class InventoryOverlayCanvas : MonoBehaviour
         // --- Contador de ítems dentro de ZonaMochila ---
         BuildInventoryCountText();
 
-        // --- Botón HUD persistente para abrir/cerrar inventario ---
-        BuildToggleButton();
-
-
     }
 
     /// <summary>
@@ -586,104 +579,7 @@ public class InventoryOverlayCanvas : MonoBehaviour
         RefreshInventoryCount();
     }
 
-    /// <summary>
-    /// Crea el botón HUD "BtnToggleInventory" como hijo directo del Canvas (NO del overlayRoot).
-    /// Esto garantiza que sea visible SIEMPRE, independientemente del estado del overlay.
-    /// Estilo: letra "I" con fuente Cinzel-Bold, fondo oscuro semitransparente con borde dorado.
-    /// Posición: esquina superior izquierda.
-    /// Funcionalidad: llama a Toggle() al hacer clic.
-    /// </summary>
-    private void BuildToggleButton()
-    {
-        // Si ya existe (serializado o de ejecución previa), no recrear
-        if (btnToggleInventory != null) return;
 
-        // Buscar si ya existe un hijo llamado BtnToggleInventory
-        Transform existing = transform.Find("BtnToggleInventory");
-        if (existing != null)
-        {
-            btnToggleInventory = existing.GetComponent<Button>();
-            if (btnToggleInventory != null)
-            {
-                // Reconectar listener por si se perdió
-                btnToggleInventory.onClick.RemoveAllListeners();
-                btnToggleInventory.onClick.AddListener(Toggle);
-                return;
-            }
-        }
-
-        // --- Crear el GameObject del botón como hijo directo del Canvas ---
-        GameObject btnObj = new GameObject("BtnToggleInventory");
-        btnObj.transform.SetParent(transform, false);
-
-        RectTransform btnRect = btnObj.AddComponent<RectTransform>();
-        // Esquina superior izquierda, tamaño fijo 52x52
-        btnRect.anchorMin = new Vector2(0f, 1f);
-        btnRect.anchorMax = new Vector2(0f, 1f);
-        btnRect.pivot = new Vector2(0f, 1f);
-        btnRect.anchoredPosition = new Vector2(20f, -20f); // 20px de margen desde la esquina
-        btnRect.sizeDelta = new Vector2(52f, 52f);
-
-        // --- Fondo del botón: oscuro semitransparente ---
-        btnObj.AddComponent<CanvasRenderer>();
-        Image btnBg = btnObj.AddComponent<Image>();
-        btnBg.color = new Color(0.08f, 0.06f, 0.10f, 0.88f); // Casi negro con toque púrpura
-        btnBg.raycastTarget = true;
-
-        // --- Borde dorado usando Outline ---
-        Outline btnOutline = btnObj.AddComponent<Outline>();
-        btnOutline.effectColor = new Color(0.72f, 0.55f, 0.20f, 0.85f); // Dorado RPG
-        btnOutline.effectDistance = new Vector2(2f, 2f);
-
-        // --- Segundo Outline para efecto de borde más definido ---
-        Outline btnOutline2 = btnObj.AddComponent<Outline>();
-        btnOutline2.effectColor = new Color(0.45f, 0.32f, 0.12f, 0.60f); // Dorado oscuro
-        btnOutline2.effectDistance = new Vector2(1f, 1f);
-
-        // --- Texto "I" centrado con fuente RPG ---
-        GameObject textObj = new GameObject("Label");
-        textObj.transform.SetParent(btnObj.transform, false);
-
-        RectTransform textRect = textObj.AddComponent<RectTransform>();
-        StretchToFill(textRect);
-
-        TextMeshProUGUI label = textObj.AddComponent<TextMeshProUGUI>();
-        label.text = "I";
-        label.fontSize = 26f;
-        label.fontStyle = FontStyles.Bold;
-        label.color = new Color(0.92f, 0.82f, 0.55f, 1f); // Dorado cálido (mismo que itemNameText)
-        label.alignment = TextAlignmentOptions.Center;
-        label.enableWordWrapping = false;
-        label.raycastTarget = false;
-
-        // Cargar fuente RPG (Cinzel-Bold SDF)
-        TMP_FontAsset rpgFont = Resources.Load<TMP_FontAsset>("Fonts/Cinzel-Bold SDF");
-        if (rpgFont != null)
-        {
-            label.font = rpgFont;
-        }
-
-        // --- Componente Button ---
-        btnToggleInventory = btnObj.AddComponent<Button>();
-
-        // Transición de color para feedback visual sutil
-        ColorBlock colors = btnToggleInventory.colors;
-        colors.normalColor = Color.white;
-        colors.highlightedColor = new Color(1f, 0.9f, 0.7f, 1f); // Tinte dorado al hover
-        colors.pressedColor = new Color(0.8f, 0.6f, 0.3f, 1f);   // Dorado intenso al presionar
-        colors.selectedColor = Color.white;
-        colors.fadeDuration = 0.12f;
-        btnToggleInventory.colors = colors;
-        btnToggleInventory.targetGraphic = btnBg;
-
-        // --- Conectar onClick a Toggle ---
-        btnToggleInventory.onClick.AddListener(Toggle);
-
-        // --- Cursor hover: cambiar a mano al pasar sobre el botón ---
-        btnObj.AddComponent<CursorHoverUI>();
-
-        Debug.Log("InventoryOverlayCanvas: BtnToggleInventory creado — esquina superior izquierda, estilo RPG.");
-    }
 
     private void BuildInventoryBackgroundImage()
     {
