@@ -119,7 +119,7 @@ public class DoorTrigger : Interactable
         {
             Debug.Log($"[DoorTrigger] {gameObject.name}: Sótano descubierto. Puerta habilitada.");
         }
-    }    }
+    }
 
     private bool ShouldSecretBasementColliderBeEnabled()
     {
