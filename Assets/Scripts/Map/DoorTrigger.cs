@@ -299,10 +299,15 @@ public class DoorTrigger : Interactable
                 }
                 else
                 {
-                    result.blockReason = "No puedo bajar por ahí todavía… debería hablar con los demás primero.";
+                    result.blockReason = "Tal vez debería hablar con alguien antes de bajar.";
                 }
                 return result;
             }
+
+            // Validación del sótano pasó — saltar validación general de llaves
+            // (la puerta usa requiredKeys del Inspector que puede tener un KeyType incorrecto)
+            result.canPass = true;
+            return result;
         }
 
         // 1. Verificar capítulo requerido
