@@ -35,6 +35,19 @@ public class RoomManager : MonoBehaviour
 
     public string CurrentRoomId => currentRoomId;
 
+    public string CurrentRoomDisplayName
+    {
+        get
+        {
+            if (currentRoomDefinition == null || string.IsNullOrWhiteSpace(currentRoomDefinition.displayName))
+            {
+                return string.Empty;
+            }
+
+            return currentRoomDefinition.displayName;
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -149,6 +162,16 @@ public class RoomManager : MonoBehaviour
         }
 
         return room.displayName;
+    }
+
+    public string GetCurrentRoomBackgroundObjectName()
+    {
+        if (currentRoomDefinition == null || currentRoomDefinition.backgroundObject == null)
+        {
+            return string.Empty;
+        }
+
+        return currentRoomDefinition.backgroundObject.name;
     }
 
     public string GetRoomDisplayName(string roomId)

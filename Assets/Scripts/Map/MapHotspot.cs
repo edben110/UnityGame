@@ -65,6 +65,11 @@ public class MapHotspot : Interactable
 
         bool shouldBeVisible = StoryState.Instance.CurrentChapterId == requiredChapterId;
 
+        if (HasItemReward() && !IsItemCollected())
+        {
+            shouldBeVisible = true;
+        }
+
         // Solo ocultar el renderer, no el GameObject completo
         // (para que siga recibiendo eventos de StateChanged)
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -166,6 +171,12 @@ public override void Interact()
             InventoryState.AddItem(grantItemId);
         }
 
+        if (StoryState.Instance != null && (hideAfterPickup || consumeAfterUse) && IsItemCollected())
+        {
+            StoryState.Instance.SetFlag(GetUsedFlag(), true);
+            RefreshAvailability();
+        }
+
         TriggerNarrativeConversation();
 
         if (HotspotItemPanelUI.Instance != null)
@@ -198,7 +209,18 @@ public override void Interact()
 
     private void RefreshAvailability()
     {
-        if (!consumeAfterUse || StoryState.Instance == null || !StoryState.Instance.HasFlag(GetUsedFlag()))
+        if (StoryState.Instance == null)
+        {
+            return;
+        }
+
+        if (hideAfterPickup && HasItemReward() && IsItemCollected())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        if (!consumeAfterUse || !StoryState.Instance.HasFlag(GetUsedFlag()))
         {
             return;
         }
@@ -262,6 +284,21 @@ public override void Interact()
         return !string.IsNullOrWhiteSpace(grantItemId);
     }
 
+    private bool IsItemCollected()
+    {
+        if (!HasItemReward())
+        {
+            return false;
+        }
+
+        if (InventoryState.HasItem(grantItemId))
+        {
+            return true;
+        }
+
+        return StoryState.Instance != null && StoryState.Instance.HasFlag(GetUsedFlag());
+    }
+
     private string ResolveItemDisplayName()
     {
         if (!string.IsNullOrWhiteSpace(grantItemDisplayName))
@@ -294,14 +331,22 @@ public override void Interact()
 
     private Sprite ResolveItemSprite()
     {
+        string canonicalItemId = InventoryCatalog.CanonicalizeItemId(grantItemId);
+
         if (grantItemSprite != null)
         {
             return grantItemSprite;
         }
 
-        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(grantItemId, out InventoryItemDefinition definition))
+        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(canonicalItemId, out InventoryItemDefinition definition))
         {
             return definition.icon;
+        }
+
+        Sprite sprite = Resources.Load<Sprite>($"Sprites/{canonicalItemId}");
+        if (sprite != null)
+        {
+            return sprite;
         }
 
         return null;

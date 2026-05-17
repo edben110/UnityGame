@@ -72,10 +72,12 @@ Decisión del prólogo:
 
 ═══════════════════════════════════════════════════════════════════
  CAPÍTULO 1 — LA LLEGADA (3:00 PM)
- Ubicación: Lobby
+ Ubicación: Lobby y sala de npcs
 ═══════════════════════════════════════════════════════════════════
-
-EXPLORACIÓN DEL LOBBY (hotspots):
+Lobby:
+En una mesa del lobby se encuentra un objeto escondido a simple vista:
+CARTA del Padre con una fecha y algunos otros documentos de propiedades y herencias
+EXPLORACIÓN DE la sala de npcs
 ─────────────────────────────────
 1. LIBRO DE VISITAS — Una entrada tachada con tinta roja. Fecha:
    hace 3 semanas. Nombre ilegible.
@@ -91,7 +93,7 @@ EXPLORACIÓN DEL LOBBY (hotspots):
 
 INTERACCIÓN CON NPCs:
 ─────────────────────
-El jugador debe hablar con cada NPC:
+El jugador debe hablar con almenos un NPC:
 • Conversación de ansiedad (calmar)
 • Preguntar motivo de visita
 • Mostrar objetos encontrados para obtener reacciones
@@ -109,15 +111,10 @@ La llave del estudio NO está a simple vista. El jugador debe:
 5. Abrir el cofre → obtener la LLAVE DEL ESTUDIO
 
 CONDICIONES PARA AVANZAR:
-• Explorar los 4 hotspots del lobby
-• Hablar con todos los NPCs
-• Resolver el puzzle y obtener la llave
+• Hablar con al menos uno de todos los NPCs
+• Resolver el puzzle y obtener la llave del estudio
 
-DECISIÓN DEL CAPÍTULO:
-  [1] Hablar sinceramente sobre Simón (ansiedad -8)
-  [2] Separarse (ansiedad +14)
-
-TRANSICIÓN: El protagonista usa la llave → entra SOLO al estudio.
+TRANSICIÓN: El protagonista usa la llave(posterior si se cumplen las anteriores validaciones) → entra SOLO al estudio.
 
 
 ═══════════════════════════════════════════════════════════════════
@@ -132,6 +129,7 @@ EXPLORACIÓN DEL ESTUDIO (hotspots):
 ───────────────────────────────────
 1. AGENDA — "Reunión cancelada. Peligro. No volver a abrir la
    puerta norte." Última entrada: hace 3 días.
+   "en la pagina final de la agenda dice: el código de la puerta es dia de la carta de mi p### concatenado con la fecha de la foto mia con mi ####
 
 2. LIBRO DE CONTABILIDAD — Entradas marcadas con "B" roja.
    Discrepancias financieras significativas. SE RECOGE AL
@@ -143,9 +141,6 @@ EXPLORACIÓN DEL ESTUDIO (hotspots):
 4. TABLERO DE CORCHO — Fotos de los 5 personajes conectadas con
    hilos rojos. Una sexta foto con el rostro cubierto con cinta
    negra. "¿Quién eres tú?"
-
-5. ARCHIVADOR — Cerrado con llave pequeña. No se puede abrir aún.
-   (Las joyas de Ana están aquí dentro)
 
 REGRESO AL LOBBY:
 ─────────────────
@@ -172,7 +167,6 @@ La llave de la habitación NO se encuentra directamente. El jugador:
 
 CONDICIÓN PARA AVANZAR:
 • Tener la llave de la habitación
-• Haber completado la decisión del libro con Ben
 
 
 ═══════════════════════════════════════════════════════════════════
@@ -212,9 +206,7 @@ EXPLORACIÓN DE LA GALERÍA (puzzles):
    es parte del código de la sala de seguridad.
 
 2. CAJA PUZZLE 2 — Requiere resolver la primera (de la cama).
-   Contiene la LLAVE PEQUEÑA DEL ARCHIVADOR.
-   Con esta llave se abre el archivador del estudio que contiene
-   el ESTUCHE DE JOYAS FAMILIARES (objeto que busca Ana).
+   Contiene ESTUCHE DE JOYAS FAMILIARES (objeto que busca Ana).
 
 3. CAJA PUZZLE 3 — Contiene la LLAVE DEL SÓTANO.
 
@@ -223,10 +215,10 @@ EXPLORACIÓN DE LA GALERÍA (puzzles):
 
 PUZZLE — CÓDIGO DE LA SALA DE SEGURIDAD:
 ────────────────────────────────────────
-El código 4-7-2-9 se descubre así:
-• "4" — Del día de la carta del padre (4 de julio)
+El código 4-7-2-7 se descubre así:
+• "1" — Del día de la carta del padre (4 de julio)
 • "7" — Del mes de la carta del padre (julio = 7)
-• "2-9" — De la fecha "1929" en la carta (29)
+• "2-7" — De la fecha "1929" en la carta (29)
 El jugador conecta la fecha de la carta de Robert con el teclado
 numérico de la puerta de la sala de seguridad.
 
@@ -268,6 +260,7 @@ EXPLORACIÓN DE LA SALA DE SEGURIDAD (hotspots):
 
 5. MAPA ACTUALIZADO — Marca con X roja la habitación exacta
    donde está Simón retenido. Tercera puerta del Ala Norte.
+6. caja puzzle(se debe resolver) adentro hay una llave que solo sirve una vez por que ya esta muy desgastada
 
 ═══════════════════════════════════════════════════════════════════
  DECISIÓN CRÍTICA — ENTREGAR O NO LOS OBJETOS
@@ -294,6 +287,8 @@ DECISIÓN:
 
   [3] ENTREGAR SELECTIVAMENTE — dar algunos y quedarse otros
       → Efecto mixto según a quién se le entregue
+	para esto el jugador debe seleccionar el item desde el inventario y luego cliquear al npc para que en donde sale el botón preguntar por objeto desde el panel de interaccion, al darle click a ese botón después de tener los 5 ítems de los npcs, le entreguemos el item seleccionado al npc que le corresponde el item
+
 
 
 ═══════════════════════════════════════════════════════════════════
@@ -312,15 +307,12 @@ finales principales (A, B o C). Solo cambia el epílogo.
 
 EL PASILLO DEL ALA NORTE:
 ─────────────────────────
-• Largo, oscuro, cinco puertas idénticas
-• Si tiene la nota roja → usa velas (seguro, sin evento de terror)
-• Si NO la tiene → las luces se apagan, respiración ajena, terror
+• Largo, oscuro, 3 puertas idénticas
 
 DECISIÓN DE PUERTAS:
-  [1] Primera puerta (más cercana) — vacía, pierde tiempo
-  [2] Tercera puerta (la del mapa) — encuentra a Simón directo
-  [3] Quinta puerta (al fondo) — evento de terror, silueta en
-      espejo, luego encuentra a Simón
+  [1] Primera puerta (más cercana) — vacía con telarañas, pierde tiempo y se pierde la llave de un solo uso
+  [2] segunda puerta (puerta centra y que sale en el mapa) — encuentra a Simón directo
+  [3] tercera puerta (al fondo) — habitación con una cama y un ventanal grande(habitación donde alguien se ha quedado, parece una sala de operaciones) 
 
 ENCUENTRO CON SIMÓN:
 ────────────────────
@@ -339,7 +331,7 @@ Reacciona según cuántos NPCs sobrevivieron:
 
 ───────────────────────────────────────────────────────────────────
  FINAL A — TODOS SOBREVIVEN
- Condiciones: Entregar objetos + Ansiedad de todos < 75 + Rescatar
+ Condiciones: Entregar objetos + Rescatar simon
 ───────────────────────────────────────────────────────────────────
 
 El grupo sale unido de la mansión. Simón es liberado. La policía
@@ -363,7 +355,7 @@ Epílogo: "A veces la verdad no mata. A veces salva."
 
 ───────────────────────────────────────────────────────────────────
  FINAL B — NO TODOS SOBREVIVEN
- Condiciones: Al menos 1 NPC con ansiedad 100 (muere)
+ Condiciones: Al menos 1 NPC con ansiedad 100 (muerto) o simon no es rescatado
 ───────────────────────────────────────────────────────────────────
 
 Los NPCs que alcanzaron ansiedad 100 abandonaron la sala durante
@@ -390,34 +382,32 @@ Para cada NPC muerto, se describe dónde y cómo fue encontrado:
 • Robert — En el lobby, frente a la chimenea apagada
 • Ana — En la galería, abrazando un marco vacío
 • Lucas — En la habitación de Simón, con el relicario en la mano
+• Simon— En una habitación del ala norte, muerto y con signos de tortura deshidratación e inanicion
 
 ───────────────────────────────────────────────────────────────────
  FINAL C — EL PROTAGONISTA ES EL CULPABLE
  Condiciones: No entregar objetos + Elegir "Buscar al asesino"
- en la decisión final + Todos los NPCs mueren (ansiedad 100)
+ en la decisión final + Todos los NPCs mueren independientemente de la ansiedad que tengan
 ───────────────────────────────────────────────────────────────────
 
 Revelación: Franks Keller no es un detective. Es la sexta persona.
 El hombre de la foto con cinta negra.
 
 MOTIVOS DE KELLER:
-Keller fue socio de Simón hace años. Simón presenció un crimen
+Keller provoco un incidente. Simón presenció un crimen
 que Keller cometió (el incendio del almacén del puerto). Simón
 guardó evidencia. Keller necesitaba:
 1. Recuperar la evidencia (carpeta de Lisa, libro de contabilidad)
-2. Eliminar a todos los testigos potenciales
+2. Eliminar a todos los testigos potenciales que pudiesen encontrarlo
 3. Asegurarse de que Simón no pudiera hablar
 
 MÉTODO:
 Keller envió las invitaciones falsas. Atrajo a los 5 a la mansión.
 Sabía que cada uno tenía un secreto que los haría vulnerables.
-Manipuló la situación para que la ansiedad los destruyera:
-• No habló con ellos deliberadamente (o el jugador no lo hizo)
-• Los dejó aislarse
-• La mansión hizo el resto
+Manipuló la situación para averiguar sobre donde puede estar todo lo que queria:
 
-Cuando todos están muertos, Keller baja al Ala Norte. Simón lo
-reconoce. La última conversación:
+keller asesina a todos luego baja al Ala Norte. Donde  Simón lo
+reconoce. La última conversación y que solo pasa en este final:
 
 SIMÓN: "Sabía que eras tú. Desde el principio."
 KELLER: "Entonces sabes por qué estoy aquí."
@@ -428,9 +418,7 @@ KELLER: "No vine por la evidencia. Vine porque no puedo dejar
 Keller deja a Simón atado. Sale de la mansión. Quema la evidencia.
 La policía encuentra 6 cuerpos días después. Caso archivado.
 
-Epílogo: "La mansión guarda sus secretos. Y los de quien la visita.
-Seis meses después, cinco nuevas invitaciones fueron enviadas.
-La misma letra. La misma trampa. El mismo final."
+Epílogo: "La mansión guarda sus secretos. Y los de quien la visita."
 
 
 ═══════════════════════════════════════════════════════════════════
@@ -469,11 +457,10 @@ FINAL A (Todos sobreviven):
 
 FINAL B (No todos sobreviven):
 • Al menos 1 NPC llega a ansiedad 100 y muere
-• El resto del grupo sale (con o sin Simón)
+• o el resto del grupo sale (con o sin Simón)
 
 FINAL C (Protagonista culpable):
-• No entregar objetos a los NPCs
-• Dejar que TODOS los NPCs mueran (ansiedad 100)
+• No entregar objetos a ningún NPCs
 • En la decisión final elegir "Buscar al asesino"
 • Se revela que Keller es el asesino
 

@@ -69,6 +69,12 @@ public class InventoryOverlayCanvas : MonoBehaviour
     [Tooltip("Imagen UI para mostrar el preview grande del ítem seleccionado. Se crea automáticamente dentro de ZonaPreview si es null.")]
     [SerializeField] private Image previewItemImage;
 
+    [Header("Seleccion de item")]
+    [Tooltip("Botón para seleccionar el item activo desde el inventario.")]
+    [SerializeField] private Button selectItemButton;
+    [SerializeField] private TextMeshProUGUI selectItemButtonText;
+    [SerializeField] private string selectItemButtonLabel = "Seleccionar";
+
     [Header("Textos de ZonaDescripcion")]
     [Tooltip("TextMeshPro para el nombre del ítem seleccionado. Se crea automáticamente dentro de ZonaDescripcion si es null.")]
     [SerializeField] private TextMeshProUGUI itemNameText;
@@ -85,6 +91,8 @@ public class InventoryOverlayCanvas : MonoBehaviour
 
     /// <summary>Índice del slot actualmente seleccionado. -1 = ninguno.</summary>
     private int selectedSlotIndex = -1;
+    private string selectedSlotItemId = string.Empty;
+    private List<string> currentItemsCache = new List<string>();
 
     /// <summary>Referencia al contenedor central donde se colocará el sprite del inventario.</summary>
     public RectTransform Container => inventoryContainer;
@@ -358,6 +366,9 @@ public class InventoryOverlayCanvas : MonoBehaviour
         // --- Preview Image dentro de ZonaPreview ---
         BuildPreviewImage();
 
+        // --- Botón Seleccionar dentro de ZonaPreview ---
+        BuildSelectButton();
+
         // --- Textos de nombre y descripción dentro de ZonaDescripcion ---
         BuildDescriptionTexts();
 
@@ -413,6 +424,81 @@ public class InventoryOverlayCanvas : MonoBehaviour
         previewItemImage.preserveAspect = true;
         previewItemImage.raycastTarget = false;
         previewItemImage.enabled = true; // Siempre habilitado, controlamos visibilidad con alpha/sprite
+    }
+
+    private void BuildSelectButton()
+    {
+        if (zonaPreview == null)
+        {
+            Debug.LogWarning("InventoryOverlayCanvas: ZonaPreview es null. No se puede crear el boton Seleccionar.");
+            return;
+        }
+
+        if (selectItemButton != null)
+        {
+            return;
+        }
+
+        Transform existing = zonaPreview.Find("SelectItemButton");
+        if (existing != null)
+        {
+            selectItemButton = existing.GetComponent<Button>();
+            if (selectItemButton != null)
+            {
+                selectItemButtonText = selectItemButton.GetComponentInChildren<TextMeshProUGUI>(true);
+                return;
+            }
+        }
+
+        GameObject buttonObj = new GameObject("SelectItemButton");
+        buttonObj.transform.SetParent(zonaPreview, false);
+
+        RectTransform buttonRect = buttonObj.AddComponent<RectTransform>();
+        buttonRect.anchorMin = new Vector2(0.22f, 0.02f);
+        buttonRect.anchorMax = new Vector2(0.78f, 0.18f);
+        buttonRect.offsetMin = Vector2.zero;
+        buttonRect.offsetMax = Vector2.zero;
+        buttonRect.pivot = new Vector2(0.5f, 0.5f);
+
+        buttonObj.AddComponent<CanvasRenderer>();
+        Image buttonImage = buttonObj.AddComponent<Image>();
+        buttonImage.color = new Color(0.28f, 0.22f, 0.18f, 0.9f);
+        buttonImage.raycastTarget = true;
+
+        selectItemButton = buttonObj.AddComponent<Button>();
+        selectItemButton.transition = Selectable.Transition.None;
+        selectItemButton.onClick.RemoveAllListeners();
+        selectItemButton.onClick.AddListener(OnSelectButtonPressed);
+
+        if (buttonObj.GetComponent<CursorHoverUI>() == null)
+        {
+            buttonObj.AddComponent<CursorHoverUI>();
+        }
+
+        GameObject labelObj = new GameObject("SelectItemButtonText");
+        labelObj.transform.SetParent(buttonObj.transform, false);
+
+        RectTransform labelRect = labelObj.AddComponent<RectTransform>();
+        StretchToFill(labelRect);
+
+        selectItemButtonText = labelObj.AddComponent<TextMeshProUGUI>();
+        selectItemButtonText.text = selectItemButtonLabel;
+        selectItemButtonText.alignment = TextAlignmentOptions.Center;
+        selectItemButtonText.fontSize = 16f;
+        selectItemButtonText.color = new Color(0.92f, 0.82f, 0.55f, 1f);
+        selectItemButtonText.raycastTarget = false;
+
+        TMP_FontAsset rpgFont = Resources.Load<TMP_FontAsset>("Fonts/Cinzel-Bold SDF");
+        if (rpgFont == null && TMP_Settings.instance != null)
+        {
+            rpgFont = TMP_Settings.defaultFontAsset;
+        }
+        if (rpgFont != null)
+        {
+            selectItemButtonText.font = rpgFont;
+        }
+
+        selectItemButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -841,6 +927,9 @@ public class InventoryOverlayCanvas : MonoBehaviour
 
         // Actualizar textos de nombre y descripción
         UpdateDescriptionTexts(slotIndex);
+
+        string itemId = GetItemIdForSlot(slotIndex);
+        UpdateSelectButtonState(!string.IsNullOrWhiteSpace(itemId), itemId);
     }
 
     /// <summary>
@@ -858,8 +947,10 @@ public class InventoryOverlayCanvas : MonoBehaviour
         }
 
         selectedSlotIndex = -1;
+        selectedSlotItemId = string.Empty;
         UpdatePreviewImage(null);
         ClearDescriptionTexts();
+        UpdateSelectButtonState(false, string.Empty);
     }
 
     /// <summary>
@@ -886,7 +977,7 @@ public class InventoryOverlayCanvas : MonoBehaviour
     /// </summary>
     private void UpdateDescriptionTexts(int slotIndex)
     {
-        List<string> currentItems = InventoryState.GetItems();
+        List<string> currentItems = currentItemsCache ?? InventoryState.GetItems();
         InventoryCatalog catalog = InventoryCatalog.Instance;
 
         if (slotIndex < 0 || slotIndex >= currentItems.Count || catalog == null)
@@ -932,6 +1023,38 @@ public class InventoryOverlayCanvas : MonoBehaviour
         {
             itemDescriptionText.text = string.Empty;
         }
+    }
+
+    private void UpdateSelectButtonState(bool visible, string itemId)
+    {
+        if (selectItemButton == null)
+        {
+            return;
+        }
+
+        selectedSlotItemId = visible ? itemId : string.Empty;
+        selectItemButton.gameObject.SetActive(visible);
+    }
+
+    private void OnSelectButtonPressed()
+    {
+        if (string.IsNullOrWhiteSpace(selectedSlotItemId))
+        {
+            return;
+        }
+
+        InventoryState.SetSelectedItem(selectedSlotItemId);
+    }
+
+    private string GetItemIdForSlot(int slotIndex)
+    {
+        List<string> items = currentItemsCache ?? InventoryState.GetItems();
+        if (slotIndex < 0 || slotIndex >= items.Count)
+        {
+            return string.Empty;
+        }
+
+        return items[slotIndex];
     }
 
     // ==================== CONTADOR DE ÍTEMS (ZONA MOCHILA) ====================
@@ -980,7 +1103,7 @@ public class InventoryOverlayCanvas : MonoBehaviour
             return;
         }
 
-        List<string> currentItems = InventoryState.GetItems();
+        currentItemsCache = InventoryState.GetItems();
         InventoryCatalog catalog = InventoryCatalog.Instance;
 
         for (int i = 0; i < slots.Count; i++)
@@ -991,9 +1114,9 @@ public class InventoryOverlayCanvas : MonoBehaviour
                 continue;
             }
 
-            if (i < currentItems.Count)
+            if (i < currentItemsCache.Count)
             {
-                string itemId = currentItems[i];
+                string itemId = currentItemsCache[i];
                 Sprite icon = null;
 
                 if (catalog != null && catalog.TryGet(itemId, out InventoryItemDefinition definition))
@@ -1003,8 +1126,7 @@ public class InventoryOverlayCanvas : MonoBehaviour
 
                 if (icon == null)
                 {
-                    Debug.LogWarning($"InventoryOverlayCanvas: Ítem '{itemId}' no tiene sprite en el catálogo. " +
-                        "Verifica que exista en InventoryCatalog con un icon asignado.");
+                    Debug.LogWarning($"InventoryOverlayCanvas: Ítem '{itemId}' no tiene sprite en el catálogo. El slot quedará vacío hasta corregir el icono.");
                 }
 
                 slot.SetItem(icon);
@@ -1026,6 +1148,7 @@ public class InventoryOverlayCanvas : MonoBehaviour
             {
                 // Actualizar preview por si el sprite cambió
                 UpdatePreviewImage(slots[selectedSlotIndex].CurrentSprite);
+                UpdateSelectButtonState(true, GetItemIdForSlot(selectedSlotIndex));
             }
         }
     }

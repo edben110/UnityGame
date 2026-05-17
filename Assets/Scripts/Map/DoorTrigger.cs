@@ -108,7 +108,7 @@ public class DoorTrigger : Interactable
         }
 
         return StoryState.Instance.CurrentChapterId == "chapter3"
-            && InventoryState.HasItem(KeyType.SmallKey.ToString());
+            && StoryState.Instance.HasFlag("BasementDiscovered");
     }
 
     private void HideAnxietyOverlayIfVisible()
@@ -245,15 +245,33 @@ public class DoorTrigger : Interactable
 
         if (IsSecretBasementDoor())
         {
-            bool canOpenSecretBasement = StoryState.Instance != null
-                && StoryState.Instance.CurrentChapterId == "chapter3"
-                && InventoryState.HasItem(KeyType.BasementKey.ToString())
-                && result.npcTalkCount >= 1;
+            bool isChapter3 = StoryState.Instance != null
+                && StoryState.Instance.CurrentChapterId == "chapter3";
+            bool hasBasementDiscovered = StoryState.Instance != null
+                && StoryState.Instance.HasFlag("BasementDiscovered");
+            bool hasBasementKey = InventoryState.HasItem(KeyType.BasementKey.ToString());
+            bool hasNpcTalk = result.npcTalkCount >= 1;
+            bool canOpenSecretBasement = isChapter3 && hasBasementDiscovered && hasBasementKey && hasNpcTalk;
 
             if (!canOpenSecretBasement)
             {
                 result.canPass = false;
-                result.blockReason = "Creo que aún no debería bajar ahí.";
+                if (!isChapter3)
+                {
+                    result.blockReason = "No puedo bajar por ahí todavía.";
+                }
+                else if (!hasBasementDiscovered)
+                {
+                    result.blockReason = "No hay nada aquí.";
+                }
+                else if (!hasBasementKey)
+                {
+                    result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                }
+                else
+                {
+                    result.blockReason = "No puedo bajar por ahí todavía… debería hablar con los demás primero.";
+                }
                 return result;
             }
         }
@@ -301,8 +319,12 @@ public class DoorTrigger : Interactable
         {
             result.chapter3DoorInteraction = true;
             result.hasSimonKey = InventoryState.HasItem(simonRoomRequiredKey.ToString());
-            result.hasBookDecision = CountNpcTalksInCurrentChapter() >= 1 && StoryState.Instance.HasFlag(chapter2BookDecisionCompleteFlag);
-            result.canStartChapter3 = result.hasSimonKey && result.hasBookDecision;
+
+            // NEW BEHAVIOR: Ben+book panel is optional. To start Chapter 3 we require:
+            // - The Simon room key
+            // - The player has talked to at least one NPC in the current chapter
+            bool hasTalkedAtLeastOneNpc = result.npcTalkCount >= 1;
+            result.canStartChapter3 = result.hasSimonKey && hasTalkedAtLeastOneNpc;
 
             if (!result.canStartChapter3)
             {
@@ -313,10 +335,10 @@ public class DoorTrigger : Interactable
                     result.chapter3Reason = "Missing Simon Room Key";
                     result.blockReason = "Creo que aún no estoy listo para entrar. Necesito la llave de la habitación de Simón.";
                 }
-                else if (!result.hasBookDecision)
+                else if (!hasTalkedAtLeastOneNpc)
                 {
                     result.chapter3Reason = "Must talk to at least one NPC";
-                    result.blockReason = "Quizás sería buena idea hablar sobre algunos hallazgos del estudio antes de seguir.";
+                    result.blockReason = "Quizás sería buena idea hablar con alguien antes de seguir.";
                 }
                 else
                 {
@@ -334,7 +356,7 @@ public class DoorTrigger : Interactable
         if (ShouldValidateChapter4Entry())
         {
             result.chapter4DoorInteraction = true;
-            result.hasBasementKey = InventoryState.HasItem("BasementKey");
+            result.hasBasementKey = InventoryState.HasItem(KeyType.BasementKey.ToString());
             result.hasBasementDiscovered = StoryState.Instance.HasFlag("BasementDiscovered");
             result.hasChapter3Decision = CountNpcTalksInCurrentChapter() >= 1; // At least one NPC talked in chapter 3
             result.canStartChapter4 = result.hasBasementKey && result.hasBasementDiscovered && result.hasChapter3Decision;
@@ -356,7 +378,7 @@ public class DoorTrigger : Interactable
                 else if (!result.hasChapter3Decision)
                 {
                     result.chapter4Reason = "Must talk to at least one NPC";
-                    result.blockReason = "Debería hablar con los demás sobre mis hallazgos antes de bajar.";
+                    result.blockReason = "No puedo bajar por ahí todavía… debería hablar con los demás primero.";
                 }
                 else
                 {
@@ -460,6 +482,11 @@ public class DoorTrigger : Interactable
         // Cambiar al nuevo capítulo
         StoryState.Instance.SetChapter(targetChapterId);
         StoryState.Instance.SetFlag($"{targetChapterId}.intro.seen", true);
+
+        if (ChapterFlowController.Instance != null)
+        {
+            ChapterFlowController.Instance.ResetNpcTalkTrackingForNewChapter();
+        }
 
         if (GameManager.Instance != null)
         {
@@ -646,6 +673,11 @@ public class DoorTrigger : Interactable
         if (StoryState.Instance.CurrentChapterId != "chapter3")
         {
             return false;
+        }
+
+        if (IsSecretBasementDoor())
+        {
+            return true;
         }
 
         if (string.Equals(targetRoomId, "sotano", StringComparison.OrdinalIgnoreCase)

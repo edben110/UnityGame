@@ -36,6 +36,11 @@ public class ChapterFlowController : MonoBehaviour
     [SerializeField] private string chapter2Id = "chapter2";
     [SerializeField] private string chapter3Id = "chapter3";
 
+    [Header("Cap 3: Decisión de la carta")]
+    [SerializeField] private string chapter3NpcRoomId = "lobby";
+    [SerializeField] private string[] chapter3NpcAllowedBackgroundNames = { "LivingRoom", "NPCRoom", "Lobby" };
+    private const string Chapter3LetterDecisionShownFlag = "chapter3.letter_decision.shown";
+
     [Header("Flags")]
     [SerializeField] private string prologueCompleteFlag = "chapter.prologue.complete";
     [SerializeField] private string chapter1CompleteFlag = "chapter.chapter1.complete";
@@ -205,13 +210,14 @@ public class ChapterFlowController : MonoBehaviour
             return;
         }
 
-        if (!string.Equals(newRoom, "lobby", System.StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(newRoom, chapter3NpcRoomId, System.StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
 
         StoryState.Instance.SetFlag("PlayerEnteredNpcRoom", true);
         StoryState.Instance.SetFlag("chapter3.npc_room.entered", true);
+        TryLaunchChapter3DecisionInNpcRoom();
     }
 
     private void SyncChapterTracking(bool forceRebuild)
@@ -236,6 +242,14 @@ public class ChapterFlowController : MonoBehaviour
     {
         talkedNpcIdsInCurrentChapter.Clear();
         npcTalkedCountInCurrentChapter = 0;
+    }
+
+    public void ResetNpcTalkTrackingForNewChapter()
+    {
+        ResetNpcTalkProgress();
+        lastObservedChapterId = StoryState.Instance != null
+            ? StoryState.Instance.CurrentChapterId
+            : string.Empty;
     }
 
     private void RebuildNpcTalkProgressForCurrentChapter()
@@ -313,16 +327,90 @@ public class ChapterFlowController : MonoBehaviour
         }
 
         // CAP 3: Disparar decisión al tener la carta y entrar a la sala de NPCs
-        if (chapter == chapter3Id && !StoryState.Instance.HasFlag("chapter3.decision.shown") && InventoryState.HasItem("HS_Unfinished_Letter") && StoryState.Instance.HasFlag("PlayerEnteredNpcRoom"))
+        // La decisión de la carta se dispara solamente al entrar en la sala de NPCs.
+    }
+
+    private void TryLaunchChapter3DecisionInNpcRoom()
+    {
+        if (StoryState.Instance == null || dialogueRunner == null)
         {
-            bool inNpcRoom = RoomManager.Instance == null || RoomManager.Instance.CurrentRoomId == "lobby";
-            if (inNpcRoom)
+            return;
+        }
+
+        if (StoryState.Instance.CurrentChapterId != chapter3Id)
+        {
+            return;
+        }
+
+        if (RoomManager.Instance == null || !string.Equals(RoomManager.Instance.CurrentRoomId, chapter3NpcRoomId, System.StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        if (!IsChapter3NpcVisibleContext())
+        {
+            Debug.Log("[ChapterFlow] Cap 3 decision blocked: the player is not in the allowed visible NPC background context.");
+            return;
+        }
+
+        if (!InventoryState.HasItem("HS_Unfinished_Letter"))
+        {
+            return;
+        }
+
+        if (StoryState.Instance.HasFlag(Chapter3LetterDecisionShownFlag) || StoryState.Instance.HasFlag("chapter3.decision.shown"))
+        {
+            return;
+        }
+
+        StoryState.Instance.SetFlag(Chapter3LetterDecisionShownFlag, true);
+        StoryState.Instance.SetFlag("chapter3.decision.shown", true);
+        Debug.Log("[ChapterFlow] ★ Cap 3: Carta encontrada. En sala de NPCs. Lanzando decisión...");
+        Invoke(nameof(LaunchChapter3Decision), 1.5f);
+    }
+
+    private bool IsChapter3NpcVisibleContext()
+    {
+        if (RoomManager.Instance == null)
+        {
+            return false;
+        }
+
+        string currentRoomId = RoomManager.Instance.CurrentRoomId;
+        if (!string.Equals(currentRoomId, chapter3NpcRoomId, System.StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        string displayName = RoomManager.Instance.CurrentRoomDisplayName;
+        string backgroundName = RoomManager.Instance.GetCurrentRoomBackgroundObjectName();
+
+        return MatchesAllowedNpcContext(displayName)
+            || MatchesAllowedNpcContext(backgroundName);
+    }
+
+    private bool MatchesAllowedNpcContext(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value) || chapter3NpcAllowedBackgroundNames == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < chapter3NpcAllowedBackgroundNames.Length; i++)
+        {
+            string allowed = chapter3NpcAllowedBackgroundNames[i];
+            if (string.IsNullOrWhiteSpace(allowed))
             {
-                StoryState.Instance.SetFlag("chapter3.decision.shown", true);
-                Debug.Log("[ChapterFlow] ★ Cap 3: Carta encontrada. En Lobby. Lanzando decisión...");
-                Invoke(nameof(LaunchChapter3Decision), 1.5f);
+                continue;
+            }
+
+            if (string.Equals(value, allowed, System.StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
             }
         }
+
+        return false;
     }
 
     private void LaunchChapter2InitialDecision()

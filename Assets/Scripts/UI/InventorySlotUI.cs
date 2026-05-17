@@ -57,8 +57,72 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnte
 
     private void Awake()
     {
+        EnsureReferences();
+
         // Estado inicial: ícono vacío/transparente, bordes desactivados
         ClearSlot();
+    }
+
+    private void OnValidate()
+    {
+        EnsureReferences();
+    }
+
+    private void EnsureReferences()
+    {
+        if (itemIcon == null)
+        {
+            Transform iconTransform = transform.Find("ItemIcon");
+            if (iconTransform != null)
+            {
+                itemIcon = iconTransform.GetComponent<Image>();
+            }
+        }
+
+        if (selectionHighlight == null)
+        {
+            Transform highlightTransform = transform.Find("SelectionHighlight");
+            if (highlightTransform != null)
+            {
+                selectionHighlight = highlightTransform.gameObject;
+            }
+        }
+
+        if (borderTop == null)
+        {
+            Transform borderTransform = transform.Find("BorderTop");
+            if (borderTransform != null)
+            {
+                borderTop = borderTransform.gameObject;
+            }
+        }
+
+        if (borderBottom == null)
+        {
+            Transform borderTransform = transform.Find("BorderBottom");
+            if (borderTransform != null)
+            {
+                borderBottom = borderTransform.gameObject;
+            }
+        }
+
+        if (borderLeft == null)
+        {
+            Transform borderTransform = transform.Find("BorderLeft");
+            if (borderTransform != null)
+            {
+                borderLeft = borderTransform.gameObject;
+            }
+        }
+
+        if (borderRight == null)
+        {
+            Transform borderTransform = transform.Find("BorderRight");
+            if (borderTransform != null)
+            {
+                borderRight = borderTransform.gameObject;
+            }
+        }
     }
 
     /// <summary>
