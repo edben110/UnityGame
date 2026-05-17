@@ -93,12 +93,33 @@ public class DoorTrigger : Interactable
             return;
         }
 
+        bool shouldBeEnabled = ShouldSecretBasementColliderBeEnabled();
+
         BoxCollider2D col = GetComponent<BoxCollider2D>();
         if (col != null)
         {
-            col.enabled = ShouldSecretBasementColliderBeEnabled();
+            col.enabled = shouldBeEnabled;
         }
-    }
+
+        // Mover la puerta a una posición visible cuando se descubre
+        // La puerta empieza fuera de pantalla y se mueve al centro cuando BasementDiscovered
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.enabled = shouldBeEnabled;
+        }
+
+        UnityEngine.UI.Image img = GetComponent<UnityEngine.UI.Image>();
+        if (img != null)
+        {
+            img.enabled = shouldBeEnabled;
+        }
+
+        if (shouldBeEnabled)
+        {
+            Debug.Log($"[DoorTrigger] {gameObject.name}: Sótano descubierto. Puerta habilitada.");
+        }
+    }    }
 
     private bool ShouldSecretBasementColliderBeEnabled()
     {
@@ -107,8 +128,14 @@ public class DoorTrigger : Interactable
             return false;
         }
 
-        return StoryState.Instance.CurrentChapterId == "chapter3"
-            && StoryState.Instance.HasFlag("BasementDiscovered");
+        // La puerta se habilita si:
+        // 1. Estamos en chapter3 Y se descubrió la trampilla (BasementDiscovered)
+        // 2. O si el jugador ya tiene la llave del sótano (implica que resolvió los puzzles)
+        bool isChapter3 = StoryState.Instance.CurrentChapterId == "chapter3";
+        bool hasBasementDiscovered = StoryState.Instance.HasFlag("BasementDiscovered");
+        bool hasBasementKey = InventoryState.HasItem(KeyType.BasementKey.ToString());
+
+        return isChapter3 && (hasBasementDiscovered || hasBasementKey);
     }
 
     private void HideAnxietyOverlayIfVisible()
@@ -251,7 +278,9 @@ public class DoorTrigger : Interactable
                 && StoryState.Instance.HasFlag("BasementDiscovered");
             bool hasBasementKey = InventoryState.HasItem(KeyType.BasementKey.ToString());
             bool hasNpcTalk = result.npcTalkCount >= 1;
-            bool canOpenSecretBasement = isChapter3 && hasBasementDiscovered && hasBasementKey && hasNpcTalk;
+            // Si tiene la llave, se considera que ya descubrió la trampilla
+            bool effectiveDiscovered = hasBasementDiscovered || hasBasementKey;
+            bool canOpenSecretBasement = isChapter3 && effectiveDiscovered && hasBasementKey && hasNpcTalk;
 
             if (!canOpenSecretBasement)
             {
@@ -260,7 +289,7 @@ public class DoorTrigger : Interactable
                 {
                     result.blockReason = "No es momento de bajar ahí. Debo seguir investigando arriba.";
                 }
-                else if (!hasBasementDiscovered)
+                else if (!effectiveDiscovered)
                 {
                     result.blockReason = "Parece una trampilla vieja... pero no veo cómo abrirla. Tal vez deba investigar más la galería.";
                 }
