@@ -66,8 +66,8 @@ Keller llega a la mansión. Presentación de los 5 personajes.
 Se establece la premisa: Simón ha muerto, todos buscan algo.
 
 Decisión del prólogo:
-  [1] Prometer mantener unido al grupo (ansiedad -5)
-  [2] Prometer buscar la verdad a cualquier costo (ansiedad +5)
+  [1] Prometer mantener unido al grupo
+  [2] Prometer buscar la verdad a cualquier costo
 
 
 ═══════════════════════════════════════════════════════════════════
@@ -76,7 +76,7 @@ Decisión del prólogo:
 ═══════════════════════════════════════════════════════════════════
 Lobby:
 En una mesa del lobby se encuentra un objeto escondido a simple vista:
-CARTA del Padre con una fecha y algunos otros documentos de propiedades y herencias
+CARTA del Padre con una fecha (4-7-29) y algunos otros documentos de propiedades y herencias
 EXPLORACIÓN DE la sala de npcs
 ─────────────────────────────────
 1. LIBRO DE VISITAS — Una entrada tachada con tinta roja. Fecha:
@@ -93,26 +93,19 @@ EXPLORACIÓN DE la sala de npcs
 
 INTERACCIÓN CON NPCs:
 ─────────────────────
-El jugador debe hablar con almenos un NPC:
+El jugador debe hablar con al menos un NPC:
 • Conversación de ansiedad (calmar)
 • Preguntar motivo de visita
 • Mostrar objetos encontrados para obtener reacciones
 
 PUZZLE — LLAVE DEL ESTUDIO:
 ───────────────────────────
-La llave del estudio NO está a simple vista. El jugador debe:
-1. Examinar el libro de visitas (obtiene la fecha tachada)
-2. Examinar la fotografía (nota la fecha "1987" al dorso)
-3. Notar que el gramófono tiene un disco puesto con un número
-   grabado en la etiqueta
-4. Combinar las pistas: el número del disco + la fecha tachada
-   revelan la combinación de un pequeño cofre decorativo en la
-   repisa de la chimenea
-5. Abrir el cofre → obtener la LLAVE DEL ESTUDIO
+l resolver el puzzle del cofre
+2 Abrir el cofre → obtener la LLAVE DEL ESTUDIO
 
 CONDICIONES PARA AVANZAR:
 • Hablar con al menos uno de todos los NPCs
-• Resolver el puzzle y obtener la llave del estudio
+• Resolver el puzzle del cofre y obtener la llave del estudio
 
 TRANSICIÓN: El protagonista usa la llave(posterior si se cumplen las anteriores validaciones) → entra SOLO al estudio.
 
@@ -160,10 +153,8 @@ PUZZLE — LLAVE DE LA HABITACIÓN DE SIMÓN:
 La llave de la habitación NO se encuentra directamente. El jugador:
 1. En el estudio, nota que la agenda tiene una página arrancada
    con marcas de presión (se puede leer frotando con lápiz)
-2. La marca revela: "Segundo cajón, detrás del espejo"
+2. La marca revela: "cajón principal" donde se conseguira la caja puzzle a resolver para obtener la llave de l HABITACION DE SIMON
 3. En el lobby, hay un espejo decorativo cerca de la escalera
-4. Detrás del espejo hay un compartimento con la LLAVE DE LA
-   HABITACIÓN DE SIMÓN
 
 CONDICIÓN PARA AVANZAR:
 • Tener la llave de la habitación
@@ -202,7 +193,7 @@ EXPLORACIÓN DE LA GALERÍA (puzzles):
 1. PINTURA MISTERIOSA — Compartimento oculto detrás del marco.
    Contiene la CARTA MANUSCRITA DEL PADRE COMÚN.
    (Este es el objeto que busca Robert)
-   La carta tiene una fecha: "4 de julio de 1929" — esta fecha
+   La carta tiene una fecha: "17 de junio de 1943" — esta fecha
    es parte del código de la sala de seguridad.
 
 2. CAJA PUZZLE 2 — Requiere resolver la primera (de la cama).
@@ -216,9 +207,9 @@ EXPLORACIÓN DE LA GALERÍA (puzzles):
 PUZZLE — CÓDIGO DE LA SALA DE SEGURIDAD:
 ────────────────────────────────────────
 El código 4-7-2-7 se descubre así:
-• "1" — Del día de la carta del padre (4 de julio)
+• "4" — Del día de la carta del padre (4 de julio)
 • "7" — Del mes de la carta del padre (julio = 7)
-• "2-7" — De la fecha "1929" en la carta (29)
+• "2-9" — De la fecha "1929" en la carta (29)
 El jugador conecta la fecha de la carta de Robert con el teclado
 numérico de la puerta de la sala de seguridad.
 
