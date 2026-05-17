@@ -101,8 +101,7 @@ public class DoorTrigger : Interactable
             col.enabled = shouldBeEnabled;
         }
 
-        // Mover la puerta a una posición visible cuando se descubre
-        // La puerta empieza fuera de pantalla y se mueve al centro cuando BasementDiscovered
+        // Mostrar/ocultar la puerta visualmente según el capítulo
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null)
         {
@@ -117,7 +116,7 @@ public class DoorTrigger : Interactable
 
         if (shouldBeEnabled)
         {
-            Debug.Log($"[DoorTrigger] {gameObject.name}: Sótano descubierto. Puerta habilitada.");
+            Debug.Log($"[DoorTrigger] {gameObject.name}: Capítulo 3 activo. Puerta del sótano habilitada automáticamente.");
         }
     }
 
@@ -128,14 +127,10 @@ public class DoorTrigger : Interactable
             return false;
         }
 
-        // La puerta se habilita si:
-        // 1. Estamos en chapter3 Y se descubrió la trampilla (BasementDiscovered)
-        // 2. O si el jugador ya tiene la llave del sótano (implica que resolvió los puzzles)
+        // REGLA: La puerta del sótano se activa automáticamente en chapter3.
+        // La validación de llaves ocurre al intentar abrirla, NO para hacerla visible.
         bool isChapter3 = StoryState.Instance.CurrentChapterId == "chapter3";
-        bool hasBasementDiscovered = StoryState.Instance.HasFlag("BasementDiscovered");
-        bool hasBasementKey = InventoryState.HasItem(KeyType.BasementKey.ToString());
-
-        return isChapter3 && (hasBasementDiscovered || hasBasementKey);
+        return isChapter3;
     }
 
     private void HideAnxietyOverlayIfVisible()
@@ -274,38 +269,38 @@ public class DoorTrigger : Interactable
         {
             bool isChapter3 = StoryState.Instance != null
                 && StoryState.Instance.CurrentChapterId == "chapter3";
-            bool hasBasementDiscovered = StoryState.Instance != null
-                && StoryState.Instance.HasFlag("BasementDiscovered");
-            bool hasBasementKey = InventoryState.HasItem(KeyType.BasementKey.ToString());
-            bool hasNpcTalk = result.npcTalkCount >= 1;
-            // Si tiene la llave, se considera que ya descubrió la trampilla
-            bool effectiveDiscovered = hasBasementDiscovered || hasBasementKey;
-            bool canOpenSecretBasement = isChapter3 && effectiveDiscovered && hasBasementKey && hasNpcTalk;
 
-            if (!canOpenSecretBasement)
+            if (!isChapter3)
             {
                 result.canPass = false;
-                if (!isChapter3)
-                {
-                    result.blockReason = "No es momento de bajar ahí. Debo seguir investigando arriba.";
-                }
-                else if (!effectiveDiscovered)
-                {
-                    result.blockReason = "Parece una trampilla vieja... pero no veo cómo abrirla. Tal vez deba investigar más la galería.";
-                }
-                else if (!hasBasementKey)
-                {
-                    result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
-                }
-                else
-                {
-                    result.blockReason = "Tal vez debería hablar con alguien antes de bajar.";
-                }
+                result.blockReason = "No es momento de bajar ahí. Debo seguir investigando arriba.";
                 return result;
             }
 
-            // Validación del sótano pasó — saltar validación general de llaves
-            // (la puerta usa requiredKeys del Inspector que puede tener un KeyType incorrecto)
+            // Validar llaves usando el array requiredKeys del Inspector (sin hardcodear)
+            bool hasAllKeys = true;
+            if (requiredKeys != null && requiredKeys.Length > 0)
+            {
+                foreach (KeyType keyType in requiredKeys)
+                {
+                    string itemId = keyType.ToString();
+                    if (!InventoryState.HasItem(itemId))
+                    {
+                        hasAllKeys = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!hasAllKeys)
+            {
+                result.canPass = false;
+                result.hasKey = false;
+                result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                return result;
+            }
+
+            // Validación pasó — acceso permitido
             result.canPass = true;
             return result;
         }
@@ -713,7 +708,7 @@ public class DoorTrigger : Interactable
 
         if (IsSecretBasementDoor())
         {
-            return true;
+            return false; // La puerta secreta del sótano ya tiene su propia validación arriba
         }
 
         if (string.Equals(targetRoomId, "sotano", StringComparison.OrdinalIgnoreCase)
@@ -727,6 +722,22 @@ public class DoorTrigger : Interactable
 
     private bool ShouldAutoStartChapter4OnEntry()
     {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        if (StoryState.Instance.CurrentChapterId != "chapter3")
+        {
+            return false;
+        }
+
+        // La puerta secreta del sótano siempre dispara transición a Cap 4
+        if (IsSecretBasementDoor())
+        {
+            return true;
+        }
+
         return ShouldValidateChapter4Entry();
     }
 

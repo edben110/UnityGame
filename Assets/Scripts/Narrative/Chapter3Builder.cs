@@ -84,6 +84,8 @@ public class Chapter3Builder : MonoBehaviour
             BuildGaleriaCajaPuzzle2(),
             BuildGaleriaCajaPuzzle3(),
             BuildGaleriaAlfombraSospechosa(),
+            // ─── Carta del Padre (Galería) ───
+            BuildGaleriaCartaPadre(),
             // ─── NPC: diálogos de ansiedad Cap 3 ───
             BuildNpcAnxiety("chapter3_npc_robert", "Robert",
                 "Tardas demasiado allí dentro. ¿Encontraste algo en su habitación o solo estás perdiendo el tiempo?",
@@ -344,6 +346,29 @@ public class Chapter3Builder : MonoBehaviour
         return new DialogueConversation
         {
             id = "chapter3_Gallery_SuspectCarpet",
+            nodes = new List<DialogueNode> { start }
+        };
+    }
+
+    private static DialogueConversation BuildGaleriaCartaPadre()
+    {
+        DialogueNode start = new DialogueNode
+        {
+            id = "start",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "Detrás de la pintura misteriosa, en el compartimento oculto, hay una carta manuscrita cuidadosamente doblada. El papel es viejo, amarillento, pero la tinta se conserva." },
+                new DialogueLine { speaker = "Narrador", text = "La carta está fechada: '4 de julio de 1929'. La caligrafía es firme, de alguien mayor. Dice:", anxietyDelta = 5f },
+                new DialogueLine { speaker = "Carta", text = "Hijo mío, si lees esto es porque ya no estoy. Quiero que sepas que nunca dejé de pensar en ti ni en tu hermano. La sangre nos une aunque el mundo nos separe. Cuida de él como yo no pude. — Tu padre." },
+                new DialogueLine { speaker = "Jugador", text = "¿Hermano? Simón tenía un hermano... y esta carta lo confirma. Robert desvió la mirada cuando vio la foto de 'Padre e hijo'. Esto lo conecta todo.", anxietyDelta = 10f },
+                new DialogueLine { speaker = "Narrador", text = "La fecha '4-7-29' podría ser importante. La guardas con cuidado.", setFlag = "clue.galeria.carta_padre", addInventoryItemId = "carta_padre" }
+            }
+        };
+
+        return new DialogueConversation
+        {
+            id = "chapter3_Father_Letter",
             nodes = new List<DialogueNode> { start }
         };
     }

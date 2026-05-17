@@ -31,7 +31,7 @@ public class SecretCarpetHotspot : Interactable
     [SerializeField] private string firstLookMessage = "La alfombra posee una forma extraña…";
     [SerializeField] private string revealMessage = "Hay una puerta secreta debajo. ¿Qué habrá ahí abajo?";
     [SerializeField] private string blockedMessage = "No puedo bajar por ahí todavía… debería hablar con los demás primero.";
-    [SerializeField] private string alreadyDiscoveredMessage = "Una puerta secreta que lleva al sótano. Necesito la llave para abrirla.";
+    [SerializeField] private string alreadyDiscoveredMessage = "La trampilla al sótano. Necesito la llave correcta para abrirla.";
 
     private const string FirstLookFlag = "carpet.first_look";
     private const string BasementDiscoveredFlag = "BasementDiscovered";
@@ -82,13 +82,9 @@ public class SecretCarpetHotspot : Interactable
 
     private void RefreshBasementDoorVisibility()
     {
-        if (basementDoorObject == null || StoryState.Instance == null)
-        {
-            return;
-        }
-
-        bool discovered = StoryState.Instance.HasFlag(BasementDiscoveredFlag);
-        basementDoorObject.SetActive(discovered);
+        // Door_ToSecretBasement now manages its own visibility via DoorTrigger.RefreshDoorAvailability().
+        // This hotspot no longer controls the door's active state.
+        // The BasementDiscovered flag is still set for narrative tracking purposes.
     }
 
     public override void Interact()
