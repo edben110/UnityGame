@@ -321,12 +321,13 @@ public override void Interact()
             return grantItemDescription;
         }
 
-        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(grantItemId, out InventoryItemDefinition definition))
+        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(grantItemId, out InventoryItemDefinition definition) && !string.IsNullOrWhiteSpace(definition.description))
         {
             return definition.description;
         }
 
-        return string.Empty;
+        // Fallback: usar defaults narrativos
+        return InventoryNarrativeDefaults.GetDefaultDescription(grantItemId);
     }
 
     private Sprite ResolveItemSprite()
@@ -338,15 +339,30 @@ public override void Interact()
             return grantItemSprite;
         }
 
-        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(canonicalItemId, out InventoryItemDefinition definition))
+        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(canonicalItemId, out InventoryItemDefinition definition) && definition.icon != null)
         {
             return definition.icon;
         }
 
+        // Fallback: intentar cargar desde Resources
         Sprite sprite = Resources.Load<Sprite>($"Sprites/{canonicalItemId}");
         if (sprite != null)
         {
             return sprite;
+        }
+
+        // Fallback: usar el SpriteRenderer del propio hotspot si tiene uno
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null && sr.sprite != null)
+        {
+            return sr.sprite;
+        }
+
+        // Fallback: buscar Image component (para hotspots basados en UI)
+        UnityEngine.UI.Image img = GetComponent<UnityEngine.UI.Image>();
+        if (img != null && img.sprite != null)
+        {
+            return img.sprite;
         }
 
         return null;

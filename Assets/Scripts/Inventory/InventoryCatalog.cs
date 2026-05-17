@@ -21,6 +21,9 @@ public class InventoryCatalog : MonoBehaviour
 
         Instance = this;
         RebuildLookup();
+
+        // Registrar defaults narrativos para items sin sprite
+        InventoryNarrativeDefaults.EnsureAllDefaultsRegistered();
     }
 
     private void OnValidate()

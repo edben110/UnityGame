@@ -258,11 +258,11 @@ public class DoorTrigger : Interactable
                 result.canPass = false;
                 if (!isChapter3)
                 {
-                    result.blockReason = "No puedo bajar por ahí todavía.";
+                    result.blockReason = "No es momento de bajar ahí. Debo seguir investigando arriba.";
                 }
                 else if (!hasBasementDiscovered)
                 {
-                    result.blockReason = "No hay nada aquí.";
+                    result.blockReason = "Parece una trampilla vieja... pero no veo cómo abrirla. Tal vez deba investigar más la galería.";
                 }
                 else if (!hasBasementKey)
                 {
@@ -368,7 +368,7 @@ public class DoorTrigger : Interactable
                 if (!result.hasBasementDiscovered)
                 {
                     result.chapter4Reason = "Basement Not Discovered";
-                    result.blockReason = "No hay nada aquí."; // La puerta en sí ni debería ser visible si no está descubierta, pero por si acaso.
+                    result.blockReason = "Parece una trampilla vieja... pero no veo cómo abrirla. Tal vez deba investigar más la galería.";
                 }
                 else if (!result.hasBasementKey)
                 {
@@ -378,7 +378,7 @@ public class DoorTrigger : Interactable
                 else if (!result.hasChapter3Decision)
                 {
                     result.chapter4Reason = "Must talk to at least one NPC";
-                    result.blockReason = "No puedo bajar por ahí todavía… debería hablar con los demás primero.";
+                    result.blockReason = "Tal vez debería hablar con alguien antes de bajar. Podría necesitar información.";
                 }
                 else
                 {
@@ -633,7 +633,9 @@ public class DoorTrigger : Interactable
     private bool IsSecretBasementDoor()
     {
         return string.Equals(targetRoomId, "secretBasement", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(gameObject.name, "Door_SecretBasement", StringComparison.OrdinalIgnoreCase);
+            || string.Equals(targetRoomId, "basement", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_SecretBasement", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_ToSecretBasement", StringComparison.OrdinalIgnoreCase);
     }
 
     private bool ShouldValidateChapter3Entry()
