@@ -83,35 +83,34 @@ public class NumericPasswordPanel : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
         }
-    }
 
-    private void Start()
-    {
         // Verificar si ya fue desbloqueado previamente
         if (StoryState.Instance != null && StoryState.Instance.HasFlag(unlockFlag))
         {
             isUnlocked = true;
-            Debug.Log("[NumericPassword] Ya desbloqueado previamente.");
+            Debug.Log("[NumericPassword] Ya desbloqueado previamente. Panel no se activará.");
+            return;
+        }
+    }
+
+    private void Start()
+    {
+        if (isUnlocked)
+        {
+            gameObject.SetActive(false);
             return;
         }
 
+        // Crear hitboxes para cuando el panel se active
         CreateDigitHitboxes();
 
-        // Desactivar el collider del DoorTrigger padre para que los hitboxes reciban clicks directamente
-        // El jugador verá el teclado y podrá clickear los números sin que el DoorTrigger intercepte
-        BoxCollider2D parentCollider = GetComponent<BoxCollider2D>();
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = false;
-            Debug.Log("[NumericPassword] Collider padre desactivado para permitir interacción con hitboxes.");
-        }
-
-        panelIsShowing = true;
+        // El panel comienza oculto — se activa cuando el jugador interactúa con Door_ToSecurityRoom
+        gameObject.SetActive(false);
+        panelIsShowing = false;
     }
 
     /// <summary>
     /// Muestra el panel de contraseña activando los hitboxes y haciéndolo visible.
-    /// Desactiva el collider del padre (DoorTrigger) para que los hitboxes reciban clicks.
     /// Llamado por DoorTrigger cuando el jugador interactúa con Door_ToSecurityRoom.
     /// </summary>
     public void ShowPanel()
@@ -126,13 +125,6 @@ public class NumericPasswordPanel : MonoBehaviour
         if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);
-        }
-
-        // Desactivar el collider del DoorTrigger para que los digit hitboxes reciban clicks
-        BoxCollider2D parentCollider = GetComponent<BoxCollider2D>();
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = false;
         }
 
         // Crear hitboxes si no existen aún
@@ -156,24 +148,17 @@ public class NumericPasswordPanel : MonoBehaviour
         currentInput.Clear();
 
         panelIsShowing = true;
-        Debug.Log("[NumericPassword] Panel de contraseña mostrado. Collider padre desactivado. Esperando input del jugador.");
+        Debug.Log("[NumericPassword] Panel de contraseña mostrado. Esperando input del jugador.");
     }
 
     /// <summary>
-    /// Oculta el panel y reactiva el collider del DoorTrigger.
+    /// Oculta el panel.
     /// </summary>
     public void HidePanel()
     {
         panelIsShowing = false;
-
-        // Reactivar el collider del DoorTrigger
-        BoxCollider2D parentCollider = GetComponent<BoxCollider2D>();
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = true;
-        }
-
-        Debug.Log("[NumericPassword] Panel ocultado. Collider padre reactivado.");
+        gameObject.SetActive(false);
+        Debug.Log("[NumericPassword] Panel ocultado.");
     }
 
     /// <summary>
@@ -274,13 +259,6 @@ public class NumericPasswordPanel : MonoBehaviour
             StoryState.Instance.SetFlag(unlockFlag, true);
         }
 
-        // Reactivar el collider del DoorTrigger para que la puerta funcione normalmente
-        BoxCollider2D parentCollider = GetComponent<BoxCollider2D>();
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = true;
-        }
-
         // Feedback
         if (correctSound != null && audioSource != null)
         {
@@ -293,10 +271,11 @@ public class NumericPasswordPanel : MonoBehaviour
             panel.ShowSystemMessage(correctPasswordMessage);
         }
 
-        // Desactivar hitboxes (ya no se necesitan)
+        // Desactivar hitboxes y ocultar panel
         DisableHitboxes();
+        gameObject.SetActive(false);
 
-        Debug.Log("[NumericPassword] ★ CONTRASEÑA CORRECTA. Puerta desbloqueada. Collider padre reactivado.");
+        Debug.Log("[NumericPassword] ★ CONTRASEÑA CORRECTA. Puerta desbloqueada.");
         PasswordCorrect?.Invoke();
     }
 

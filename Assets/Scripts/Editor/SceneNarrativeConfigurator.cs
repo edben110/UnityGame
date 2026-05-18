@@ -660,7 +660,7 @@ public class SceneNarrativeConfigurator : EditorWindow
     }
 
     /// <summary>
-    /// Asegura que exista Door_ToSecurityRoom con NumericPasswordPanel.
+    /// Asegura que exista Door_ToSecurityRoom (sin NumericPasswordPanel — el panel es un objeto separado).
     /// </summary>
     private static void EnsureSecurityRoomDoor()
     {
@@ -689,17 +689,17 @@ public class SceneNarrativeConfigurator : EditorWindow
         }
 
         SerializedObject doorSo = new SerializedObject(door);
-        SetString(doorSo, "targetRoomId", "security_room");
-        SetString(doorSo, "requiredChapterId", "chapter4");
+        SetString(doorSo, "targetRoomId", "securityRoom");
+        SetString(doorSo, "requiredChapterId", "");
         SetString(doorSo, "lockedMessage", "La puerta tiene un teclado numerico. Necesito encontrar la combinacion correcta.");
         doorSo.ApplyModifiedPropertiesWithoutUndo();
 
-        // Asegurar NumericPasswordPanel
-        var passwordPanel = doorObj.GetComponent<NumericPasswordPanel>();
-        if (passwordPanel == null)
+        // Eliminar NumericPasswordPanel si existe en la puerta (migrado a objeto separado "Panel")
+        var oldPanel = doorObj.GetComponent<NumericPasswordPanel>();
+        if (oldPanel != null)
         {
-            passwordPanel = doorObj.AddComponent<NumericPasswordPanel>();
-            Debug.Log("[Configurador] NumericPasswordPanel añadido a Door_ToSecurityRoom.");
+            Object.DestroyImmediate(oldPanel);
+            Debug.Log("[Configurador] NumericPasswordPanel ELIMINADO de Door_ToSecurityRoom (migrado a Panel separado).");
         }
     }
 

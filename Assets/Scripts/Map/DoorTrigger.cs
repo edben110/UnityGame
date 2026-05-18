@@ -59,23 +59,21 @@ public class DoorTrigger : Interactable
             {
                 col.enabled = ShouldSecretBasementColliderBeEnabled();
             }
-            else if (IsSecurityRoomDoor())
-            {
-                // Si tiene NumericPasswordPanel activo y no está desbloqueado,
-                // dejar el collider desactivado para que los hitboxes reciban clicks
-                NumericPasswordPanel npp = GetComponent<NumericPasswordPanel>();
-                if (npp != null && !npp.IsUnlocked)
-                {
-                    col.enabled = false;
-                }
-                else if (!col.enabled)
-                {
-                    col.enabled = true;
-                }
-            }
             else if (!col.enabled)
             {
                 col.enabled = true;
+            }
+        }
+
+        // Migración: eliminar NumericPasswordPanel de Door_ToSecurityRoom si existe
+        // El sistema de contraseña ahora vive en un objeto separado (PasswordPanel)
+        if (IsSecurityRoomDoor())
+        {
+            NumericPasswordPanel oldPanel = GetComponent<NumericPasswordPanel>();
+            if (oldPanel != null)
+            {
+                Destroy(oldPanel);
+                Debug.Log("[DoorTrigger] NumericPasswordPanel eliminado de Door_ToSecurityRoom (migrado a PasswordPanel standalone).");
             }
         }
 
@@ -259,6 +257,25 @@ public class DoorTrigger : Interactable
             return;
         }
 
+        // ═══ PUERTA DE SEGURIDAD (entrada con diálogo contextual) ═══
+        if (IsSecurityRoomDoor())
+        {
+            bool firstEntry = StoryState.Instance == null || !StoryState.Instance.HasFlag("chapter4.security_room.entered");
+            ChangeRoom();
+
+            if (firstEntry)
+            {
+                // Lanzar diálogo de entrada a la sala de seguridad (solo la primera vez)
+                DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
+                if (runner != null && !runner.IsRunning && runner.HasConversation("chapter4_security_room_entry"))
+                {
+                    runner.StartConversation("chapter4_security_room_entry", "start");
+                    Debug.Log("[DoorTrigger] Entrando a Security Room por primera vez. Lanzando diálogo contextual.");
+                }
+            }
+            return;
+        }
+
         // Puerta normal (sin transición de capítulo)
         DialoguePanelUI normalPanel = DialoguePanelUI.Instance;
         if (normalPanel != null)
@@ -312,12 +329,8 @@ public class DoorTrigger : Interactable
         {
             if (StoryState.Instance == null || !StoryState.Instance.HasFlag("SecurityRoom.Unlocked"))
             {
-                // Intentar abrir el panel de contraseña si existe
-                NumericPasswordPanel passwordPanel = GetComponent<NumericPasswordPanel>();
-                if (passwordPanel == null)
-                {
-                    passwordPanel = FindAnyObjectByType<NumericPasswordPanel>();
-                }
+                // Buscar el PasswordPanel en la escena (incluye objetos inactivos)
+                NumericPasswordPanel passwordPanel = FindPasswordPanel();
 
                 if (passwordPanel != null && !passwordPanel.IsUnlocked)
                 {
@@ -325,13 +338,16 @@ public class DoorTrigger : Interactable
                     if (passwordPanel.IsPanelShowing)
                     {
                         result.canPass = false;
-                        result.blockReason = string.Empty; // No mostrar mensaje, el panel está activo
+                        result.blockReason = string.Empty;
                         return result;
                     }
 
                     // Activar el panel de contraseña para que el jugador pueda interactuar
                     passwordPanel.ShowPanel();
-                    Debug.Log("[DoorTrigger] Puerta de seguridad: mostrando panel de contraseña.");
+                    Debug.Log("[DoorTrigger] Puerta de seguridad: activando PasswordPanel.");
+                    result.canPass = false;
+                    result.blockReason = string.Empty; // El panel se muestra, no necesita mensaje adicional
+                    return result;
                 }
 
                 result.canPass = false;
@@ -900,6 +916,38 @@ public class DoorTrigger : Interactable
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Busca el NumericPasswordPanel en la escena, incluyendo objetos inactivos.
+    /// Si hay múltiples, prefiere el que NO está en Door_ToSecurityRoom.
+    /// </summary>
+    private NumericPasswordPanel FindPasswordPanel()
+    {
+        NumericPasswordPanel[] panels = FindObjectsByType<NumericPasswordPanel>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (panels == null || panels.Length == 0)
+        {
+            return null;
+        }
+
+        // Si solo hay uno, usarlo
+        if (panels.Length == 1)
+        {
+            return panels[0];
+        }
+
+        // Si hay múltiples, preferir el que NO está en Door_ToSecurityRoom (el panel standalone)
+        NumericPasswordPanel standalone = null;
+        for (int i = 0; i < panels.Length; i++)
+        {
+            if (!string.Equals(panels[i].gameObject.name, "Door_ToSecurityRoom", StringComparison.OrdinalIgnoreCase))
+            {
+                standalone = panels[i];
+                break;
+            }
+        }
+
+        return standalone != null ? standalone : panels[0];
     }
 
     private bool ShouldValidateChapter3Entry()
