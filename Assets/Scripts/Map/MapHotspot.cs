@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class MapHotspot : Interactable
@@ -23,12 +22,6 @@ public class MapHotspot : Interactable
     [TextArea(2, 5)] [SerializeField] private string grantItemDescription;
     [SerializeField] private Sprite grantItemSprite;
     [SerializeField] private bool hideAfterPickup = true;
-
-    [Header("Item tras diálogo")]
-    [SerializeField] private string grantItemIdAfterDialogue;
-    [SerializeField] private string grantItemDisplayNameAfterDialogue;
-    [TextArea(2, 5)] [SerializeField] private string grantItemDescriptionAfterDialogue;
-    [SerializeField] private Sprite grantItemSpriteAfterDialogue;
 
     [Header("Depuracion")]
     [SerializeField] private bool showDebugMarkerInGame;
@@ -193,11 +186,6 @@ public override void Interact()
             return;
         }
 
-        if (HasDeferredDialogueGrant())
-        {
-            SubscribeDeferredGrant();
-        }
-
         TriggerNarrativeConversation();
     }
 
@@ -228,16 +216,13 @@ public override void Interact()
 
         if (HasItemReward())
         {
-            InventoryNarrativeDefaults.EnsureItemRegistered(grantItemId);
-
-            Sprite pickupSprite = ResolveItemSprite();
-            if (pickupSprite != null && InventoryCatalog.Instance != null)
+            if (InventoryCatalog.Instance != null)
             {
                 InventoryCatalog.Instance.RegisterRuntimeItem(
                     grantItemId,
                     ResolveItemDisplayName(),
                     ResolveItemDescription(),
-                    pickupSprite);
+                    ResolveItemSprite());
             }
 
             InventoryState.AddItem(grantItemId);
@@ -277,107 +262,6 @@ public override void Interact()
             StoryState.Instance.SetFlag(GetUsedFlag(), true);
             RefreshAvailability();
         }
-    }
-
-    private bool HasDeferredDialogueGrant()
-    {
-        return !string.IsNullOrWhiteSpace(grantItemIdAfterDialogue)
-               && !string.IsNullOrWhiteSpace(conversationId)
-               && !IsDeferredGrantCollected();
-    }
-
-    private bool IsDeferredGrantCollected()
-    {
-        if (string.IsNullOrWhiteSpace(grantItemIdAfterDialogue))
-        {
-            return true;
-        }
-
-        if (InventoryState.HasItem(grantItemIdAfterDialogue))
-        {
-            return true;
-        }
-
-        return StoryState.Instance != null && StoryState.Instance.HasFlag(GetDeferredGrantFlag());
-    }
-
-    private void SubscribeDeferredGrant()
-    {
-        DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
-        if (runner == null)
-        {
-            return;
-        }
-
-        runner.ConversationEnded -= OnConversationEndedDeferredGrant;
-        runner.ConversationEnded += OnConversationEndedDeferredGrant;
-    }
-
-    private void OnConversationEndedDeferredGrant(string endedConversationId)
-    {
-        DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
-        if (runner != null)
-        {
-            runner.ConversationEnded -= OnConversationEndedDeferredGrant;
-        }
-
-        if (!string.Equals(endedConversationId, conversationId, StringComparison.OrdinalIgnoreCase))
-        {
-            return;
-        }
-
-        if (IsDeferredGrantCollected())
-        {
-            return;
-        }
-
-        GrantDeferredDialogueItem();
-    }
-
-    private void GrantDeferredDialogueItem()
-    {
-        string itemId = grantItemIdAfterDialogue;
-        InventoryNarrativeDefaults.EnsureItemRegistered(itemId);
-
-        string displayName = !string.IsNullOrWhiteSpace(grantItemDisplayNameAfterDialogue)
-            ? grantItemDisplayNameAfterDialogue
-            : InventoryNarrativeDefaults.GetDefaultDisplayName(itemId);
-
-        string description = !string.IsNullOrWhiteSpace(grantItemDescriptionAfterDialogue)
-            ? grantItemDescriptionAfterDialogue
-            : InventoryNarrativeDefaults.GetDefaultDescription(itemId);
-
-        Sprite sprite = grantItemSpriteAfterDialogue;
-        if (sprite == null)
-        {
-            sprite = InventoryProvisionalIcons.GetForItem(itemId);
-        }
-
-        if (InventoryCatalog.Instance != null)
-        {
-            InventoryCatalog.Instance.RegisterRuntimeItem(itemId, displayName, description, sprite);
-        }
-
-        bool added = InventoryState.AddItem(itemId);
-        if (StoryState.Instance != null)
-        {
-            StoryState.Instance.SetFlag(GetDeferredGrantFlag(), true);
-        }
-
-        if (added)
-        {
-            DialoguePanelUI panel = DialoguePanelUI.Instance;
-            if (panel != null)
-            {
-                panel.ShowSystemMessage($"Has obtenido {displayName}. Revísalo en el inventario.");
-            }
-        }
-    }
-
-    private string GetDeferredGrantFlag()
-    {
-        string id = string.IsNullOrWhiteSpace(hotspotId) ? gameObject.name : hotspotId;
-        return $"hotspot.deferred_grant.{id}";
     }
 
     private void RefreshAvailability()

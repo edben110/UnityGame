@@ -59,7 +59,6 @@ public class Chapter4Builder : MonoBehaviour
     {
         List<DialogueConversation> conversations = new List<DialogueConversation>();
         conversations.Add(BuildIntro());
-        conversations.Add(BuildSecurityRoomEntry());
         conversations.Add(BuildHotspotMirillaCentral());
         conversations.Add(BuildHotspotMaletinNegro());
         conversations.Add(BuildHotspotCilindros());
@@ -93,30 +92,8 @@ public class Chapter4Builder : MonoBehaviour
                     lines = new List<DialogueLine>
                     {
                         new DialogueLine { speaker = "Narrador", text = "Capítulo 4 — El Sótano. 8:00 PM." },
-                        new DialogueLine { speaker = "Jugador", text = "Así que esto es lo que había debajo de la alfombra... un sótano oculto. Está oscuro y hace mucho frío." },
+                        new DialogueLine { speaker = "Jugador", text = "Así que esta es la sala de seguridad... el código 4-7-2-9 funcionó. Está oscuro y hace mucho frío." },
                         new DialogueLine { speaker = "Narrador", text = "El aire está viciado. Aquí abajo Simón guardaba sus secretos más peligrosos. Debo ser cuidadoso.", anxietyDelta = 10f, setFlag = "chapter4.intro.seen" }
-                    }
-                }
-            }
-        };
-    }
-
-    private DialogueConversation BuildSecurityRoomEntry()
-    {
-        return new DialogueConversation
-        {
-            id = "chapter4_security_room_entry",
-            nodes = new List<DialogueNode>
-            {
-                new DialogueNode
-                {
-                    id = "start",
-                    endsConversation = true,
-                    lines = new List<DialogueLine>
-                    {
-                        new DialogueLine { speaker = "Jugador", text = "Así que esta es la sala de seguridad... el código 4-7-2-9 funcionó." },
-                        new DialogueLine { speaker = "Narrador", text = "Hay monitores apagados, un panel de control con luces parpadeantes, y documentos esparcidos por todas partes." },
-                        new DialogueLine { speaker = "Jugador", text = "Desde aquí se controlan los bloqueos electrónicos de la mansión. Si desactivo el sistema, podré acceder al ala norte.", setFlag = "chapter4.security_room.entered" }
                     }
                 }
             }

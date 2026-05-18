@@ -90,24 +90,26 @@ public class KeyItem : Interactable
         string displayName = KeyTypeDisplayNames.GetDisplayName(keyType);
         string description = KeyTypeDisplayNames.GetDescription(keyType);
 
-        Sprite worldSprite = null;
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
+        // Registrar en el catálogo con display name legible
+        if (InventoryCatalog.Instance != null)
         {
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
+            Sprite worldSprite = null;
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null)
+            {
+                spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            }
 
-        if (spriteRenderer != null)
-        {
-            worldSprite = spriteRenderer.sprite;
-        }
+            if (spriteRenderer != null)
+            {
+                worldSprite = spriteRenderer.sprite;
+            }
 
-        if (InventoryCatalog.Instance != null && worldSprite != null)
-        {
             InventoryCatalog.Instance.RegisterRuntimeItem(itemId, displayName, description, worldSprite);
+            Debug.Log($"[KeyItem] Registrado en catálogo: '{itemId}' -> '{displayName}'");
         }
 
-        InventoryNarrativeDefaults.EnsureItemRegistered(itemId);
+        // Agregar al inventario persistente
         bool added = InventoryState.AddItem(itemId);
 
         // Para compatibilidad, también marcar un flag en StoryState opcional

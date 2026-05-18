@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d113f362eaf13c048be17b897bdbf0e3
+guid: 9f217b677528d4a4f8da3f4b974d48b7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8261308913886201206
-    second: Carta_0
+      213: 713650526786840481
+    second: Estudio_simon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,43 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Carta_0
+      name: Estudio_simon_0
       rect:
         serializedVersion: 2
-        x: 594
-        y: 416
-        width: 285
-        height: 206
+        x: 0
+        y: 0
+        width: 1264
+        height: 843
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8a7b08205fe95d80800000000000000
-      internalID: -8261308913886201206
+      spriteID: 1a766ee7f5567e900800000000000000
+      internalID: 713650526786840481
       vertices: []
       indices: 
       edges: []
@@ -135,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Carta_0: -8261308913886201206
+      Estudio_simon_0: 713650526786840481
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -22,22 +22,8 @@ public class InventoryCatalog : MonoBehaviour
         Instance = this;
         RebuildLookup();
 
+        // Registrar defaults narrativos para items sin sprite
         InventoryNarrativeDefaults.EnsureAllDefaultsRegistered();
-        RefreshRegisteredInventoryItems();
-    }
-
-    private void Start()
-    {
-        RefreshRegisteredInventoryItems();
-    }
-
-    private static void RefreshRegisteredInventoryItems()
-    {
-        List<string> owned = InventoryState.GetItems();
-        for (int i = 0; i < owned.Count; i++)
-        {
-            InventoryNarrativeDefaults.EnsureItemRegistered(owned[i]);
-        }
     }
 
     private void OnValidate()
@@ -79,67 +65,25 @@ public class InventoryCatalog : MonoBehaviour
             icon = icon
         };
 
-        if (runtimeOverrides.TryGetValue(normalized, out InventoryItemDefinition runtimeExisting) && runtimeExisting != null)
-        {
-            MergeDefinition(runtimeExisting, ref merged);
-        }
-
         if (lookup.TryGetValue(normalized, out InventoryItemDefinition existing) && existing != null)
         {
-            MergeDefinition(existing, ref merged);
-        }
-
-        FillMissingFromNarrativeDefaults(normalized, merged);
-        runtimeOverrides[normalized] = merged;
-    }
-
-    public void EnsureItemRegistered(string itemId)
-    {
-        InventoryNarrativeDefaults.EnsureItemRegistered(itemId);
-    }
-
-    private static void MergeDefinition(InventoryItemDefinition source, ref InventoryItemDefinition target)
-    {
-        if (source == null || target == null)
-        {
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(target.displayName) || target.displayName == target.id)
-        {
-            if (!string.IsNullOrWhiteSpace(source.displayName))
+            if (string.IsNullOrWhiteSpace(merged.displayName))
             {
-                target.displayName = source.displayName;
+                merged.displayName = existing.displayName;
+            }
+
+            if (string.IsNullOrWhiteSpace(merged.description))
+            {
+                merged.description = existing.description;
+            }
+
+            if (merged.icon == null)
+            {
+                merged.icon = existing.icon;
             }
         }
 
-        if (string.IsNullOrWhiteSpace(target.description) && !string.IsNullOrWhiteSpace(source.description))
-        {
-            target.description = source.description;
-        }
-
-        if (target.icon == null && source.icon != null)
-        {
-            target.icon = source.icon;
-        }
-    }
-
-    private static void FillMissingFromNarrativeDefaults(string normalized, InventoryItemDefinition merged)
-    {
-        if (string.IsNullOrWhiteSpace(merged.displayName) || merged.displayName == normalized)
-        {
-            merged.displayName = InventoryNarrativeDefaults.GetDefaultDisplayName(normalized);
-        }
-
-        if (string.IsNullOrWhiteSpace(merged.description))
-        {
-            merged.description = InventoryNarrativeDefaults.GetDefaultDescription(normalized);
-        }
-
-        if (merged.icon == null)
-        {
-            merged.icon = InventoryProvisionalIcons.GetForItem(normalized);
-        }
+        runtimeOverrides[normalized] = merged;
     }
 
     public static string CanonicalizeItemId(string itemId)
@@ -196,36 +140,6 @@ public class InventoryCatalog : MonoBehaviour
         if (string.Equals(normalized, "lobby_photo", StringComparison.Ordinal))
         {
             return "foto_padre_hijo";
-        }
-
-        if (string.Equals(normalized, "gallerykey", StringComparison.Ordinal) ||
-            string.Equals(normalized, "gallery_key", StringComparison.Ordinal))
-        {
-            return "gallerykey";
-        }
-
-        if (string.Equals(normalized, "bedroomkey", StringComparison.Ordinal) ||
-            string.Equals(normalized, "bedroom_key", StringComparison.Ordinal))
-        {
-            return "bedroomkey";
-        }
-
-        if (string.Equals(normalized, "basementkey", StringComparison.Ordinal) ||
-            string.Equals(normalized, "basement_key", StringComparison.Ordinal))
-        {
-            return "basementkey";
-        }
-
-        if (string.Equals(normalized, "studykey", StringComparison.Ordinal) ||
-            string.Equals(normalized, "study_key", StringComparison.Ordinal))
-        {
-            return "studykey";
-        }
-
-        if (string.Equals(normalized, "lobbykey", StringComparison.Ordinal) ||
-            string.Equals(normalized, "lobby_key", StringComparison.Ordinal))
-        {
-            return "lobbykey";
         }
 
         return normalized;

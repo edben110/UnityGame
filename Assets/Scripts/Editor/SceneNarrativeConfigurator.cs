@@ -282,8 +282,6 @@ public class SceneNarrativeConfigurator : EditorWindow
         int hotspotsCreated = CreateOrUpdateHotspots(chapter4Hotspots);
         int doorsCreated = CreateOrUpdateDoors(chapter5Doors);
         EnsureSingletonSystems();
-        EnsureSecurityRoomDoor();
-        EnsureEpilogueSystem();
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
@@ -291,9 +289,7 @@ public class SceneNarrativeConfigurator : EditorWindow
         EditorUtility.DisplayDialog("Configuracion Completa",
             $"Hotspots Cap 4: {hotspotsCreated} creados/actualizados\n" +
             $"Puertas Cap 5: {doorsCreated} creadas/actualizadas\n" +
-            $"Sistemas singleton: verificados\n" +
-            $"Door_ToSecurityRoom + NumericPasswordPanel: verificados\n" +
-            $"EpilogueSystem + EpilogueBuilder: verificados\n\n" +
+            $"Sistemas singleton: verificados\n\n" +
             "Hotspots creados:\n" +
             "- Mirilla Central\n" +
             "- Maletin Negro (relicario Lucas)\n" +
@@ -304,7 +300,6 @@ public class SceneNarrativeConfigurator : EditorWindow
             "- Diario Final\n" +
             "- Maquinaria\n\n" +
             "Puertas creadas:\n" +
-            "- Door_ToSecurityRoom (contraseña 4-7-2-9)\n" +
             "- Door_ToNorthStreet (Cap 4 -> Cap 5)\n" +
             "- Door_ToEmptyRoom (Cap 5)\n" +
             "- Door_ToKidnappedSimon (Cap 5)\n" +
@@ -646,99 +641,6 @@ public class SceneNarrativeConfigurator : EditorWindow
             gateObj.transform.SetParent(systemsParent.transform);
             gateObj.AddComponent<Chapter5ValidationGate>();
             Debug.Log("[Configurador] Chapter5ValidationGate CREADO.");
-        }
-
-        // ProgressionTestHelper (debug)
-        if (UnityEngine.Object.FindAnyObjectByType<ProgressionTestHelper>() == null)
-        {
-            GameObject systemsParent = FindOrCreateParent("_Systems");
-            GameObject testObj = new GameObject("ProgressionTestHelper");
-            testObj.transform.SetParent(systemsParent.transform);
-            testObj.AddComponent<ProgressionTestHelper>();
-            Debug.Log("[Configurador] ProgressionTestHelper CREADO.");
-        }
-    }
-
-    /// <summary>
-    /// Asegura que exista Door_ToSecurityRoom (sin NumericPasswordPanel — el panel es un objeto separado).
-    /// </summary>
-    private static void EnsureSecurityRoomDoor()
-    {
-        // Buscar la puerta
-        GameObject doorObj = FindInScene("Door_ToSecurityRoom");
-        if (doorObj == null)
-        {
-            // Crear la puerta en el sótano
-            GameObject parent = FindOrCreateParent("Doors");
-            doorObj = new GameObject("Door_ToSecurityRoom");
-            doorObj.transform.SetParent(parent.transform);
-            doorObj.transform.localPosition = new Vector3(0f, 1.5f, 0f);
-
-            var col = doorObj.AddComponent<BoxCollider2D>();
-            col.size = new Vector2(2.0f, 2.5f);
-
-            doorObj.AddComponent<DoorTrigger>();
-            Debug.Log("[Configurador] Door_ToSecurityRoom CREADA.");
-        }
-
-        // Configurar DoorTrigger
-        var door = doorObj.GetComponent<DoorTrigger>();
-        if (door == null)
-        {
-            door = doorObj.AddComponent<DoorTrigger>();
-        }
-
-        SerializedObject doorSo = new SerializedObject(door);
-        SetString(doorSo, "targetRoomId", "securityRoom");
-        SetString(doorSo, "requiredChapterId", "");
-        SetString(doorSo, "lockedMessage", "La puerta tiene un teclado numerico. Necesito encontrar la combinacion correcta.");
-        doorSo.ApplyModifiedPropertiesWithoutUndo();
-
-        // Eliminar NumericPasswordPanel si existe en la puerta (migrado a objeto separado "Panel")
-        var oldPanel = doorObj.GetComponent<NumericPasswordPanel>();
-        if (oldPanel != null)
-        {
-            UnityEngine.Object.DestroyImmediate(oldPanel);
-            Debug.Log("[Configurador] NumericPasswordPanel ELIMINADO de Door_ToSecurityRoom (migrado a Panel separado).");
-        }
-    }
-
-    /// <summary>
-    /// Asegura que existan EpilogueSystem y EpilogueBuilder.
-    /// </summary>
-    private static void EnsureEpilogueSystem()
-    {
-        if (UnityEngine.Object.FindAnyObjectByType<EpilogueSystem>() == null)
-        {
-            GameObject systemsParent = FindOrCreateParent("_Systems");
-            GameObject epilogueObj = new GameObject("EpilogueSystem");
-            epilogueObj.transform.SetParent(systemsParent.transform);
-            epilogueObj.AddComponent<EpilogueSystem>();
-            Debug.Log("[Configurador] EpilogueSystem CREADO.");
-        }
-
-        if (UnityEngine.Object.FindAnyObjectByType<EpilogueBuilder>() == null)
-        {
-            // Buscar DialogueLibrary existente para adjuntar el builder
-            DialogueLibrary library = UnityEngine.Object.FindAnyObjectByType<DialogueLibrary>();
-            if (library != null)
-            {
-                var builder = library.gameObject.GetComponent<EpilogueBuilder>();
-                if (builder == null)
-                {
-                    library.gameObject.AddComponent<EpilogueBuilder>();
-                    Debug.Log("[Configurador] EpilogueBuilder añadido al GameObject de DialogueLibrary.");
-                }
-            }
-            else
-            {
-                GameObject systemsParent = FindOrCreateParent("_Systems");
-                GameObject builderObj = new GameObject("EpilogueBuilder");
-                builderObj.transform.SetParent(systemsParent.transform);
-                builderObj.AddComponent<DialogueLibrary>();
-                builderObj.AddComponent<EpilogueBuilder>();
-                Debug.Log("[Configurador] EpilogueBuilder CREADO con DialogueLibrary propia.");
-            }
         }
     }
 
