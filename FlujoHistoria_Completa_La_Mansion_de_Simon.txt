@@ -71,7 +71,7 @@ Decisión del prólogo:
 
 
 ═══════════════════════════════════════════════════════════════════
- CAPÍTULO 1 — LA LLEGADA (3:00 PM)
+ CAPÍTULO 1 — LA LLEGADA
  Ubicación: Lobby y sala de npcs
 ═══════════════════════════════════════════════════════════════════
 Lobby:
@@ -111,7 +111,7 @@ TRANSICIÓN: El protagonista usa la llave(posterior si se cumplen las anteriores
 
 
 ═══════════════════════════════════════════════════════════════════
- CAPÍTULO 2 — LA PRIMERA HORA (4:30 PM)
+ CAPÍTULO 2 — LA PRIMERA HORA
  Ubicación: Estudio (solo) + Lobby (NPCs)
 ═══════════════════════════════════════════════════════════════════
 
@@ -220,7 +220,7 @@ CONDICIÓN PARA AVANZAR:
 
 
 ═══════════════════════════════════════════════════════════════════
- CAPÍTULO 4 — EL SÓTANO (8:00 PM)
+ CAPÍTULO 4 — EL SÓTANO
  Ubicación: Sótano / Sala de Seguridad (solo) + Lobby (NPCs)
 ═══════════════════════════════════════════════════════════════════
 
@@ -276,7 +276,7 @@ DECISIÓN:
 
 
 ═══════════════════════════════════════════════════════════════════
- CAPÍTULO 5 — LA NOCHE (10:00 PM)
+ CAPÍTULO 5 — LA NOCHE
  Ubicación: Ala Norte → Pasillo oscuro → Habitación de Simón
 ═══════════════════════════════════════════════════════════════════
 
