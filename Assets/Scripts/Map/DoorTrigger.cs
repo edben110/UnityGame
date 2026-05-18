@@ -116,7 +116,7 @@ public class DoorTrigger : Interactable
 
         if (shouldBeEnabled)
         {
-            Debug.Log($"[DoorTrigger] {gameObject.name}: Capítulo 3 activo. Puerta del sótano habilitada automáticamente.");
+            Debug.Log($"[DoorTrigger] {gameObject.name}: Puerta del sótano habilitada (capítulo actual permite acceso).");
         }
     }
 
@@ -127,10 +127,10 @@ public class DoorTrigger : Interactable
             return false;
         }
 
-        // REGLA: La puerta del sótano se activa automáticamente en chapter3.
-        // La validación de llaves ocurre al intentar abrirla, NO para hacerla visible.
-        bool isChapter3 = StoryState.Instance.CurrentChapterId == "chapter3";
-        return isChapter3;
+        // REGLA: La puerta del sótano se activa automáticamente en chapter3 y permanece
+        // activa en chapter4+ (el sótano es zona de exploración activa desde Cap 3 en adelante).
+        string chapter = StoryState.Instance.CurrentChapterId;
+        return chapter == "chapter3" || chapter == "chapter4" || chapter == "chapter5";
     }
 
     private void HideAnxietyOverlayIfVisible()
@@ -267,45 +267,56 @@ public class DoorTrigger : Interactable
 
         if (IsSecretBasementDoor())
         {
-            bool isChapter3 = StoryState.Instance != null
-                && StoryState.Instance.CurrentChapterId == "chapter3";
-
-            if (!isChapter3)
+            if (StoryState.Instance == null)
             {
                 result.canPass = false;
-                result.blockReason = "No es momento de bajar ahí. Debo seguir investigando arriba.";
+                result.blockReason = "No es momento de bajar ahí.";
                 return result;
             }
 
-            // Validar llaves usando el array requiredKeys del Inspector (sin hardcodear)
-            bool hasAllKeys = true;
-            string missingKeyName = "";
-            if (requiredKeys != null && requiredKeys.Length > 0)
+            string chapter = StoryState.Instance.CurrentChapterId;
+
+            // En chapter4+ el sótano es zona activa — acceso libre sin restricciones
+            if (chapter == "chapter4" || chapter == "chapter5")
             {
-                foreach (KeyType keyType in requiredKeys)
+                result.canPass = true;
+                return result;
+            }
+
+            // En chapter3 se valida la llave
+            if (chapter == "chapter3")
+            {
+                // Validar llaves usando el array requiredKeys del Inspector (sin hardcodear)
+                bool hasAllKeys = true;
+                if (requiredKeys != null && requiredKeys.Length > 0)
                 {
-                    string itemId = keyType.ToString();
-                    if (!InventoryState.HasItem(itemId))
+                    foreach (KeyType keyType in requiredKeys)
                     {
-                        hasAllKeys = false;
-                        missingKeyName = KeyTypeDisplayNames.GetDisplayName(keyType);
-                        break;
+                        string itemId = keyType.ToString();
+                        if (!InventoryState.HasItem(itemId))
+                        {
+                            hasAllKeys = false;
+                            break;
+                        }
                     }
                 }
-            }
 
-            if (!hasAllKeys)
-            {
-                result.canPass = false;
-                result.hasKey = false;
-                result.blockReason = !string.IsNullOrEmpty(missingKeyName)
-                    ? $"La puerta del sótano está cerrada. Necesito la {missingKeyName.ToLower()}."
-                    : "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                if (!hasAllKeys)
+                {
+                    result.canPass = false;
+                    result.hasKey = false;
+                    result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                    return result;
+                }
+
+                // Validación pasó — acceso permitido
+                result.canPass = true;
                 return result;
             }
 
-            // Validación pasó — acceso permitido
-            result.canPass = true;
+            // Antes de chapter3 — bloqueado
+            result.canPass = false;
+            result.blockReason = "No puedo acceder a esta zona todavía.";
             return result;
         }
 
@@ -688,7 +699,9 @@ public class DoorTrigger : Interactable
         return string.Equals(targetRoomId, "secretBasement", StringComparison.OrdinalIgnoreCase)
             || string.Equals(targetRoomId, "basement", StringComparison.OrdinalIgnoreCase)
             || string.Equals(gameObject.name, "Door_SecretBasement", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(gameObject.name, "Door_ToSecretBasement", StringComparison.OrdinalIgnoreCase);
+            || string.Equals(gameObject.name, "Door_ToSecretBasement", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_ToaBasementeFromSecureDoor", StringComparison.OrdinalIgnoreCase)
+            || gameObject.name.Contains("Basemente", StringComparison.OrdinalIgnoreCase);
     }
 
     private bool ShouldValidateChapter3Entry()
@@ -751,12 +764,14 @@ public class DoorTrigger : Interactable
             return false;
         }
 
+        // Solo dispara transición a Cap 4 si estamos en chapter3.
+        // En chapter4+ la puerta es navegación normal (sin transición).
         if (StoryState.Instance.CurrentChapterId != "chapter3")
         {
             return false;
         }
 
-        // La puerta secreta del sótano siempre dispara transición a Cap 4
+        // La puerta secreta del sótano siempre dispara transición a Cap 4 (desde Cap 3)
         if (IsSecretBasementDoor())
         {
             return true;

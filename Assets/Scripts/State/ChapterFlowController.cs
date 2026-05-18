@@ -122,6 +122,13 @@ public class ChapterFlowController : MonoBehaviour
         {
             StoryState.Instance.SetFlag("session.started", true);
             StoryState.Instance.SetChapter(prologueChapterId);
+
+            // Intentar cambiar a la sala del prólogo si existe
+            if (RoomManager.Instance != null && RoomManager.Instance.HasRoom("prologue"))
+            {
+                RoomManager.Instance.ChangeRoom("prologue");
+            }
+
             dialogueRunner.StartConversation(prologueIntroConversationId, "start");
             return;
         }
@@ -463,6 +470,12 @@ public class ChapterFlowController : MonoBehaviour
                 GameManager.Instance.UnlockChapter(chapter1Id);
             }
 
+            // Cambiar a la sala del lobby para iniciar Cap 1
+            if (RoomManager.Instance != null && RoomManager.Instance.HasRoom("lobby"))
+            {
+                RoomManager.Instance.ChangeRoom("lobby");
+            }
+
             Debug.Log("[ChapterFlow] ═══ PRÓLOGO → CAP 1 ═══");
             dialogueRunner.StartConversation(chapter1IntroConversationId, "start");
             return;
@@ -522,6 +535,11 @@ public class ChapterFlowController : MonoBehaviour
 
         if (currentChapter == prologueChapterId && !StoryState.Instance.HasFlag(prologueCompleteFlag))
         {
+            // Asegurar que estamos en la sala del prólogo
+            if (RoomManager.Instance != null && RoomManager.Instance.HasRoom("prologue"))
+            {
+                RoomManager.Instance.ChangeRoom("prologue");
+            }
             dialogueRunner.StartConversation(prologueIntroConversationId, "start");
             return;
         }
