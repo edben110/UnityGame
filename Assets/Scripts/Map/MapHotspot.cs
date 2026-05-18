@@ -53,8 +53,14 @@ public class MapHotspot : Interactable
     }
 
     /// <summary>
-    /// Oculta el hotspot si el capítulo actual no coincide con requiredChapterId.
-    /// Así los hotspots de Cap 4 no se ven durante Cap 1.
+    /// Controla la visibilidad del hotspot según el capítulo actual.
+    /// 
+    /// REGLA DE PERSISTENCIA:
+    ///   - requiredChapterId actúa como "capítulo MÍNIMO de activación", NO como capítulo exacto.
+    ///   - Un hotspot se activa cuando el jugador alcanza su capítulo requerido.
+    ///   - Una vez activado, permanece disponible en capítulos posteriores SI aún no fue recogido.
+    ///   - Esto evita softlocks: objetos olvidados siguen siendo accesibles al volver.
+    ///   - Si el objeto ya fue recogido (IsItemCollected), se oculta normalmente.
     /// </summary>
     private void RefreshChapterVisibility()
     {
@@ -63,7 +69,25 @@ public class MapHotspot : Interactable
             return;
         }
 
-        bool shouldBeVisible = StoryState.Instance.CurrentChapterId == requiredChapterId;
+        // Determinar si el capítulo actual es >= al capítulo requerido (activación mínima)
+        bool chapterReached = IsCurrentChapterAtOrAfter(requiredChapterId);
+
+        // El hotspot es visible si:
+        // 1. El jugador ha alcanzado o superado el capítulo de activación
+        // 2. Y el objeto aún no ha sido recogido/consumido
+        bool shouldBeVisible = chapterReached;
+
+        // Si tiene reward de item y ya fue recogido, ocultarlo
+        if (HasItemReward() && IsItemCollected())
+        {
+            shouldBeVisible = false;
+        }
+
+        // Si fue consumido (consumeAfterUse), ocultarlo
+        if (consumeAfterUse && StoryState.Instance.HasFlag(GetUsedFlag()))
+        {
+            shouldBeVisible = false;
+        }
 
         // Solo ocultar el renderer, no el GameObject completo
         // (para que siga recibiendo eventos de StateChanged)
@@ -84,6 +108,42 @@ public class MapHotspot : Interactable
         if (debugMarkerInstance != null)
         {
             debugMarkerInstance.SetActive(shouldBeVisible);
+        }
+    }
+
+    /// <summary>
+    /// Compara el capítulo actual con el requerido usando orden numérico.
+    /// Retorna true si el capítulo actual es igual o posterior al requerido.
+    /// Orden: prologue < chapter1 < chapter2 < chapter3 < chapter4 < chapter5
+    /// </summary>
+    private static bool IsCurrentChapterAtOrAfter(string requiredChapter)
+    {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        int currentOrder = GetChapterOrder(StoryState.Instance.CurrentChapterId);
+        int requiredOrder = GetChapterOrder(requiredChapter);
+        return currentOrder >= requiredOrder;
+    }
+
+    private static int GetChapterOrder(string chapterId)
+    {
+        if (string.IsNullOrWhiteSpace(chapterId))
+        {
+            return -1;
+        }
+
+        switch (chapterId.ToLowerInvariant())
+        {
+            case "prologue": return 0;
+            case "chapter1": return 1;
+            case "chapter2": return 2;
+            case "chapter3": return 3;
+            case "chapter4": return 4;
+            case "chapter5": return 5;
+            default: return -1;
         }
     }
 
@@ -108,7 +168,9 @@ public override void Interact()
             return;
         }
 
-        if (!string.IsNullOrWhiteSpace(requiredChapterId) && StoryState.Instance.CurrentChapterId != requiredChapterId)
+        // NUEVA LÓGICA: requiredChapterId actúa como capítulo MÍNIMO, no exacto.
+        // El hotspot es interactuable si el jugador ha alcanzado o superado ese capítulo.
+        if (!string.IsNullOrWhiteSpace(requiredChapterId) && !IsCurrentChapterAtOrAfter(requiredChapterId))
         {
             return;
         }
@@ -166,6 +228,12 @@ public override void Interact()
             InventoryState.AddItem(grantItemId);
         }
 
+        if (StoryState.Instance != null && (hideAfterPickup || consumeAfterUse) && IsItemCollected())
+        {
+            StoryState.Instance.SetFlag(GetUsedFlag(), true);
+            RefreshAvailability();
+        }
+
         TriggerNarrativeConversation();
 
         if (HotspotItemPanelUI.Instance != null)
@@ -198,7 +266,18 @@ public override void Interact()
 
     private void RefreshAvailability()
     {
-        if (!consumeAfterUse || StoryState.Instance == null || !StoryState.Instance.HasFlag(GetUsedFlag()))
+        if (StoryState.Instance == null)
+        {
+            return;
+        }
+
+        if (hideAfterPickup && HasItemReward() && IsItemCollected())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        if (!consumeAfterUse || !StoryState.Instance.HasFlag(GetUsedFlag()))
         {
             return;
         }
@@ -262,6 +341,21 @@ public override void Interact()
         return !string.IsNullOrWhiteSpace(grantItemId);
     }
 
+    private bool IsItemCollected()
+    {
+        if (!HasItemReward())
+        {
+            return false;
+        }
+
+        if (InventoryState.HasItem(grantItemId))
+        {
+            return true;
+        }
+
+        return StoryState.Instance != null && StoryState.Instance.HasFlag(GetUsedFlag());
+    }
+
     private string ResolveItemDisplayName()
     {
         if (!string.IsNullOrWhiteSpace(grantItemDisplayName))
@@ -284,24 +378,48 @@ public override void Interact()
             return grantItemDescription;
         }
 
-        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(grantItemId, out InventoryItemDefinition definition))
+        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(grantItemId, out InventoryItemDefinition definition) && !string.IsNullOrWhiteSpace(definition.description))
         {
             return definition.description;
         }
 
-        return string.Empty;
+        // Fallback: usar defaults narrativos
+        return InventoryNarrativeDefaults.GetDefaultDescription(grantItemId);
     }
 
     private Sprite ResolveItemSprite()
     {
+        string canonicalItemId = InventoryCatalog.CanonicalizeItemId(grantItemId);
+
         if (grantItemSprite != null)
         {
             return grantItemSprite;
         }
 
-        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(grantItemId, out InventoryItemDefinition definition))
+        if (InventoryCatalog.Instance != null && InventoryCatalog.Instance.TryGet(canonicalItemId, out InventoryItemDefinition definition) && definition.icon != null)
         {
             return definition.icon;
+        }
+
+        // Fallback: intentar cargar desde Resources
+        Sprite sprite = Resources.Load<Sprite>($"Sprites/{canonicalItemId}");
+        if (sprite != null)
+        {
+            return sprite;
+        }
+
+        // Fallback: usar el SpriteRenderer del propio hotspot si tiene uno
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null && sr.sprite != null)
+        {
+            return sr.sprite;
+        }
+
+        // Fallback: buscar Image component (para hotspots basados en UI)
+        UnityEngine.UI.Image img = GetComponent<UnityEngine.UI.Image>();
+        if (img != null && img.sprite != null)
+        {
+            return img.sprite;
         }
 
         return null;

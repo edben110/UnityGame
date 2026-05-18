@@ -93,10 +93,30 @@ public class DoorTrigger : Interactable
             return;
         }
 
+        bool shouldBeEnabled = ShouldSecretBasementColliderBeEnabled();
+
         BoxCollider2D col = GetComponent<BoxCollider2D>();
         if (col != null)
         {
-            col.enabled = ShouldSecretBasementColliderBeEnabled();
+            col.enabled = shouldBeEnabled;
+        }
+
+        // Mostrar/ocultar la puerta visualmente según el capítulo
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.enabled = shouldBeEnabled;
+        }
+
+        UnityEngine.UI.Image img = GetComponent<UnityEngine.UI.Image>();
+        if (img != null)
+        {
+            img.enabled = shouldBeEnabled;
+        }
+
+        if (shouldBeEnabled)
+        {
+            Debug.Log($"[DoorTrigger] {gameObject.name}: Puerta del sótano habilitada (capítulo actual permite acceso).");
         }
     }
 
@@ -107,8 +127,10 @@ public class DoorTrigger : Interactable
             return false;
         }
 
-        return StoryState.Instance.CurrentChapterId == "chapter3"
-            && InventoryState.HasItem(KeyType.SmallKey.ToString());
+        // REGLA: La puerta del sótano se activa automáticamente en chapter3 y permanece
+        // activa en chapter4+ (el sótano es zona de exploración activa desde Cap 3 en adelante).
+        string chapter = StoryState.Instance.CurrentChapterId;
+        return chapter == "chapter3" || chapter == "chapter4" || chapter == "chapter5";
     }
 
     private void HideAnxietyOverlayIfVisible()
@@ -154,6 +176,9 @@ public class DoorTrigger : Interactable
 
         // ═══ ACCESO PERMITIDO ═══
 
+        // Consumir llaves de un solo uso después de validar acceso
+        ConsumeSingleUseKeys();
+
         // Determinar si esta puerta debe disparar transición de capítulo
         bool shouldTriggerTransition = triggersChapterTransition;
         string effectiveTransitionChapter = transitionToChapterId;
@@ -178,6 +203,28 @@ public class DoorTrigger : Interactable
             shouldTriggerTransition = true;
             effectiveTransitionChapter = "chapter4";
             Debug.Log("[DoorTrigger] Auto-detectado: puerta al sótano en Cap 3 → transición a Cap 4 (validada)");
+        }
+
+        if (!shouldTriggerTransition && ShouldAutoStartChapter5OnEntry())
+        {
+            // Validar con Chapter5ValidationGate antes de permitir transición
+            if (Chapter5ValidationGate.Instance != null)
+            {
+                if (!Chapter5ValidationGate.Instance.ValidateChapter5Entry(out string chapter5BlockReason))
+                {
+                    DialoguePanelUI blockPanel = DialoguePanelUI.Instance;
+                    if (blockPanel != null)
+                    {
+                        blockPanel.ShowSystemMessage(chapter5BlockReason);
+                    }
+                    Debug.Log($"[DoorTrigger] Capítulo 5 BLOQUEADO: {chapter5BlockReason}");
+                    return;
+                }
+            }
+
+            shouldTriggerTransition = true;
+            effectiveTransitionChapter = "chapter5";
+            Debug.Log("[DoorTrigger] Auto-detectado: puerta al Ala Norte en Cap 4 → transición a Cap 5 (validada)");
         }
 
         // Si esta puerta dispara transición de capítulo
@@ -245,17 +292,57 @@ public class DoorTrigger : Interactable
 
         if (IsSecretBasementDoor())
         {
-            bool canOpenSecretBasement = StoryState.Instance != null
-                && StoryState.Instance.CurrentChapterId == "chapter3"
-                && InventoryState.HasItem(KeyType.BasementKey.ToString())
-                && result.npcTalkCount >= 1;
-
-            if (!canOpenSecretBasement)
+            if (StoryState.Instance == null)
             {
                 result.canPass = false;
-                result.blockReason = "Creo que aún no debería bajar ahí.";
+                result.blockReason = "No es momento de bajar ahí.";
                 return result;
             }
+
+            string chapter = StoryState.Instance.CurrentChapterId;
+
+            // En chapter4+ el sótano es zona activa — acceso libre sin restricciones
+            if (chapter == "chapter4" || chapter == "chapter5")
+            {
+                result.canPass = true;
+                return result;
+            }
+
+            // En chapter3 se valida la llave
+            if (chapter == "chapter3")
+            {
+                // Validar llaves usando el array requiredKeys del Inspector (sin hardcodear)
+                bool hasAllKeys = true;
+                if (requiredKeys != null && requiredKeys.Length > 0)
+                {
+                    foreach (KeyType keyType in requiredKeys)
+                    {
+                        string itemId = keyType.ToString();
+                        if (!InventoryState.HasItem(itemId))
+                        {
+                            hasAllKeys = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (!hasAllKeys)
+                {
+                    result.canPass = false;
+                    result.hasKey = false;
+                    result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                    return result;
+                }
+
+                // Validación pasó — acceso permitido
+                result.canPass = true;
+                return result;
+            }
+
+            // Antes de chapter3 — bloqueado
+            result.canPass = false;
+            result.blockReason = "No puedo acceder a esta zona todavía.";
+            return result;
         }
 
         // 1. Verificar capítulo requerido
@@ -285,6 +372,27 @@ public class DoorTrigger : Interactable
         {
             foreach (KeyType keyType in requiredKeys)
             {
+                // SingleUseKey: si ya fue usada en ESTA puerta, no bloquear
+                if (keyType == KeyType.SingleUseKey)
+                {
+                    bool alreadyUsedHere = StoryState.Instance != null
+                        && StoryState.Instance.HasFlag($"SingleUseKey.consumed.door.{gameObject.name}");
+                    if (alreadyUsedHere)
+                    {
+                        continue; // La puerta ya fue abierta con esta llave
+                    }
+
+                    // Si la llave ya fue consumida en OTRA puerta, bloquear
+                    bool consumed = StoryState.Instance != null && StoryState.Instance.HasFlag("OneTimeKeyUsed");
+                    if (consumed)
+                    {
+                        result.hasKey = false;
+                        result.canPass = false;
+                        result.blockReason = "Ya usé la llave desgastada en otra puerta. Se rompió al girarla.";
+                        return result;
+                    }
+                }
+
                 string itemId = keyType.ToString();
                 if (!InventoryState.HasItem(itemId))
                 {
@@ -301,8 +409,12 @@ public class DoorTrigger : Interactable
         {
             result.chapter3DoorInteraction = true;
             result.hasSimonKey = InventoryState.HasItem(simonRoomRequiredKey.ToString());
-            result.hasBookDecision = CountNpcTalksInCurrentChapter() >= 1 && StoryState.Instance.HasFlag(chapter2BookDecisionCompleteFlag);
-            result.canStartChapter3 = result.hasSimonKey && result.hasBookDecision;
+
+            // NEW BEHAVIOR: Ben+book panel is optional. To start Chapter 3 we require:
+            // - The Simon room key
+            // - The player has talked to at least one NPC in the current chapter
+            bool hasTalkedAtLeastOneNpc = result.npcTalkCount >= 1;
+            result.canStartChapter3 = result.hasSimonKey && hasTalkedAtLeastOneNpc;
 
             if (!result.canStartChapter3)
             {
@@ -313,10 +425,10 @@ public class DoorTrigger : Interactable
                     result.chapter3Reason = "Missing Simon Room Key";
                     result.blockReason = "Creo que aún no estoy listo para entrar. Necesito la llave de la habitación de Simón.";
                 }
-                else if (!result.hasBookDecision)
+                else if (!hasTalkedAtLeastOneNpc)
                 {
                     result.chapter3Reason = "Must talk to at least one NPC";
-                    result.blockReason = "Quizás sería buena idea hablar sobre algunos hallazgos del estudio antes de seguir.";
+                    result.blockReason = "Quizás sería buena idea hablar con alguien antes de seguir.";
                 }
                 else
                 {
@@ -330,13 +442,31 @@ public class DoorTrigger : Interactable
             result.chapter3Reason = "All requirements satisfied";
         }
 
-        // 3.6. Inicio de Cap 4 solo por puerta + llave de sótano + alfombra movida + flujo
+        // 3.6. Inicio de Cap 4 solo por puerta + llaves del inspector + alfombra movida + flujo
         if (ShouldValidateChapter4Entry())
         {
             result.chapter4DoorInteraction = true;
-            result.hasBasementKey = InventoryState.HasItem("BasementKey");
             result.hasBasementDiscovered = StoryState.Instance.HasFlag("BasementDiscovered");
             result.hasChapter3Decision = CountNpcTalksInCurrentChapter() >= 1; // At least one NPC talked in chapter 3
+
+            // Validar llaves requeridas usando el array requiredKeys del Inspector (sin hardcodear BasementKey)
+            bool hasRequiredKeys = true;
+            string missingKeyName = "";
+            if (requiredKeys != null && requiredKeys.Length > 0)
+            {
+                foreach (KeyType keyType in requiredKeys)
+                {
+                    string itemId = keyType.ToString();
+                    if (!InventoryState.HasItem(itemId))
+                    {
+                        hasRequiredKeys = false;
+                        missingKeyName = KeyTypeDisplayNames.GetDisplayName(keyType);
+                        break;
+                    }
+                }
+            }
+
+            result.hasBasementKey = hasRequiredKeys;
             result.canStartChapter4 = result.hasBasementKey && result.hasBasementDiscovered && result.hasChapter3Decision;
 
             if (!result.canStartChapter4)
@@ -346,17 +476,19 @@ public class DoorTrigger : Interactable
                 if (!result.hasBasementDiscovered)
                 {
                     result.chapter4Reason = "Basement Not Discovered";
-                    result.blockReason = "No hay nada aquí."; // La puerta en sí ni debería ser visible si no está descubierta, pero por si acaso.
+                    result.blockReason = "Parece una trampilla vieja... pero no veo cómo abrirla. Tal vez deba investigar más la galería.";
                 }
                 else if (!result.hasBasementKey)
                 {
-                    result.chapter4Reason = "Missing Basement Key";
-                    result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                    result.chapter4Reason = "Missing Required Key";
+                    result.blockReason = !string.IsNullOrEmpty(missingKeyName)
+                        ? $"La puerta del sótano está cerrada. Necesito la {missingKeyName.ToLower()}."
+                        : "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
                 }
                 else if (!result.hasChapter3Decision)
                 {
                     result.chapter4Reason = "Must talk to at least one NPC";
-                    result.blockReason = "Debería hablar con los demás sobre mis hallazgos antes de bajar.";
+                    result.blockReason = "Tal vez debería hablar con alguien antes de bajar. Podría necesitar información.";
                 }
                 else
                 {
@@ -461,6 +593,11 @@ public class DoorTrigger : Interactable
         StoryState.Instance.SetChapter(targetChapterId);
         StoryState.Instance.SetFlag($"{targetChapterId}.intro.seen", true);
 
+        if (ChapterFlowController.Instance != null)
+        {
+            ChapterFlowController.Instance.ResetNpcTalkTrackingForNewChapter();
+        }
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.UnlockChapter(targetChapterId);
@@ -540,6 +677,51 @@ public class DoorTrigger : Interactable
     //  UTILIDADES
     // ═══════════════════════════════════════════════════════════════
 
+    /// <summary>
+    /// Consume las llaves de un solo uso (SingleUseKey) después de abrir la puerta.
+    /// La llave se elimina del inventario y se marca como usada en StoryState
+    /// para que no pueda reutilizarse aunque el jugador vuelva atrás.
+    /// </summary>
+    private void ConsumeSingleUseKeys()
+    {
+        if (requiredKeys == null || requiredKeys.Length == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < requiredKeys.Length; i++)
+        {
+            if (requiredKeys[i] == KeyType.SingleUseKey)
+            {
+                // Verificar que no fue ya consumida (persistencia)
+                if (StoryState.Instance != null && StoryState.Instance.HasFlag("OneTimeKeyUsed"))
+                {
+                    continue;
+                }
+
+                // Consumir: eliminar del inventario
+                string itemId = KeyType.SingleUseKey.ToString();
+                InventoryState.RemoveItem(itemId);
+
+                // Marcar como usada permanentemente
+                if (StoryState.Instance != null)
+                {
+                    StoryState.Instance.SetFlag("OneTimeKeyUsed", true);
+                    StoryState.Instance.SetFlag($"SingleUseKey.consumed.door.{gameObject.name}", true);
+                }
+
+                Debug.Log($"[DoorTrigger] ★ SingleUseKey CONSUMIDA en puerta '{gameObject.name}'. Ya no puede reutilizarse.");
+
+                // Feedback al jugador
+                DialoguePanelUI panel = DialoguePanelUI.Instance;
+                if (panel != null)
+                {
+                    panel.ShowSystemMessage("La llave se ha roto al girarla. Ya no servirá para otra puerta.");
+                }
+            }
+        }
+    }
+
     private bool ChangeRoom()
     {
         if (RoomManager.Instance == null)
@@ -606,7 +788,11 @@ public class DoorTrigger : Interactable
     private bool IsSecretBasementDoor()
     {
         return string.Equals(targetRoomId, "secretBasement", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(gameObject.name, "Door_SecretBasement", StringComparison.OrdinalIgnoreCase);
+            || string.Equals(targetRoomId, "basement", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_SecretBasement", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_ToSecretBasement", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_ToaBasementeFromSecureDoor", StringComparison.OrdinalIgnoreCase)
+            || gameObject.name.Contains("Basemente", StringComparison.OrdinalIgnoreCase);
     }
 
     private bool ShouldValidateChapter3Entry()
@@ -648,6 +834,11 @@ public class DoorTrigger : Interactable
             return false;
         }
 
+        if (IsSecretBasementDoor())
+        {
+            return false; // La puerta secreta del sótano ya tiene su propia validación arriba
+        }
+
         if (string.Equals(targetRoomId, "sotano", StringComparison.OrdinalIgnoreCase)
             || string.Equals(targetRoomId, "basement", StringComparison.OrdinalIgnoreCase))
         {
@@ -659,7 +850,61 @@ public class DoorTrigger : Interactable
 
     private bool ShouldAutoStartChapter4OnEntry()
     {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        // Solo dispara transición a Cap 4 si estamos en chapter3.
+        // En chapter4+ la puerta es navegación normal (sin transición).
+        if (StoryState.Instance.CurrentChapterId != "chapter3")
+        {
+            return false;
+        }
+
+        // La puerta secreta del sótano siempre dispara transición a Cap 4 (desde Cap 3)
+        if (IsSecretBasementDoor())
+        {
+            return true;
+        }
+
         return ShouldValidateChapter4Entry();
+    }
+
+    /// <summary>
+    /// Detecta si esta puerta es la del Ala Norte (Door_ToNorthStreet) durante el Capítulo 4.
+    /// Esta puerta dispara la transición al Capítulo 5 con validaciones robustas.
+    /// </summary>
+    private bool IsNorthStreetDoor()
+    {
+        if (StoryState.Instance == null || StoryState.Instance.CurrentChapterId != "chapter4")
+        {
+            return false;
+        }
+
+        // Detectar por nombre del GameObject
+        if (string.Equals(gameObject.name, "Door_ToNorthStreet", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_NorthStreet", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_ToAlaNorte", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        // Detectar por targetRoomId
+        if (string.Equals(targetRoomId, "northstreet", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "ala_norte", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "alanorte", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "north_hall", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool ShouldAutoStartChapter5OnEntry()
+    {
+        return IsNorthStreetDoor();
     }
 
     private bool IsLobbyTarget()

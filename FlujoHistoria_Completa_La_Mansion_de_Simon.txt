@@ -1,0 +1,460 @@
+═══════════════════════════════════════════════════════════════════
+ LA MANSIÓN DE SIMÓN — HISTORIA COMPLETA DEL JUEGO
+ Versión actualizada con cambios narrativos
+═══════════════════════════════════════════════════════════════════
+
+CONTEXTO GENERAL
+────────────────
+Europa, 1943. Berna, Suiza. Lejos del frente, pero no del miedo.
+
+El detective Franks Keller recibe la noticia de que Simón, un pintor
+reconocido, ha muerto en circunstancias vagas. Keller investiga un
+incidente que Simón presenció y que nunca llegó a los diarios.
+Alguien se aseguró de que no llegara.
+
+Keller llega a la mansión y encuentra a 5 personas reunidas en el
+lobby. Todos dicen estar ahí por la muerte de Simón, pero cada uno
+tiene un motivo oculto y busca algo específico dentro de la casa.
+
+PERSONAJES
+──────────
+• BEN (38) — Corredor de bolsa en quiebra. Desvió fondos de Simón.
+  Busca: Libro de contabilidad comprometedor (ESTUDIO)
+
+• LISA (31) — Periodista suspendida. Tiene copias de pruebas de un
+  crimen que Simón presenció.
+  Busca: Carpeta con fotografías y documentos (DEBAJO DE LA CAMA,
+  HABITACIÓN DE SIMÓN)
+
+• ROBERT (54) — Abogado semi-retirado. Es hermano secreto de Simón.
+  Busca: Carta manuscrita del padre común (GALERÍA — dentro de un
+  compartimento oculto detrás de una pintura)
+
+• ANA (45) — Galerista y tasadora. Usó joyas familiares de Simón
+  como garantía sin permiso.
+  Busca: Estuche de cuero con joyas familiares (GALERÍA — dentro
+  del archivador que se abre con la llave pequeña)
+
+• LUCAS (27) — Estudiante, ex-ayudante de Simón. Tomó un relicario.
+  Busca: Relicario de plata con inscripción (SALA DE SEGURIDAD —
+  dentro del maletín negro)
+
+MECÁNICA DE ANSIEDAD
+────────────────────
+Cada NPC tiene un nivel de ansiedad (0-100). Si el jugador no habla
+con ellos, la ansiedad sube al final de cada capítulo (+25 por
+capítulo ignorado). Si la ansiedad llega a 100, el NPC abandona la
+sala y muere en otro lugar de la mansión.
+
+Hablar con los NPCs reduce su ansiedad. El jugador debe equilibrar
+entre investigar solo y mantener al grupo estable.
+
+REGLA NARRATIVA FUNDAMENTAL
+───────────────────────────
+• El protagonista SIEMPRE investiga solo.
+• Los NPCs NUNCA salen del lobby.
+• Los NPCs son fuentes de información, sospecha y contraste.
+• El conocimiento es asimétrico: el jugador sabe cosas que los NPCs
+  ignoran hasta que decide revelárselas.
+
+
+═══════════════════════════════════════════════════════════════════
+ PRÓLOGO
+═══════════════════════════════════════════════════════════════════
+
+Keller llega a la mansión. Presentación de los 5 personajes.
+Se establece la premisa: Simón ha muerto, todos buscan algo.
+
+Decisión del prólogo:
+  [1] Prometer mantener unido al grupo
+  [2] Prometer buscar la verdad a cualquier costo
+
+
+═══════════════════════════════════════════════════════════════════
+ CAPÍTULO 1 — LA LLEGADA
+ Ubicación: Lobby y sala de npcs
+═══════════════════════════════════════════════════════════════════
+Lobby:
+En una mesa del lobby se encuentra un objeto escondido a simple vista:
+CARTA del Padre con una fecha (4-7-29) y algunos otros documentos de propiedades y herencias
+EXPLORACIÓN DE la sala de npcs
+─────────────────────────────────
+1. LIBRO DE VISITAS — Una entrada tachada con tinta roja. Fecha:
+   hace 3 semanas. Nombre ilegible.
+
+2. ABRIGO EN EL PERCHERO — Nota en el bolsillo: "No confíes en
+   nadie que llegue antes que tú."
+
+3. FOTOGRAFÍA SOBRE LA CHIMENEA — Simón joven con un hombre mayor.
+   Al dorso: "Padre e hijo, 1987." Robert desvía la mirada.
+
+4. PERIÓDICO — "Incendio en almacén del puerto, investigación
+   reabierta." Lisa intenta parecer indiferente.
+
+INTERACCIÓN CON NPCs:
+─────────────────────
+El jugador debe hablar con al menos un NPC:
+• Conversación de ansiedad (calmar)
+• Preguntar motivo de visita
+• Mostrar objetos encontrados para obtener reacciones
+
+PUZZLE — LLAVE DEL ESTUDIO:
+───────────────────────────
+l resolver el puzzle del cofre
+2 Abrir el cofre → obtener la LLAVE DEL ESTUDIO
+
+CONDICIONES PARA AVANZAR:
+• Hablar con al menos uno de todos los NPCs
+• Resolver el puzzle del cofre y obtener la llave del estudio
+
+TRANSICIÓN: El protagonista usa la llave(posterior si se cumplen las anteriores validaciones) → entra SOLO al estudio.
+
+
+═══════════════════════════════════════════════════════════════════
+ CAPÍTULO 2 — LA PRIMERA HORA
+ Ubicación: Estudio (solo) + Lobby (NPCs)
+═══════════════════════════════════════════════════════════════════
+
+El protagonista entra SOLO al estudio. La habitación está demasiado
+ordenada para alguien que murió repentinamente. Esto genera sospecha.
+
+EXPLORACIÓN DEL ESTUDIO (hotspots):
+───────────────────────────────────
+1. AGENDA — "Reunión cancelada. Peligro. No volver a abrir la
+   puerta norte." Última entrada: hace 3 días.
+   "en la pagina final de la agenda dice: el código de la puerta es el dia de la carta de mi p###
+
+2. LIBRO DE CONTABILIDAD — Entradas marcadas con "B" roja.
+   Discrepancias financieras significativas. SE RECOGE AL
+   INVENTARIO. (Este es el objeto que busca Ben)
+
+3. TABLERO DE CORCHO — Fotos de los 5 personajes conectadas con
+   hilos rojos. Una sexta foto con el rostro cubierto con cinta
+   negra. "¿Quién eres tú?"
+
+REGRESO AL LOBBY:
+─────────────────
+El protagonista vuelve con el libro de contabilidad. Ben NO sabe
+que lo encontró hasta que el jugador decide confrontarlo.
+
+SEGUNDA DECISIÓN (al mostrar el libro a Ben):
+  [1] Confrontar — Acusar a Ben directamente
+  [2] Subir a buscar la habitación de Simón
+
+PUZZLE — LLAVE DE LA HABITACIÓN DE SIMÓN:
+─────────────────────────────────────────
+La llave de la habitación NO se encuentra directamente. El jugador:
+1. En el estudio, nota que la agenda tiene una página arrancada
+   con marcas de presión (se puede leer frotando con lápiz)
+2. La marca revela: "cajón principal" donde se conseguira la caja puzzle a resolver para obtener la llave de l HABITACION DE SIMON
+3. En el lobby, hay un espejo decorativo cerca de la escalera
+
+CONDICIÓN PARA AVANZAR:
+• Tener la llave de la habitación
+
+
+═══════════════════════════════════════════════════════════════════
+ CAPÍTULO 3 — LA TARDE SILENCIOSA (6:00 PM)
+ Ubicación: Habitación de Simón (solo) + Galería + Lobby (NPCs)
+═══════════════════════════════════════════════════════════════════
+
+El protagonista entra SOLO a la habitación. Atmósfera íntima,
+incómoda, secreta. Simón no era solo una víctima — escondía cosas.
+
+EXPLORACIÓN DE LA HABITACIÓN (hotspots):
+────────────────────────────────────────
+1. VASO DE AGUA — Condensación fresca. Alguien estuvo aquí hace
+   menos de 2 horas. "Los muertos no beben agua."
+
+2. MAPA EN LA PARED — Marca el "Ala Norte" con círculo rojo.
+   "Aquí termina todo. O empieza."
+
+3. CARTA INCONCLUSA — "Si alguien lee esto, no estoy muerto.
+   Estoy en el Ala Norte. No vine por voluntad propia. Hay alguien
+   más en esta casa que no debería estar. No confíen en—"
+   SE RECOGE AL INVENTARIO.
+
+4. MESITA DE NOCHE — Notas médicas (Simón estaba medicado).
+   Foto familiar con el rostro de Robert tachado.
+
+5. DEBAJO DE LA CAMA — Caja puzzle + borradores de testificación
+   legal + CARPETA CON FOTOGRAFÍAS Y DOCUMENTOS DEL CRIMEN
+   (Este es el objeto que busca Lisa)
+
+EXPLORACIÓN DE LA GALERÍA (puzzles):
+────────────────────────────────────
+1. PINTURA MISTERIOSA — Compartimento oculto detrás del marco.
+   Contiene la CARTA MANUSCRITA DEL PADRE COMÚN.
+   (Este es el objeto que busca Robert)
+   La carta tiene una fecha: "17 de junio de 1943" — esta fecha
+   es parte del código de la sala de seguridad.
+
+2. CAJA PUZZLE 2 — Requiere resolver la primera (de la cama).
+   Contiene ESTUCHE DE JOYAS FAMILIARES (objeto que busca Ana).
+
+3. CAJA PUZZLE 3 — Contiene la LLAVE DEL SÓTANO.
+
+4. ALFOMBRA SOSPECHOSA — Suena hueco al pisarla. Al moverla,
+   revela una TRAMPILLA AL SÓTANO con cerradura de hierro.
+
+PUZZLE — CÓDIGO DE LA SALA DE SEGURIDAD:
+────────────────────────────────────────
+El código 4-7-2-7 se descubre así:
+• "4" — Del día de la carta del padre (4 de julio)
+• "7" — Del mes de la carta del padre (julio = 7)
+• "2-9" — De la fecha "1929" en la carta (29)
+El jugador conecta la fecha de la carta de Robert con el teclado
+numérico de la puerta de la sala de seguridad.
+
+REGRESO AL LOBBY CON LA CARTA DE SIMÓN:
+───────────────────────────────────────
+DECISIÓN DEL CAPÍTULO:
+  [1] Mostrar la carta al grupo — "Simón está vivo"
+  [2] Guardar la carta — seguir investigando
+  [3] Preguntarle a Robert sobre su relación con Simón
+
+CONDICIÓN PARA AVANZAR:
+• Tener la llave del sótano
+• Haber descubierto la trampilla
+• Haber hablado con al menos 1 NPC
+
+
+═══════════════════════════════════════════════════════════════════
+ CAPÍTULO 4 — EL SÓTANO
+ Ubicación: Sótano / Sala de Seguridad (solo) + Lobby (NPCs)
+═══════════════════════════════════════════════════════════════════
+
+El protagonista baja SOLO al sótano por la trampilla.
+Encuentra una puerta con teclado numérico → introduce 4-7-2-9.
+
+EXPLORACIÓN DE LA SALA DE SEGURIDAD (hotspots):
+───────────────────────────────────────────────
+1. MIRILLA CENTRAL — Se ve una figura humana sentada, inmóvil,
+   en una habitación del Ala Norte.
+
+2. MALETÍN NEGRO — Contiene el RELICARIO DE PLATA de Lucas.
+   Inscripción: "Para Lucas. Siempre."
+   (Este es el objeto que busca Lucas)
+
+3. CILINDROS DE FONÓGRAFO — Grabación de Simón:
+   "No voy a callar más. Aunque eso me cueste la vida."
+
+4. NOTA ROJA — "Si encuentras esto, ya saben que estás aquí.
+   No uses las luces del pasillo norte."
+
+5. MAPA ACTUALIZADO — Marca con X roja la habitación exacta
+   donde está Simón retenido. Tercera puerta del Ala Norte.
+6. caja puzzle(se debe resolver) adentro hay una llave que solo sirve una vez por que ya esta muy desgastada
+
+═══════════════════════════════════════════════════════════════════
+ DECISIÓN CRÍTICA — ENTREGAR O NO LOS OBJETOS
+═══════════════════════════════════════════════════════════════════
+
+Antes de ir al Ala Norte, el protagonista regresa al lobby.
+Tiene en su poder los objetos que cada NPC vino a buscar:
+• Libro de contabilidad (Ben)
+• Carpeta con evidencia (Lisa)
+• Carta del padre (Robert)
+• Estuche de joyas (Ana) — si abrió el archivador
+• Relicario (Lucas)
+
+DECISIÓN:
+  [1] ENTREGAR todos los objetos a sus dueños
+      → Los NPCs se calman significativamente (ansiedad -30)
+      → Aumenta la confianza del grupo
+      → Desbloquea el FINAL A (todos sobreviven)
+
+  [2] NO ENTREGAR los objetos — guardarlos como evidencia
+      → Los NPCs se ponen nerviosos (ansiedad +15)
+      → El protagonista mantiene el control
+      → Puede llevar al FINAL B o FINAL C
+
+  [3] ENTREGAR SELECTIVAMENTE — dar algunos y quedarse otros
+      → Efecto mixto según a quién se le entregue
+	para esto el jugador debe seleccionar el item desde el inventario y luego cliquear al npc para que en donde sale el botón preguntar por objeto desde el panel de interaccion, al darle click a ese botón después de tener los 5 ítems de los npcs, le entreguemos el item seleccionado al npc que le corresponde el item
+
+
+
+═══════════════════════════════════════════════════════════════════
+ CAPÍTULO 5 — LA NOCHE
+ Ubicación: Ala Norte → Pasillo oscuro → Habitación de Simón
+═══════════════════════════════════════════════════════════════════
+
+DECISIÓN — RESCATAR A SIMÓN:
+────────────────────────────
+Antes de entrar al Ala Norte:
+  [1] Ir a rescatar a Simón
+  [2] No ir — quedarse con el grupo
+
+Si elige NO ir: Simón permanece cautivo. Esto NO afecta los
+finales principales (A, B o C). Solo cambia el epílogo.
+
+EL PASILLO DEL ALA NORTE:
+─────────────────────────
+• Largo, oscuro, 3 puertas idénticas
+
+DECISIÓN DE PUERTAS:
+  [1] Primera puerta (más cercana) — vacía con telarañas, pierde tiempo y se pierde la llave de un solo uso llegando al final b con la cantidad de npcs vivos que tenga la partida pero sin rescatar a simon
+  [2] segunda puerta (puerta de la derecha y que sale en el mapa) — encuentra a Simón directo
+  [3] tercera puerta (al fondo) — habitación con una cama y un ventanal grande(habitación donde alguien se ha quedado(el asesino), parece una sala de operaciones) 
+
+ENCUENTRO CON SIMÓN:
+────────────────────
+Simón está atado a una silla. Venda en la frente, deshidratado.
+Lo primero que dice: "...agua."
+
+Reacciona según cuántos NPCs sobrevivieron:
+• 5 vivos: "...todos." (alivio total)
+• 3-4 vivos: "¿Los demás...?" (preocupación)
+• 1-2 vivos: "...¿solo...?" (desolación)
+
+
+═══════════════════════════════════════════════════════════════════
+ LOS TRES FINALES
+═══════════════════════════════════════════════════════════════════
+
+───────────────────────────────────────────────────────────────────
+ FINAL A — TODOS SOBREVIVEN
+ Condiciones: Entregar objetos + Rescatar simon
+───────────────────────────────────────────────────────────────────
+
+El grupo sale unido de la mansión. Simón es liberado. La policía
+llega al día siguiente tras la denuncia del grupo.
+
+La investigación revela que la sexta persona (rostro con cinta
+negra) era un antiguo socio de Simón que orquestó todo para
+recuperar documentos comprometedores. Fue arrestado semanas después
+en la frontera con Austria.
+
+Cada NPC enfrenta las consecuencias de sus secretos:
+• Ben devuelve el dinero y evita cargos gracias a la cooperación.
+• Lisa publica la investigación del incendio del puerto.
+• Robert reconoce públicamente su parentesco con Simón.
+• Ana devuelve las joyas y renegocia su deuda.
+• Lucas devuelve el relicario y Simón lo perdona.
+
+Keller cierra el caso. La mansión es vendida.
+
+Epílogo: "A veces la verdad no mata. A veces salva."
+
+───────────────────────────────────────────────────────────────────
+ FINAL B — NO TODOS SOBREVIVEN
+ Condiciones: Al menos 1 NPC con ansiedad 100 (muerto) o simon no es rescatado
+───────────────────────────────────────────────────────────────────
+
+al menos uno de los NPCs que alcanzaron ansiedad 100 abandonaron la sala durante
+la historia. Sus cuerpos son encontrados en distintas habitaciones
+de la mansión.
+
+El grupo restante sale, pero el trauma es irreversible. Simón es
+liberado (si el jugador fue a rescatarlo) pero queda marcado.
+
+La policía investiga las muertes. La causa oficial: "crisis
+nerviosa seguida de accidente." Pero Keller sabe que no fue
+accidente — fue el aislamiento. La mansión amplifica el miedo
+de quien está solo.
+
+Los sobrevivientes cargan con la culpa de no haber hablado más,
+de no haber prestado atención a las señales.
+
+Epílogo: "El silencio mata más lento que un cuchillo. Pero mata
+igual."
+
+Para cada NPC muerto, se describe dónde y cómo fue encontrado:
+• Ben — En el estudio, escribiendo "SALDADO" repetidamente
+• Lisa — En la galería, con su libreta abierta en una página vacía
+• Robert — En el lobby, frente a la chimenea apagada
+• Ana — En la galería, abrazando un marco vacío
+• Lucas — En la habitación de Simón, con el relicario en la mano
+• Simon— En una habitación del ala norte, muerto y con signos de tortura deshidratación e inanicion
+
+───────────────────────────────────────────────────────────────────
+ FINAL C — EL PROTAGONISTA ES EL CULPABLE
+ Condiciones: No entregar objetos + Elegir "Buscar al asesino"
+ en la decisión final + Todos los NPCs mueren independientemente de la ansiedad que tengan
+───────────────────────────────────────────────────────────────────
+
+Revelación: Franks Keller no es un detective. Es la sexta persona.
+El hombre de la foto con cinta negra.
+
+MOTIVOS DE KELLER:
+Keller provoco un incidente. Simón presenció un crimen
+que Keller cometió (el incendio del almacén del puerto). Simón
+guardó evidencia. Keller necesitaba:
+1. Recuperar la evidencia (carpeta de Lisa, libro de contabilidad)
+2. Eliminar a todos los testigos potenciales que pudiesen encontrarlo
+3. Asegurarse de que Simón no pudiera hablar
+
+MÉTODO:
+Keller envió las invitaciones falsas. Atrajo a los 5 a la mansión.
+Sabía que cada uno tenía un secreto que los haría vulnerables.
+Manipuló la situación para averiguar sobre donde puede estar todo lo que queria:
+
+keller asesina a todos luego baja al Ala Norte. Donde  Simón lo
+reconoce. La última conversación y que solo pasa en este final:
+
+SIMÓN: "Sabía que eras tú. Desde el principio."
+KELLER: "Entonces sabes por qué estoy aquí."
+SIMÓN: "La evidencia ya no importa. Hiciste copias de todo."
+KELLER: "No vine por la evidencia. Vine porque no puedo dejar
+         testigos."
+
+Keller deja a Simón atado. Sale de la mansión. Quema la evidencia.
+La policía encuentra 6 cuerpos días después. Caso archivado.
+
+Epílogo: "La mansión guarda sus secretos. Y los de quien la visita."
+
+
+═══════════════════════════════════════════════════════════════════
+ RESUMEN DE UBICACIÓN DE OBJETOS CLAVE
+═══════════════════════════════════════════════════════════════════
+
+LLAVES (obtenidas por puzzles):
+• Llave del estudio → Puzzle del cofre en la chimenea (Cap 1)
+• Llave de la habitación → Compartimento detrás del espejo (Cap 2)
+• Llave pequeña del archivador → Caja puzzle 2 en galería (Cap 3)
+• Llave del sótano → Caja puzzle 3 en galería (Cap 3)
+• Código sala de seguridad (4-7-2-9) → Fecha en carta del padre
+  encontrada en galería (Cap 3)
+
+OBJETOS DE NPCs:
+• Relicario de Lucas → Sala de seguridad (maletín negro)
+• Libro de contabilidad de Ben → Estudio
+• Joyas de Ana → Galería (archivador, requiere llave pequeña)
+• Pruebas/documentos de Lisa → Debajo de la cama (habitación)
+• Carta de Robert → Galería (compartimento detrás de pintura)
+
+NOTA: La carta de Robert se encuentra en Cap 3 (galería), antes
+del Cap 5. La fecha en la carta (4 de julio de 1929) es la clave
+para el código de la sala de seguridad, conectando el objeto de
+Robert con el acceso al relicario de Lucas.
+
+
+═══════════════════════════════════════════════════════════════════
+ CONDICIONES DE CADA FINAL (SIMPLIFICADAS)
+═══════════════════════════════════════════════════════════════════
+
+FINAL A (Todos sobreviven):
+• Hablar con todos los NPCs regularmente (ansiedad < 75)
+• Entregar los objetos antes del Cap 5
+• Rescatar a Simón
+
+FINAL B (No todos sobreviven):
+• Al menos 1 NPC llega a ansiedad 100 y muere
+• o el resto del grupo sale (con o sin Simón)
+
+FINAL C (Protagonista culpable):
+• No entregar objetos a ningún NPCs
+• En la decisión final elegir "Buscar al asesino"
+• Se revela que Keller es el asesino
+
+NOTA SOBRE SIMÓN:
+Rescatar o no a Simón es una decisión independiente que afecta
+el epílogo pero NO determina cuál de los 3 finales se obtiene.
+• Si lo rescatas → aparece en el final como sobreviviente/testigo
+• Si no lo rescatas → permanece cautivo, mencionado en el epílogo
+
+
+═══════════════════════════════════════════════════════════════════
+ FIN DEL DOCUMENTO
+═══════════════════════════════════════════════════════════════════

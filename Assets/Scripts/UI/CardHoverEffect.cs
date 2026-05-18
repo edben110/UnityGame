@@ -29,6 +29,8 @@ public class CardHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (cardImage != null)
             cardImage.color = hoverColor;
         transform.localScale = hoverScale;
+
+        CursorManager.SetHand();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -36,5 +38,12 @@ public class CardHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (cardImage != null)
             cardImage.color = normalColor;
         transform.localScale = normalScale;
+
+        CursorManager.SetDefault();
+    }
+
+    private void OnDisable()
+    {
+        CursorManager.SetDefault();
     }
 }

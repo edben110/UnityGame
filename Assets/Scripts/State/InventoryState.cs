@@ -213,6 +213,21 @@ public static class InventoryState
             return "carta_inconclusa";
         }
 
+        // Equivalence for the small key to match enum SmallKey string representation
+        if (string.Equals(normalized, "llave_pequena", StringComparison.Ordinal) ||
+            string.Equals(normalized, "llavepequena", StringComparison.Ordinal))
+        {
+            return "smallkey";
+        }
+
+        // Equivalence for the single use key
+        if (string.Equals(normalized, "llave_desgastada", StringComparison.Ordinal) ||
+            string.Equals(normalized, "llave_un_solo_uso", StringComparison.Ordinal) ||
+            string.Equals(normalized, "one_time_key", StringComparison.Ordinal))
+        {
+            return "singleusekey";
+        }
+
         // Backward compatibility: versiones anteriores guardaban esta pista como "lobby_photo".
         if (string.Equals(normalized, "lobby_photo", StringComparison.Ordinal))
         {

@@ -37,19 +37,30 @@ public class HotspotItemPanelUI : MonoBehaviour
         if (viewButton != null)
         {
             viewButton.onClick.AddListener(HandleViewPressed);
+            EnsureCursorHover(viewButton.gameObject);
         }
 
         if (pickButton != null)
         {
             pickButton.onClick.AddListener(HandlePickPressed);
+            EnsureCursorHover(pickButton.gameObject);
         }
 
         if (closeButton != null)
         {
             closeButton.onClick.AddListener(Hide);
+            EnsureCursorHover(closeButton.gameObject);
         }
 
         Hide();
+    }
+
+    private static void EnsureCursorHover(GameObject obj)
+    {
+        if (obj != null && obj.GetComponent<CursorHoverUI>() == null)
+        {
+            obj.AddComponent<CursorHoverUI>();
+        }
     }
 
     private void OnDestroy()
@@ -123,6 +134,9 @@ public class HotspotItemPanelUI : MonoBehaviour
         {
             root.SetActive(false);
         }
+
+        // Restaurar cursor al cerrar el panel
+        CursorManager.SetDefault();
     }
 
     private void HandleViewPressed()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,9 @@ public class InventoryCatalog : MonoBehaviour
 
         Instance = this;
         RebuildLookup();
+
+        // Registrar defaults narrativos para items sin sprite
+        InventoryNarrativeDefaults.EnsureAllDefaultsRegistered();
     }
 
     private void OnValidate()
@@ -82,6 +86,11 @@ public class InventoryCatalog : MonoBehaviour
         runtimeOverrides[normalized] = merged;
     }
 
+    public static string CanonicalizeItemId(string itemId)
+    {
+        return Normalize(itemId);
+    }
+
     public string GetDisplayNameOrFallback(string itemId)
     {
         if (TryGet(itemId, out InventoryItemDefinition definition) && !string.IsNullOrWhiteSpace(definition.displayName))
@@ -115,8 +124,24 @@ public class InventoryCatalog : MonoBehaviour
 
     private static string Normalize(string itemId)
     {
-        return string.IsNullOrWhiteSpace(itemId)
-            ? string.Empty
-            : itemId.Trim().ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(itemId))
+        {
+            return string.Empty;
+        }
+
+        string normalized = itemId.Trim().ToLowerInvariant();
+
+        if (string.Equals(normalized, "hs_unfinished_letter", StringComparison.Ordinal) ||
+            string.Equals(normalized, "unfinished_letter", StringComparison.Ordinal))
+        {
+            return "carta_inconclusa";
+        }
+
+        if (string.Equals(normalized, "lobby_photo", StringComparison.Ordinal))
+        {
+            return "foto_padre_hijo";
+        }
+
+        return normalized;
     }
 }

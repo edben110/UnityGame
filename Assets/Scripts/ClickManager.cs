@@ -46,8 +46,17 @@ public class ClickManager : MonoBehaviour
             return;
         }
 
+        // --- Hover detection para cursor de mano sobre interactuables del mundo ---
+        UpdateWorldHoverCursor(activeCamera);
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
+            // Bloquear clics del juego mientras el inventario está abierto
+            if (InventoryOverlayCanvas.Instance != null && InventoryOverlayCanvas.Instance.IsOpen)
+            {
+                return;
+            }
+
             if (IsPointerOverBlockingUi())
             {
                 return;
@@ -136,6 +145,70 @@ public class ClickManager : MonoBehaviour
         }
 
         return RoomManager.Instance.IsObjectInCurrentRoom(interactable.gameObject);
+    }
+
+    /// <summary>
+    /// Detecta si el mouse está sobre un Interactable del mundo (hotspot, NPC, puerta)
+    /// y cambia el cursor a mano. Si no hay interactuable debajo, restaura el cursor
+    /// SOLO si no está sobre UI (para no interferir con CursorHoverUI).
+    /// </summary>
+    private void UpdateWorldHoverCursor(Camera activeCamera)
+    {
+        // Si el inventario está abierto, no hacer hover del mundo
+        if (InventoryOverlayCanvas.Instance != null && InventoryOverlayCanvas.Instance.IsOpen)
+        {
+            return;
+        }
+
+        // Si el mouse está sobre UI interactuable, dejar que CursorHoverUI maneje el cursor
+        if (IsPointerOverAnyUI())
+        {
+            return;
+        }
+
+        Vector3 screenPos = Mouse.current.position.ReadValue();
+        screenPos.z = Mathf.Abs(activeCamera.transform.position.z);
+        Vector2 mousePos = activeCamera.ScreenToWorldPoint(screenPos);
+
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
+            if (CanInteractWith(interactable))
+            {
+                CursorManager.SetHand();
+                return;
+            }
+        }
+
+        // No hay interactuable debajo: restaurar cursor
+        if (CursorManager.IsHand)
+        {
+            CursorManager.SetDefault();
+        }
+    }
+
+    /// <summary>
+    /// Verifica si el puntero está sobre cualquier elemento UI con raycast activo.
+    /// Usado para evitar que el hover del mundo interfiera con el hover de UI.
+    /// </summary>
+    private static bool IsPointerOverAnyUI()
+    {
+        if (EventSystem.current == null)
+        {
+            return false;
+        }
+
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        {
+            position = Mouse.current.position.ReadValue()
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        return results.Count > 0;
     }
 
     private static bool IsPointerOverBlockingUi()

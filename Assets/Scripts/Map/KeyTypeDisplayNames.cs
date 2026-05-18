@@ -12,7 +12,8 @@ public static class KeyTypeDisplayNames
         { KeyType.BedroomKey, "Llave de la Habitación" },
         { KeyType.BasementKey, "Llave del Sótano" },
         { KeyType.StudyKey, "Llave del Estudio" },
-        { KeyType.SmallKey, "Llave Pequeña" }
+        { KeyType.SmallKey, "Llave Pequeña" },
+        { KeyType.SingleUseKey, "Llave Desgastada" }
     };
 
     private static readonly Dictionary<KeyType, string> DescriptionMap = new Dictionary<KeyType, string>()
@@ -22,7 +23,8 @@ public static class KeyTypeDisplayNames
         { KeyType.BedroomKey, "Una llave que abre la puerta de la habitación." },
         { KeyType.BasementKey, "Una llave que abre la puerta del sótano." },
         { KeyType.StudyKey, "Una llave pesada de hierro forjado. Abre la puerta del estudio de Simón." },
-        { KeyType.SmallKey, "Una llave pequeña y oxidada. Parece abrir un cajón o archivador." }
+        { KeyType.SmallKey, "Una llave pequeña y oxidada. Parece abrir un cajón o archivador." },
+        { KeyType.SingleUseKey, "Una llave vieja y desgastada. Parece que solo resistirá un uso más antes de romperse." }
     };
 
     public static string GetDisplayName(KeyType keyType)
