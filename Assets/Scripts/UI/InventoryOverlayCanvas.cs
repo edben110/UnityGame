@@ -250,6 +250,8 @@ public class InventoryOverlayCanvas : MonoBehaviour
     /// <summary>Oculta el inventario fullscreen.</summary>
     public void Hide()
     {
+        CloseActivePuzzleIfOpen();
+
         if (overlayRoot != null)
         {
             overlayRoot.SetActive(false);
@@ -269,6 +271,20 @@ public class InventoryOverlayCanvas : MonoBehaviour
         else
         {
             Show();
+        }
+    }
+
+    private static void CloseActivePuzzleIfOpen()
+    {
+        if (Acertijo2PuzzleService.Instance != null && Acertijo2PuzzleService.Instance.IsOpen)
+        {
+            Acertijo2PuzzleService.Instance.ClosePuzzle();
+            return;
+        }
+
+        if (AcertijoPuzzleService.Instance != null && AcertijoPuzzleService.Instance.IsOpen)
+        {
+            AcertijoPuzzleService.Instance.ClosePuzzle();
         }
     }
 

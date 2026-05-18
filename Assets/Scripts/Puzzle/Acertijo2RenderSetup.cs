@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Garantiza una cámara activa en cada display usado por el editor (evita "No Cameras Rendering").
@@ -20,24 +23,37 @@ public class Acertijo2RenderSetup : MonoBehaviour
         }
     }
 
-    private static bool ExisteCamaraEnDisplay(int display)
+    private bool ExisteCamaraEnDisplay(int display)
     {
-        Camera[] camaras = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None);
-        foreach (Camera camara in camaras)
+        foreach (Camera camara in ObtenerCamarasDeEstaEscena())
         {
             if (camara.enabled && camara.gameObject.activeInHierarchy && camara.targetDisplay == display)
+            {
                 return true;
+            }
         }
 
         return false;
     }
 
-    private static void AsegurarCamaraDisplay(int display, bool esPrincipal)
+    private void AsegurarCamaraDisplay(int display, bool esPrincipal)
     {
-        Camera camara = esPrincipal ? Camera.main : null;
+        Camera camara = null;
+        if (esPrincipal)
+        {
+            foreach (Camera candidata in ObtenerCamarasDeEstaEscena())
+            {
+                if (candidata.isActiveAndEnabled && candidata.CompareTag("MainCamera"))
+                {
+                    camara = candidata;
+                    break;
+                }
+            }
+        }
+
         if (camara == null)
         {
-            foreach (Camera candidata in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))
+            foreach (Camera candidata in ObtenerCamarasDeEstaEscena())
             {
                 if (candidata.targetDisplay == display && candidata.enabled)
                 {
@@ -50,6 +66,12 @@ public class Acertijo2RenderSetup : MonoBehaviour
         if (camara == null)
         {
             var go = new GameObject(esPrincipal ? "Main Camera" : $"Display{display + 1} Camera");
+            Scene ownerScene = gameObject.scene;
+            if (ownerScene.IsValid())
+            {
+                SceneManager.MoveGameObjectToScene(go, ownerScene);
+            }
+
             if (esPrincipal)
             {
                 go.tag = "MainCamera";
@@ -85,5 +107,22 @@ public class Acertijo2RenderSetup : MonoBehaviour
         camara.cullingMask = esPrincipal ? -1 : 0;
         camara.enabled = true;
         camara.gameObject.SetActive(true);
+    }
+
+    private Camera[] ObtenerCamarasDeEstaEscena()
+    {
+        Scene scene = gameObject.scene;
+        if (!scene.IsValid())
+        {
+            return Array.Empty<Camera>();
+        }
+
+        var camaras = new List<Camera>();
+        foreach (GameObject root in scene.GetRootGameObjects())
+        {
+            camaras.AddRange(root.GetComponentsInChildren<Camera>(true));
+        }
+
+        return camaras.ToArray();
     }
 }

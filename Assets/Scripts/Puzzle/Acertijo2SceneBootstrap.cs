@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -42,18 +43,13 @@ public class Acertijo2SceneBootstrap : MonoBehaviour
 
     private void EnsureCloseButton()
     {
-        if (transform.Find("BtnCerrarAcertijo") != null)
+        Canvas canvas = ResolvePuzzleCanvas();
+        if (canvas == null)
         {
             return;
         }
 
-        Canvas canvas = GetComponent<Canvas>();
-        if (canvas == null)
-        {
-            canvas = FindFirstObjectByType<Canvas>();
-        }
-
-        if (canvas == null)
+        if (canvas.transform.Find("BtnCerrarAcertijo") != null)
         {
             return;
         }
@@ -90,6 +86,38 @@ public class Acertijo2SceneBootstrap : MonoBehaviour
         label.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         label.fontSize = 22;
         label.raycastTarget = false;
+    }
+
+    private Canvas ResolvePuzzleCanvas()
+    {
+        Canvas canvas = GetComponent<Canvas>();
+        if (canvas != null)
+        {
+            return canvas;
+        }
+
+        canvas = GetComponentInParent<Canvas>();
+        if (canvas != null)
+        {
+            return canvas;
+        }
+
+        Scene scene = gameObject.scene;
+        if (!scene.IsValid())
+        {
+            return FindFirstObjectByType<Canvas>();
+        }
+
+        foreach (GameObject root in scene.GetRootGameObjects())
+        {
+            canvas = root.GetComponentInChildren<Canvas>(true);
+            if (canvas != null)
+            {
+                return canvas;
+            }
+        }
+
+        return null;
     }
 
     private static void CloseWithoutReward()

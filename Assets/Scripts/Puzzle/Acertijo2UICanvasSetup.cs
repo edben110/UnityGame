@@ -14,6 +14,11 @@ public class Acertijo2UICanvasSetup : MonoBehaviour
 
     private void Awake()
     {
+        ApplyRuntimeConfiguration();
+    }
+
+    public void ApplyRuntimeConfiguration()
+    {
         AplicarConfiguracion();
     }
 

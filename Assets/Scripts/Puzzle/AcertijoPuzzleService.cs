@@ -133,7 +133,7 @@ public class AcertijoPuzzleService : MonoBehaviour
         if (puzzleScene.IsValid())
         {
             SceneManager.SetActiveScene(puzzleScene);
-            EnsureSceneBootstrap(puzzleScene);
+            PuzzleAdditiveSceneUtility.FinalizeLoadedScene(puzzleScene, typeof(AcertijoSceneBootstrap));
         }
 
         isOpen = true;
@@ -192,41 +192,6 @@ public class AcertijoPuzzleService : MonoBehaviour
             ? $"Has resuelto el acertijo y obtenido {displayName}."
             : $"Ya tenías {displayName} en el inventario.";
         ShowSystemMessage(message);
-    }
-
-    private static void EnsureSceneBootstrap(Scene puzzleScene)
-    {
-        if (!puzzleScene.IsValid())
-        {
-            return;
-        }
-
-        foreach (GameObject root in puzzleScene.GetRootGameObjects())
-        {
-            if (root.GetComponentInChildren<AcertijoSceneBootstrap>(true) != null)
-            {
-                return;
-            }
-        }
-
-        foreach (GameObject root in puzzleScene.GetRootGameObjects())
-        {
-            Canvas canvas = root.GetComponent<Canvas>();
-            if (canvas == null)
-            {
-                canvas = root.GetComponentInChildren<Canvas>(true);
-            }
-
-            if (canvas != null)
-            {
-                if (canvas.GetComponent<AcertijoSceneBootstrap>() == null)
-                {
-                    canvas.gameObject.AddComponent<AcertijoSceneBootstrap>();
-                }
-
-                return;
-            }
-        }
     }
 
     private static void ShowSystemMessage(string message)
