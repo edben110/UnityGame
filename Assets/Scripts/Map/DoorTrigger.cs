@@ -290,6 +290,30 @@ public class DoorTrigger : Interactable
         result.allNpcsTalked = result.npcTalkCount >= 5;
         result.hasKey = true;
 
+        // ═══ PUERTA DE LA SALA DE SEGURIDAD (requiere contraseña numérica) ═══
+        if (IsSecurityRoomDoor())
+        {
+            if (StoryState.Instance == null || !StoryState.Instance.HasFlag("SecurityRoom.Unlocked"))
+            {
+                result.canPass = false;
+                result.blockReason = "La puerta tiene un teclado numérico. Necesito encontrar la combinación correcta.";
+
+                // Intentar abrir el panel de contraseña si existe
+                NumericPasswordPanel passwordPanel = FindAnyObjectByType<NumericPasswordPanel>();
+                if (passwordPanel != null && !passwordPanel.IsUnlocked)
+                {
+                    // El panel se encargará de la interacción
+                    Debug.Log("[DoorTrigger] Puerta de seguridad: mostrando panel de contraseña.");
+                }
+
+                return result;
+            }
+
+            // Ya desbloqueada — permitir paso
+            result.canPass = true;
+            return result;
+        }
+
         if (IsSecretBasementDoor())
         {
             if (StoryState.Instance == null)
@@ -793,6 +817,26 @@ public class DoorTrigger : Interactable
             || string.Equals(gameObject.name, "Door_ToSecretBasement", StringComparison.OrdinalIgnoreCase)
             || string.Equals(gameObject.name, "Door_ToaBasementeFromSecureDoor", StringComparison.OrdinalIgnoreCase)
             || gameObject.name.Contains("Basemente", StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Detecta si esta puerta es la de la Sala de Seguridad (requiere contraseña 4-7-2-9).
+    /// </summary>
+    private bool IsSecurityRoomDoor()
+    {
+        if (string.Equals(gameObject.name, "Door_ToSecurityRoom", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (string.Equals(targetRoomId, "security_room", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "securityroom", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "sala_seguridad", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private bool ShouldValidateChapter3Entry()

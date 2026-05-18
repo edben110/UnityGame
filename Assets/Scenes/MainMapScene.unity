@@ -5406,6 +5406,7 @@ GameObject:
   - component: {fileID: 650944590}
   - component: {fileID: 650944589}
   - component: {fileID: 650944591}
+  - component: {fileID: 650944592}
   m_Layer: 0
   m_Name: DialogueSystem
   m_TagString: Untagged
@@ -7272,6 +7273,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06833fecf57307b4aa48e160f9f54c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chapter4Builder
+  targetLibrary: {fileID: 0}
+  generateOnStartIfEmpty: 1
+--- !u!114 &650944592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650944583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d5a5ed7684a3443b6eeb08d8d2ec4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EpilogueBuilder
   targetLibrary: {fileID: 0}
   generateOnStartIfEmpty: 1
 --- !u!1 &659230938
@@ -11739,6 +11754,8 @@ Transform:
   m_Children:
   - {fileID: 254323724}
   - {fileID: 912102682}
+  - {fileID: 1510631413}
+  - {fileID: 1791312819}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294416194
@@ -13468,6 +13485,7 @@ GameObject:
   - component: {fileID: 1446252349}
   - component: {fileID: 1446252348}
   - component: {fileID: 1446252347}
+  - component: {fileID: 1446252350}
   m_Layer: 0
   m_Name: Door_ToSecurityRoom
   m_TagString: Untagged
@@ -13506,17 +13524,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: securityRoom
+  targetRoomId: security_room
   requiredFlag: 
   requiredKeys: 
-  requiredChapterId: 
+  requiredChapterId: chapter4
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
-  lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  lockedMessage: La puerta tiene un teclado numerico. Necesito encontrar la combinacion
+    correcta.
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1446252348
@@ -13624,6 +13643,36 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1446252350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446252345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43607d3d593e12f45b4a104201f35f72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NumericPasswordPanel
+  correctPassword: 04000000070000000200000009000000
+  digitPositions:
+  - {x: -1, y: 1}
+  - {x: 0, y: 1}
+  - {x: 1, y: 1}
+  - {x: -1, y: 0}
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: -1, y: -1}
+  - {x: 0, y: -1}
+  - {x: 1, y: -1}
+  hitboxSize: {x: 0.8, y: 0.8}
+  unlockFlag: SecurityRoom.Unlocked
+  wrongPasswordMessage: "Parece que no es la combinaci\xF3n correcta..."
+  correctPasswordMessage: El mecanismo hace click. La puerta se ha desbloqueado.
+  digitClickSound: {fileID: 0}
+  wrongSound: {fileID: 0}
+  correctSound: {fileID: 0}
 --- !u!1 &1447478147
 GameObject:
   m_ObjectHideFlags: 0
@@ -14053,6 +14102,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 720863764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1510631412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1510631413}
+  - component: {fileID: 1510631414}
+  m_Layer: 0
+  m_Name: ProgressionTestHelper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1510631413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510631412}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1267732868}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1510631414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510631412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9fa265849bf4fa4dbc1a7eba999f369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProgressionTestHelper
+  enableTestingMode: 1
+  grantAllKeys: 0
+  grantAllNpcItems: 0
+  forceChapterId: 
+  unlockSecurityRoom: 0
+  simulateAllDeliveries: 0
+  simulateSimonRescue: 0
+  evaluateEnding: 0
 --- !u!1 &1542674131
 GameObject:
   m_ObjectHideFlags: 0
@@ -16451,6 +16552,51 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1791312818
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1791312819}
+  - component: {fileID: 1791312820}
+  m_Layer: 0
+  m_Name: EpilogueSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1791312819
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791312818}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1267732868}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1791312820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791312818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7085b8daf23853e4a94961c8bb4435d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EpilogueSystem
+  epilogueConversationPrefix: epilogue_
 --- !u!1 &1794638035
 GameObject:
   m_ObjectHideFlags: 0
