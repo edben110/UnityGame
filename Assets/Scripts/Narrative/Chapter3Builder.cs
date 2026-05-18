@@ -293,8 +293,8 @@ public class Chapter3Builder : MonoBehaviour
             {
                 new DialogueLine { speaker = "Narrador", text = "Una segunda caja puzzle descansa sobre una peana de mármol. El mecanismo es similar a la primera, pero los símbolos son diferentes." },
                 new DialogueLine { speaker = "Jugador", text = "Si uso el mismo razonamiento que con la primera caja, podría abrirla." },
-                new DialogueLine { speaker = "Narrador", text = "Tras manipular los engranajes por unos minutos, el compartimento se abre con un clic.", requiredFlag = "clue.habitacion.caja_puzzle_1", setFlag = "clue.galeria.caja_puzzle_2" },
-                new DialogueLine { speaker = "Jugador", text = "Dentro no hay llave todavía. La caja de la cama parece ser la que guarda el acceso a la galería.", requiredFlag = "clue.galeria.caja_puzzle_2" }
+                new DialogueLine { speaker = "Narrador", text = "Tras manipular los engranajes por unos minutos, el compartimento se abre con un clic.", requiredFlag = "clue.habitacion.caja_puzzle_1", setFlag = "clue.galeria.caja_puzzle_2", addInventoryItemId = "GalleryKey" },
+                new DialogueLine { speaker = "Jugador", text = "Dentro hay una llave de la galería. La caja del dormitorio tenía que esconder algo más grande.", requiredFlag = "clue.galeria.caja_puzzle_2" }
             }
         };
 
@@ -381,10 +381,10 @@ public class Chapter3Builder : MonoBehaviour
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "La cama está deshecha. Las sábanas todavía conservan la forma de un cuerpo. La almohada tiene una marca de cabeza." },
-                new DialogueLine { speaker = "Narrador", text = "Pasas la mano sobre la tela. Está tibia. No caliente, pero tampoco fría. Como si alguien se hubiera levantado hace no mucho.", anxietyDelta = 8f },
-                new DialogueLine { speaker = "Narrador", text = "Debajo de la almohada, un mechón de cabello oscuro. De Simón, probablemente.", setFlag = "clue.habitacion.cama" },
-                new DialogueLine { speaker = "Narrador", text = "Al revisar el somier encuentras una caja de madera con un rompecabezas deslizante en la tapa. La guardas: podría esconder la llave de la galería.", anxietyDelta = 5f }
+                new DialogueLine { speaker = "Narrador", text = "Te arrodillas y revisas debajo de la cama. Está oscuro, pero alcanzas a tocar algo sólido." },
+                new DialogueLine { speaker = "Narrador", text = "Sacas una caja de madera con un extraño mecanismo en la tapa. Parece un rompecabezas.", setFlag = "clue.habitacion.caja_puzzle_1", addInventoryItemId = "caja_puzzle_1" },
+                new DialogueLine { speaker = "Narrador", text = "Si consigues abrirla más tarde, quizá esconda algo útil para la galería.", anxietyDelta = 5f },
+                new DialogueLine { speaker = "Narrador", text = "Junto a la caja, hay unos papeles sueltos. Lisa los estaba buscando. Los guardas porque pueden cambiar el final.", anxietyDelta = 5f, setFlag = "FoundLisaDocuments", addInventoryItemId = "papeles_lisa" }
             }
         };
 

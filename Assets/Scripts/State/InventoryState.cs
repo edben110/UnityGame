@@ -34,8 +34,6 @@ public static class InventoryState
             return false;
         }
 
-        InventoryNarrativeDefaults.EnsureItemRegistered(normalized);
-
         Persist();
         Changed?.Invoke();
         return true;
