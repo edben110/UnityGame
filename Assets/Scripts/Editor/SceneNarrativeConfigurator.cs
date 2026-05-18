@@ -698,7 +698,7 @@ public class SceneNarrativeConfigurator : EditorWindow
         var oldPanel = doorObj.GetComponent<NumericPasswordPanel>();
         if (oldPanel != null)
         {
-            Object.DestroyImmediate(oldPanel);
+            UnityEngine.Object.DestroyImmediate(oldPanel);
             Debug.Log("[Configurador] NumericPasswordPanel ELIMINADO de Door_ToSecurityRoom (migrado a Panel separado).");
         }
     }
