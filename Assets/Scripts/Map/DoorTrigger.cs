@@ -279,6 +279,7 @@ public class DoorTrigger : Interactable
 
             // Validar llaves usando el array requiredKeys del Inspector (sin hardcodear)
             bool hasAllKeys = true;
+            string missingKeyName = "";
             if (requiredKeys != null && requiredKeys.Length > 0)
             {
                 foreach (KeyType keyType in requiredKeys)
@@ -287,6 +288,7 @@ public class DoorTrigger : Interactable
                     if (!InventoryState.HasItem(itemId))
                     {
                         hasAllKeys = false;
+                        missingKeyName = KeyTypeDisplayNames.GetDisplayName(keyType);
                         break;
                     }
                 }
@@ -296,7 +298,9 @@ public class DoorTrigger : Interactable
             {
                 result.canPass = false;
                 result.hasKey = false;
-                result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                result.blockReason = !string.IsNullOrEmpty(missingKeyName)
+                    ? $"La puerta del sótano está cerrada. Necesito la {missingKeyName.ToLower()}."
+                    : "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
                 return result;
             }
 
@@ -381,13 +385,31 @@ public class DoorTrigger : Interactable
             result.chapter3Reason = "All requirements satisfied";
         }
 
-        // 3.6. Inicio de Cap 4 solo por puerta + llave de sótano + alfombra movida + flujo
+        // 3.6. Inicio de Cap 4 solo por puerta + llaves del inspector + alfombra movida + flujo
         if (ShouldValidateChapter4Entry())
         {
             result.chapter4DoorInteraction = true;
-            result.hasBasementKey = InventoryState.HasItem(KeyType.BasementKey.ToString());
             result.hasBasementDiscovered = StoryState.Instance.HasFlag("BasementDiscovered");
             result.hasChapter3Decision = CountNpcTalksInCurrentChapter() >= 1; // At least one NPC talked in chapter 3
+
+            // Validar llaves requeridas usando el array requiredKeys del Inspector (sin hardcodear BasementKey)
+            bool hasRequiredKeys = true;
+            string missingKeyName = "";
+            if (requiredKeys != null && requiredKeys.Length > 0)
+            {
+                foreach (KeyType keyType in requiredKeys)
+                {
+                    string itemId = keyType.ToString();
+                    if (!InventoryState.HasItem(itemId))
+                    {
+                        hasRequiredKeys = false;
+                        missingKeyName = KeyTypeDisplayNames.GetDisplayName(keyType);
+                        break;
+                    }
+                }
+            }
+
+            result.hasBasementKey = hasRequiredKeys;
             result.canStartChapter4 = result.hasBasementKey && result.hasBasementDiscovered && result.hasChapter3Decision;
 
             if (!result.canStartChapter4)
@@ -401,8 +423,10 @@ public class DoorTrigger : Interactable
                 }
                 else if (!result.hasBasementKey)
                 {
-                    result.chapter4Reason = "Missing Basement Key";
-                    result.blockReason = "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
+                    result.chapter4Reason = "Missing Required Key";
+                    result.blockReason = !string.IsNullOrEmpty(missingKeyName)
+                        ? $"La puerta del sótano está cerrada. Necesito la {missingKeyName.ToLower()}."
+                        : "La puerta del sótano está cerrada con llave. Necesito encontrarla.";
                 }
                 else if (!result.hasChapter3Decision)
                 {

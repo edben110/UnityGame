@@ -122,16 +122,13 @@ EXPLORACIÓN DEL ESTUDIO (hotspots):
 ───────────────────────────────────
 1. AGENDA — "Reunión cancelada. Peligro. No volver a abrir la
    puerta norte." Última entrada: hace 3 días.
-   "en la pagina final de la agenda dice: el código de la puerta es dia de la carta de mi p### concatenado con la fecha de la foto mia con mi ####
+   "en la pagina final de la agenda dice: el código de la puerta es el dia de la carta de mi p###
 
 2. LIBRO DE CONTABILIDAD — Entradas marcadas con "B" roja.
    Discrepancias financieras significativas. SE RECOGE AL
    INVENTARIO. (Este es el objeto que busca Ben)
 
-3. NOTA DEL TABLÓN — "Segunda copia hecha. Ellos no saben que
-   tengo el duplicado. Si algo me pasa, buscar en el archivador."
-
-4. TABLERO DE CORCHO — Fotos de los 5 personajes conectadas con
+3. TABLERO DE CORCHO — Fotos de los 5 personajes conectadas con
    hilos rojos. Una sexta foto con el rostro cubierto con cinta
    negra. "¿Quién eres tú?"
 
@@ -139,10 +136,6 @@ REGRESO AL LOBBY:
 ─────────────────
 El protagonista vuelve con el libro de contabilidad. Ben NO sabe
 que lo encontró hasta que el jugador decide confrontarlo.
-
-PRIMERA DECISIÓN (al hablar con los 5 NPCs):
-  [1] Hablar sinceramente sobre Simón
-  [2] Separarse
 
 SEGUNDA DECISIÓN (al mostrar el libro a Ben):
   [1] Confrontar — Acusar a Ben directamente
@@ -301,9 +294,9 @@ EL PASILLO DEL ALA NORTE:
 • Largo, oscuro, 3 puertas idénticas
 
 DECISIÓN DE PUERTAS:
-  [1] Primera puerta (más cercana) — vacía con telarañas, pierde tiempo y se pierde la llave de un solo uso
-  [2] segunda puerta (puerta centra y que sale en el mapa) — encuentra a Simón directo
-  [3] tercera puerta (al fondo) — habitación con una cama y un ventanal grande(habitación donde alguien se ha quedado, parece una sala de operaciones) 
+  [1] Primera puerta (más cercana) — vacía con telarañas, pierde tiempo y se pierde la llave de un solo uso llegando al final b con la cantidad de npcs vivos que tenga la partida pero sin rescatar a simon
+  [2] segunda puerta (puerta de la derecha y que sale en el mapa) — encuentra a Simón directo
+  [3] tercera puerta (al fondo) — habitación con una cama y un ventanal grande(habitación donde alguien se ha quedado(el asesino), parece una sala de operaciones) 
 
 ENCUENTRO CON SIMÓN:
 ────────────────────
@@ -349,7 +342,7 @@ Epílogo: "A veces la verdad no mata. A veces salva."
  Condiciones: Al menos 1 NPC con ansiedad 100 (muerto) o simon no es rescatado
 ───────────────────────────────────────────────────────────────────
 
-Los NPCs que alcanzaron ansiedad 100 abandonaron la sala durante
+al menos uno de los NPCs que alcanzaron ansiedad 100 abandonaron la sala durante
 la historia. Sus cuerpos son encontrados en distintas habitaciones
 de la mansión.
 
