@@ -29,6 +29,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMapScene.unity
     guid: a7a18141fbabcea4c8cf2ead493c5923
+  - enabled: 1
+    path: Assets/Scenes/AcertijoScene.unity
+    guid: 761fde1ad20c2274399e4cf47b221b68
+  - enabled: 1
+    path: Assets/Scenes/Acertijo2Scene.unity
+    guid: c423b0c029bb3fb4cbcd368e60278a8e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
