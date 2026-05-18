@@ -64,6 +64,11 @@ public class KeyItem : Interactable
             return KeyType.BasementKey;
         }
 
+        if (normalizedName.Contains("singleuse") || normalizedName.Contains("desgastada") || normalizedName.Contains("onetime") || normalizedName.Contains("one_time"))
+        {
+            return KeyType.SingleUseKey;
+        }
+
         if (normalizedName.Contains("lobby"))
         {
             return KeyType.LobbyKey;

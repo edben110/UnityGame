@@ -176,6 +176,9 @@ public class DoorTrigger : Interactable
 
         // ═══ ACCESO PERMITIDO ═══
 
+        // Consumir llaves de un solo uso después de validar acceso
+        ConsumeSingleUseKeys();
+
         // Determinar si esta puerta debe disparar transición de capítulo
         bool shouldTriggerTransition = triggersChapterTransition;
         string effectiveTransitionChapter = transitionToChapterId;
@@ -200,6 +203,28 @@ public class DoorTrigger : Interactable
             shouldTriggerTransition = true;
             effectiveTransitionChapter = "chapter4";
             Debug.Log("[DoorTrigger] Auto-detectado: puerta al sótano en Cap 3 → transición a Cap 4 (validada)");
+        }
+
+        if (!shouldTriggerTransition && ShouldAutoStartChapter5OnEntry())
+        {
+            // Validar con Chapter5ValidationGate antes de permitir transición
+            if (Chapter5ValidationGate.Instance != null)
+            {
+                if (!Chapter5ValidationGate.Instance.ValidateChapter5Entry(out string chapter5BlockReason))
+                {
+                    DialoguePanelUI blockPanel = DialoguePanelUI.Instance;
+                    if (blockPanel != null)
+                    {
+                        blockPanel.ShowSystemMessage(chapter5BlockReason);
+                    }
+                    Debug.Log($"[DoorTrigger] Capítulo 5 BLOQUEADO: {chapter5BlockReason}");
+                    return;
+                }
+            }
+
+            shouldTriggerTransition = true;
+            effectiveTransitionChapter = "chapter5";
+            Debug.Log("[DoorTrigger] Auto-detectado: puerta al Ala Norte en Cap 4 → transición a Cap 5 (validada)");
         }
 
         // Si esta puerta dispara transición de capítulo
@@ -347,6 +372,27 @@ public class DoorTrigger : Interactable
         {
             foreach (KeyType keyType in requiredKeys)
             {
+                // SingleUseKey: si ya fue usada en ESTA puerta, no bloquear
+                if (keyType == KeyType.SingleUseKey)
+                {
+                    bool alreadyUsedHere = StoryState.Instance != null
+                        && StoryState.Instance.HasFlag($"SingleUseKey.consumed.door.{gameObject.name}");
+                    if (alreadyUsedHere)
+                    {
+                        continue; // La puerta ya fue abierta con esta llave
+                    }
+
+                    // Si la llave ya fue consumida en OTRA puerta, bloquear
+                    bool consumed = StoryState.Instance != null && StoryState.Instance.HasFlag("OneTimeKeyUsed");
+                    if (consumed)
+                    {
+                        result.hasKey = false;
+                        result.canPass = false;
+                        result.blockReason = "Ya usé la llave desgastada en otra puerta. Se rompió al girarla.";
+                        return result;
+                    }
+                }
+
                 string itemId = keyType.ToString();
                 if (!InventoryState.HasItem(itemId))
                 {
@@ -631,6 +677,51 @@ public class DoorTrigger : Interactable
     //  UTILIDADES
     // ═══════════════════════════════════════════════════════════════
 
+    /// <summary>
+    /// Consume las llaves de un solo uso (SingleUseKey) después de abrir la puerta.
+    /// La llave se elimina del inventario y se marca como usada en StoryState
+    /// para que no pueda reutilizarse aunque el jugador vuelva atrás.
+    /// </summary>
+    private void ConsumeSingleUseKeys()
+    {
+        if (requiredKeys == null || requiredKeys.Length == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < requiredKeys.Length; i++)
+        {
+            if (requiredKeys[i] == KeyType.SingleUseKey)
+            {
+                // Verificar que no fue ya consumida (persistencia)
+                if (StoryState.Instance != null && StoryState.Instance.HasFlag("OneTimeKeyUsed"))
+                {
+                    continue;
+                }
+
+                // Consumir: eliminar del inventario
+                string itemId = KeyType.SingleUseKey.ToString();
+                InventoryState.RemoveItem(itemId);
+
+                // Marcar como usada permanentemente
+                if (StoryState.Instance != null)
+                {
+                    StoryState.Instance.SetFlag("OneTimeKeyUsed", true);
+                    StoryState.Instance.SetFlag($"SingleUseKey.consumed.door.{gameObject.name}", true);
+                }
+
+                Debug.Log($"[DoorTrigger] ★ SingleUseKey CONSUMIDA en puerta '{gameObject.name}'. Ya no puede reutilizarse.");
+
+                // Feedback al jugador
+                DialoguePanelUI panel = DialoguePanelUI.Instance;
+                if (panel != null)
+                {
+                    panel.ShowSystemMessage("La llave se ha roto al girarla. Ya no servirá para otra puerta.");
+                }
+            }
+        }
+    }
+
     private bool ChangeRoom()
     {
         if (RoomManager.Instance == null)
@@ -778,6 +869,42 @@ public class DoorTrigger : Interactable
         }
 
         return ShouldValidateChapter4Entry();
+    }
+
+    /// <summary>
+    /// Detecta si esta puerta es la del Ala Norte (Door_ToNorthStreet) durante el Capítulo 4.
+    /// Esta puerta dispara la transición al Capítulo 5 con validaciones robustas.
+    /// </summary>
+    private bool IsNorthStreetDoor()
+    {
+        if (StoryState.Instance == null || StoryState.Instance.CurrentChapterId != "chapter4")
+        {
+            return false;
+        }
+
+        // Detectar por nombre del GameObject
+        if (string.Equals(gameObject.name, "Door_ToNorthStreet", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_NorthStreet", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(gameObject.name, "Door_ToAlaNorte", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        // Detectar por targetRoomId
+        if (string.Equals(targetRoomId, "northstreet", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "ala_norte", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "alanorte", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "north_hall", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool ShouldAutoStartChapter5OnEntry()
+    {
+        return IsNorthStreetDoor();
     }
 
     private bool IsLobbyTarget()

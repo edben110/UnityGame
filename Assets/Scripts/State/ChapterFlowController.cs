@@ -35,6 +35,8 @@ public class ChapterFlowController : MonoBehaviour
     [SerializeField] private string chapter1Id = "chapter1";
     [SerializeField] private string chapter2Id = "chapter2";
     [SerializeField] private string chapter3Id = "chapter3";
+    [SerializeField] private string chapter4Id = "chapter4";
+    [SerializeField] private string chapter5Id = "chapter5";
 
     [Header("Cap 3: Decisión de la carta")]
     [SerializeField] private string chapter3NpcRoomId = "lobby";
@@ -46,6 +48,8 @@ public class ChapterFlowController : MonoBehaviour
     [SerializeField] private string chapter1CompleteFlag = "chapter.chapter1.complete";
     [SerializeField] private string chapter2CompleteFlag = "chapter.chapter2.complete";
     [SerializeField] private string chapter3CompleteFlag = "chapter.chapter3.complete";
+    [SerializeField] private string chapter4CompleteFlag = "chapter.chapter4.complete";
+    [SerializeField] private string chapter5CompleteFlag = "chapter.chapter5.complete";
 
     [Header("Progreso Cap 2 y 3 (auto-decisión)")]
     [SerializeField] private int chapter2RequiredClues = 2;

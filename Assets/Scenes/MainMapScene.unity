@@ -315,115 +315,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.003036499}
   m_SizeDelta: {x: 1920, y: 960}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &51592125
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 51592126}
-  - component: {fileID: 51592128}
-  - component: {fileID: 51592127}
-  m_Layer: 0
-  m_Name: HS_OldShelf
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &51592126
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51592125}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.0964, y: -30.9909}
-  m_SizeDelta: {x: 38.3473, y: 21.0018}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &51592127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51592125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &51592128
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51592125}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 40, y: 20}
-  m_EdgeRadius: 0
 --- !u!1 &69006281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1100,216 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!1 &158418039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 158418040}
+  - component: {fileID: 158418042}
+  - component: {fileID: 158418041}
+  m_Layer: 0
+  m_Name: HS_chapter4_mapa_actualizado
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &158418040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158418039}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &158418041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158418039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: chapter4_mapa_actualizado
+  requiredChapterId: chapter4
+  conversationId: chapter4_hotspot_mapa
+  startNodeId: start
+  consumeAfterUse: 0
+  setFlagOnInteract: chapter4.mapa.seen
+  grantItemId: 
+  grantItemDisplayName: 
+  grantItemDescription: 
+  grantItemSprite: {fileID: 0}
+  hideAfterPickup: 0
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 0.9, y: 0.9}
+--- !u!61 &158418042
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158418039}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.2, y: 1.2}
+  m_EdgeRadius: 0
+--- !u!1 &160640874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 160640875}
+  - component: {fileID: 160640877}
+  - component: {fileID: 160640876}
+  m_Layer: 0
+  m_Name: HS_chapter4_caja_puzzle_llave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &160640875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160640874}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &160640876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160640874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: chapter4_caja_puzzle_llave
+  requiredChapterId: chapter4
+  conversationId: chapter4_hotspot_caja_puzzle_llave
+  startNodeId: start
+  consumeAfterUse: 1
+  setFlagOnInteract: chapter4.single_use_key.found
+  grantItemId: SingleUseKey
+  grantItemDisplayName: Llave Desgastada
+  grantItemDescription: Una llave vieja y desgastada. Solo resistira un uso mas.
+  grantItemSprite: {fileID: 0}
+  hideAfterPickup: 1
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 0.9, y: 0.9}
+--- !u!61 &160640877
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160640874}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.2, y: 1.2}
+  m_EdgeRadius: 0
 --- !u!1 &171563338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,8 +1336,8 @@ Transform:
   m_GameObject: {fileID: 171563338}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -37.84, y: -14.59, z: 0}
-  m_LocalScale: {x: 1.3844116, y: 1.102364, z: 1}
+  m_LocalPosition: {x: -42.8, y: 0.8, z: 0}
+  m_LocalScale: {x: 1.18256, y: 0.9811, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 720863764}
@@ -1290,7 +1391,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 715184301222051581, guid: 7672257dbb35dbc45a63e9fd864d3f93, type: 3}
+  m_Sprite: {fileID: 2302482933892944989, guid: e0aa04db163bde04f931da29ffbfe1dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1300,6 +1401,112 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &180523219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180523220}
+  - component: {fileID: 180523222}
+  - component: {fileID: 180523221}
+  m_Layer: 0
+  m_Name: HS_chapter4_maletin_negro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &180523220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180523219}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.5, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &180523221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180523219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: chapter4_maletin_negro
+  requiredChapterId: chapter4
+  conversationId: chapter4_hotspot_maletin_negro
+  startNodeId: start
+  consumeAfterUse: 1
+  setFlagOnInteract: chapter4.maletin.opened
+  grantItemId: relicario_lucas
+  grantItemDisplayName: Relicario de Lucas
+  grantItemDescription: 'Un relicario de plata con la inscripcion: ''Para Lucas.
+    Siempre.'''
+  grantItemSprite: {fileID: 0}
+  hideAfterPickup: 1
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 0.9, y: 0.9}
+--- !u!61 &180523222
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180523219}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.2, y: 1.2}
+  m_EdgeRadius: 0
 --- !u!1 &217387911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,6 +1751,52 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
+--- !u!1 &254323723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 254323724}
+  - component: {fileID: 254323725}
+  m_Layer: 0
+  m_Name: NpcDeliverySystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &254323724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254323723}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1267732868}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &254323725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254323723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d250c4db1eac63d4cb674e67e2227153, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcDeliverySystem
+  requiredChapterId: chapter4
+  requiredRoomId: lobby
 --- !u!1 &257989749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,11 +2166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
   rooms:
-  - roomId: prologue
-    displayName: "Pr\xF3logo"
-    backgroundObject: {fileID: 415671180}
-    hotspotsContainer: {fileID: 0}
-    cameraObject: {fileID: 0}
   - roomId: lobby
     displayName: Salon Principal
     backgroundObject: {fileID: 813642837}
@@ -1978,7 +2226,7 @@ MonoBehaviour:
     backgroundObject: {fileID: 1493836120}
     hotspotsContainer: {fileID: 745521841}
     cameraObject: {fileID: 1661077253}
-  startingRoomId: prologue
+  startingRoomId: lobby
 --- !u!4 &290049658
 Transform:
   m_ObjectHideFlags: 0
@@ -2044,17 +2292,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: northstreet
+  targetRoomId: ala_norte
   requiredFlag: 
-  requiredKeys: 
-  requiredChapterId: 
-  requiredNpcTalkCount: 0
-  triggersChapterTransition: 0
-  transitionToChapterId: 
+  requiredKeys: 06000000
+  requiredChapterId: chapter4
+  requiredNpcTalkCount: 1
+  triggersChapterTransition: 1
+  transitionToChapterId: chapter5
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
-  lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  lockedMessage: La puerta al Ala Norte esta cerrada. Necesito la llave desgastada.
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &294805767
@@ -2707,115 +2955,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!1 &324725186
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 324725187}
-  - component: {fileID: 324725189}
-  - component: {fileID: 324725188}
-  m_Layer: 0
-  m_Name: HS_OldDesktop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &324725187
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324725186}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.9283, y: -67.7783}
-  m_SizeDelta: {x: 36.1429, y: 28.6178}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &324725188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324725186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &324725189
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324725186}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 35, y: 30}
-  m_EdgeRadius: 0
 --- !u!1 &329041363
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,26 +3130,22 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &329393440
-RectTransform:
+  m_IsActive: 0
+--- !u!4 &329393440
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329393439}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.09, y: -81.79}
-  m_SizeDelta: {x: 3.242, y: 2.0681}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329393441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3081,7 +3216,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3, y: 2}
+  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &331399822
 GameObject:
@@ -3529,8 +3664,8 @@ Transform:
   m_GameObject: {fileID: 415671180}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -38.24, y: 0.39, z: 0}
-  m_LocalScale: {x: 1.2867087, y: 1.2638531, z: 1}
+  m_LocalPosition: {x: -43.3, y: -13.9, z: 0}
+  m_LocalScale: {x: 1.18256, y: 0.9811, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 720863764}
@@ -3584,7 +3719,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -445055827032896396, guid: 7d6c6e98a01f4194eafea093549375b1, type: 3}
+  m_Sprite: {fileID: 2302482933892944989, guid: e0aa04db163bde04f931da29ffbfe1dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4594,31 +4729,27 @@ GameObject:
   - component: {fileID: 559764715}
   - component: {fileID: 559764713}
   m_Layer: 0
-  m_Name: HS_CentralSigth
+  m_Name: HS_chapter4_cuadro_cinco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &559764712
-RectTransform:
+  m_IsActive: 0
+--- !u!4 &559764712
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559764711}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 1.5, z: 0}
   m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.33, y: -77.74961}
-  m_SizeDelta: {x: 37.9349, y: 32.9699}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &559764713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4631,7 +4762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
+  hotspotId: chapter4_cuadro_cinco
   requiredChapterId: chapter4
   conversationId: chapter4_cuadro_cinco
   startNodeId: start
@@ -4689,7 +4820,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 35, y: 35}
+  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &576627963
 GameObject:
@@ -4752,7 +4883,7 @@ Transform:
   m_GameObject: {fileID: 587178100}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.11, y: -33.7, z: 0}
+  m_LocalPosition: {x: -0.1288, y: -33.7, z: 0}
   m_LocalScale: {x: 1.180663, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4985,7 +5116,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!1 &605966250
+--- !u!1 &623919434
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4993,68 +5124,65 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 605966251}
-  - component: {fileID: 605966253}
-  - component: {fileID: 605966252}
+  - component: {fileID: 623919435}
+  - component: {fileID: 623919437}
+  - component: {fileID: 623919436}
   m_Layer: 0
-  m_Name: HS_OldBarrelsAndBoxes
+  m_Name: HS_chapter4_diario_final
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &605966251
-RectTransform:
+--- !u!4 &623919435
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605966250}
+  m_GameObject: {fileID: 623919434}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
+  m_LocalPosition: {x: -3, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.145, y: -69.750046}
-  m_SizeDelta: {x: 75.5683, y: 61.8989}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &605966252
+--- !u!114 &623919436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605966250}
+  m_GameObject: {fileID: 623919434}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
+  hotspotId: chapter4_diario_final
   requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
+  conversationId: chapter4_hotspot_diario_final
   startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
+  consumeAfterUse: 1
+  setFlagOnInteract: chapter4.diario.found
+  grantItemId: diario_final
+  grantItemDisplayName: Diario de Investigacion
+  grantItemDescription: El diario final de Simon. Contiene informacion sobre su investigacion
+    secreta.
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &605966253
+--- !u!61 &623919437
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605966250}
+  m_GameObject: {fileID: 623919434}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -5085,123 +5213,14 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 75, y: 60}
-  m_EdgeRadius: 0
---- !u!1 &641247263
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 641247264}
-  - component: {fileID: 641247266}
-  - component: {fileID: 641247265}
-  m_Layer: 0
-  m_Name: HS_OldMap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &641247264
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641247263}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.363, y: -54.347027}
-  m_SizeDelta: {x: 40.3578, y: 88.3083}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &641247265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641247263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &641247266
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641247263}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 40, y: 90}
+  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &641822158
 GameObject:
@@ -5467,18 +5486,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: No estan aqui solo por duelo. Todos buscan algo.
         anxietyDelta: 5
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: 'Tu rol: observar, hablar y evitar que la ansiedad rompa al grupo.'
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices:
       - id: focus_group
         text: Prometer mantener unido al grupo
@@ -5506,6 +5528,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5519,24 +5542,28 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: Llegue por una carta. No confio en esta reunion.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: La noticia de la muerte de Simon fue demasiado vaga.
         anxietyDelta: 3
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: Explora el mapa. Cada objeto puede alterar la ansiedad y la historia.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5550,12 +5577,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: 'Fecha: hace tres semanas. Nombre ilegible.'
         anxietyDelta: 8
         requiredFlag: 
         setFlag: clue.lobby.book
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5569,12 +5598,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Nota
         text: No confies en nadie que haya llegado antes que tu.
         anxietyDelta: 6
         requiredFlag: 
         setFlag: clue.lobby.coat
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5588,12 +5619,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: 'Al dorso: ''Padre e hijo, 1987''. Robert aparta la mirada.'
         anxietyDelta: 5
         requiredFlag: 
         setFlag: clue.lobby.photo
         addInventoryItemId: foto_padre_hijo
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5607,12 +5640,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Titular
         text: Incendio en almacen del puerto, investigacion reabierta.
         anxietyDelta: 6
         requiredFlag: 
         setFlag: clue.lobby.newspaper
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5626,18 +5661,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: No confiaria en separarnos. Esta casa tiene mas preguntas que respuestas.
         anxietyDelta: -3
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La conversacion te ayuda a contener la tension del grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5651,6 +5689,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: "No sabia que quedaba una copia aqui. Ese hombre era el padre de Sim\xF3n...
           y tambien el mio. No estoy listo para contarlo al resto."
@@ -5658,12 +5697,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5677,6 +5718,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: Esa clase de tachadura no es casual. En tiempos asi, la gente borra
           nombres cuando teme represalias.
@@ -5684,12 +5726,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5704,18 +5748,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: Suena a advertencia de alguien que conoce esta casa mejor que nosotros.
         anxietyDelta: -2
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5729,18 +5776,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: Si reabrieron esa investigacion, alguien aqui va a ponerse nervioso.
         anxietyDelta: -2
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5754,6 +5804,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: Si encontramos mas pistas en el lobby, podriamos entender por que nos
           llamo.
@@ -5761,12 +5812,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La conversacion te ayuda a contener la tension del grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5780,6 +5833,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: "Lo vi. Esa reaccion no es casualidad. Si esa imagen sigue apareciendo
           en nuestras pistas, la historia familiar de Sim\xF3n es mas importante
@@ -5788,12 +5842,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5807,6 +5863,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: En el arte, borrar un nombre es un mensaje. Alguien quiso que ese visitante
           no existiera.
@@ -5814,12 +5871,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5833,18 +5892,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: Alguien dejo esa advertencia con tiempo. Eso significa premeditacion.
         anxietyDelta: -2
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5858,18 +5920,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: "Si Sim\xF3n fue testigo, ese caso explica por que nos reunieron."
         anxietyDelta: -2
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5883,6 +5948,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: Escucha, si hablas conmigo seguido me mantengo estable. Si me dejas
           solo, me derrumbo.
@@ -5890,12 +5956,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La conversacion te ayuda a contener la tension del grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5909,6 +5977,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: "Si la foto menciona al padre de Sim\xF3n, entonces hay herencias y
           decisiones viejas metidas en esto. Robert sabe algo, seguro."
@@ -5916,12 +5985,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5935,18 +6006,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: Ese tipo de detalle es lo que termina costando dinero... y vidas.
         anxietyDelta: -2
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5961,18 +6035,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: Si alguien llego antes, tuvo tiempo de preparar algo. Eso me inquieta.
         anxietyDelta: -2
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -5986,6 +6063,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: Ese incendio fue un desastre financiero. Si alguien insiste en reabrirlo,
           es porque hay culpables.
@@ -5993,12 +6071,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6012,6 +6092,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: Si encontramos evidencia real, podremos proteger al grupo de decisiones
           ciegas.
@@ -6019,12 +6100,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La conversacion te ayuda a contener la tension del grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6038,6 +6121,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: "Esa foto conecta con lo que investigaba. Si Robert evita mirarla,
           es porque teme que alguien ate su nombre al de Sim\xF3n."
@@ -6045,12 +6129,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6064,6 +6150,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: Eso es lo primero que revisaria si estuviera investigando. Ocultar
           un nombre es una pista en si misma.
@@ -6071,12 +6158,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6090,6 +6179,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: Eso suena a alguien intentando salvarnos sin exponerse. Quiero saber
           quien la escribio.
@@ -6097,12 +6187,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6116,18 +6208,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: "Ese es el incidente que vengo siguiendo. Sim\xF3n estaba ahi."
         anxietyDelta: -2
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6141,18 +6236,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lucas
         text: Si notas que mi ansiedad sube, hablame antes de explorar otra zona.
         anxietyDelta: -3
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La conversacion te ayuda a contener la tension del grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6166,6 +6264,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lucas
         text: "Sim\xF3n nunca hablaba de su familia, pero guardaba esa foto cerca
           del fuego, como si la mirara seguido. Esa pista importa."
@@ -6173,12 +6272,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6192,6 +6293,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lucas
         text: "Sim\xF3n era cuidadoso con sus visitas. Si borro a alguien, ese alguien
           tenia peso."
@@ -6199,12 +6301,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6218,6 +6322,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lucas
         text: "Suena a Sim\xF3n. Siempre dejaba pistas como si no pudiera hablar
           directo."
@@ -6225,12 +6330,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6244,6 +6351,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lucas
         text: "Sim\xF3n menciono ese incendio una vez. Dijo que alguien miente sobre
           lo que paso."
@@ -6251,12 +6359,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La reaccion abre una nueva capa de la historia sin romper el grupo.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6270,6 +6380,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices:
       - id: go_together
         text: Explorar juntos la mansion
@@ -6305,6 +6416,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6316,12 +6428,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: Se desbloquea una ruta mas oscura para capitulo 2.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: route.dark
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6333,6 +6447,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6346,6 +6461,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La puerta se abre sin resistencia. No estaba cerrada con llave. Como
           si alguien quisiera que entraras.
@@ -6353,6 +6469,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Jugador
         text: "Aqu\xED es donde Sim\xF3n pasaba m\xE1s tiempo. Si escond\xEDa algo,
           probablemente est\xE9 aqu\xED."
@@ -6360,6 +6477,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: 'El cuarto es espartano: una cama, una mesita de noche, un escritorio
           y un mapa clavado en la pared. Un vaso de agua descansa en la mesita.'
@@ -6367,6 +6485,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Jugador
         text: "Tal vez aqu\xED encuentre lo que explique por qu\xE9 todo esto fue
           preparado."
@@ -6374,6 +6493,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: chapter3.intro.seen
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6388,6 +6508,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Tocas el vidrio. Est\xE1 fr\xEDo. Pero la condensaci\xF3n es reciente.
           Alguien sirvi\xF3 este vaso hace no m\xE1s de dos horas."
@@ -6395,12 +6516,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: Los muertos no beben agua.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: clue.habitacion.vaso_agua
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6415,6 +6538,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Una zona est\xE1 marcada con un c\xEDrculo rojo grueso: el 'Ala Norte'.
           Es una secci\xF3n de la mansi\xF3n que no aparece en ning\xFAn plano moderno."
@@ -6422,6 +6546,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Debajo del c\xEDrculo, con letra peque\xF1a: 'Aqu\xED termina todo.
           O empieza.'"
@@ -6429,6 +6554,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: clue.habitacion.mapa_ala_norte
         addInventoryItemId: mapa_ala_norte
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6444,12 +6570,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: 'La carta dice:'
         anxietyDelta: 5
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Carta
         text: "Si alguien lee esto, no estoy muerto. Estoy en el Ala Norte. No vine
           por voluntad propia. Hay alguien m\xE1s en esta casa que no deber\xEDa
@@ -6458,6 +6586,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "La frase se corta abruptamente. Una mancha de tinta marca el punto
           donde la pluma resbal\xF3."
@@ -6465,12 +6594,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: clue.habitacion.carta_inconclusa
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Sim\xF3n est\xE1 vivo. Y est\xE1 atrapado."
         anxietyDelta: 0
         requiredFlag: 
         setFlag: simon_vivo
         addInventoryItemId: carta_inconclusa
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6485,6 +6616,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Una llave peque\xF1a y oxidada. No es para una puerta. Es para algo
           m\xE1s \xEDntimo. Un caj\xF3n. Un archivador."
@@ -6492,6 +6624,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: clue.habitacion.llave_pequena
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Recuerdas el archivador cerrado del estudio. Esta llave podr\xEDa
           abrirlo."
@@ -6499,6 +6632,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6513,6 +6647,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Pasas la mano sobre la tela. Est\xE1 tibia. No caliente, pero tampoco
           fr\xEDa. Como si alguien se hubiera levantado hace no mucho."
@@ -6520,6 +6655,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Debajo de la almohada, un mech\xF3n de cabello oscuro. De Sim\xF3n,
           probablemente."
@@ -6527,6 +6663,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: clue.habitacion.cama
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6541,6 +6678,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: "Si Sim\xF3n estuvo aqu\xED hace poco, entonces todo lo que nos dijeron
           fue mentira."
@@ -6548,6 +6686,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6561,6 +6700,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: Me estoy empezando a preguntar si realmente vine por un funeral o por
           una trampa.
@@ -6568,6 +6708,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6581,6 +6722,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: "Si Sim\xF3n est\xE1 vivo y nos atrajo aqu\xED... \xBFqu\xE9 quiere
           de nosotros?"
@@ -6588,6 +6730,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6602,12 +6745,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: "La carta, el mapa, el vaso... todo est\xE1 puesto para que lo encontremos."
         anxietyDelta: -7
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6622,6 +6767,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lucas
         text: "\xC9l no se fue por voluntad propia. Alguien lo encerr\xF3. O \xE9l
           mismo se encerr\xF3."
@@ -6629,6 +6775,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6643,18 +6790,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: Ya no importa nada. Ya no importa.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: Ha llegado a un punto sin retorno. La casa lo ha roto.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6669,18 +6819,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: Ya no importa nada. Ya no importa.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: Ha llegado a un punto sin retorno. La casa lo ha roto.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6695,18 +6848,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: Ya no importa nada. Ya no importa.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: Ha llegado a un punto sin retorno. La casa lo ha roto.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6721,18 +6877,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: Ya no importa nada. Ya no importa.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: Ha llegado a un punto sin retorno. La casa lo ha roto.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6747,18 +6906,21 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lucas
         text: Ya no importa nada. Ya no importa.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: Ha llegado a un punto sin retorno. La casa lo ha roto.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6772,6 +6934,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Robert
         text: "Si est\xE1 vivo... entonces esto no es un funeral. Es una trampa.
           Y todos ca\xEDmos en ella."
@@ -6779,12 +6942,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La verdad se acerca. Y con ella, el peligro.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6798,6 +6963,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: "No. Nunca vi esa parte de la mansi\xF3n. Sim\xF3n nunca la mencion\xF3
           en nuestros tratos."
@@ -6805,12 +6971,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La verdad se acerca. Y con ella, el peligro.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6824,6 +6992,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: "\xBFUna llave peque\xF1a? Eso... eso podr\xEDa abrir el archivador
           del estudio. No, no vayas. No abras eso."
@@ -6831,12 +7000,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La verdad se acerca. Y con ella, el peligro.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6851,6 +7022,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: "Horas. Tal vez menos. Esto confirma mi teor\xEDa. La muerte fue un
           montaje."
@@ -6858,12 +7030,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La verdad se acerca. Y con ella, el peligro.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6877,6 +7051,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lucas
         text: "Era su costumbre. Nunca hac\xEDa la cama. Dec\xEDa que era un ritual
           in\xFAtil para gente que no vive de verdad."
@@ -6884,12 +7059,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: La verdad se acerca. Y con ella, el peligro.
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6905,12 +7082,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "\xBFCu\xE1l es tu pr\xF3ximo paso?"
         anxietyDelta: 0
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices:
       - id: return_archivador
         text: "Volver al estudio con la llave peque\xF1a para abrir el archivador"
@@ -6947,6 +7126,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Dentro encuentras carpetas, documentos, fotograf\xEDas. Todo apunta
           a una verdad m\xE1s grande que la que imaginabas."
@@ -6954,12 +7134,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Sim\xF3n no muri\xF3 por accidente. Fue deliberado."
         anxietyDelta: 8
         requiredFlag: 
         setFlag: chapter3.archivador_abierto
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6972,6 +7154,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Los pasillos son cada vez m\xE1s estrechos. Las paredes weep agua.
           La estructura chirr\xEDa bajo tus pies."
@@ -6979,12 +7162,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "Encuentras una puerta. Est\xE1 abierta. Y adentro..."
         anxietyDelta: 15
         requiredFlag: 
         setFlag: chapter3.ala_norte_explorada
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -6997,12 +7182,14 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ana
         text: "\xBFQu\xE9? No... eso no tiene sentido. Vimos el cuerpo."
         anxietyDelta: 12
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Ben
         text: "Nos mintieron. Todo esto es una trampa. \xBFPor qu\xE9 nos trajeron
           aqu\xED?"
@@ -7010,6 +7197,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Lisa
         text: "Lo sab\xEDa. Desde el principio supe que algo no cuadraba. La escena
           era demasiado perfecta."
@@ -7017,6 +7205,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: 
         addInventoryItemId: 
+        removeInventoryItemId: 
       - speaker: Narrador
         text: "El grupo estalla en caos. La confianza que quedaba se desmorona. Todos
           miran a los dem\xE1s con sospecha. Alguien en esta habitaci\xF3n sabe la
@@ -7025,6 +7214,7 @@ MonoBehaviour:
         requiredFlag: 
         setFlag: chapter3.group_confronted
         addInventoryItemId: 
+        removeInventoryItemId: 
       choices: []
       nextNodeIdIfNoChoices: 
       endsConversation: 1
@@ -7653,17 +7843,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: emptyRoom
+  targetRoomId: killer_bunker
   requiredFlag: 
-  requiredKeys: 
-  requiredChapterId: 
+  requiredKeys: 06000000
+  requiredChapterId: chapter5
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
-  lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  lockedMessage: Esta puerta esta cerrada con llave.
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &726997795
@@ -7806,18 +7996,14 @@ Transform:
   - {fileID: 1797940306}
   - {fileID: 1668387509}
   - {fileID: 1605137294}
-  - {fileID: 1659887886}
-  - {fileID: 1072159236}
-  - {fileID: 641247264}
-  - {fileID: 1879956140}
   - {fileID: 724228707}
   - {fileID: 483574121}
+  - {fileID: 1623652292}
   - {fileID: 1165964232}
   - {fileID: 1012153353}
   - {fileID: 2117565361}
   - {fileID: 1295665680}
   - {fileID: 576627964}
-  - {fileID: 878522652}
   - {fileID: 90893717}
   - {fileID: 404231388}
   - {fileID: 1945706831}
@@ -7845,28 +8031,24 @@ Transform:
   - {fileID: 294805765}
   - {fileID: 1297561641}
   - {fileID: 217749925}
+  - {fileID: 559764712}
   - {fileID: 851867029}
   - {fileID: 299342764}
   - {fileID: 401645333}
-  - {fileID: 559764712}
-  - {fileID: 914745452}
-  - {fileID: 605966251}
-  - {fileID: 1449079329}
-  - {fileID: 1275799248}
-  - {fileID: 1541341558}
-  - {fileID: 2140557691}
-  - {fileID: 51592126}
-  - {fileID: 324725187}
-  - {fileID: 1001860518}
-  - {fileID: 1641970425}
-  - {fileID: 1623652292}
   - {fileID: 329393440}
-  - {fileID: 1665044415}
   - {fileID: 869424476}
   - {fileID: 1031111134}
   - {fileID: 2104364813}
   - {fileID: 1574513360}
   - {fileID: 1993620604}
+  - {fileID: 1794638036}
+  - {fileID: 180523220}
+  - {fileID: 160640875}
+  - {fileID: 781062625}
+  - {fileID: 1447478148}
+  - {fileID: 158418040}
+  - {fileID: 623919435}
+  - {fileID: 1873997892}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &758717111
@@ -7919,7 +8101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: secureDoor
+  targetRoomId: lobby
   requiredFlag: 
   requiredKeys: 
   requiredChapterId: 
@@ -8037,6 +8219,111 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!1 &781062624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 781062625}
+  - component: {fileID: 781062627}
+  - component: {fileID: 781062626}
+  m_Layer: 0
+  m_Name: HS_chapter4_cilindros_fonografo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &781062625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781062624}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &781062626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781062624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: chapter4_cilindros_fonografo
+  requiredChapterId: chapter4
+  conversationId: chapter4_hotspot_cilindros
+  startNodeId: start
+  consumeAfterUse: 0
+  setFlagOnInteract: chapter4.cilindros.heard
+  grantItemId: 
+  grantItemDisplayName: 
+  grantItemDescription: 
+  grantItemSprite: {fileID: 0}
+  hideAfterPickup: 0
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 0.9, y: 0.9}
+--- !u!61 &781062627
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781062624}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.2, y: 1.2}
+  m_EdgeRadius: 0
 --- !u!1 &790100809
 GameObject:
   m_ObjectHideFlags: 0
@@ -8087,17 +8374,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: killerbunker
+  targetRoomId: empty_room
   requiredFlag: 
-  requiredKeys: 
-  requiredChapterId: 
+  requiredKeys: 06000000
+  requiredChapterId: chapter5
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
-  lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  lockedMessage: Esta puerta esta cerrada con llave.
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &790100812
@@ -8868,7 +9155,7 @@ Transform:
   m_GameObject: {fileID: 869424475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2, y: -82.67, z: 0}
+  m_LocalPosition: {x: -3.48, y: -82.74, z: 0}
   m_LocalScale: {x: 0.2754821, y: 0.2754821, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9005,41 +9292,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
---- !u!1 &878522651
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 878522652}
-  m_Layer: 0
-  m_Name: Pzl_Locked_Archivator (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &878522652
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 878522651}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.469, y: -59.859726}
-  m_SizeDelta: {x: 2.1881, y: 2.0983}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &889365483
 GameObject:
   m_ObjectHideFlags: 0
@@ -9172,7 +9424,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &914745451
+--- !u!1 &891117220
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9180,68 +9432,63 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 914745452}
-  - component: {fileID: 914745454}
-  - component: {fileID: 914745453}
+  - component: {fileID: 891117221}
+  - component: {fileID: 891117223}
+  - component: {fileID: 891117222}
   m_Layer: 0
-  m_Name: HS_OldminiRoom
+  m_Name: Door_ToKidnappedSimon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &914745452
-RectTransform:
+--- !u!4 &891117221
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914745451}
+  m_GameObject: {fileID: 891117220}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 745521842}
+  m_Father: {fileID: 2118796520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.72, y: -66.77}
-  m_SizeDelta: {x: 37.9349, y: 32.9699}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &914745453
+--- !u!114 &891117222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914745451}
+  m_GameObject: {fileID: 891117220}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &914745454
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
+  targetRoomId: simon_captive
+  requiredFlag: 
+  requiredKeys: 06000000
+  requiredChapterId: chapter5
+  requiredNpcTalkCount: 0
+  triggersChapterTransition: 0
+  transitionToChapterId: 
+  enforceChapter3EntryValidation: 1
+  simonRoomRequiredKey: 2
+  chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  lockedMessage: Esta puerta esta cerrada con llave.
+  showDebugGizmo: 1
+  gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
+--- !u!61 &891117223
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914745451}
+  m_GameObject: {fileID: 891117220}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -9272,15 +9519,60 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 35, y: 35}
+  m_Size: {x: 1.5, y: 3}
   m_EdgeRadius: 0
+--- !u!1 &912102681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912102682}
+  - component: {fileID: 912102683}
+  m_Layer: 0
+  m_Name: Chapter5ValidationGate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &912102682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912102681}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1267732868}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &912102683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912102681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 658674a239114474483781a25ae89fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chapter5ValidationGate
+  requiredKeysForChapter5: 0100000004000000020000000600000005000000
 --- !u!1 &920561804
 GameObject:
   m_ObjectHideFlags: 0
@@ -9606,115 +9898,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996581745}
   m_CullTransparentMesh: 0
---- !u!1 &1001860517
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1001860518}
-  - component: {fileID: 1001860520}
-  - component: {fileID: 1001860519}
-  m_Layer: 0
-  m_Name: HS_OldBifee
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1001860518
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001860517}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.33, y: -67}
-  m_SizeDelta: {x: 36.1429, y: 49.8666}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1001860519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001860517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1001860520
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001860517}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 35, y: 50}
-  m_EdgeRadius: 0
 --- !u!1 &1005990209
 GameObject:
   m_ObjectHideFlags: 0
@@ -10152,115 +10335,6 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
---- !u!1 &1072159235
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1072159236}
-  - component: {fileID: 1072159238}
-  - component: {fileID: 1072159237}
-  m_Layer: 0
-  m_Name: HS_Library2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1072159236
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072159235}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.363, y: -54.347027}
-  m_SizeDelta: {x: 40.3578, y: 88.3083}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1072159237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072159235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1072159238
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072159235}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 40, y: 90}
   m_EdgeRadius: 0
 --- !u!1 &1074313677
 GameObject:
@@ -11634,7 +11708,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &1275799247
+--- !u!1 &1267732867
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11642,107 +11716,31 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1275799248}
-  - component: {fileID: 1275799250}
-  - component: {fileID: 1275799249}
+  - component: {fileID: 1267732868}
   m_Layer: 0
-  m_Name: HS_OldPictures
+  m_Name: _Systems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1275799248
-RectTransform:
+--- !u!4 &1267732868
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275799247}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 1267732867}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
+  m_Children:
+  - {fileID: 254323724}
+  - {fileID: 912102682}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.71, y: -22.97}
-  m_SizeDelta: {x: 37.8452, y: 39.2759}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1275799249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275799247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1275799250
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275799247}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 40, y: 40}
-  m_EdgeRadius: 0
 --- !u!1 &1294416194
 GameObject:
   m_ObjectHideFlags: 0
@@ -13626,7 +13624,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!1 &1449079328
+--- !u!1 &1447478147
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13634,68 +13632,64 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1449079329}
-  - component: {fileID: 1449079331}
-  - component: {fileID: 1449079330}
+  - component: {fileID: 1447478148}
+  - component: {fileID: 1447478150}
+  - component: {fileID: 1447478149}
   m_Layer: 0
-  m_Name: HS_OldCloset
+  m_Name: HS_chapter4_nota_roja
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1449079329
-RectTransform:
+--- !u!4 &1447478148
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1449079328}
+  m_GameObject: {fileID: 1447478147}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
+  m_LocalPosition: {x: 3, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.027, y: -32.695694}
-  m_SizeDelta: {x: 48.9162, y: 66.9536}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1449079330
+--- !u!114 &1447478149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1449079328}
+  m_GameObject: {fileID: 1447478147}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
+  hotspotId: chapter4_nota_roja
   requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
+  conversationId: chapter4_hotspot_nota_roja
   startNodeId: start
   consumeAfterUse: 0
-  setFlagOnInteract: 
+  setFlagOnInteract: chapter4.nota_roja.read
   grantItemId: 
   grantItemDisplayName: 
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
+  hideAfterPickup: 0
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1449079331
+--- !u!61 &1447478150
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1449079328}
+  m_GameObject: {fileID: 1447478147}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -13726,14 +13720,14 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 50, y: 65}
+  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &1454228211
 GameObject:
@@ -14059,115 +14053,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 720863764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1541341557
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1541341558}
-  - component: {fileID: 1541341560}
-  - component: {fileID: 1541341559}
-  m_Layer: 0
-  m_Name: HS_OldPaintUtensils
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1541341558
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541341557}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.69, y: -26.29}
-  m_SizeDelta: {x: 91.2235, y: 25.8325}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1541341559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541341557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1541341560
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541341557}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 90, y: 25}
-  m_EdgeRadius: 0
 --- !u!1 &1542674131
 GameObject:
   m_ObjectHideFlags: 0
@@ -14940,11 +14825,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14956,35 +14841,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 793.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 441.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -15335,7 +15220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
   hotspotId: chapter3_Unfinished_Letter
-  requiredChapterId: 
+  requiredChapterId: chapter3
   conversationId: chapter3_Unfinished_Letter
   startNodeId: start
   consumeAfterUse: 1
@@ -15485,224 +15370,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629071097}
   m_CullTransparentMesh: 1
---- !u!1 &1641970424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1641970425}
-  - component: {fileID: 1641970427}
-  - component: {fileID: 1641970426}
-  m_Layer: 0
-  m_Name: HS_DoorCodeHelp
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1641970425
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641970424}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.26, y: -65.92}
-  m_SizeDelta: {x: 15.9182, y: 16.5855}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1641970426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641970424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1641970427
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641970424}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 15, y: 15}
-  m_EdgeRadius: 0
---- !u!1 &1659887885
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1659887886}
-  - component: {fileID: 1659887888}
-  - component: {fileID: 1659887887}
-  m_Layer: 0
-  m_Name: HS_Library1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1659887886
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1659887885}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.6652, y: -54.82}
-  m_SizeDelta: {x: 33.8208, y: 61.8989}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1659887887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1659887885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1659887888
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1659887885}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 35, y: 60}
-  m_EdgeRadius: 0
 --- !u!1 &1661077250
 GameObject:
   m_ObjectHideFlags: 0
@@ -15831,115 +15498,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1665044414
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1665044415}
-  - component: {fileID: 1665044417}
-  - component: {fileID: 1665044416}
-  m_Layer: 0
-  m_Name: HS_chapter5_MansionMap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1665044415
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665044414}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.09, y: -81.79}
-  m_SizeDelta: {x: 3.242, y: 2.0681}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1665044416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665044414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter5_maletin
-  requiredChapterId: chapter5
-  conversationId: chapter5_maletin
-  startNodeId: start
-  consumeAfterUse: 1
-  setFlagOnInteract: 
-  grantItemId: relicario
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1665044417
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665044414}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 3, y: 2}
-  m_EdgeRadius: 0
 --- !u!1 &1665595491
 GameObject:
   m_ObjectHideFlags: 0
@@ -16893,6 +16451,111 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1794638035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1794638036}
+  - component: {fileID: 1794638038}
+  - component: {fileID: 1794638037}
+  m_Layer: 0
+  m_Name: HS_chapter4_mirilla_central
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1794638036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794638035}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1794638037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794638035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: chapter4_mirilla_central
+  requiredChapterId: chapter4
+  conversationId: chapter4_hotspot_mirilla_central
+  startNodeId: start
+  consumeAfterUse: 0
+  setFlagOnInteract: chapter4.mirilla.seen
+  grantItemId: 
+  grantItemDisplayName: 
+  grantItemDescription: 
+  grantItemSprite: {fileID: 0}
+  hideAfterPickup: 0
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 0.9, y: 0.9}
+--- !u!61 &1794638038
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794638035}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.2, y: 1.2}
+  m_EdgeRadius: 0
 --- !u!1 &1797940305
 GameObject:
   m_ObjectHideFlags: 0
@@ -17443,6 +17106,8 @@ MonoBehaviour:
   chapter1Id: chapter1
   chapter2Id: chapter2
   chapter3Id: chapter3
+  chapter4Id: chapter4
+  chapter5Id: chapter5
   chapter3NpcRoomId: lobby
   chapter3NpcAllowedBackgroundNames:
   - LivingRoom
@@ -17452,6 +17117,8 @@ MonoBehaviour:
   chapter1CompleteFlag: chapter.chapter1.complete
   chapter2CompleteFlag: chapter.chapter2.complete
   chapter3CompleteFlag: chapter.chapter3.complete
+  chapter4CompleteFlag: chapter.chapter4.complete
+  chapter5CompleteFlag: chapter.chapter5.complete
   chapter2RequiredClues: 2
   forceFreshStartOnPlay: 1
 --- !u!114 &1820128883
@@ -17856,6 +17523,111 @@ RectTransform:
   m_AnchoredPosition: {x: 1.8648, y: -6.223}
   m_SizeDelta: {x: 778.06, y: 298.45}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1873997891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1873997892}
+  - component: {fileID: 1873997894}
+  - component: {fileID: 1873997893}
+  m_Layer: 0
+  m_Name: HS_chapter4_maquinaria
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1873997892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873997891}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.5, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1873997893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873997891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: chapter4_maquinaria
+  requiredChapterId: chapter4
+  conversationId: chapter4_hotspot_maquinaria
+  startNodeId: start
+  consumeAfterUse: 0
+  setFlagOnInteract: 
+  grantItemId: 
+  grantItemDisplayName: 
+  grantItemDescription: 
+  grantItemSprite: {fileID: 0}
+  hideAfterPickup: 0
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 0.9, y: 0.9}
+--- !u!61 &1873997894
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873997891}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.2, y: 1.2}
+  m_EdgeRadius: 0
 --- !u!1 &1876671620
 GameObject:
   m_ObjectHideFlags: 0
@@ -17947,115 +17719,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &1879956139
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1879956140}
-  - component: {fileID: 1879956142}
-  - component: {fileID: 1879956141}
-  m_Layer: 0
-  m_Name: HS_Chests
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1879956140
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879956139}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.73, y: -54.84}
-  m_SizeDelta: {x: 28.335, y: 24.9153}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1879956141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879956139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1879956142
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879956139}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 30, y: 25}
-  m_EdgeRadius: 0
 --- !u!1 &1884629418
 GameObject:
   m_ObjectHideFlags: 0
@@ -19401,7 +19064,7 @@ MonoBehaviour:
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!1 &2140557690
+--- !u!1 &2118796519
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19409,107 +19072,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2140557691}
-  - component: {fileID: 2140557693}
-  - component: {fileID: 2140557692}
+  - component: {fileID: 2118796520}
   m_Layer: 0
-  m_Name: HS_OldPicture
+  m_Name: Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2140557691
-RectTransform:
+--- !u!4 &2118796520
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140557690}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 2118796519}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
+  m_Children:
+  - {fileID: 891117221}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.29, y: -20.62}
-  m_SizeDelta: {x: 78.5708, y: 39.2759}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2140557692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140557690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: 
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &2140557693
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140557690}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 75, y: 40}
-  m_EdgeRadius: 0
 --- !u!1 &2143162113
 GameObject:
   m_ObjectHideFlags: 0
@@ -19671,3 +19257,5 @@ SceneRoots:
   - {fileID: 2048511736}
   - {fileID: 1143663162}
   - {fileID: 659230940}
+  - {fileID: 2118796520}
+  - {fileID: 1267732868}
