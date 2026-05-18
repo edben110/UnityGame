@@ -184,10 +184,10 @@ public class ProgressionTestHelper : MonoBehaviour
 
         StoryState.Instance.SetFlag("SecurityRoom.Unlocked", true);
 
-        NumericPasswordPanel[] panels = FindObjectsByType<NumericPasswordPanel>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        if (panels != null && panels.Length > 0)
+        NumericPasswordPanel panel = FindAnyObjectByType<NumericPasswordPanel>();
+        if (panel != null)
         {
-            panels[0].ForceUnlock();
+            panel.ForceUnlock();
         }
 
         Debug.Log("[TestHelper] ★ Sala de seguridad desbloqueada (bypass).");
