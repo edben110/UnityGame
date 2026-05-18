@@ -207,37 +207,103 @@ public void EnsureData()
 
     private static DialogueConversation BuildPrologueIntro()
     {
+        // ═══ NODO 1: Introducción narrativa — Quién es Franz Keller ═══
         DialogueNode start = new DialogueNode
         {
             id = "start",
             endsConversation = false,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Europa, 1943. La mansion de Simon recibe a cinco visitantes unidos por secretos." },
-                new DialogueLine { speaker = "Narrador", text = "No estan aqui solo por duelo. Todos buscan algo.", anxietyDelta = 5f },
-                new DialogueLine { speaker = "Narrador", text = "Tu rol: observar, hablar y evitar que la ansiedad rompa al grupo." }
+                new DialogueLine { speaker = "Narrador", text = "Berna, Suiza. 1943. Lejos del frente, pero no del miedo." },
+                new DialogueLine { speaker = "Narrador", text = "El detective Franks Keller recibe una carta urgente: Simón, un pintor reconocido, ha muerto en circunstancias vagas. Nadie sabe exactamente qué ocurrió." },
+                new DialogueLine { speaker = "Keller", text = "Simón presenció algo que nunca llegó a los diarios. Alguien se aseguró de que no llegara. Y ahora está muerto." },
+                new DialogueLine { speaker = "Narrador", text = "Keller llega a la mansión al atardecer. Cinco personas ya están reunidas en el lobby. Todos dicen estar ahí por la muerte de Simón." },
+                new DialogueLine { speaker = "Keller", text = "Pero cada uno tiene un motivo oculto. Puedo verlo en sus ojos. Nadie viaja hasta aquí solo por duelo." },
+                new DialogueLine { speaker = "Narrador", text = "Tu misión: investigar la verdad detrás de la muerte de Simón. Observar, hablar, recoger evidencias. Y sobre todo: mantener al grupo estable antes de que la ansiedad los destruya." }
+            },
+            nextNodeIdIfNoChoices = "context"
+        };
+
+        // ═══ NODO 2: Contexto de los personajes ═══
+        DialogueNode context = new DialogueNode
+        {
+            id = "context",
+            endsConversation = false,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "En el lobby hay cinco personas:" },
+                new DialogueLine { speaker = "Narrador", text = "Robert (54) — Abogado semi-retirado. Serio, reservado. Desvía la mirada cuando se menciona a Simón." },
+                new DialogueLine { speaker = "Narrador", text = "Ana (45) — Galerista y tasadora de arte. Elegante, calculadora. Examina cada objeto como si lo tasara." },
+                new DialogueLine { speaker = "Narrador", text = "Ben (38) — Corredor de bolsa. Nervioso, sudoroso. Sus manos tiemblan cuando nadie lo mira." },
+                new DialogueLine { speaker = "Narrador", text = "Lisa (31) — Periodista suspendida. Observadora, directa. Toma notas mentales de todo." },
+                new DialogueLine { speaker = "Narrador", text = "Lucas (27) — Ex-ayudante de Simón. Joven, inquieto. Conoce la mansión mejor que nadie." }
+            },
+            nextNodeIdIfNoChoices = "tutorial"
+        };
+
+        // ═══ NODO 3: Tutorial de mecánicas ═══
+        DialogueNode tutorial = new DialogueNode
+        {
+            id = "tutorial",
+            endsConversation = false,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Narrador", text = "— CÓMO JUGAR —" },
+                new DialogueLine { speaker = "Narrador", text = "EXPLORAR: Haz click en los objetos del escenario para investigarlos. Cada objeto puede revelar pistas importantes." },
+                new DialogueLine { speaker = "Narrador", text = "HABLAR CON NPCs: Haz click en un personaje para abrir el menú de interacción. Usa el botón 'Hablar' para conversar y reducir su ansiedad." },
+                new DialogueLine { speaker = "Narrador", text = "INVENTARIO: Los objetos que recojas se guardan en tu inventario. Selecciona un objeto y luego habla con un NPC para 'Preguntar por objeto'." },
+                new DialogueLine { speaker = "Narrador", text = "ANSIEDAD: Cada personaje tiene un nivel de ansiedad. Si no hablas con ellos, su ansiedad sube. Si llega al máximo, abandonarán la sala y podrían morir." },
+                new DialogueLine { speaker = "Narrador", text = "PUERTAS: Algunas puertas requieren llaves o condiciones narrativas. Explora para encontrar lo que necesitas." },
+                new DialogueLine { speaker = "Narrador", text = "DECISIONES: En momentos clave, deberás tomar decisiones que afectan la historia y los finales posibles." }
+            },
+            nextNodeIdIfNoChoices = "decision"
+        };
+
+        // ═══ NODO 4: Decisión del prólogo ═══
+        DialogueNode decision = new DialogueNode
+        {
+            id = "decision",
+            endsConversation = false,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Keller", text = "Antes de entrar... debo decidir cómo voy a manejar esto." },
+                new DialogueLine { speaker = "Narrador", text = "¿Cuál será tu enfoque?" }
             },
             choices = new List<DialogueChoice>
             {
-                new DialogueChoice { id = "focus_group", text = "Prometer mantener unido al grupo", nextNodeId = "end", anxietyDelta = -5f, setFlag = "choice.prologue.unity" },
-                new DialogueChoice { id = "focus_truth", text = "Prometer buscar la verdad a cualquier costo", nextNodeId = "end", anxietyDelta = 5f, setFlag = "choice.prologue.truth" }
+                new DialogueChoice { id = "focus_group", text = "Mantener unido al grupo — la verdad puede esperar", nextNodeId = "end_group", anxietyDelta = -5f, setFlag = "choice.prologue.unity" },
+                new DialogueChoice { id = "focus_truth", text = "Buscar la verdad a cualquier costo — aunque duela", nextNodeId = "end_truth", anxietyDelta = 5f, setFlag = "choice.prologue.truth" }
             }
         };
 
-        DialogueNode end = new DialogueNode
+        // ═══ NODO 5a: Final — Enfoque grupo ═══
+        DialogueNode endGroup = new DialogueNode
         {
-            id = "end",
+            id = "end_group",
             endsConversation = true,
             lines = new List<DialogueLine>
             {
-                new DialogueLine { speaker = "Narrador", text = "Prologo completado. Comienza el Capitulo 1: La Llegada." }
+                new DialogueLine { speaker = "Keller", text = "Si mantengo al grupo unido, tal vez la verdad salga sola. Nadie confiesa bajo presión extrema." },
+                new DialogueLine { speaker = "Narrador", text = "Entras a la mansión. El lobby te recibe con un silencio pesado. Comienza la investigación." }
+            }
+        };
+
+        // ═══ NODO 5b: Final — Enfoque verdad ═══
+        DialogueNode endTruth = new DialogueNode
+        {
+            id = "end_truth",
+            endsConversation = true,
+            lines = new List<DialogueLine>
+            {
+                new DialogueLine { speaker = "Keller", text = "La verdad es lo único que importa. Si alguien se rompe en el camino... es el precio de la justicia." },
+                new DialogueLine { speaker = "Narrador", text = "Entras a la mansión. El lobby te recibe con un silencio pesado. Comienza la investigación." }
             }
         };
 
         return new DialogueConversation
         {
             id = "prologue_intro",
-            nodes = new List<DialogueNode> { start, end }
+            nodes = new List<DialogueNode> { start, context, tutorial, decision, endGroup, endTruth }
         };
     }
 

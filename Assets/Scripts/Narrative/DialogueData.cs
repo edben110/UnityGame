@@ -11,6 +11,7 @@ public class DialogueLine
     public string requiredFlag;
     public string setFlag;
     public string addInventoryItemId;
+    public string removeInventoryItemId;
 }
 
 [Serializable]

@@ -37,6 +37,7 @@ public static class InventoryNarrativeDefaults
         // Cap 3 — Galería
         { "carta_padre", new ItemDefault { displayName = "Carta del padre", description = "Carta manuscrita del padre común de Robert y Simón. Fecha: 4 de julio de 1929." } },
         { "llave_pequena", new ItemDefault { displayName = "Llave pequeña", description = "Una llave de bronce pequeña. Parece ser la llave de un archivador." } },
+        { "smallkey", new ItemDefault { displayName = "Llave pequeña", description = "Una llave de bronce pequeña. Parece ser la llave de un archivador." } },
         { "estuche_joyas", new ItemDefault { displayName = "Estuche de joyas", description = "Estuche de cuero con joyas familiares de Simón. Lo que Ana vino a buscar." } },
         { "basementkey", new ItemDefault { displayName = "Llave del sótano", description = "Una llave pesada de hierro negro con una etiqueta desgastada: 'Sótano'." } },
 

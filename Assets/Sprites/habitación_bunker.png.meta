@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 587ef709d244529409047dfac71dd5b8
+guid: abb71eee39bce2144a5d7c925428fd46
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5435238267552388547
-    second: Ala_norte_0
+      213: -1444817288564336073
+    second: "habitaci\xF3n_bunker_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,55 +96,16 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ala_norte_0
+      name: "habitaci\xF3n_bunker_0"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1535
+        width: 1536
         height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -154,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c5d11f3868dd6b40800000000000000
-      internalID: 5435238267552388547
+      spriteID: 73a97cdb45af2fbe0800000000000000
+      internalID: -1444817288564336073
       vertices: []
       indices: 
       edges: []
@@ -174,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ala_norte_0: 5435238267552388547
+      "habitaci\xF3n_bunker_0": -1444817288564336073
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

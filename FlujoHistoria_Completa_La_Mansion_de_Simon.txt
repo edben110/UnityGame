@@ -66,17 +66,17 @@ Keller llega a la mansión. Presentación de los 5 personajes.
 Se establece la premisa: Simón ha muerto, todos buscan algo.
 
 Decisión del prólogo:
-  [1] Prometer mantener unido al grupo (ansiedad -5)
-  [2] Prometer buscar la verdad a cualquier costo (ansiedad +5)
+  [1] Prometer mantener unido al grupo
+  [2] Prometer buscar la verdad a cualquier costo
 
 
 ═══════════════════════════════════════════════════════════════════
- CAPÍTULO 1 — LA LLEGADA (3:00 PM)
+ CAPÍTULO 1 — LA LLEGADA
  Ubicación: Lobby y sala de npcs
 ═══════════════════════════════════════════════════════════════════
 Lobby:
 En una mesa del lobby se encuentra un objeto escondido a simple vista:
-CARTA del Padre con una fecha y algunos otros documentos de propiedades y herencias
+CARTA del Padre con una fecha (4-7-29) y algunos otros documentos de propiedades y herencias
 EXPLORACIÓN DE la sala de npcs
 ─────────────────────────────────
 1. LIBRO DE VISITAS — Una entrada tachada con tinta roja. Fecha:
@@ -93,32 +93,25 @@ EXPLORACIÓN DE la sala de npcs
 
 INTERACCIÓN CON NPCs:
 ─────────────────────
-El jugador debe hablar con almenos un NPC:
+El jugador debe hablar con al menos un NPC:
 • Conversación de ansiedad (calmar)
 • Preguntar motivo de visita
 • Mostrar objetos encontrados para obtener reacciones
 
 PUZZLE — LLAVE DEL ESTUDIO:
 ───────────────────────────
-La llave del estudio NO está a simple vista. El jugador debe:
-1. Examinar el libro de visitas (obtiene la fecha tachada)
-2. Examinar la fotografía (nota la fecha "1987" al dorso)
-3. Notar que el gramófono tiene un disco puesto con un número
-   grabado en la etiqueta
-4. Combinar las pistas: el número del disco + la fecha tachada
-   revelan la combinación de un pequeño cofre decorativo en la
-   repisa de la chimenea
-5. Abrir el cofre → obtener la LLAVE DEL ESTUDIO
+l resolver el puzzle del cofre
+2 Abrir el cofre → obtener la LLAVE DEL ESTUDIO
 
 CONDICIONES PARA AVANZAR:
 • Hablar con al menos uno de todos los NPCs
-• Resolver el puzzle y obtener la llave del estudio
+• Resolver el puzzle del cofre y obtener la llave del estudio
 
 TRANSICIÓN: El protagonista usa la llave(posterior si se cumplen las anteriores validaciones) → entra SOLO al estudio.
 
 
 ═══════════════════════════════════════════════════════════════════
- CAPÍTULO 2 — LA PRIMERA HORA (4:30 PM)
+ CAPÍTULO 2 — LA PRIMERA HORA
  Ubicación: Estudio (solo) + Lobby (NPCs)
 ═══════════════════════════════════════════════════════════════════
 
@@ -129,16 +122,13 @@ EXPLORACIÓN DEL ESTUDIO (hotspots):
 ───────────────────────────────────
 1. AGENDA — "Reunión cancelada. Peligro. No volver a abrir la
    puerta norte." Última entrada: hace 3 días.
-   "en la pagina final de la agenda dice: el código de la puerta es dia de la carta de mi p### concatenado con la fecha de la foto mia con mi ####
+   "en la pagina final de la agenda dice: el código de la puerta es el dia de la carta de mi p###
 
 2. LIBRO DE CONTABILIDAD — Entradas marcadas con "B" roja.
    Discrepancias financieras significativas. SE RECOGE AL
    INVENTARIO. (Este es el objeto que busca Ben)
 
-3. NOTA DEL TABLÓN — "Segunda copia hecha. Ellos no saben que
-   tengo el duplicado. Si algo me pasa, buscar en el archivador."
-
-4. TABLERO DE CORCHO — Fotos de los 5 personajes conectadas con
+3. TABLERO DE CORCHO — Fotos de los 5 personajes conectadas con
    hilos rojos. Una sexta foto con el rostro cubierto con cinta
    negra. "¿Quién eres tú?"
 
@@ -146,10 +136,6 @@ REGRESO AL LOBBY:
 ─────────────────
 El protagonista vuelve con el libro de contabilidad. Ben NO sabe
 que lo encontró hasta que el jugador decide confrontarlo.
-
-PRIMERA DECISIÓN (al hablar con los 5 NPCs):
-  [1] Hablar sinceramente sobre Simón
-  [2] Separarse
 
 SEGUNDA DECISIÓN (al mostrar el libro a Ben):
   [1] Confrontar — Acusar a Ben directamente
@@ -160,10 +146,8 @@ PUZZLE — LLAVE DE LA HABITACIÓN DE SIMÓN:
 La llave de la habitación NO se encuentra directamente. El jugador:
 1. En el estudio, nota que la agenda tiene una página arrancada
    con marcas de presión (se puede leer frotando con lápiz)
-2. La marca revela: "Segundo cajón, detrás del espejo"
+2. La marca revela: "cajón principal" donde se conseguira la caja puzzle a resolver para obtener la llave de l HABITACION DE SIMON
 3. En el lobby, hay un espejo decorativo cerca de la escalera
-4. Detrás del espejo hay un compartimento con la LLAVE DE LA
-   HABITACIÓN DE SIMÓN
 
 CONDICIÓN PARA AVANZAR:
 • Tener la llave de la habitación
@@ -202,7 +186,7 @@ EXPLORACIÓN DE LA GALERÍA (puzzles):
 1. PINTURA MISTERIOSA — Compartimento oculto detrás del marco.
    Contiene la CARTA MANUSCRITA DEL PADRE COMÚN.
    (Este es el objeto que busca Robert)
-   La carta tiene una fecha: "4 de julio de 1929" — esta fecha
+   La carta tiene una fecha: "17 de junio de 1943" — esta fecha
    es parte del código de la sala de seguridad.
 
 2. CAJA PUZZLE 2 — Requiere resolver la primera (de la cama).
@@ -216,9 +200,9 @@ EXPLORACIÓN DE LA GALERÍA (puzzles):
 PUZZLE — CÓDIGO DE LA SALA DE SEGURIDAD:
 ────────────────────────────────────────
 El código 4-7-2-7 se descubre así:
-• "1" — Del día de la carta del padre (4 de julio)
+• "4" — Del día de la carta del padre (4 de julio)
 • "7" — Del mes de la carta del padre (julio = 7)
-• "2-7" — De la fecha "1929" en la carta (29)
+• "2-9" — De la fecha "1929" en la carta (29)
 El jugador conecta la fecha de la carta de Robert con el teclado
 numérico de la puerta de la sala de seguridad.
 
@@ -236,7 +220,7 @@ CONDICIÓN PARA AVANZAR:
 
 
 ═══════════════════════════════════════════════════════════════════
- CAPÍTULO 4 — EL SÓTANO (8:00 PM)
+ CAPÍTULO 4 — EL SÓTANO
  Ubicación: Sótano / Sala de Seguridad (solo) + Lobby (NPCs)
 ═══════════════════════════════════════════════════════════════════
 
@@ -292,7 +276,7 @@ DECISIÓN:
 
 
 ═══════════════════════════════════════════════════════════════════
- CAPÍTULO 5 — LA NOCHE (10:00 PM)
+ CAPÍTULO 5 — LA NOCHE
  Ubicación: Ala Norte → Pasillo oscuro → Habitación de Simón
 ═══════════════════════════════════════════════════════════════════
 
@@ -310,9 +294,9 @@ EL PASILLO DEL ALA NORTE:
 • Largo, oscuro, 3 puertas idénticas
 
 DECISIÓN DE PUERTAS:
-  [1] Primera puerta (más cercana) — vacía con telarañas, pierde tiempo y se pierde la llave de un solo uso
-  [2] segunda puerta (puerta centra y que sale en el mapa) — encuentra a Simón directo
-  [3] tercera puerta (al fondo) — habitación con una cama y un ventanal grande(habitación donde alguien se ha quedado, parece una sala de operaciones) 
+  [1] Primera puerta (más cercana) — vacía con telarañas, pierde tiempo y se pierde la llave de un solo uso llegando al final b con la cantidad de npcs vivos que tenga la partida pero sin rescatar a simon
+  [2] segunda puerta (puerta de la derecha y que sale en el mapa) — encuentra a Simón directo
+  [3] tercera puerta (al fondo) — habitación con una cama y un ventanal grande(habitación donde alguien se ha quedado(el asesino), parece una sala de operaciones) 
 
 ENCUENTRO CON SIMÓN:
 ────────────────────
@@ -358,7 +342,7 @@ Epílogo: "A veces la verdad no mata. A veces salva."
  Condiciones: Al menos 1 NPC con ansiedad 100 (muerto) o simon no es rescatado
 ───────────────────────────────────────────────────────────────────
 
-Los NPCs que alcanzaron ansiedad 100 abandonaron la sala durante
+al menos uno de los NPCs que alcanzaron ansiedad 100 abandonaron la sala durante
 la historia. Sus cuerpos son encontrados en distintas habitaciones
 de la mansión.
 

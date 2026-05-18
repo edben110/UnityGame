@@ -273,6 +273,16 @@ public class DialogueRunner : MonoBehaviour
 
             InventoryState.AddItem(itemId);
         }
+
+        if (!string.IsNullOrWhiteSpace(line.removeInventoryItemId))
+        {
+            string removeItemId = line.removeInventoryItemId;
+            bool removed = InventoryState.RemoveItem(removeItemId);
+            if (removed)
+            {
+                Debug.Log($"DialogueRunner: Item '{removeItemId}' eliminado del inventario via diálogo.");
+            }
+        }
     }
 
     private static List<DialogueChoice> BuildVisibleChoices(List<DialogueChoice> allChoices)

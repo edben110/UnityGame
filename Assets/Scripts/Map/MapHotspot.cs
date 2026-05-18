@@ -53,8 +53,14 @@ public class MapHotspot : Interactable
     }
 
     /// <summary>
-    /// Oculta el hotspot si el capítulo actual no coincide con requiredChapterId.
-    /// Así los hotspots de Cap 4 no se ven durante Cap 1.
+    /// Controla la visibilidad del hotspot según el capítulo actual.
+    /// 
+    /// REGLA DE PERSISTENCIA:
+    ///   - requiredChapterId actúa como "capítulo MÍNIMO de activación", NO como capítulo exacto.
+    ///   - Un hotspot se activa cuando el jugador alcanza su capítulo requerido.
+    ///   - Una vez activado, permanece disponible en capítulos posteriores SI aún no fue recogido.
+    ///   - Esto evita softlocks: objetos olvidados siguen siendo accesibles al volver.
+    ///   - Si el objeto ya fue recogido (IsItemCollected), se oculta normalmente.
     /// </summary>
     private void RefreshChapterVisibility()
     {
@@ -63,11 +69,24 @@ public class MapHotspot : Interactable
             return;
         }
 
-        bool shouldBeVisible = StoryState.Instance.CurrentChapterId == requiredChapterId;
+        // Determinar si el capítulo actual es >= al capítulo requerido (activación mínima)
+        bool chapterReached = IsCurrentChapterAtOrAfter(requiredChapterId);
 
-        if (HasItemReward() && !IsItemCollected())
+        // El hotspot es visible si:
+        // 1. El jugador ha alcanzado o superado el capítulo de activación
+        // 2. Y el objeto aún no ha sido recogido/consumido
+        bool shouldBeVisible = chapterReached;
+
+        // Si tiene reward de item y ya fue recogido, ocultarlo
+        if (HasItemReward() && IsItemCollected())
         {
-            shouldBeVisible = true;
+            shouldBeVisible = false;
+        }
+
+        // Si fue consumido (consumeAfterUse), ocultarlo
+        if (consumeAfterUse && StoryState.Instance.HasFlag(GetUsedFlag()))
+        {
+            shouldBeVisible = false;
         }
 
         // Solo ocultar el renderer, no el GameObject completo
@@ -92,6 +111,42 @@ public class MapHotspot : Interactable
         }
     }
 
+    /// <summary>
+    /// Compara el capítulo actual con el requerido usando orden numérico.
+    /// Retorna true si el capítulo actual es igual o posterior al requerido.
+    /// Orden: prologue < chapter1 < chapter2 < chapter3 < chapter4 < chapter5
+    /// </summary>
+    private static bool IsCurrentChapterAtOrAfter(string requiredChapter)
+    {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        int currentOrder = GetChapterOrder(StoryState.Instance.CurrentChapterId);
+        int requiredOrder = GetChapterOrder(requiredChapter);
+        return currentOrder >= requiredOrder;
+    }
+
+    private static int GetChapterOrder(string chapterId)
+    {
+        if (string.IsNullOrWhiteSpace(chapterId))
+        {
+            return -1;
+        }
+
+        switch (chapterId.ToLowerInvariant())
+        {
+            case "prologue": return 0;
+            case "chapter1": return 1;
+            case "chapter2": return 2;
+            case "chapter3": return 3;
+            case "chapter4": return 4;
+            case "chapter5": return 5;
+            default: return -1;
+        }
+    }
+
     private void HideAnxietyOverlayIfVisible()
     {
         AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
@@ -113,7 +168,9 @@ public override void Interact()
             return;
         }
 
-        if (!string.IsNullOrWhiteSpace(requiredChapterId) && StoryState.Instance.CurrentChapterId != requiredChapterId)
+        // NUEVA LÓGICA: requiredChapterId actúa como capítulo MÍNIMO, no exacto.
+        // El hotspot es interactuable si el jugador ha alcanzado o superado ese capítulo.
+        if (!string.IsNullOrWhiteSpace(requiredChapterId) && !IsCurrentChapterAtOrAfter(requiredChapterId))
         {
             return;
         }
