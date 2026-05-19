@@ -130,6 +130,7 @@ public class StoryState : MonoBehaviour
         anxiety = 0f;
         flags.Clear();
         decisions.Clear();
+        CharacterGroupStateRepository.Reset();
         Save();
         InventoryState.Clear();
         NotifyStateChanged();

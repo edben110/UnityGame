@@ -51,6 +51,11 @@ public class ClickManager : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
+            if (GameInputBlocker.IsBlocked)
+            {
+                return;
+            }
+
             // Bloquear clics del juego mientras el inventario está abierto
             if (InventoryOverlayCanvas.Instance != null && InventoryOverlayCanvas.Instance.IsOpen)
             {

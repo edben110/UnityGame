@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
         }
 
         saveSystem.DeleteSave();
+        CharacterGroupStateRepository.Reset();
         currentSaveData = saveSystem.CreateNewSave();
 
         ChapterDefinition firstChapter = GetFirstValidChapter();
