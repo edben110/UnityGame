@@ -238,6 +238,11 @@ public class NpcLocationManager : MonoBehaviour
         }
     }
 
+    public void RefreshNpcVisibilityPublic()
+    {
+        RefreshNpcVisibility();
+    }
+
     private void RefreshNpcVisibility()
     {
         string currentRoom = RoomManager.Instance != null ? RoomManager.Instance.CurrentRoomId : null;
@@ -250,7 +255,9 @@ public class NpcLocationManager : MonoBehaviour
                 continue;
             }
 
-            bool shouldShow = npc.currentRoomId == currentRoom;
+            bool isDead = StoryState.Instance != null
+                            && StoryState.Instance.HasFlag($"npc.dead.{npc.npcId}");
+            bool shouldShow = !isDead && npc.currentRoomId == currentRoom;
             npc.npcObject.SetActive(shouldShow);
         }
     }

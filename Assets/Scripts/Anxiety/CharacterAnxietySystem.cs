@@ -11,7 +11,7 @@ public class CharacterAnxietySystem : MonoBehaviour
         public string id;
         public string displayName;
         [Range(0f, 100f)] public float anxiety = 10f;
-        [Range(0f, 20f)] public float increasePerMinute = 4f;
+        [Range(0f, 30f)] public float increasePerMinute = 15f;
         [Range(0f, 50f)] public float talkReduction = 18f;
         [Range(0f, 100f)] public float criticalThreshold = 75f;
     }
@@ -27,6 +27,8 @@ public class CharacterAnxietySystem : MonoBehaviour
 
     public event Action<string, float> CharacterAnxietyChanged;
 
+    private bool subscribedToRoomChanges;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -38,6 +40,25 @@ public class CharacterAnxietySystem : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         RebuildLookup();
+        CharacterGroupStateRepository.Load();
+        ApplyRepositoryToCharacters();
+    }
+
+    private void Start()
+    {
+        EnsureDeadNpcsAreHidden();
+        SubscribeToRoomChanges();
+        ValidateAnxietyLevels();
+    }
+
+    private void OnEnable()
+    {
+        SubscribeToRoomChanges();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeFromRoomChanges();
     }
 
     private void Update()
@@ -47,7 +68,7 @@ public class CharacterAnxietySystem : MonoBehaviour
             return;
         }
 
-        if (activeChapterIds != null && activeChapterIds.Count > 0 && !activeChapterIds.Contains(StoryState.Instance.CurrentChapterId))
+        if (!IsAnxietyActiveForCurrentChapter())
         {
             return;
         }
@@ -61,16 +82,17 @@ public class CharacterAnxietySystem : MonoBehaviour
                 continue;
             }
 
+            if (IsDead(entry.id))
+            {
+                continue;
+            }
+
             float before = entry.anxiety;
             entry.anxiety = Mathf.Clamp(entry.anxiety + entry.increasePerMinute * deltaMinutes, 0f, 100f);
             if (!Mathf.Approximately(before, entry.anxiety))
             {
+                PersistCharacterState(entry);
                 CharacterAnxietyChanged?.Invoke(entry.id, entry.anxiety);
-            }
-
-            if (entry.anxiety >= entry.criticalThreshold)
-            {
-                StoryState.Instance.SetFlag($"npc.critical.{entry.id}", true);
             }
         }
 
@@ -170,6 +192,7 @@ public class CharacterAnxietySystem : MonoBehaviour
         }
 
         entry.anxiety = Mathf.Clamp(entry.anxiety - entry.talkReduction, 0f, 100f);
+        PersistCharacterState(entry);
         CharacterAnxietyChanged?.Invoke(entry.id, entry.anxiety);
 
         if (StoryState.Instance != null)
@@ -194,6 +217,168 @@ public class CharacterAnxietySystem : MonoBehaviour
             }
 
             lookup[entry.id] = entry;
+        }
+    }
+
+    public void ApplySavedAnxiety(string characterId, float anxietyValue)
+    {
+        if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null)
+        {
+            return;
+        }
+
+        entry.anxiety = Mathf.Clamp(anxietyValue, 0f, 100f);
+    }
+
+    private void ApplyRepositoryToCharacters()
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            CharacterAnxietyEntry entry = characters[i];
+            if (entry == null || string.IsNullOrWhiteSpace(entry.id))
+            {
+                continue;
+            }
+
+            if (CharacterGroupStateRepository.TryGet(entry.id, out CharacterGroupStateEntry saved))
+            {
+                entry.anxiety = Mathf.Clamp(saved.anxiety, 0f, 100f);
+
+                if (!saved.isInGroup)
+                {
+                    CharacterAnxietyDeathDirector.ApplySeparation(entry.id, saved.cinematicPlayed);
+                }
+            }
+            else
+            {
+                PersistCharacterState(entry);
+            }
+        }
+    }
+
+    private static void PersistCharacterState(CharacterAnxietyEntry entry)
+    {
+        if (entry == null || string.IsNullOrWhiteSpace(entry.id))
+        {
+            return;
+        }
+
+        CharacterGroupStateRepository.SetAnxiety(entry.id, entry.anxiety);
+    }
+
+    private void EnsureDeadNpcsAreHidden()
+    {
+        if (NpcLocationManager.Instance == null)
+        {
+            return;
+        }
+
+        List<string> ids = GetCharacterIds();
+        for (int i = 0; i < ids.Count; i++)
+        {
+            string characterId = ids[i];
+            if (!IsDead(characterId))
+            {
+                continue;
+            }
+
+            if (!string.Equals(NpcLocationManager.Instance.GetNpcRoom(characterId), "missing", StringComparison.OrdinalIgnoreCase))
+            {
+                NpcLocationManager.Instance.MoveNpc(characterId, "missing");
+            }
+        }
+
+        NpcLocationManager.Instance.RefreshNpcVisibilityPublic();
+    }
+
+    /// <summary>
+    /// Revisa umbrales críticos y ansiedad máxima (se llama al cambiar de habitación).
+    /// </summary>
+    public void ValidateAnxietyLevels()
+    {
+        if (StoryState.Instance == null || !IsAnxietyActiveForCurrentChapter())
+        {
+            return;
+        }
+
+        for (int i = 0; i < characters.Count; i++)
+        {
+            CharacterAnxietyEntry entry = characters[i];
+            if (entry == null || string.IsNullOrWhiteSpace(entry.id) || IsDead(entry.id))
+            {
+                continue;
+            }
+
+            ApplyAnxietyLevelFlags(entry);
+
+            if (entry.anxiety >= 99.9f)
+            {
+                CharacterAnxietyDeathDirector.Instance?.TryStartSeparationSequence(entry.id);
+            }
+        }
+    }
+
+    private void SubscribeToRoomChanges()
+    {
+        if (subscribedToRoomChanges || RoomManager.Instance == null)
+        {
+            return;
+        }
+
+        RoomManager.Instance.RoomChanged += HandleRoomChanged;
+        subscribedToRoomChanges = true;
+    }
+
+    private void UnsubscribeFromRoomChanges()
+    {
+        if (!subscribedToRoomChanges || RoomManager.Instance == null)
+        {
+            return;
+        }
+
+        RoomManager.Instance.RoomChanged -= HandleRoomChanged;
+        subscribedToRoomChanges = false;
+    }
+
+    private void HandleRoomChanged(string previousRoom, string newRoom)
+    {
+        if (string.IsNullOrWhiteSpace(newRoom))
+        {
+            return;
+        }
+
+        ValidateAnxietyLevels();
+    }
+
+    private bool IsAnxietyActiveForCurrentChapter()
+    {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        if (activeChapterIds == null || activeChapterIds.Count == 0)
+        {
+            return true;
+        }
+
+        return activeChapterIds.Contains(StoryState.Instance.CurrentChapterId);
+    }
+
+    private static void ApplyAnxietyLevelFlags(CharacterAnxietyEntry entry)
+    {
+        if (entry == null || StoryState.Instance == null)
+        {
+            return;
+        }
+
+        if (entry.anxiety >= entry.criticalThreshold)
+        {
+            StoryState.Instance.SetFlag($"npc.critical.{entry.id}", true);
+        }
+        else
+        {
+            StoryState.Instance.SetFlag($"npc.critical.{entry.id}", false);
         }
     }
 

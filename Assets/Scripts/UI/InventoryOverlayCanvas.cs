@@ -187,7 +187,10 @@ public class InventoryOverlayCanvas : MonoBehaviour
         // Toggle inventario con tecla I (New Input System, consistente con ClickManager)
         if (Keyboard.current != null && Keyboard.current.iKey.wasPressedThisFrame)
         {
-            Toggle();
+            if (!GameInputBlocker.IsBlocked)
+            {
+                Toggle();
+            }
         }
     }
 
