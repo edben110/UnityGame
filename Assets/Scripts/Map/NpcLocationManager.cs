@@ -175,12 +175,22 @@ public class NpcLocationManager : MonoBehaviour
     {
         foreach (var pair in npcLookup)
         {
+            if (IsNpcAbsentFromMap(pair.Key))
+            {
+                continue;
+            }
+
             pair.Value.currentRoomId = roomId;
         }
     }
 
     private void MoveNpcSilent(string npcId, string roomId)
     {
+        if (IsNpcAbsentFromMap(npcId))
+        {
+            return;
+        }
+
         if (npcLookup.TryGetValue(npcId, out NpcRoomAssignment npc))
         {
             npc.currentRoomId = roomId;
@@ -243,6 +253,38 @@ public class NpcLocationManager : MonoBehaviour
         RefreshNpcVisibility();
     }
 
+    /// <summary>
+    /// Oculta el sprite del NPC en WorldMap (p. ej. tras ansiedad 100 y cinemática).
+    /// </summary>
+    public void HideNpcFromMap(string npcId)
+    {
+        if (!npcLookup.TryGetValue(npcId, out NpcRoomAssignment npc) || npc == null)
+        {
+            return;
+        }
+
+        npc.currentRoomId = "missing";
+
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.SetDecision($"npc.location.{npcId}", "missing");
+            StoryState.Instance.SetFlag($"npc.separated.{npcId}", true);
+        }
+
+        if (npc.npcObject != null)
+        {
+            npc.npcObject.SetActive(false);
+
+            NpcInteractable interactable = npc.npcObject.GetComponent<NpcInteractable>();
+            if (interactable != null)
+            {
+                interactable.enabled = false;
+            }
+        }
+
+        RefreshNpcVisibility();
+    }
+
     private void RefreshNpcVisibility()
     {
         string currentRoom = RoomManager.Instance != null ? RoomManager.Instance.CurrentRoomId : null;
@@ -255,10 +297,35 @@ public class NpcLocationManager : MonoBehaviour
                 continue;
             }
 
-            bool isDead = StoryState.Instance != null
-                            && StoryState.Instance.HasFlag($"npc.dead.{npc.npcId}");
-            bool shouldShow = !isDead && npc.currentRoomId == currentRoom;
+            bool shouldShow = !IsNpcAbsentFromMap(npc.npcId) && npc.currentRoomId == currentRoom;
             npc.npcObject.SetActive(shouldShow);
+
+            NpcInteractable interactable = npc.npcObject.GetComponent<NpcInteractable>();
+            if (interactable != null)
+            {
+                interactable.enabled = shouldShow;
+            }
         }
+    }
+
+    private static bool IsNpcAbsentFromMap(string npcId)
+    {
+        if (string.IsNullOrWhiteSpace(npcId))
+        {
+            return true;
+        }
+
+        if (!CharacterGroupStateRepository.IsInGroup(npcId))
+        {
+            return true;
+        }
+
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        return StoryState.Instance.HasFlag($"npc.dead.{npcId}")
+            || StoryState.Instance.HasFlag($"npc.separated.{npcId}");
     }
 }

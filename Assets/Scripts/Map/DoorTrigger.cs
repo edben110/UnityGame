@@ -731,6 +731,12 @@ public class DoorTrigger : Interactable
 
         bool success = RoomManager.Instance.ChangeRoom(targetRoomId);
         Debug.Log($"[DoorTrigger] ChangeRoom('{targetRoomId}') => {success}");
+
+        if (success && CharacterAnxietySystem.Instance != null)
+        {
+            CharacterAnxietySystem.Instance.OnDoorInteracted();
+        }
+
         return success;
     }
 

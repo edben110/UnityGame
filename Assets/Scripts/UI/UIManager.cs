@@ -92,10 +92,17 @@ public class UIManager : MonoBehaviour
             for (int i = 0; i < rootCanvas.transform.childCount; i++)
             {
                 Transform child = rootCanvas.transform.GetChild(i);
-                if (child.GetComponent<UIManager>() == null)
+                if (child.GetComponent<UIManager>() != null)
                 {
-                    child.gameObject.SetActive(false);
+                    continue;
                 }
+
+                if (child.name == NewGameIntroPresenter.IntroUiRootName)
+                {
+                    continue;
+                }
+
+                child.gameObject.SetActive(false);
             }
         }
     }
@@ -116,6 +123,17 @@ public class UIManager : MonoBehaviour
         SetPanelState(chaptersPanel, true);
         if (backgroundObj != null) backgroundObj.SetActive(true);
         BuildChapterButtons();
+    }
+
+    public void HideAllMenuUi()
+    {
+        SetPanelState(mainMenuPanel, false);
+        SetPanelState(chaptersPanel, false);
+
+        if (backgroundObj != null)
+        {
+            backgroundObj.SetActive(false);
+        }
     }
 
     // ==================== EVENTOS ====================

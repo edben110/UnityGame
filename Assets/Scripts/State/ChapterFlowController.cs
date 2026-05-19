@@ -38,11 +38,6 @@ public class ChapterFlowController : MonoBehaviour
     [SerializeField] private string chapter4Id = "chapter4";
     [SerializeField] private string chapter5Id = "chapter5";
 
-    [Header("Cap 3: Decisión de la carta")]
-    [SerializeField] private string chapter3NpcRoomId = "lobby";
-    [SerializeField] private string[] chapter3NpcAllowedBackgroundNames = { "LivingRoom", "NPCRoom", "Lobby" };
-    private const string Chapter3LetterDecisionShownFlag = "chapter3.letter_decision.shown";
-
     [Header("Flags")]
     [SerializeField] private string prologueCompleteFlag = "chapter.prologue.complete";
     [SerializeField] private string chapter1CompleteFlag = "chapter.chapter1.complete";
@@ -51,27 +46,14 @@ public class ChapterFlowController : MonoBehaviour
     [SerializeField] private string chapter4CompleteFlag = "chapter.chapter4.complete";
     [SerializeField] private string chapter5CompleteFlag = "chapter.chapter5.complete";
 
-    [Header("Progreso Cap 2 y 3 (auto-decisión)")]
-    [SerializeField] private int chapter2RequiredClues = 2;
-
     [Header("Prueba")]
-    [SerializeField] private bool forceFreshStartOnPlay = true;
+    [SerializeField] private bool forceFreshStartOnPlay = false;
 
     private DialogueRunner dialogueRunner;
-    private bool chapter2DecisionLaunched;
-    private bool pendingProgressCheck;
 
-    // Flags que setean los hotspots del Cap 2
     private string lastObservedChapterId = string.Empty;
     private readonly HashSet<string> talkedNpcIdsInCurrentChapter = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
     private int npcTalkedCountInCurrentChapter;
-    private static readonly string[] chapter2ClueFlags = {
-        "clue.estudio.agenda",
-        "clue.estudio.libro_contabilidad",
-        "clue.estudio.nota_tablon",
-        "clue.estudio.tablero_corcho",
-        "clue.estudio.archivador_visto"
-    };
 
     // Flags de NPCs hablados
     private static readonly string[] npcTalkFlags = {
@@ -116,10 +98,31 @@ public class ChapterFlowController : MonoBehaviour
             RoomManager.Instance.RoomChanged += OnRoomChanged;
         }
 
+        if (StoryState.Instance.HasFlag("newgame.intro.completed"))
+        {
+            if (!StoryState.Instance.HasFlag("session.started"))
+            {
+                StoryState.Instance.SetFlag("session.started", true);
+            }
+
+            if (StoryState.Instance.CurrentChapterId == prologueChapterId)
+            {
+                StoryState.Instance.SetChapter(chapter1Id);
+            }
+
+            if (RoomManager.Instance != null && RoomManager.Instance.HasRoom("lobby"))
+            {
+                RoomManager.Instance.ChangeRoom("lobby");
+            }
+
+            ResumeFromCurrentChapter();
+            return;
+        }
+
         if (forceFreshStartOnPlay)
         {
             StoryState.Instance.ResetForNewGame(prologueChapterId);
-            Debug.Log("[ChapterFlow] Fresh start → Prólogo");
+            Debug.Log("[ChapterFlow] Fresh start → Prólogo (solo editor/debug)");
         }
 
         if (!StoryState.Instance.HasFlag("session.started"))
@@ -127,7 +130,6 @@ public class ChapterFlowController : MonoBehaviour
             StoryState.Instance.SetFlag("session.started", true);
             StoryState.Instance.SetChapter(prologueChapterId);
 
-            // Intentar cambiar a la sala del prólogo si existe
             if (RoomManager.Instance != null && RoomManager.Instance.HasRoom("prologue"))
             {
                 RoomManager.Instance.ChangeRoom("prologue");
@@ -155,16 +157,6 @@ public class ChapterFlowController : MonoBehaviour
             {
                 RoomManager.Instance.RoomChanged -= OnRoomChanged;
             }
-        }
-    }
-
-    private void Update()
-    {
-        // Verificar progreso cuando el diálogo termina
-        if (pendingProgressCheck && dialogueRunner != null && !dialogueRunner.IsRunning)
-        {
-            pendingProgressCheck = false;
-            CheckAutoDecisions();
         }
     }
 
@@ -204,14 +196,9 @@ public class ChapterFlowController : MonoBehaviour
         return string.Empty;
     }
 
-    // ═══════════════════════════════════════════════════════════════
-    //  AUTO-DECISIONES (Cap 2 y Cap 3)
-    // ═══════════════════════════════════════════════════════════════
-
     private void OnStateChanged()
     {
         SyncChapterTracking(false);
-        pendingProgressCheck = true;
     }
 
     private void OnRoomChanged(string previousRoom, string newRoom)
@@ -221,14 +208,13 @@ public class ChapterFlowController : MonoBehaviour
             return;
         }
 
-        if (!string.Equals(newRoom, chapter3NpcRoomId, System.StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(newRoom, "lobby", System.StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
 
         StoryState.Instance.SetFlag("PlayerEnteredNpcRoom", true);
         StoryState.Instance.SetFlag("chapter3.npc_room.entered", true);
-        TryLaunchChapter3DecisionInNpcRoom();
     }
 
     private void SyncChapterTracking(bool forceRebuild)
@@ -305,147 +291,6 @@ public class ChapterFlowController : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(currentChapter))
         {
             StoryState.Instance.SetFlag($"chapter.{currentChapter}.npc.talked.{normalizedNpcId}", true);
-        }
-    }
-
-    /// <summary>
-    /// Verifica si se deben lanzar decisiones para Cap 2 y Cap 3.
-    /// </summary>
-    private void CheckAutoDecisions()
-    {
-        if (StoryState.Instance == null || dialogueRunner == null || dialogueRunner.IsRunning)
-        {
-            return;
-        }
-
-        string chapter = StoryState.Instance.CurrentChapterId;
-
-        // CAP 2: Disparar PRIMERA decisión cuando se han hablado con los 5 NPCs
-        if (chapter == chapter2Id && !chapter2DecisionLaunched && !StoryState.Instance.HasFlag(chapter2CompleteFlag))
-        {
-            int npcTalkCount = GetNpcTalkCount();
-            if (npcTalkCount >= 5)  // Se han hablado con TODOS los NPCs
-            {
-                // Verificar que el jugador está en la sala de NPCs
-                bool inNpcRoom = RoomManager.Instance == null || RoomManager.Instance.CurrentRoomId == "lobby";
-                if (inNpcRoom && !StoryState.Instance.HasFlag("chapter2.initial_decision.shown"))
-                {
-                    chapter2DecisionLaunched = true;
-                    Debug.Log("[ChapterFlow] ★ Cap 2: Hablado con los 5 NPCs. Lanzando decisión inicial...");
-                    Invoke(nameof(LaunchChapter2InitialDecision), 1.5f);
-                }
-            }
-        }
-
-        // CAP 3: Disparar decisión al tener la carta y entrar a la sala de NPCs
-        // La decisión de la carta se dispara solamente al entrar en la sala de NPCs.
-    }
-
-    private void TryLaunchChapter3DecisionInNpcRoom()
-    {
-        if (StoryState.Instance == null || dialogueRunner == null)
-        {
-            return;
-        }
-
-        if (StoryState.Instance.CurrentChapterId != chapter3Id)
-        {
-            return;
-        }
-
-        if (RoomManager.Instance == null || !string.Equals(RoomManager.Instance.CurrentRoomId, chapter3NpcRoomId, System.StringComparison.OrdinalIgnoreCase))
-        {
-            return;
-        }
-
-        if (!IsChapter3NpcVisibleContext())
-        {
-            Debug.Log("[ChapterFlow] Cap 3 decision blocked: the player is not in the allowed visible NPC background context.");
-            return;
-        }
-
-        if (!InventoryState.HasItem("HS_Unfinished_Letter"))
-        {
-            return;
-        }
-
-        if (StoryState.Instance.HasFlag(Chapter3LetterDecisionShownFlag) || StoryState.Instance.HasFlag("chapter3.decision.shown"))
-        {
-            return;
-        }
-
-        StoryState.Instance.SetFlag(Chapter3LetterDecisionShownFlag, true);
-        StoryState.Instance.SetFlag("chapter3.decision.shown", true);
-        Debug.Log("[ChapterFlow] ★ Cap 3: Carta encontrada. En sala de NPCs. Lanzando decisión...");
-        Invoke(nameof(LaunchChapter3Decision), 1.5f);
-    }
-
-    private bool IsChapter3NpcVisibleContext()
-    {
-        if (RoomManager.Instance == null)
-        {
-            return false;
-        }
-
-        string currentRoomId = RoomManager.Instance.CurrentRoomId;
-        if (!string.Equals(currentRoomId, chapter3NpcRoomId, System.StringComparison.OrdinalIgnoreCase))
-        {
-            return false;
-        }
-
-        string displayName = RoomManager.Instance.CurrentRoomDisplayName;
-        string backgroundName = RoomManager.Instance.GetCurrentRoomBackgroundObjectName();
-
-        return MatchesAllowedNpcContext(displayName)
-            || MatchesAllowedNpcContext(backgroundName);
-    }
-
-    private bool MatchesAllowedNpcContext(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value) || chapter3NpcAllowedBackgroundNames == null)
-        {
-            return false;
-        }
-
-        for (int i = 0; i < chapter3NpcAllowedBackgroundNames.Length; i++)
-        {
-            string allowed = chapter3NpcAllowedBackgroundNames[i];
-            if (string.IsNullOrWhiteSpace(allowed))
-            {
-                continue;
-            }
-
-            if (string.Equals(value, allowed, System.StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void LaunchChapter2InitialDecision()
-    {
-        if (dialogueRunner != null && !dialogueRunner.IsRunning)
-        {
-            StoryState.Instance.SetFlag("chapter2.initial_decision.shown", true);
-            dialogueRunner.StartConversation(chapter2InitialDecisionConversationId, "start");
-        }
-        else
-        {
-            Invoke(nameof(LaunchChapter2InitialDecision), 1f);
-        }
-    }
-
-    private void LaunchChapter3Decision()
-    {
-        if (dialogueRunner != null && !dialogueRunner.IsRunning)
-        {
-            dialogueRunner.StartConversation(chapter3DecisionConversationId, "start");
-        }
-        else
-        {
-            Invoke(nameof(LaunchChapter3Decision), 1f);
         }
     }
 
@@ -529,8 +374,6 @@ public class ChapterFlowController : MonoBehaviour
             return;
         }
 
-        // Después de cualquier conversación, verificar auto-decisiones
-        pendingProgressCheck = true;
     }
 
     private void ResumeFromCurrentChapter()
