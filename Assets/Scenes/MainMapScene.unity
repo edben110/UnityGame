@@ -7711,7 +7711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: lobby
+  targetRoomId: secureDoor
   requiredFlag: 
   requiredKeys: 
   requiredChapterId: 
@@ -11576,10 +11576,11 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
+  grantItemIdAfterDialogue: puzzle_box_2
+  grantItemDisplayNameAfterDialogue: Caja puzzle de la cama
+  grantItemDescriptionAfterDialogue: "Caja de madera con un rompecabezas deslizante
+    en la tapa. \xC1brela desde el inventario para obtener la llave de la galer\xEDa."
+  grantItemSpriteAfterDialogue: {fileID: 5540733348116712071, guid: ba8bbc89a912a10468e246108c472335, type: 3}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -13288,16 +13289,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NumericPasswordPanel
   correctPassword: 04000000070000000200000009000000
   digitPositions:
-  - {x: -1, y: 1}
-  - {x: 0, y: 1}
-  - {x: 1, y: 1}
-  - {x: -1, y: 0}
-  - {x: 0, y: 0}
-  - {x: 1, y: 0}
-  - {x: -1, y: -1}
-  - {x: 0, y: -1}
-  - {x: 1, y: -1}
-  hitboxSize: {x: 0.8, y: 0.8}
+  - {x: 4.27, y: 0.35}
+  - {x: 4.67, y: 0.35}
+  - {x: 5.1, y: 0.35}
+  - {x: 4.27, y: -0.01}
+  - {x: 4.67, y: -0.01}
+  - {x: 5.1, y: -0.01}
+  - {x: 4.27, y: -0.4}
+  - {x: 4.67, y: -0.4}
+  - {x: 5.1, y: -0.4}
+  hitboxSize: {x: 0.3, y: 0.3}
   unlockFlag: SecurityRoom.Unlocked
   wrongPasswordMessage: "Parece que no es la combinaci\xF3n correcta..."
   correctPasswordMessage: El mecanismo hace click. La puerta se ha desbloqueado.
@@ -14533,11 +14534,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 767.60004
+      value: 890
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 429.8
+      value: 489
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.x
