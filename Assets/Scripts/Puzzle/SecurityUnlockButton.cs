@@ -2,25 +2,24 @@ using UnityEngine;
 
 /// <summary>
 /// Botón interactuable dentro de la Sala de Seguridad (Security Room).
-/// Al presionarlo, desactiva el sistema de seguridad y desbloquea Door_ToNorthStreet permanentemente.
+/// Al presionarlo, desbloquea Door_ToNorthStreet permanentemente.
 ///
-/// FLAGS QUE SETEA:
-///   - SecuritySystemDisabled = TRUE
-///   - Door_ToNorthStreetUnlocked = TRUE
+/// FLAG QUE SETEA:
+///   - UnlockNorthStreetDoor = TRUE
 ///
 /// PERSISTENCIA:
-///   Los flags se guardan en StoryState, que persiste entre escenas y sesiones.
+///   El flag se guarda en StoryState, que persiste entre escenas y sesiones.
 ///
-/// NARRATIVA:
-///   Franz dice: "Parece que este panel controla los bloqueos de la mansión...
-///   eso debería abrir el acceso al ala norte."
+/// IMPORTANTE:
+///   Este botón NO inicia el Capítulo 5 automáticamente.
+///   Solo desbloquea físicamente la puerta.
+///   Las validaciones narrativas del Cap 5 siguen siendo obligatorias.
 /// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
 public class SecurityUnlockButton : Interactable
 {
-    [Header("Flags de desbloqueo")]
-    [SerializeField] private string securityDisabledFlag = "SecuritySystemDisabled";
-    [SerializeField] private string doorUnlockedFlag = "Door_ToNorthStreetUnlocked";
+    [Header("Flag de desbloqueo")]
+    [SerializeField] private string doorUnlockedFlag = "UnlockNorthStreetDoor";
 
     [Header("Feedback narrativo")]
     [TextArea(2, 4)]
@@ -38,8 +37,7 @@ public class SecurityUnlockButton : Interactable
         // Verificar si ya fue activado previamente (persistencia)
         if (StoryState.Instance != null)
         {
-            hasBeenActivated = StoryState.Instance.HasFlag(securityDisabledFlag)
-                            && StoryState.Instance.HasFlag(doorUnlockedFlag);
+            hasBeenActivated = StoryState.Instance.HasFlag(doorUnlockedFlag);
         }
 
         // Asegurar que tiene collider
@@ -60,10 +58,9 @@ public class SecurityUnlockButton : Interactable
             return;
         }
 
-        // Desactivar sistema de seguridad
+        // Desbloquear Door_ToNorthStreet permanentemente
         if (StoryState.Instance != null)
         {
-            StoryState.Instance.SetFlag(securityDisabledFlag, true);
             StoryState.Instance.SetFlag(doorUnlockedFlag, true);
         }
 
@@ -84,7 +81,7 @@ public class SecurityUnlockButton : Interactable
         // Feedback narrativo
         ShowMessage(unlockMessage);
 
-        Debug.Log("[SecurityUnlockButton] ★ Sistema de seguridad DESACTIVADO. Door_ToNorthStreet desbloqueada permanentemente.");
+        Debug.Log("[SecurityUnlockButton] ★ Door_ToNorthStreet desbloqueada permanentemente (UnlockNorthStreetDoor = TRUE).");
     }
 
     private static void ShowMessage(string message)
