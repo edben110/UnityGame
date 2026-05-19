@@ -5,6 +5,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    /// <summary>
+    /// Tras nueva partida, CharacterAnxietySystem asigna ansiedad inicial aleatoria al cargar el mapa.
+    /// </summary>
+    public static bool PendingCharacterAnxietyInit { get; private set; }
+
+    public static void ClearPendingCharacterAnxietyInit()
+    {
+        PendingCharacterAnxietyInit = false;
+    }
+
     [Header("Configuracion de capitulos")]
     [SerializeField] private List<ChapterDefinition> chapters = new List<ChapterDefinition>();
     [SerializeField] private string prologueSceneName = "PrologueScene";
@@ -75,6 +85,7 @@ public class GameManager : MonoBehaviour
         saveSystem.DeleteSave();
         CharacterGroupStateRepository.Reset();
         NewGamePendingState.Reset();
+        PendingCharacterAnxietyInit = true;
         currentSaveData = saveSystem.CreateNewSave();
 
         ChapterDefinition firstChapter = GetFirstValidChapter();
@@ -139,6 +150,7 @@ public class GameManager : MonoBehaviour
         }
 
         NewGamePendingState.Reset();
+        PendingCharacterAnxietyInit = true;
 
         if (NewGameIntroPresenter.Instance != null)
         {

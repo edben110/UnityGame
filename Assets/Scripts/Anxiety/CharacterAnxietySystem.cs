@@ -11,10 +11,15 @@ public class CharacterAnxietySystem : MonoBehaviour
         public string id;
         public string displayName;
         [Range(0f, 100f)] public float anxiety = 10f;
-        [Range(0f, 30f)] public float increasePerMinute = 15f;
         [Range(0f, 50f)] public float talkReduction = 18f;
         [Range(0f, 100f)] public float criticalThreshold = 75f;
     }
+
+    private const float DoorInteractionAnxietyDelta = 7f;
+    private const float ItemPickupAnxietyDelta = 2f;
+    private const float ObjectQuestionAnxietyReduction = 5f;
+    private const float NewGameAnxietyMin = 0f;
+    private const float NewGameAnxietyMax = 20f;
 
     public static CharacterAnxietySystem Instance { get; private set; }
 
@@ -46,6 +51,12 @@ public class CharacterAnxietySystem : MonoBehaviour
 
     private void Start()
     {
+        if (GameManager.PendingCharacterAnxietyInit)
+        {
+            InitializeForNewGame();
+            GameManager.ClearPendingCharacterAnxietyInit();
+        }
+
         EnsureDeadNpcsAreHidden();
         SubscribeToRoomChanges();
         ValidateAnxietyLevels();
@@ -63,39 +74,6 @@ public class CharacterAnxietySystem : MonoBehaviour
 
     private void Update()
     {
-        if (StoryState.Instance == null)
-        {
-            return;
-        }
-
-        if (!IsAnxietyActiveForCurrentChapter())
-        {
-            return;
-        }
-
-        float deltaMinutes = Time.deltaTime / 60f;
-        for (int i = 0; i < characters.Count; i++)
-        {
-            CharacterAnxietyEntry entry = characters[i];
-            if (entry == null || string.IsNullOrWhiteSpace(entry.id))
-            {
-                continue;
-            }
-
-            if (IsDead(entry.id))
-            {
-                continue;
-            }
-
-            float before = entry.anxiety;
-            entry.anxiety = Mathf.Clamp(entry.anxiety + entry.increasePerMinute * deltaMinutes, 0f, 100f);
-            if (!Mathf.Approximately(before, entry.anxiety))
-            {
-                PersistCharacterState(entry);
-                CharacterAnxietyChanged?.Invoke(entry.id, entry.anxiety);
-            }
-        }
-
         if (debugStatusText != null)
         {
             debugStatusText.text = BuildFullStatusText();
@@ -176,15 +154,161 @@ public class CharacterAnxietySystem : MonoBehaviour
         return ids;
     }
 
-    public void ApplyTalkRelief(string characterId)
+    public void InitializeForNewGame()
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            CharacterAnxietyEntry entry = characters[i];
+            if (entry == null || string.IsNullOrWhiteSpace(entry.id))
+            {
+                continue;
+            }
+
+            entry.anxiety = UnityEngine.Random.Range(NewGameAnxietyMin, NewGameAnxietyMax);
+            PersistCharacterState(entry);
+            CharacterAnxietyChanged?.Invoke(entry.id, entry.anxiety);
+        }
+
+        ValidateAnxietyLevels();
+    }
+
+    public void AddAnxietyToAllAlive(float delta)
+    {
+        if (!IsAnxietyActiveForCurrentChapter() || Mathf.Approximately(delta, 0f))
+        {
+            return;
+        }
+
+        for (int i = 0; i < characters.Count; i++)
+        {
+            CharacterAnxietyEntry entry = characters[i];
+            if (entry == null || string.IsNullOrWhiteSpace(entry.id) || IsDead(entry.id))
+            {
+                continue;
+            }
+
+            AddAnxiety(entry.id, delta);
+        }
+    }
+
+    public void AddAnxiety(string characterId, float delta)
+    {
+        if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null || IsDead(characterId))
+        {
+            return;
+        }
+
+        if (!IsAnxietyActiveForCurrentChapter())
+        {
+            return;
+        }
+
+        float before = entry.anxiety;
+        entry.anxiety = Mathf.Clamp(entry.anxiety + delta, 0f, 100f);
+        if (Mathf.Approximately(before, entry.anxiety))
+        {
+            return;
+        }
+
+        PersistCharacterState(entry);
+        ApplyAnxietyLevelFlags(entry);
+        CharacterAnxietyChanged?.Invoke(entry.id, entry.anxiety);
+
+        if (entry.anxiety >= 99.9f)
+        {
+            CharacterAnxietyDeathDirector.Instance?.TryStartSeparationSequence(entry.id);
+        }
+    }
+
+    public void OnDoorInteracted()
+    {
+        AddAnxietyToAllAlive(DoorInteractionAnxietyDelta);
+    }
+
+    public void OnItemCollected()
+    {
+        AddAnxietyToAllAlive(ItemPickupAnxietyDelta);
+    }
+
+    /// <summary>
+    /// Baja ansiedad con Hablar. Solo una vez por personaje por partida.
+    /// </summary>
+    public bool TryApplyTalkRelief(string characterId)
+    {
+        if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null)
+        {
+            return false;
+        }
+
+        if (StoryState.Instance != null && StoryState.Instance.HasFlag(GetTalkReliefFlag(characterId)))
+        {
+            return false;
+        }
+
+        ApplyTalkRelief(characterId);
+
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.SetFlag(GetTalkReliefFlag(characterId), true);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Baja ansiedad al preguntar por un objeto. Una vez por objeto (-5).
+    /// </summary>
+    public bool TryApplyObjectQuestionRelief(string characterId, string itemId)
+    {
+        if (string.IsNullOrWhiteSpace(itemId)
+            || !lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry)
+            || entry == null)
+        {
+            return false;
+        }
+
+        string normalizedItemId = NormalizeItemId(itemId);
+        if (StoryState.Instance != null && StoryState.Instance.HasFlag(GetItemQuestionReliefFlag(normalizedItemId)))
+        {
+            return false;
+        }
+
+        if (entry.anxiety >= 99.9f)
+        {
+            return false;
+        }
+
+        entry.anxiety = Mathf.Clamp(entry.anxiety - ObjectQuestionAnxietyReduction, 0f, 100f);
+        PersistCharacterState(entry);
+        ApplyAnxietyLevelFlags(entry);
+        CharacterAnxietyChanged?.Invoke(entry.id, entry.anxiety);
+
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.SetFlag(GetItemQuestionReliefFlag(normalizedItemId), true);
+        }
+
+        return true;
+    }
+
+    public bool HasUsedTalkRelief(string characterId)
+    {
+        return StoryState.Instance != null && StoryState.Instance.HasFlag(GetTalkReliefFlag(characterId));
+    }
+
+    public bool HasUsedObjectQuestionRelief(string itemId)
+    {
+        return StoryState.Instance != null
+            && StoryState.Instance.HasFlag(GetItemQuestionReliefFlag(NormalizeItemId(itemId)));
+    }
+
+    private void ApplyTalkRelief(string characterId)
     {
         if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null)
         {
             return;
         }
 
-        // Si la ansiedad ya esta al maximo (100%), no se puede reducir hablando.
-        // El personaje esta demasiado perturbado para responder con normalidad.
         if (entry.anxiety >= 99.9f)
         {
             Debug.Log($"[CharacterAnxietySystem] {GetDisplayName(entry)}: ansiedad maxima, hablar no ayuda.");
@@ -193,16 +317,28 @@ public class CharacterAnxietySystem : MonoBehaviour
 
         entry.anxiety = Mathf.Clamp(entry.anxiety - entry.talkReduction, 0f, 100f);
         PersistCharacterState(entry);
+        ApplyAnxietyLevelFlags(entry);
         CharacterAnxietyChanged?.Invoke(entry.id, entry.anxiety);
 
-        if (StoryState.Instance != null)
+        if (StoryState.Instance != null && entry.anxiety < entry.criticalThreshold)
         {
-            StoryState.Instance.SetFlag($"npc.talked.{entry.id}", true);
-            if (entry.anxiety < entry.criticalThreshold)
-            {
-                StoryState.Instance.SetFlag($"npc.critical.{entry.id}", false);
-            }
+            StoryState.Instance.SetFlag($"npc.critical.{entry.id}", false);
         }
+    }
+
+    private static string GetTalkReliefFlag(string characterId)
+    {
+        return $"anxiety.relief.talk.{characterId}";
+    }
+
+    private static string GetItemQuestionReliefFlag(string normalizedItemId)
+    {
+        return $"anxiety.relief.item.{normalizedItemId}";
+    }
+
+    private static string NormalizeItemId(string itemId)
+    {
+        return string.IsNullOrWhiteSpace(itemId) ? string.Empty : itemId.Trim().ToLowerInvariant();
     }
 
     public void RebuildLookup()

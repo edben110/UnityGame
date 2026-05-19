@@ -99,7 +99,9 @@ public class NpcInteractable : Interactable
             return false;
         }
 
-        if (StoryState.Instance.HasFlag($"npc.dead.{npcId}"))
+        if (StoryState.Instance.HasFlag($"npc.dead.{npcId}")
+            || StoryState.Instance.HasFlag($"npc.separated.{npcId}")
+            || !CharacterGroupStateRepository.IsInGroup(npcId))
         {
             return false;
         }
@@ -202,9 +204,13 @@ private void OnTalkPressed()
             Debug.Log($"[NPC] Jugador habló con {npcId}. Flag 'npc.talked.{npcId}' seteado.");
         }
 
-        if (CharacterAnxietySystem.Instance != null)
+        if (CharacterAnxietySystem.Instance != null && !CharacterAnxietySystem.Instance.TryApplyTalkRelief(npcId))
         {
-            CharacterAnxietySystem.Instance.ApplyTalkRelief(npcId);
+            if (CharacterAnxietySystem.Instance.HasUsedTalkRelief(npcId))
+            {
+                NpcInteractionMenuUI.Instance.ShowStatusText(
+                    "Hablar ya no baja su ansiedad en esta partida. Prueba preguntarle por un objeto del inventario.");
+            }
         }
 
         NpcInteractionMenuUI.Instance.Hide();
@@ -296,6 +302,18 @@ private void OnTalkPressed()
         if (!started)
         {
             return;
+        }
+
+        string itemId = ExtractItemIdFromConversation(conversationId);
+        if (CharacterAnxietySystem.Instance != null
+            && !string.IsNullOrWhiteSpace(itemId)
+            && !conversationId.Equals("chapter2_book_decision", StringComparison.Ordinal))
+        {
+            if (!CharacterAnxietySystem.Instance.TryApplyObjectQuestionRelief(npcId, itemId)
+                && CharacterAnxietySystem.Instance.HasUsedObjectQuestionRelief(itemId))
+            {
+                Debug.Log($"[NPC] Pregunta por '{itemId}' ya usada para bajar ansiedad en esta partida.");
+            }
         }
 
         if (conversationId == "chapter2_book_decision")
@@ -405,6 +423,22 @@ private void OnTalkPressed()
     private string BuildItemConversationId(string itemId)
     {
         return $"{talkConversationId}{ItemConversationSeparator}{NormalizeItemId(itemId)}";
+    }
+
+    private string ExtractItemIdFromConversation(string conversationId)
+    {
+        if (string.IsNullOrWhiteSpace(conversationId) || string.IsNullOrWhiteSpace(talkConversationId))
+        {
+            return string.Empty;
+        }
+
+        string prefix = $"{talkConversationId}{ItemConversationSeparator}";
+        if (!conversationId.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+        {
+            return string.Empty;
+        }
+
+        return conversationId.Substring(prefix.Length);
     }
 
     private bool IsBenBookDecisionContext(string itemId)

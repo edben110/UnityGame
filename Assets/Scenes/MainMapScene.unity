@@ -1704,7 +1704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6293557e23772e4e8c47fedf25f4341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChapterProgressTrigger
-  chapter1RequiredHotspots: 2
 --- !u!1 &266363895
 GameObject:
   m_ObjectHideFlags: 0
@@ -12043,31 +12042,26 @@ MonoBehaviour:
   - id: robert
     displayName: Robert
     anxiety: 5
-    increasePerMinute: 15
     talkReduction: 18
     criticalThreshold: 75
   - id: ana
     displayName: Ana
     anxiety: 5
-    increasePerMinute: 15
     talkReduction: 18
     criticalThreshold: 75
   - id: ben
     displayName: Ben
     anxiety: 5
-    increasePerMinute: 15
     talkReduction: 18
     criticalThreshold: 75
   - id: lisa
     displayName: Lisa
     anxiety: 5
-    increasePerMinute: 15
     talkReduction: 18
     criticalThreshold: 75
   - id: lucas
     displayName: Lucas
     anxiety: 5
-    increasePerMinute: 15
     talkReduction: 18
     criticalThreshold: 75
   debugStatusText: {fileID: 0}
@@ -17068,18 +17062,12 @@ MonoBehaviour:
   chapter3Id: chapter3
   chapter4Id: chapter4
   chapter5Id: chapter5
-  chapter3NpcRoomId: lobby
-  chapter3NpcAllowedBackgroundNames:
-  - LivingRoom
-  - NPCRoom
-  - Lobby
   prologueCompleteFlag: chapter.prologue.complete
   chapter1CompleteFlag: chapter.chapter1.complete
   chapter2CompleteFlag: chapter.chapter2.complete
   chapter3CompleteFlag: chapter.chapter3.complete
   chapter4CompleteFlag: chapter.chapter4.complete
   chapter5CompleteFlag: chapter.chapter5.complete
-  chapter2RequiredClues: 2
   forceFreshStartOnPlay: 1
 --- !u!114 &1820128883
 MonoBehaviour:

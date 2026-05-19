@@ -240,7 +240,10 @@ public override void Interact()
                     pickupSprite);
             }
 
-            InventoryState.AddItem(grantItemId);
+            if (InventoryState.AddItem(grantItemId) && CharacterAnxietySystem.Instance != null)
+            {
+                CharacterAnxietySystem.Instance.OnItemCollected();
+            }
         }
 
         if (StoryState.Instance != null && (hideAfterPickup || consumeAfterUse) && IsItemCollected())
@@ -359,6 +362,11 @@ public override void Interact()
         }
 
         bool added = InventoryState.AddItem(itemId);
+        if (added && CharacterAnxietySystem.Instance != null)
+        {
+            CharacterAnxietySystem.Instance.OnItemCollected();
+        }
+
         if (StoryState.Instance != null)
         {
             StoryState.Instance.SetFlag(GetDeferredGrantFlag(), true);

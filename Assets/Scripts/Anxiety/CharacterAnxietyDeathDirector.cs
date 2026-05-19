@@ -47,6 +47,11 @@ public class CharacterAnxietyDeathDirector : MonoBehaviour
 
         if (StoryState.Instance != null && StoryState.Instance.HasFlag($"npc.cinematic.played.{characterId}"))
         {
+            if (NpcLocationManager.Instance != null)
+            {
+                NpcLocationManager.Instance.HideNpcFromMap(characterId);
+            }
+
             ApplySeparation(characterId, playCinematic: false);
             return;
         }
@@ -63,6 +68,11 @@ public class CharacterAnxietyDeathDirector : MonoBehaviour
     {
         processingIds.Add(characterId);
         GameInputBlocker.Block();
+
+        if (NpcLocationManager.Instance != null)
+        {
+            NpcLocationManager.Instance.HideNpcFromMap(characterId);
+        }
 
         string displayName = CharacterAnxietySystem.Instance != null
             ? CharacterAnxietySystem.Instance.GetCharacterDisplayName(characterId)
@@ -119,8 +129,7 @@ public class CharacterAnxietyDeathDirector : MonoBehaviour
 
         if (NpcLocationManager.Instance != null)
         {
-            NpcLocationManager.Instance.MoveNpc(characterId, "missing");
-            NpcLocationManager.Instance.RefreshNpcVisibilityPublic();
+            NpcLocationManager.Instance.HideNpcFromMap(characterId);
         }
 
         CharacterGroupStateRepository.Save();
