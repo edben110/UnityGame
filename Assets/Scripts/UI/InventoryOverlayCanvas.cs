@@ -253,6 +253,8 @@ public class InventoryOverlayCanvas : MonoBehaviour
     /// <summary>Oculta el inventario fullscreen.</summary>
     public void Hide()
     {
+        CloseActivePuzzleIfOpen();
+
         if (overlayRoot != null)
         {
             overlayRoot.SetActive(false);
@@ -272,6 +274,20 @@ public class InventoryOverlayCanvas : MonoBehaviour
         else
         {
             Show();
+        }
+    }
+
+    private static void CloseActivePuzzleIfOpen()
+    {
+        if (Acertijo2PuzzleService.Instance != null && Acertijo2PuzzleService.Instance.IsOpen)
+        {
+            Acertijo2PuzzleService.Instance.ClosePuzzle();
+            return;
+        }
+
+        if (AcertijoPuzzleService.Instance != null && AcertijoPuzzleService.Instance.IsOpen)
+        {
+            AcertijoPuzzleService.Instance.ClosePuzzle();
         }
     }
 
@@ -904,6 +920,13 @@ public class InventoryOverlayCanvas : MonoBehaviour
             return;
         }
 
+        string clickedItemId = GetItemIdForSlot(slotIndex);
+        if (InventoryUsableItems.IsUsable(clickedItemId))
+        {
+            InventoryUsableItems.TryUse(clickedItemId);
+            return;
+        }
+
         // Si se hace clic en el slot ya seleccionado: deseleccionar (toggle)
         if (selectedSlotIndex == slotIndex)
         {
@@ -990,6 +1013,7 @@ public class InventoryOverlayCanvas : MonoBehaviour
         }
 
         string itemId = currentItems[slotIndex];
+        InventoryNarrativeDefaults.EnsureItemRegistered(itemId);
 
         if (catalog.TryGet(itemId, out InventoryItemDefinition definition) && definition != null)
         {
@@ -997,18 +1021,27 @@ public class InventoryOverlayCanvas : MonoBehaviour
             {
                 itemNameText.text = !string.IsNullOrWhiteSpace(definition.displayName)
                     ? definition.displayName
-                    : itemId.Replace('_', ' ');
+                    : InventoryNarrativeDefaults.GetDefaultDisplayName(itemId);
             }
 
             if (itemDescriptionText != null)
             {
-                // Usa la descripción real si existe; de lo contrario, vacío (listo para futuro uso)
-                itemDescriptionText.text = definition.description ?? string.Empty;
+                itemDescriptionText.text = !string.IsNullOrWhiteSpace(definition.description)
+                    ? definition.description
+                    : InventoryNarrativeDefaults.GetDefaultDescription(itemId);
             }
         }
         else
         {
-            ClearDescriptionTexts();
+            if (itemNameText != null)
+            {
+                itemNameText.text = InventoryNarrativeDefaults.GetDefaultDisplayName(itemId);
+            }
+
+            if (itemDescriptionText != null)
+            {
+                itemDescriptionText.text = InventoryNarrativeDefaults.GetDefaultDescription(itemId);
+            }
         }
     }
 
@@ -1120,16 +1153,17 @@ public class InventoryOverlayCanvas : MonoBehaviour
             if (i < currentItemsCache.Count)
             {
                 string itemId = currentItemsCache[i];
-                Sprite icon = null;
+                InventoryNarrativeDefaults.EnsureItemRegistered(itemId);
 
+                Sprite icon = null;
                 if (catalog != null && catalog.TryGet(itemId, out InventoryItemDefinition definition))
                 {
-                    icon = definition.icon;
+                    icon = definition != null ? definition.icon : null;
                 }
 
                 if (icon == null)
                 {
-                    Debug.LogWarning($"InventoryOverlayCanvas: Ítem '{itemId}' no tiene sprite en el catálogo. El slot quedará vacío hasta corregir el icono.");
+                    icon = InventoryProvisionalIcons.GetForItem(itemId);
                 }
 
                 slot.SetItem(icon);

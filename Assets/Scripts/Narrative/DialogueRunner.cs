@@ -237,61 +237,7 @@ public class DialogueRunner : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(line.addInventoryItemId))
         {
             string itemId = line.addInventoryItemId;
-            string canonicalItemId = InventoryCatalog.CanonicalizeItemId(itemId);
-
-            // Ensure the inventory catalog has a sprite for items added via dialogue.
-            // Some items are granted directly from Dialogue lines (addInventoryItemId)
-            // and previously were only added to InventoryState, leaving no registered
-            // icon for the UI. Try to register a runtime item with a sprite if found
-            // in Resources or already present in the catalog.
-            if (InventoryCatalog.Instance != null)
-            {
-                bool hasDef = InventoryCatalog.Instance.TryGet(itemId, out InventoryItemDefinition def);
-                bool hasIcon = hasDef && def != null && def.icon != null;
-
-                if (!hasIcon)
-                {
-                    // Try common resource paths for item sprites
-                    Sprite sprite = null;
-                    string[] tryPaths = new string[] {
-                        $"Sprites/{itemId}",
-                        $"Sprites/{itemId.ToLowerInvariant()}",
-                        $"Sprites/{canonicalItemId}",
-                        $"Sprites/{canonicalItemId.ToLowerInvariant()}",
-                        $"Sprites/Inventory/{canonicalItemId}",
-                        $"Icons/{canonicalItemId}",
-                        $"Items/{canonicalItemId}"
-                    };
-
-                    foreach (string path in tryPaths)
-                    {
-                        sprite = Resources.Load<Sprite>(path);
-                        if (sprite != null) break;
-
-                        Sprite[] all = Resources.LoadAll<Sprite>(path);
-                        if (all != null && all.Length > 0)
-                        {
-                            sprite = all[0];
-                            break;
-                        }
-                    }
-
-                    if (sprite != null)
-                    {
-                        InventoryCatalog.Instance.RegisterRuntimeItem(itemId, null, null, sprite);
-                        Debug.Log($"DialogueRunner: Registered runtime item '{itemId}' with sprite from Resources.");
-                    }
-                    else
-                    {
-                        // If no sprite found, register a minimal runtime entry so the catalog
-                        // can at least return a display name fallback. This avoids missing
-                        // definitions causing UI inconsistencies.
-                        InventoryCatalog.Instance.RegisterRuntimeItem(itemId, null, null, null);
-                        Debug.LogWarning($"DialogueRunner: Item '{itemId}' added via dialogue has no sprite in catalog or Resources. The inventory slot will remain empty until a sprite is assigned.");
-                    }
-                }
-            }
-
+            InventoryNarrativeDefaults.EnsureItemRegistered(itemId);
             InventoryState.AddItem(itemId);
         }
 
