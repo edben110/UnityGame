@@ -55,7 +55,7 @@ public class ChapterFlowController : MonoBehaviour
     [SerializeField] private int chapter2RequiredClues = 2;
 
     [Header("Prueba")]
-    [SerializeField] private bool forceFreshStartOnPlay = true;
+    [SerializeField] private bool forceFreshStartOnPlay = false;
 
     private DialogueRunner dialogueRunner;
     private bool chapter2DecisionLaunched;
@@ -116,10 +116,31 @@ public class ChapterFlowController : MonoBehaviour
             RoomManager.Instance.RoomChanged += OnRoomChanged;
         }
 
+        if (StoryState.Instance.HasFlag("newgame.intro.completed"))
+        {
+            if (!StoryState.Instance.HasFlag("session.started"))
+            {
+                StoryState.Instance.SetFlag("session.started", true);
+            }
+
+            if (StoryState.Instance.CurrentChapterId == prologueChapterId)
+            {
+                StoryState.Instance.SetChapter(chapter1Id);
+            }
+
+            if (RoomManager.Instance != null && RoomManager.Instance.HasRoom("lobby"))
+            {
+                RoomManager.Instance.ChangeRoom("lobby");
+            }
+
+            ResumeFromCurrentChapter();
+            return;
+        }
+
         if (forceFreshStartOnPlay)
         {
             StoryState.Instance.ResetForNewGame(prologueChapterId);
-            Debug.Log("[ChapterFlow] Fresh start → Prólogo");
+            Debug.Log("[ChapterFlow] Fresh start → Prólogo (solo editor/debug)");
         }
 
         if (!StoryState.Instance.HasFlag("session.started"))
@@ -127,7 +148,6 @@ public class ChapterFlowController : MonoBehaviour
             StoryState.Instance.SetFlag("session.started", true);
             StoryState.Instance.SetChapter(prologueChapterId);
 
-            // Intentar cambiar a la sala del prólogo si existe
             if (RoomManager.Instance != null && RoomManager.Instance.HasRoom("prologue"))
             {
                 RoomManager.Instance.ChangeRoom("prologue");

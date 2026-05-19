@@ -18,12 +18,28 @@ public class DialogueRunner : MonoBehaviour
 
     private void Awake()
     {
-        if (panelUI != null)
+        TryBindPanel();
+    }
+
+    public void Bind(DialogueLibrary dialogueLibrary, DialoguePanelUI panel)
+    {
+        library = dialogueLibrary;
+        panelUI = panel;
+        TryBindPanel();
+    }
+
+    private void TryBindPanel()
+    {
+        if (panelUI == null)
         {
-            panelUI.ContinuePressed += OnContinuePressed;
-            panelUI.ChoicePressed += OnChoicePressed;
-            panelUI.Hide();
+            return;
         }
+
+        panelUI.ContinuePressed -= OnContinuePressed;
+        panelUI.ChoicePressed -= OnChoicePressed;
+        panelUI.ContinuePressed += OnContinuePressed;
+        panelUI.ChoicePressed += OnChoicePressed;
+        panelUI.Hide();
     }
 
     private void OnDestroy()
@@ -105,19 +121,19 @@ public class DialogueRunner : MonoBehaviour
             return;
         }
 
-        if (selected.anxietyDelta != 0f && StoryState.Instance != null)
+        if (selected.anxietyDelta != 0f)
         {
-            StoryState.Instance.AddAnxiety(selected.anxietyDelta);
+            ApplyAnxietyDelta(selected.anxietyDelta);
         }
 
-        if (!string.IsNullOrWhiteSpace(selected.setFlag) && StoryState.Instance != null)
+        if (!string.IsNullOrWhiteSpace(selected.setFlag))
         {
-            StoryState.Instance.SetFlag(selected.setFlag, true);
+            SetNarrativeFlag(selected.setFlag, true);
         }
 
-        if (!string.IsNullOrWhiteSpace(selected.id) && StoryState.Instance != null)
+        if (!string.IsNullOrWhiteSpace(selected.id))
         {
-            StoryState.Instance.SetDecision($"choice.{activeConversation.id}.{activeNode.id}", selected.id);
+            SetNarrativeDecision($"choice.{activeConversation.id}.{activeNode.id}", selected.id);
         }
 
         if (string.IsNullOrWhiteSpace(selected.nextNodeId))
@@ -188,29 +204,34 @@ public class DialogueRunner : MonoBehaviour
 
     private static bool LineAllowedByFlags(DialogueLine line)
     {
-        if (line == null || string.IsNullOrWhiteSpace(line.requiredFlag) || StoryState.Instance == null)
+        if (line == null || string.IsNullOrWhiteSpace(line.requiredFlag))
         {
             return true;
         }
 
-        return StoryState.Instance.HasFlag(line.requiredFlag);
+        return HasNarrativeFlag(line.requiredFlag);
     }
 
     private static void ApplyLineEffects(DialogueLine line)
     {
-        if (line == null || StoryState.Instance == null)
+        if (line == null)
         {
             return;
         }
 
         if (line.anxietyDelta != 0f)
         {
-            StoryState.Instance.AddAnxiety(line.anxietyDelta);
+            ApplyAnxietyDelta(line.anxietyDelta);
         }
 
         if (!string.IsNullOrWhiteSpace(line.setFlag))
         {
-            StoryState.Instance.SetFlag(line.setFlag, true);
+            SetNarrativeFlag(line.setFlag, true);
+        }
+
+        if (StoryState.Instance == null)
+        {
+            return;
         }
 
         if (!string.IsNullOrWhiteSpace(line.addInventoryItemId))
@@ -231,6 +252,78 @@ public class DialogueRunner : MonoBehaviour
         }
     }
 
+    private static void ApplyAnxietyDelta(float delta)
+    {
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.AddAnxiety(delta);
+            return;
+        }
+
+        if (NewGamePendingState.IsActive)
+        {
+            NewGamePendingState.AddAnxiety(delta);
+        }
+    }
+
+    private static void SetNarrativeFlag(string flag, bool enabled)
+    {
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.SetFlag(flag, enabled);
+            return;
+        }
+
+        if (NewGamePendingState.IsActive)
+        {
+            NewGamePendingState.SetFlag(flag, enabled);
+        }
+    }
+
+    private static void SetNarrativeDecision(string key, string value)
+    {
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.SetDecision(key, value);
+            return;
+        }
+
+        if (NewGamePendingState.IsActive)
+        {
+            NewGamePendingState.SetDecision(key, value);
+        }
+    }
+
+    private static bool HasNarrativeFlag(string flag)
+    {
+        if (StoryState.Instance != null)
+        {
+            return StoryState.Instance.HasFlag(flag);
+        }
+
+        if (NewGamePendingState.IsActive)
+        {
+            return NewGamePendingState.HasFlag(flag);
+        }
+
+        return false;
+    }
+
+    private static float GetCurrentAnxiety()
+    {
+        if (StoryState.Instance != null)
+        {
+            return StoryState.Instance.Anxiety;
+        }
+
+        if (NewGamePendingState.IsActive)
+        {
+            return NewGamePendingState.Anxiety;
+        }
+
+        return 0f;
+    }
+
     private static List<DialogueChoice> BuildVisibleChoices(List<DialogueChoice> allChoices)
     {
         List<DialogueChoice> visible = new List<DialogueChoice>();
@@ -239,7 +332,7 @@ public class DialogueRunner : MonoBehaviour
             return visible;
         }
 
-        float anxiety = StoryState.Instance != null ? StoryState.Instance.Anxiety : 0f;
+        float anxiety = GetCurrentAnxiety();
 
         for (int i = 0; i < allChoices.Count; i++)
         {
@@ -254,7 +347,7 @@ public class DialogueRunner : MonoBehaviour
                 continue;
             }
 
-            if (!string.IsNullOrWhiteSpace(choice.requiredFlag) && StoryState.Instance != null && !StoryState.Instance.HasFlag(choice.requiredFlag))
+            if (!string.IsNullOrWhiteSpace(choice.requiredFlag) && !HasNarrativeFlag(choice.requiredFlag))
             {
                 continue;
             }

@@ -23,6 +23,7 @@ public class DialoguePanelUI : MonoBehaviour
 
     private readonly List<Button> activeChoiceButtons = new List<Button>();
     private Action pendingContinueAction;
+    private bool continueButtonWired;
 
     public static DialoguePanelUI Instance => instance;
 
@@ -40,23 +41,32 @@ public class DialoguePanelUI : MonoBehaviour
         }
 
         instance = this;
+        WireUi();
+        Hide();
+    }
 
-        if (continueButton != null)
+    /// <summary>
+    /// Enlaza el botón Continuar tras asignar referencias en runtime (p. ej. MenuDialogueUiFactory).
+    /// </summary>
+    public void WireUi()
+    {
+        if (continueButton == null || continueButtonWired)
         {
-            continueButton.onClick.AddListener(HandleContinuePressed);
-            // Cursor hover para el botón continuar
-            if (continueButton.GetComponent<CursorHoverUI>() == null)
-            {
-                continueButton.gameObject.AddComponent<CursorHoverUI>();
-            }
+            return;
         }
 
-        Hide();
+        continueButton.onClick.AddListener(HandleContinuePressed);
+        if (continueButton.GetComponent<CursorHoverUI>() == null)
+        {
+            continueButton.gameObject.AddComponent<CursorHoverUI>();
+        }
+
+        continueButtonWired = true;
     }
 
     private void OnDestroy()
     {
-        if (continueButton != null)
+        if (continueButton != null && continueButtonWired)
         {
             continueButton.onClick.RemoveListener(HandleContinuePressed);
         }
@@ -100,6 +110,11 @@ public class DialoguePanelUI : MonoBehaviour
     public void ShowSystemMessage(string text, Action continueAction = null)
     {
         ShowLine("Narrador", text, continueAction ?? Hide);
+    }
+
+    public void InvokeContinue()
+    {
+        HandleContinuePressed();
     }
 
     private void HandleContinuePressed()
@@ -173,6 +188,11 @@ public class DialoguePanelUI : MonoBehaviour
         if (root != null)
         {
             root.SetActive(false);
+        }
+
+        if (continueButton != null)
+        {
+            continueButton.gameObject.SetActive(false);
         }
 
         ClearChoices();

@@ -118,6 +118,17 @@ public class UIManager : MonoBehaviour
         BuildChapterButtons();
     }
 
+    public void HideAllMenuUi()
+    {
+        SetPanelState(mainMenuPanel, false);
+        SetPanelState(chaptersPanel, false);
+
+        if (backgroundObj != null)
+        {
+            backgroundObj.SetActive(false);
+        }
+    }
+
     // ==================== EVENTOS ====================
 
     private void WireEvents()

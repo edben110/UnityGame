@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
 
         saveSystem.DeleteSave();
         CharacterGroupStateRepository.Reset();
+        NewGamePendingState.Reset();
         currentSaveData = saveSystem.CreateNewSave();
 
         ChapterDefinition firstChapter = GetFirstValidChapter();
@@ -82,15 +83,69 @@ public class GameManager : MonoBehaviour
             currentSaveData.chapterUnlocks[firstChapter.id] = true;
         }
 
-        currentSaveData.lastSceneName = prologueSceneName;
-
         bool saved = saveSystem.Save(currentSaveData);
         if (!saved)
         {
             Debug.LogWarning("No se pudo persistir nuevo juego, pero se continuara con estado en memoria.");
         }
 
-        sceneController.TryLoadScene(prologueSceneName);
+        if (NewGameIntroPresenter.Instance != null)
+        {
+            NewGameIntroPresenter.Instance.BeginIntro();
+            return;
+        }
+
+        NewGameIntroPresenter presenter = FindAnyObjectByType<NewGameIntroPresenter>();
+        if (presenter != null)
+        {
+            presenter.BeginIntro();
+            return;
+        }
+
+        Debug.LogWarning("NewGameIntroPresenter no encontrado. Cargando escena de mapa directamente.");
+        CompleteNewGameIntroAndLoadMainMap("chapter1", 0f);
+    }
+
+    public void CompleteNewGameIntroAndLoadMainMap(string chapterId, float anxiety)
+    {
+        if (saveSystem == null)
+        {
+            Debug.LogError("SaveSystem no inicializado.");
+            return;
+        }
+
+        if (currentSaveData == null)
+        {
+            currentSaveData = saveSystem.CreateNewSave();
+        }
+
+        string targetChapter = string.IsNullOrWhiteSpace(chapterId) ? "chapter1" : chapterId;
+        string targetScene = string.IsNullOrWhiteSpace(prologueSceneName) ? "MainMapScene" : prologueSceneName;
+
+        NewGamePendingState.WriteToSaveData(currentSaveData, targetChapter, anxiety);
+
+        ChapterDefinition firstChapter = GetFirstValidChapter();
+        if (firstChapter != null)
+        {
+            currentSaveData.chapterUnlocks[firstChapter.id] = true;
+        }
+
+        currentSaveData.lastSceneName = targetScene;
+
+        bool saved = saveSystem.Save(currentSaveData);
+        if (!saved)
+        {
+            Debug.LogWarning("No se pudo persistir el estado tras el intro.");
+        }
+
+        NewGamePendingState.Reset();
+
+        if (NewGameIntroPresenter.Instance != null)
+        {
+            NewGameIntroPresenter.Instance.CleanupAndDestroy();
+        }
+
+        sceneController.TryLoadScene(targetScene);
     }
 
     public void ContinueGame()
