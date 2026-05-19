@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -550,164 +550,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!1 &108415571
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 108415572}
-  - component: {fileID: 108415575}
-  - component: {fileID: 108415574}
-  - component: {fileID: 108415573}
-  m_Layer: 0
-  m_Name: Key_GalleryKey
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &108415572
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108415571}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.58, y: -37.07}
-  m_SizeDelta: {x: 0.6148, y: 0.7491}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &108415573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108415571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e95c9b3d3acedd458c86cae66c92e76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KeyItem
-  keyType: 1
-  pickupMessage: Has recogido una llave!
-  playSound: 1
---- !u!61 &108415574
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108415571}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 1
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!212 &108415575
-SpriteRenderer:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108415571}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: fc2d1ed84ea856b4eab806336daebd41, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 1
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
 --- !u!1 &123888529
 GameObject:
   m_ObjectHideFlags: 0
@@ -926,7 +768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NpcInteractionMenuUI
   root: {fileID: 1113264208}
   titleText: {fileID: 1005990210}
-  statusText: {fileID: 1377013879}
+  statusText: {fileID: 0}
   talkButton: {fileID: 1675981729}
   verifyAnxietyButton: {fileID: 1942016010}
   askItemButton: {fileID: 266363897}
@@ -1118,25 +960,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &158418040
-RectTransform:
+--- !u!4 &158418040
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158418039}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.5, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.5089, y: -82.6675}
-  m_SizeDelta: {x: 6.0737, y: 3.1267}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &158418041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,6 +998,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 0
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -1207,7 +1049,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6, y: 3}
+  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &160640874
 GameObject:
@@ -1265,6 +1107,10 @@ MonoBehaviour:
   grantItemDescription: Una llave vieja y desgastada. Solo resistira un uso mas.
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -1314,97 +1160,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
---- !u!1 &171563338
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 171563339}
-  - component: {fileID: 171563340}
-  m_Layer: 0
-  m_Name: BG_Epilogue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &171563339
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171563338}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42, y: -14, z: 0}
-  m_LocalScale: {x: 1.3766496, y: 1.1204162, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 720863764}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &171563340
-SpriteRenderer:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171563338}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -100
-  m_MaskInteraction: 0
-  m_Sprite: {fileID: 715184301222051581, guid: 7672257dbb35dbc45a63e9fd864d3f93, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 15.36, y: 10.24}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
 --- !u!1 &180523219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,25 +1178,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &180523220
-RectTransform:
+--- !u!4 &180523220
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180523219}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.5, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.96, y: -81.82}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180523221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1466,6 +1217,10 @@ MonoBehaviour:
     Siempre.'''
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -1513,7 +1268,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3, y: 2}
+  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &217387911
 GameObject:
@@ -1710,6 +1465,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -1854,7 +1613,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6293557e23772e4e8c47fedf25f4341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChapterProgressTrigger
-  chapter1RequiredHotspots: 2
 --- !u!1 &266363895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,8 +1649,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 331, y: 43}
-  m_SizeDelta: {x: 160, y: 49.521}
+  m_AnchoredPosition: {x: 229.59529, y: -166.90111}
+  m_SizeDelta: {x: 581.0687, y: 149.0244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &266363897
 MonoBehaviour:
@@ -2300,18 +2058,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: northstreet
+  targetRoomId: ala_norte
   requiredFlag: 
   requiredKeys: 06000000
-  requiredChapterId: 
+  requiredChapterId: chapter4
   requiredNpcTalkCount: 1
   triggersChapterTransition: 1
   transitionToChapterId: chapter5
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
-  lockedMessage: La perilla de la puerta gira y se abre un poco, pero parece que
-    hay un circuito que la mantiene bloqueada.
+  lockedMessage: La puerta al Ala Norte esta cerrada. Necesito la llave desgastada.
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &294805767
@@ -2475,6 +2232,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -3178,6 +2939,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -3440,6 +3205,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -3643,97 +3412,6 @@ SpriteRenderer:
   m_FlipY: 0
   m_DrawMode: 1
   m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
---- !u!1 &415671180
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 415671181}
-  - component: {fileID: 415671182}
-  m_Layer: 0
-  m_Name: BG_Prologue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &415671181
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 415671180}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -41.88, y: -3.3, z: 0}
-  m_LocalScale: {x: 1.2292897, y: 1.120029, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 720863764}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &415671182
-SpriteRenderer:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 415671180}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -100
-  m_MaskInteraction: 0
-  m_Sprite: {fileID: -445055827032896396, guid: 7d6c6e98a01f4194eafea093549375b1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 15.36, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -4548,6 +4226,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 0.21568629, g: 0.21568629, b: 0.21568629, a: 0.654902}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -4648,168 +4330,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483574120}
   m_CullTransparentMesh: 1
---- !u!1 &507963924
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 507963925}
-  - component: {fileID: 507963928}
-  - component: {fileID: 507963927}
-  - component: {fileID: 507963926}
-  m_Layer: 0
-  m_Name: HS_SecurityUnlockButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &507963925
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507963924}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9.441481, y: 10.95732, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.3731, y: -80.08304}
-  m_SizeDelta: {x: 0.3769, y: 0.0912}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &507963926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507963924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f597c22be61e7a5469eaea75a382ee14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SecurityUnlockButton
-  securityDisabledFlag: SecuritySystemDisabled
-  doorUnlockedFlag: Door_ToNorthStreetUnlocked
-  unlockMessage: "Parece que este panel controla los bloqueos de la mansi\xF3n...
-    eso deber\xEDa abrir el acceso al ala norte."
-  alreadyUnlockedMessage: "El sistema de seguridad ya est\xE1 desactivado. La puerta
-    al ala norte deber\xEDa estar abierta."
-  unlockSound: {fileID: 0}
---- !u!212 &507963927
-SpriteRenderer:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507963924}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 120
-  m_MaskInteraction: 0
-  m_Sprite: {fileID: 633087533}
-  m_Color: {r: 0.2, g: 0.8, b: 0.3, a: 0.6}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.04, y: 0.04}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
---- !u!61 &507963928
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507963924}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.04, y: 0.04}
-    newSize: {x: 0.04, y: 0.04}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.4, y: 0.1}
-  m_EdgeRadius: 0
 --- !u!1 &538782183
 GameObject:
   m_ObjectHideFlags: 0
@@ -4944,6 +4464,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -5305,25 +4829,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &623919435
-RectTransform:
+--- !u!4 &623919435
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623919434}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.31, y: -67.22}
-  m_SizeDelta: {x: 1.4327, y: 1.5132}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &623919436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5348,6 +4868,10 @@ MonoBehaviour:
     secreta.
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -5397,216 +4921,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
---- !u!213 &633087533
-Sprite:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Rect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 4
-    height: 4
-  m_Offset: {x: 0, y: 0}
-  m_Border: {x: 0, y: 0, z: 0, w: 0}
-  m_PixelsToUnits: 100
-  m_Pivot: {x: 0.5, y: 0.5}
-  m_Extrude: 0
-  m_IsPolygon: 0
-  m_PackingTag: 
-  m_RenderDataKey:
-    00000000000000000000000000000000: 0
-  m_AtlasTags: []
-  m_SpriteAtlas: {fileID: 0}
-  m_RD:
-    serializedVersion: 3
-    texture: {fileID: 0}
-    alphaTexture: {fileID: 0}
-    secondaryTextures: []
-    m_SubMeshes:
-    - serializedVersion: 2
-      firstByte: 0
-      indexCount: 6
-      topology: 0
-      baseVertex: 0
-      firstVertex: 0
-      vertexCount: 4
-      localAABB:
-        m_Center: {x: 0, y: 0, z: 0}
-        m_Extent: {x: 0, y: 0, z: 0}
-    m_IndexBuffer: 000001000200020001000300
-    m_VertexData:
-      serializedVersion: 3
-      m_VertexCount: 4
-      m_Channels:
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 3
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 1
-        offset: 0
-        format: 0
-        dimension: 2
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      m_DataSize: 80
-      _typelessdata: 0ad7a3bc0ad7a33c000000000ad7a33c0ad7a33c000000000ad7a3bc0ad7a3bc000000000ad7a33c0ad7a3bc000000000000000000000000000000000000000000000000000000000000000000000000
-    m_Bindpose: []
-    textureRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 4
-      height: 4
-    textureRectOffset: {x: 0, y: 0}
-    atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 64
-    uvTransform: {x: 100, y: 2, z: 100, w: 2}
-    downscaleMultiplier: 1
-  m_AtlasRD:
-    serializedVersion: 3
-    texture: {fileID: 0}
-    alphaTexture: {fileID: 0}
-    secondaryTextures: []
-    m_SubMeshes:
-    - serializedVersion: 2
-      firstByte: 0
-      indexCount: 6
-      topology: 0
-      baseVertex: 0
-      firstVertex: 0
-      vertexCount: 4
-      localAABB:
-        m_Center: {x: 0, y: 0, z: 0}
-        m_Extent: {x: 0, y: 0, z: 0}
-    m_IndexBuffer: 000001000200020001000300
-    m_VertexData:
-      serializedVersion: 3
-      m_VertexCount: 4
-      m_Channels:
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 3
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 1
-        offset: 0
-        format: 0
-        dimension: 2
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      - stream: 0
-        offset: 0
-        format: 0
-        dimension: 0
-      m_DataSize: 80
-      _typelessdata: 0ad7a3bc0ad7a33c000000000ad7a33c0ad7a33c000000000ad7a3bc0ad7a3bc000000000ad7a33c0ad7a3bc000000000000000000000000000000000000000000000000000000000000000000000000
-    m_Bindpose: []
-    textureRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 4
-      height: 4
-    textureRectOffset: {x: 0, y: 0}
-    atlasRectOffset: {x: -1, y: -1}
-    settingsRaw: 64
-    uvTransform: {x: 100, y: 2, z: 100, w: 2}
-    downscaleMultiplier: 1
-  m_PhysicsShape: []
-  m_Bones: []
-  m_ScriptableObjects: []
-  m_SpriteID: 
 --- !u!1 &641822158
 GameObject:
   m_ObjectHideFlags: 0
@@ -5791,7 +5105,6 @@ GameObject:
   - component: {fileID: 650944590}
   - component: {fileID: 650944589}
   - component: {fileID: 650944591}
-  - component: {fileID: 650944592}
   m_Layer: 0
   m_Name: DialogueSystem
   m_TagString: Untagged
@@ -7660,20 +6973,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chapter4Builder
   targetLibrary: {fileID: 0}
   generateOnStartIfEmpty: 1
---- !u!114 &650944592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650944583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5d5a5ed7684a3443b6eeb08d8d2ec4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EpilogueBuilder
-  targetLibrary: {fileID: 0}
-  generateOnStartIfEmpty: 1
 --- !u!1 &659230938
 GameObject:
   m_ObjectHideFlags: 0
@@ -8002,7 +7301,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.6664, y: -335.3}
+  m_AnchoredPosition: {x: 8.6665, y: -337.6}
   m_SizeDelta: {x: 2258.837, y: 541.136}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &693586091
@@ -8072,7 +7371,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 415671181}
   - {fileID: 1676463942}
   - {fileID: 2107965194}
   - {fileID: 1089422179}
@@ -8085,7 +7383,6 @@ Transform:
   - {fileID: 1672120999}
   - {fileID: 587178101}
   - {fileID: 813642838}
-  - {fileID: 171563339}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &724228706
@@ -8190,6 +7487,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -8390,6 +7691,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1987654322}
   - {fileID: 1416465144}
   - {fileID: 1260874353}
   - {fileID: 1074313678}
@@ -8407,7 +7709,6 @@ Transform:
   - {fileID: 90893717}
   - {fileID: 404231388}
   - {fileID: 1945706831}
-  - {fileID: 108415572}
   - {fileID: 329041364}
   - {fileID: 1454228212}
   - {fileID: 461789604}
@@ -8449,7 +7750,6 @@ Transform:
   - {fileID: 158418040}
   - {fileID: 623919435}
   - {fileID: 1873997892}
-  - {fileID: 507963925}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &758717111
@@ -8502,7 +7802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: secureDoor
+  targetRoomId: lobby
   requiredFlag: 
   requiredKeys: 
   requiredChapterId: 
@@ -8638,25 +7938,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &781062625
-RectTransform:
+--- !u!4 &781062625
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781062624}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.528399, y: -77.83}
-  m_SizeDelta: {x: 3.1039, y: 4.8455}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &781062626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8680,6 +7976,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 0
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -8727,7 +8027,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3, y: 5}
+  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &790100809
 GameObject:
@@ -9346,6 +8646,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -9454,8 +8758,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Preguntar por objeto
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 96a4d45faa4cdec45887cedc94e204e6, type: 2}
-  m_sharedMaterial: {fileID: -8632604571150483983, guid: 96a4d45faa4cdec45887cedc94e204e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9479,8 +8783,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -9560,7 +8864,7 @@ Transform:
   m_GameObject: {fileID: 869424475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.14, y: -85.99, z: 0}
+  m_LocalPosition: {x: 12.5, y: -81.58, z: 0}
   m_LocalScale: {x: 0.2754821, y: 0.2754821, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9589,6 +8893,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -10368,15 +9676,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -10407,7 +9715,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -152.7367, y: 0, z: 12.219208, w: 0}
+  m_margin: {x: 11.334351, y: 0, z: 12.219208, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -10437,8 +9745,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -265.246, y: 121}
-  m_SizeDelta: {x: 22.826, y: 50}
+  m_AnchoredPosition: {x: -302, y: 147.1}
+  m_SizeDelta: {x: 404.41, y: 163.845}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1011823800
 GameObject:
@@ -10633,6 +9941,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -10692,6 +10004,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -10798,6 +10114,10 @@ MonoBehaviour:
     haya llegado antes que tu''.'
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
@@ -11098,8 +10418,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 397, y: 109}
-  m_SizeDelta: {x: -609.83, y: -395.81}
+  m_AnchoredPosition: {x: 228.6766, y: -34.3545}
+  m_SizeDelta: {x: -262.5583, y: 369.647}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1113264210
 MonoBehaviour:
@@ -11550,6 +10870,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -12064,6 +11388,10 @@ MonoBehaviour:
     investigacion reabierta.'
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
@@ -12144,8 +11472,6 @@ Transform:
   m_Children:
   - {fileID: 254323724}
   - {fileID: 912102682}
-  - {fileID: 1510631413}
-  - {fileID: 1791312819}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294416194
@@ -12341,6 +11667,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -12400,6 +11730,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -12522,33 +11856,28 @@ MonoBehaviour:
   - id: robert
     displayName: Robert
     anxiety: 5
-    increasePerMinute: 20
-    talkReduction: 18
-    criticalThreshold: 75
+    talkReduction: 20
+    criticalThreshold: 100
   - id: ana
     displayName: Ana
     anxiety: 5
-    increasePerMinute: 5
-    talkReduction: 18
-    criticalThreshold: 75
+    talkReduction: 20
+    criticalThreshold: 100
   - id: ben
     displayName: Ben
     anxiety: 5
-    increasePerMinute: 5
-    talkReduction: 18
-    criticalThreshold: 75
+    talkReduction: 20
+    criticalThreshold: 100
   - id: lisa
     displayName: Lisa
     anxiety: 5
-    increasePerMinute: 5
-    talkReduction: 18
-    criticalThreshold: 75
+    talkReduction: 20
+    criticalThreshold: 100
   - id: lucas
     displayName: Lucas
     anxiety: 5
-    increasePerMinute: 5
-    talkReduction: 18
-    criticalThreshold: 75
+    talkReduction: 20
+    criticalThreshold: 100
   debugStatusText: {fileID: 0}
 --- !u!1 &1316515058
 GameObject:
@@ -13285,15 +12614,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -13324,7 +12653,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10.181352, y: 0, z: 180.99281, w: -153.21124}
+  m_margin: {x: 10.181352, y: 0, z: 1.8541412, w: 9.185474}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -13354,8 +12683,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.201, y: 37}
-  m_SizeDelta: {x: 853.71, y: 50}
+  m_AnchoredPosition: {x: -302, y: 0.0000078678}
+  m_SizeDelta: {x: 404.4044, y: 130.3613}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1405596382
 GameObject:
@@ -13551,6 +12880,10 @@ MonoBehaviour:
     con tinta roja.
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
@@ -13917,15 +13250,14 @@ MonoBehaviour:
   targetRoomId: securityRoom
   requiredFlag: 
   requiredKeys: 
-  requiredChapterId: chapter4
+  requiredChapterId: 
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
-  lockedMessage: La puerta tiene un teclado numerico. Necesito encontrar la combinacion
-    correcta.
+  lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1446252348
@@ -14081,25 +13413,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1447478148
-RectTransform:
+--- !u!4 &1447478148
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447478147}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.66, y: -79.1}
-  m_SizeDelta: {x: 2.1739, y: 3.1346}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1447478149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14123,6 +13451,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 0
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -14170,7 +13502,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2, y: 3}
+  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &1454228211
 GameObject:
@@ -14207,7 +13539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10.27, y: -24.6}
+  m_AnchoredPosition: {x: 11.86, y: -24.36}
   m_SizeDelta: {x: 0.6148, y: 0.7491}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1454228213
@@ -14496,58 +13828,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 720863764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1510631412
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1510631413}
-  - component: {fileID: 1510631414}
-  m_Layer: 0
-  m_Name: ProgressionTestHelper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1510631413
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1510631412}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1267732868}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1510631414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1510631412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9fa265849bf4fa4dbc1a7eba999f369, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProgressionTestHelper
-  enableTestingMode: 1
-  grantAllKeys: 0
-  grantAllNpcItems: 0
-  forceChapterId: 
-  unlockSecurityRoom: 0
-  simulateAllDeliveries: 0
-  simulateSimonRescue: 0
-  evaluateEnding: 0
 --- !u!1 &1542674131
 GameObject:
   m_ObjectHideFlags: 0
@@ -14786,8 +14066,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 331, y: -128}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 356.99997, y: 4.1086254}
+  m_SizeDelta: {x: 326.2592, y: 80.7065}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1574513359
 GameObject:
@@ -14845,6 +14125,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -15081,6 +14365,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -15336,11 +14624,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 793.2
+      value: 767.60004
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 384.2
+      value: 429.8
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.x
@@ -15725,6 +15013,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 0.21568629, g: 0.21568629, b: 0.21568629, a: 0.654902}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -16154,6 +15446,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -16456,8 +15752,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 331, y: -76}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 357, y: 144}
+  m_SizeDelta: {x: 326.2592, y: 80.7065}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1676463941
 GameObject:
@@ -16946,51 +16242,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &1791312818
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1791312819}
-  - component: {fileID: 1791312820}
-  m_Layer: 0
-  m_Name: EpilogueSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1791312819
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791312818}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1267732868}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1791312820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791312818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7085b8daf23853e4a94961c8bb4435d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EpilogueSystem
-  epilogueConversationPrefix: epilogue_
 --- !u!1 &1794638035
 GameObject:
   m_ObjectHideFlags: 0
@@ -17009,25 +16260,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1794638036
-RectTransform:
+--- !u!4 &1794638036
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794638035}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.32, y: -77.75}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1794638037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17051,6 +16298,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 0
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -17163,6 +16414,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 7577365178633645245, guid: fcc0f688b8a356740b890d568e1fe966, type: 3}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 1, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
@@ -17652,18 +16907,12 @@ MonoBehaviour:
   chapter3Id: chapter3
   chapter4Id: chapter4
   chapter5Id: chapter5
-  chapter3NpcRoomId: lobby
-  chapter3NpcAllowedBackgroundNames:
-  - LivingRoom
-  - NPCRoom
-  - Lobby
   prologueCompleteFlag: chapter.prologue.complete
   chapter1CompleteFlag: chapter.chapter1.complete
   chapter2CompleteFlag: chapter.chapter2.complete
   chapter3CompleteFlag: chapter.chapter3.complete
   chapter4CompleteFlag: chapter.chapter4.complete
   chapter5CompleteFlag: chapter.chapter5.complete
-  chapter2RequiredClues: 2
   forceFreshStartOnPlay: 1
 --- !u!114 &1820128883
 MonoBehaviour:
@@ -18123,6 +17372,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 0
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -18354,172 +17607,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
---- !u!1 &1902322510
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1902322516}
-  - component: {fileID: 1902322515}
-  - component: {fileID: 1902322514}
-  - component: {fileID: 1902322513}
-  - component: {fileID: 1902322512}
-  - component: {fileID: 1902322511}
-  m_Layer: 5
-  m_Name: Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1902322511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902322510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7316314cc594dc544b721129f5197b85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DigitButton
---- !u!61 &1902322512
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902322510}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.3, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &1902322513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902322510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43607d3d593e12f45b4a104201f35f72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NumericPasswordPanel
-  correctPassword: 04000000070000000200000009000000
-  digitPositions:
-  - {x: -1, y: 1}
-  - {x: 0, y: 1}
-  - {x: 1, y: 1}
-  - {x: -1, y: 0}
-  - {x: 0, y: 0}
-  - {x: 1, y: 0}
-  - {x: -1, y: -1}
-  - {x: 0, y: -1}
-  - {x: 1, y: -1}
-  hitboxSize: {x: 0.4, y: 0.4}
-  unlockFlag: SecurityRoom.Unlocked
-  wrongPasswordMessage: "Parece que no es la combinaci\xF3n correcta..."
-  correctPasswordMessage: El mecanismo hace click. La puerta se ha desbloqueado.
-  digitClickSound: {fileID: 0}
-  wrongSound: {fileID: 0}
-  correctSound: {fileID: 0}
---- !u!114 &1902322514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902322510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1902322515
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902322510}
-  m_CullTransparentMesh: 1
---- !u!224 &1902322516
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902322510}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 25.047, y: -67.887}
-  m_SizeDelta: {x: 1.2854, y: 1.0393}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1902851353
 GameObject:
   m_ObjectHideFlags: 0
@@ -18961,8 +18048,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 331, y: -24.761}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 357, y: 281.84384}
+  m_SizeDelta: {x: 326.2592, y: 80.7065}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1945706830
 GameObject:
@@ -18977,7 +18064,7 @@ GameObject:
   - component: {fileID: 1945706833}
   - component: {fileID: 1945706832}
   m_Layer: 0
-  m_Name: Key_BedroomKey
+  m_Name: Puzzle_Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18999,8 +18086,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.57, y: -58.25}
-  m_SizeDelta: {x: 0.5227, y: 0.5301}
+  m_AnchoredPosition: {x: -5.81, y: -58.05}
+  m_SizeDelta: {x: 1.1845, y: 1.0351}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945706832
 MonoBehaviour:
@@ -19011,12 +18098,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1945706830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e95c9b3d3acedd458c86cae66c92e76, type: 3}
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KeyItem
-  keyType: 2
-  pickupMessage: Has recogido una llave!
-  playSound: 1
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: bedroom_puzzle_box
+  requiredChapterId: chapter2
+  conversationId: 
+  startNodeId: start
+  consumeAfterUse: 0
+  setFlagOnInteract: 
+  grantItemId: puzzle_box
+  grantItemDisplayName: Caja puzzle cerrada
+  grantItemDescription: Una caja de madera con un mecanismo de botones en la tapa.
+    Parece que hay que pulsar los botones en el orden correcto para abrirla.
+  grantItemSprite: {fileID: -6029530609476497558, guid: 15004c038d5efb943ac6035df04f2a10, type: 3}
+  hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &1945706833
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19055,13 +18158,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
+    oldSize: {x: 4.49, y: 3.03}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &1945706834
 SpriteRenderer:
@@ -19110,9 +18213,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: fc2d1ed84ea856b4eab806336daebd41, type: 3}
+  m_Sprite: {fileID: -6029530609476497558, guid: 15004c038d5efb943ac6035df04f2a10, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -19213,6 +18316,115 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1987654321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1987654322}
+  - component: {fileID: 1987654324}
+  - component: {fileID: 1987654323}
+  m_Layer: 0
+  m_Name: HS_Lobby_Pista
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1987654322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987654321}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.2, y: 2.1, z: 0}
+  m_LocalScale: {x: 2.5, y: 1.5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1987654323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987654321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
+  hotspotId: lobby_pista
+  requiredChapterId: prologue
+  conversationId: 
+  startNodeId: start
+  consumeAfterUse: 0
+  setFlagOnInteract: clue.lobby.pista
+  grantItemId: retrato
+  grantItemDisplayName: Retrato
+  grantItemDescription: quiza sea una pista para algo, pero que...
+  grantItemSprite: {fileID: 21300000, guid: f54c199befdf8bf4789e6f47dbee3128, type: 3}
+  hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
+  showDebugMarkerInGame: 1
+  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
+  debugMarkerSize: {x: 6, y: 6}
+--- !u!61 &1987654324
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987654321}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1993620603
 GameObject:
   m_ObjectHideFlags: 0
@@ -19269,6 +18481,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 1
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -19454,6 +18670,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -19771,6 +18991,10 @@ MonoBehaviour:
   grantItemDescription: 
   grantItemSprite: {fileID: 0}
   hideAfterPickup: 1
+  grantItemIdAfterDialogue: 
+  grantItemDisplayNameAfterDialogue: 
+  grantItemDescriptionAfterDialogue: 
+  grantItemSpriteAfterDialogue: {fileID: 0}
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
@@ -19968,5 +19192,4 @@ SceneRoots:
   - {fileID: 1143663162}
   - {fileID: 659230940}
   - {fileID: 2118796520}
-  - {fileID: 1902322516}
   - {fileID: 1267732868}
