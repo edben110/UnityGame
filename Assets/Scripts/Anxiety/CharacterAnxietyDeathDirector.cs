@@ -69,11 +69,6 @@ public class CharacterAnxietyDeathDirector : MonoBehaviour
         processingIds.Add(characterId);
         GameInputBlocker.Block();
 
-        if (NpcLocationManager.Instance != null)
-        {
-            NpcLocationManager.Instance.HideNpcFromMap(characterId);
-        }
-
         string displayName = CharacterAnxietySystem.Instance != null
             ? CharacterAnxietySystem.Instance.GetCharacterDisplayName(characterId)
             : characterId;
@@ -90,6 +85,11 @@ public class CharacterAnxietyDeathDirector : MonoBehaviour
         while (!cinematicCompleted)
         {
             yield return null;
+        }
+
+        if (NpcLocationManager.Instance != null)
+        {
+            NpcLocationManager.Instance.ApplyPostDeathVisual(characterId);
         }
 
         ApplySeparation(characterId, playCinematic: true);

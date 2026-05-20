@@ -254,7 +254,7 @@ public class NpcLocationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Oculta el sprite del NPC en WorldMap (p. ej. tras ansiedad 100 y cinemática).
+    /// Marca al NPC como ausente del mapa y aplica sprite transparente (sin interacción).
     /// </summary>
     public void HideNpcFromMap(string npcId)
     {
@@ -271,18 +271,32 @@ public class NpcLocationManager : MonoBehaviour
             StoryState.Instance.SetFlag($"npc.separated.{npcId}", true);
         }
 
-        if (npc.npcObject != null)
-        {
-            npc.npcObject.SetActive(false);
+        ApplyPostDeathVisual(npc.npcObject);
+        RefreshNpcVisibility();
+    }
 
-            NpcInteractable interactable = npc.npcObject.GetComponent<NpcInteractable>();
-            if (interactable != null)
-            {
-                interactable.enabled = false;
-            }
+    /// <summary>
+    /// Hace transparente el sprite del NPC y desactiva su interacción (tras cinemática de muerte).
+    /// </summary>
+    public void ApplyPostDeathVisual(string npcId)
+    {
+        if (!npcLookup.TryGetValue(npcId, out NpcRoomAssignment npc) || npc == null)
+        {
+            return;
         }
 
-        RefreshNpcVisibility();
+        ApplyPostDeathVisual(npc.npcObject);
+    }
+
+    private static void ApplyPostDeathVisual(GameObject npcObject)
+    {
+        if (npcObject == null)
+        {
+            return;
+        }
+
+        NpcSpriteVisibility.ApplyDeathVisual(npcObject);
+        npcObject.SetActive(false);
     }
 
     private void RefreshNpcVisibility()
@@ -297,13 +311,22 @@ public class NpcLocationManager : MonoBehaviour
                 continue;
             }
 
-            bool shouldShow = !IsNpcAbsentFromMap(npc.npcId) && npc.currentRoomId == currentRoom;
+            if (IsNpcAbsentFromMap(npc.npcId))
+            {
+                ApplyPostDeathVisual(npc.npcObject);
+                continue;
+            }
+
+            bool shouldShow = npc.currentRoomId == currentRoom;
             npc.npcObject.SetActive(shouldShow);
 
-            NpcInteractable interactable = npc.npcObject.GetComponent<NpcInteractable>();
-            if (interactable != null)
+            if (shouldShow)
             {
-                interactable.enabled = shouldShow;
+                NpcSpriteVisibility.RestoreAliveVisual(npc.npcObject);
+            }
+            else
+            {
+                NpcSpriteVisibility.SetInteractionEnabled(npc.npcObject, false);
             }
         }
     }

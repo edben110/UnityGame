@@ -429,6 +429,8 @@ public class CharacterAnxietySystem : MonoBehaviour
                 continue;
             }
 
+            NpcLocationManager.Instance.ApplyPostDeathVisual(characterId);
+
             if (!string.Equals(NpcLocationManager.Instance.GetNpcRoom(characterId), "missing", StringComparison.OrdinalIgnoreCase))
             {
                 NpcLocationManager.Instance.MoveNpc(characterId, "missing");
