@@ -34,6 +34,10 @@ public class DoorTrigger : Interactable
     [SerializeField] private KeyType simonRoomRequiredKey = KeyType.BedroomKey;
     [SerializeField] private string chapter2BookDecisionCompleteFlag = "chapter2.book_decision.completed";
 
+    [Header("Acciones al pasar")]
+    [Tooltip("Flag que se setea en StoryState al cruzar esta puerta exitosamente")]
+    [SerializeField] private string setFlagOnPass;
+
     [Header("Feedback")]
     [SerializeField] private string lockedMessage = "Esta puerta está cerrada.";
 
@@ -817,9 +821,18 @@ public class DoorTrigger : Interactable
         bool success = RoomManager.Instance.ChangeRoom(targetRoomId);
         Debug.Log($"[DoorTrigger] ChangeRoom('{targetRoomId}') => {success}");
 
-        if (success && CharacterAnxietySystem.Instance != null)
+        if (success)
         {
-            CharacterAnxietySystem.Instance.OnDoorInteracted();
+            // Setear flag al pasar exitosamente
+            if (!string.IsNullOrWhiteSpace(setFlagOnPass) && StoryState.Instance != null)
+            {
+                StoryState.Instance.SetFlag(setFlagOnPass, true);
+            }
+
+            if (CharacterAnxietySystem.Instance != null)
+            {
+                CharacterAnxietySystem.Instance.OnDoorInteracted();
+            }
         }
 
         return success;
