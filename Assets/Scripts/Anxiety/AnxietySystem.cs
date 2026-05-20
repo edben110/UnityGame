@@ -21,6 +21,9 @@ public class AnxietySystem : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float overlayAlphaMax = 0.4f;
     [SerializeField] private Color overlayColor = new Color(0.45f, 0f, 0f, 1f);
 
+    private const string NpcAnxietyNumberColor = "#FFFFFF";
+    private const string NpcAnxietySuffixColor = "#8A8580";
+
     private Vignette vignette;
     private ChromaticAberration chromatic;
 
@@ -96,12 +99,20 @@ public class AnxietySystem : MonoBehaviour
 
     public void ShowVerificationOverlay(float normalizedIntensity)
     {
-        ShowVerificationOverlay(normalizedIntensity, null);
+        ShowNpcAnxiety(Mathf.RoundToInt(Mathf.Clamp01(normalizedIntensity) * 100f));
     }
 
     public void ShowVerificationOverlay(float normalizedIntensity, string statusMessage)
     {
-        float clampedIntensity = Mathf.Clamp01(normalizedIntensity);
+        ShowNpcAnxiety(Mathf.RoundToInt(Mathf.Clamp01(normalizedIntensity) * 100f));
+    }
+
+    /// <summary>
+    /// Muestra solo el valor de ansiedad del NPC en NpcStatusText (ej. 45/100).
+    /// El número va en blanco; el sufijo /100 en gris para contraste.
+    /// </summary>
+    public void ShowNpcAnxiety(int anxietyPercent)
+    {
         HideOverlayImage();
         TryResolveNpcStatusText();
 
@@ -110,12 +121,12 @@ public class AnxietySystem : MonoBehaviour
             return;
         }
 
-        int anxietyPercent = Mathf.RoundToInt(clampedIntensity * 100f);
+        int value = Mathf.Clamp(anxietyPercent, 0, 100);
         npcStatusText.gameObject.SetActive(true);
-        npcStatusText.text = string.IsNullOrWhiteSpace(statusMessage)
-            ? $"Ansiedad: {anxietyPercent}/100"
-            : statusMessage;
-        npcStatusText.color = EvaluateAnxietyTextColor(clampedIntensity);
+        npcStatusText.richText = true;
+        npcStatusText.text =
+            $"<color={NpcAnxietyNumberColor}><b>{value}</b></color><color={NpcAnxietySuffixColor}>/100</color>";
+        npcStatusText.color = Color.white;
     }
 
     public void HideVerificationOverlay()
@@ -154,13 +165,5 @@ public class AnxietySystem : MonoBehaviour
         }
 
         npcStatusText.text = string.Empty;
-    }
-
-    private Color EvaluateAnxietyTextColor(float normalizedIntensity)
-    {
-        Color low = new Color(0.88f, 0.86f, 0.8f, 1f);
-        Color high = overlayColor;
-        high.a = 1f;
-        return Color.Lerp(low, high, normalizedIntensity);
     }
 }

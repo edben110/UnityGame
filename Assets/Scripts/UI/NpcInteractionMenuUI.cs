@@ -129,10 +129,19 @@ public class NpcInteractionMenuUI : MonoBehaviour
 
     public void ShowStatusText(string text)
     {
-        if (statusText != null)
+        if (string.IsNullOrWhiteSpace(text))
         {
-            statusText.text = text ?? string.Empty;
+            return;
         }
+
+        DialoguePanelUI panel = DialoguePanelUI.Instance;
+        if (panel != null)
+        {
+            panel.ShowSystemMessage(text);
+            return;
+        }
+
+        Debug.Log($"[NpcInteractionMenuUI] {text}");
     }
 
     public void Hide()
@@ -149,6 +158,12 @@ public class NpcInteractionMenuUI : MonoBehaviour
             root.SetActive(false);
         }
 
+        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+        if (anxietySystem != null)
+        {
+            anxietySystem.HideVerificationOverlay();
+        }
+
         CursorManager.SetDefault();
     }
 
@@ -156,22 +171,22 @@ public class NpcInteractionMenuUI : MonoBehaviour
     {
         if (CharacterAnxietySystem.Instance == null || string.IsNullOrWhiteSpace(npcId))
         {
-            DisplayAnxietyValue(0, 0f);
+            DisplayAnxietyValue(0);
             return;
         }
 
         float anxiety = CharacterAnxietySystem.Instance.GetAnxiety(npcId);
-        DisplayAnxietyValue(Mathf.RoundToInt(anxiety), anxiety / 100f);
+        DisplayAnxietyValue(Mathf.RoundToInt(anxiety));
     }
 
-    private void DisplayAnxietyValue(int anxietyValue, float normalizedAnxiety)
+    private void DisplayAnxietyValue(int anxietyValue)
     {
-        string text = anxietyValue.ToString();
+        int clamped = Mathf.Clamp(anxietyValue, 0, 100);
 
         AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
         if (anxietySystem != null)
         {
-            anxietySystem.ShowVerificationOverlay(normalizedAnxiety, text);
+            anxietySystem.ShowNpcAnxiety(clamped);
             return;
         }
 
@@ -181,10 +196,9 @@ public class NpcInteractionMenuUI : MonoBehaviour
         }
 
         statusText.gameObject.SetActive(true);
-        statusText.text = text;
-        Color low = new Color(0.88f, 0.86f, 0.8f, 1f);
-        Color high = new Color(0.75f, 0.1f, 0.08f, 1f);
-        statusText.color = Color.Lerp(low, high, Mathf.Clamp01(normalizedAnxiety));
+        statusText.richText = true;
+        statusText.text = $"<color=#FFFFFF><b>{clamped}</b></color><color=#8A8580>/100</color>";
+        statusText.color = Color.white;
     }
 
     private void HandleTalk()
