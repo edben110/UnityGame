@@ -2136,7 +2136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: ala_norte
+  targetRoomId: northstreet
   requiredFlag: 
   requiredKeys: 
   requiredChapterId: chapter4
