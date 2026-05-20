@@ -976,8 +976,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.25, y: -82.37}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 4.26, y: -82.43}
+  m_SizeDelta: {x: 5.2814, y: 2.5792}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &158418041
 MonoBehaviour:
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &158418042
@@ -1119,7 +1119,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &160640877
@@ -1202,8 +1202,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.95, y: -81.78}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -3.96, y: -81.81}
+  m_SizeDelta: {x: 3.2334, y: 2.2239}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180523221
 MonoBehaviour:
@@ -1233,7 +1233,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &180523222
@@ -4381,7 +4381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.08, y: -2.97}
+  m_AnchoredPosition: {x: 2.18, y: -71.44}
   m_SizeDelta: {x: 0.6895, y: 0.7778}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486549743
@@ -4396,7 +4396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e95c9b3d3acedd458c86cae66c92e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyItem
-  keyType: 4
+  keyType: 6
   pickupMessage: Has recogido una llave!
   playSound: 1
 --- !u!61 &486549744
@@ -4710,7 +4710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &576627964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4856,7 +4856,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.67, y: -70.7}
+  m_AnchoredPosition: {x: 13.32, y: -70.649994}
   m_SizeDelta: {x: 4.3232, y: 3.9901}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &604566857
@@ -5050,7 +5050,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &623919437
@@ -8076,7 +8076,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &781062627
@@ -9566,7 +9566,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 15.5789795, y: -88.20001}
+  m_AnchoredPosition: {x: 15.579102, y: -88.19995}
   m_SizeDelta: {x: 352.662, y: 477.341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &996581747
@@ -10114,7 +10114,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
 --- !u!61 &1074313680
@@ -11388,7 +11388,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
 --- !u!61 &1260874355
@@ -12885,7 +12885,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
 --- !u!61 &1416465146
@@ -13233,7 +13233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 20.37, y: -67.87}
+  m_AnchoredPosition: {x: 19.02, y: -67.82}
   m_SizeDelta: {x: 4.9774, y: 7.2145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1446252347
@@ -13460,7 +13460,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &1447478150
@@ -14629,11 +14629,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 818
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 489
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.x
@@ -16311,7 +16311,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &1794638038
@@ -17385,7 +17385,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &1873997894
@@ -17460,7 +17460,7 @@ Transform:
   m_GameObject: {fileID: 1876671620}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.49, y: -67.63, z: 0}
+  m_LocalPosition: {x: 20.14, y: -67.579994, z: 0}
   m_LocalScale: {x: 1.1776943, y: 0.9964051, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18389,7 +18389,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
 --- !u!61 &1987654324
