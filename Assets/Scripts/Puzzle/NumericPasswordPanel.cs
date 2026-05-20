@@ -49,7 +49,9 @@ public class NumericPasswordPanel : MonoBehaviour
 
     [Header("Hitbox")]
     [Tooltip("Tamaño de cada hitbox invisible sobre los números")]
-    [SerializeField] private Vector2 hitboxSize = new Vector2(0.8f, 0.8f);
+    [SerializeField] private Vector2 hitboxSize = new Vector2(0.45f, 0.45f);
+    [Tooltip("Padre de los botones (BG_SecureDoor). Si está vacío, se busca el fondo de secureDoor.")]
+    [SerializeField] private Transform digitHitboxParent;
 
     [Header("Puerta a desbloquear")]
     [Tooltip("Flag que se setea al resolver la contraseña (la puerta lo lee)")]
@@ -71,6 +73,8 @@ public class NumericPasswordPanel : MonoBehaviour
     private AudioSource audioSource;
 
     public bool IsUnlocked => isUnlocked;
+    public bool IsPanelShowing => panelIsShowing;
+    public int RequiredDigitCount => correctPassword != null ? correctPassword.Length : 0;
 
     public event Action PasswordCorrect;
     public event Action PasswordWrong;
@@ -118,29 +122,11 @@ public class NumericPasswordPanel : MonoBehaviour
         }
 
         SetDoorColliderEnabled(false);
-
-        // Crear hitboxes si no existen aún
-        if (digitHitboxes == null || digitHitboxes.Length == 0)
-        {
-            CreateDigitHitboxes();
-        }
-        else
-        {
-            // Reactivar hitboxes existentes
-            for (int i = 0; i < digitHitboxes.Length; i++)
-            {
-                if (digitHitboxes[i] != null)
-                {
-                    digitHitboxes[i].SetActive(true);
-                }
-            }
-        }
-
-        // Limpiar input previo
         currentInput.Clear();
+        CreateDigitHitboxes();
 
         panelIsShowing = true;
-        Debug.Log("[NumericPassword] Panel de contraseña mostrado. Collider padre desactivado. Esperando input del jugador.");
+        Debug.Log($"[NumericPassword] Teclado activo. Introduce {RequiredDigitCount} dígitos (ej. 4-7-2-9).");
     }
 
     /// <summary>
@@ -149,21 +135,57 @@ public class NumericPasswordPanel : MonoBehaviour
     public void HidePanel()
     {
         panelIsShowing = false;
+        DisableHitboxes();
         EnsureDoorColliderEnabled();
         Debug.Log("[NumericPassword] Panel ocultado. Collider de puerta reactivado.");
     }
 
-    /// <summary>
-    /// Indica si el panel de contraseña está actualmente visible/activo.
-    /// </summary>
-    public bool IsPanelShowing => panelIsShowing;
+    public static NumericPasswordPanel GetActivePanel()
+    {
+        NumericPasswordPanel[] panels = FindObjectsByType<NumericPasswordPanel>(
+            FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None);
+
+        for (int i = 0; i < panels.Length; i++)
+        {
+            if (panels[i] != null && panels[i].IsPanelShowing)
+            {
+                return panels[i];
+            }
+        }
+
+        return null;
+    }
 
     /// <summary>
     /// Crea hitboxes invisibles sobre cada posición de dígito.
     /// Cada hitbox tiene un DigitButton component que reporta clicks.
     /// </summary>
+    private Transform ResolveDigitHitboxParent()
+    {
+        if (digitHitboxParent != null)
+        {
+            return digitHitboxParent;
+        }
+
+        if (RoomManager.Instance != null)
+        {
+            Transform secureDoorBg = RoomManager.Instance.GetRoomBackgroundTransform("secureDoor");
+            if (secureDoorBg != null)
+            {
+                return secureDoorBg;
+            }
+        }
+
+        GameObject bg = GameObject.Find("BG_SecureDoor");
+        return bg != null ? bg.transform : transform;
+    }
+
     private void CreateDigitHitboxes()
     {
+        DestroyDigitHitboxes();
+
+        Transform parent = ResolveDigitHitboxParent();
         digitHitboxes = new GameObject[9];
 
         for (int i = 0; i < 9; i++)
@@ -172,7 +194,7 @@ public class NumericPasswordPanel : MonoBehaviour
             Vector2 pos = i < digitPositions.Length ? digitPositions[i] : Vector2.zero;
 
             GameObject hitbox = new GameObject($"DigitHitbox_{digitValue}");
-            hitbox.transform.SetParent(transform, false);
+            hitbox.transform.SetParent(parent, false);
             hitbox.transform.localPosition = new Vector3(pos.x, pos.y, 0f);
 
             BoxCollider2D col = hitbox.AddComponent<BoxCollider2D>();
@@ -193,13 +215,18 @@ public class NumericPasswordPanel : MonoBehaviour
     /// </summary>
     public void OnDigitPressed(int digit)
     {
-        if (isUnlocked)
+        if (isUnlocked || !panelIsShowing)
+        {
+            return;
+        }
+
+        if (digit < 1 || digit > 9 || currentInput.Count >= RequiredDigitCount)
         {
             return;
         }
 
         currentInput.Add(digit);
-        Debug.Log($"[NumericPassword] Input: {string.Join("-", currentInput)} (esperado: {string.Join("-", correctPassword)})");
+        Debug.Log($"[NumericPassword] Dígito {currentInput.Count}/{RequiredDigitCount}: {digit}");
 
         // Feedback sonoro
         if (digitClickSound != null && audioSource != null)
@@ -208,7 +235,7 @@ public class NumericPasswordPanel : MonoBehaviour
         }
 
         // Verificar si ya tiene suficientes dígitos
-        if (currentInput.Count >= correctPassword.Length)
+        if (currentInput.Count >= RequiredDigitCount)
         {
             ValidatePassword();
         }
@@ -219,14 +246,13 @@ public class NumericPasswordPanel : MonoBehaviour
     /// </summary>
     private void ValidatePassword()
     {
-        bool isCorrect = true;
+        bool isCorrect = currentInput.Count == RequiredDigitCount;
 
-        for (int i = 0; i < correctPassword.Length; i++)
+        for (int i = 0; isCorrect && i < correctPassword.Length; i++)
         {
-            if (i >= currentInput.Count || currentInput[i] != correctPassword[i])
+            if (currentInput[i] != correctPassword[i])
             {
                 isCorrect = false;
-                break;
             }
         }
 
@@ -304,15 +330,25 @@ public class NumericPasswordPanel : MonoBehaviour
 
     private void DisableHitboxes()
     {
-        if (digitHitboxes == null) return;
+        DestroyDigitHitboxes();
+    }
+
+    private void DestroyDigitHitboxes()
+    {
+        if (digitHitboxes == null)
+        {
+            return;
+        }
 
         for (int i = 0; i < digitHitboxes.Length; i++)
         {
             if (digitHitboxes[i] != null)
             {
-                digitHitboxes[i].SetActive(false);
+                Destroy(digitHitboxes[i]);
             }
         }
+
+        digitHitboxes = null;
     }
 
     /// <summary>

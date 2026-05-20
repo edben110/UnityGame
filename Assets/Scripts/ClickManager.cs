@@ -74,6 +74,11 @@ public class ClickManager : MonoBehaviour
             // Raycast que detecta múltiples hits
             RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
 
+            if (TryHandlePasswordDigitClick(hits))
+            {
+                return;
+            }
+
             RaycastHit2D selectedHit = new RaycastHit2D();
             Interactable selectedInteractable = null;
             float selectedDepth = float.MaxValue;
@@ -130,6 +135,45 @@ public class ClickManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    private static bool TryHandlePasswordDigitClick(RaycastHit2D[] hits)
+    {
+        if (NumericPasswordPanel.GetActivePanel() == null)
+        {
+            return false;
+        }
+
+        DigitButton bestDigit = null;
+        float bestDistance = float.MaxValue;
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider == null)
+            {
+                continue;
+            }
+
+            DigitButton digitButton = hits[i].collider.GetComponent<DigitButton>();
+            if (digitButton == null || !CanInteractWith(digitButton))
+            {
+                continue;
+            }
+
+            if (hits[i].distance < bestDistance)
+            {
+                bestDistance = hits[i].distance;
+                bestDigit = digitButton;
+            }
+        }
+
+        if (bestDigit == null)
+        {
+            return false;
+        }
+
+        bestDigit.Interact();
+        return true;
     }
 
     private static bool CanInteractWith(Interactable interactable)

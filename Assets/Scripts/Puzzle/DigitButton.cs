@@ -33,7 +33,7 @@ public class DigitButton : Interactable
             return;
         }
 
-        if (parentPanel.IsUnlocked)
+        if (parentPanel.IsUnlocked || !parentPanel.IsPanelShowing)
         {
             return;
         }

@@ -174,6 +174,27 @@ public class RoomManager : MonoBehaviour
         return currentRoomDefinition.backgroundObject.name;
     }
 
+    public Transform GetCurrentRoomBackgroundTransform()
+    {
+        if (currentRoomDefinition == null || currentRoomDefinition.backgroundObject == null)
+        {
+            return null;
+        }
+
+        return currentRoomDefinition.backgroundObject.transform;
+    }
+
+    public Transform GetRoomBackgroundTransform(string roomId)
+    {
+        if (string.IsNullOrWhiteSpace(roomId) || !roomLookup.TryGetValue(roomId, out RoomDefinition room)
+            || room.backgroundObject == null)
+        {
+            return null;
+        }
+
+        return room.backgroundObject.transform;
+    }
+
     public string GetRoomDisplayName(string roomId)
     {
         if (string.IsNullOrWhiteSpace(roomId))

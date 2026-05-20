@@ -612,6 +612,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: 
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &123888532
@@ -837,6 +838,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &137112065
@@ -1870,6 +1872,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &267421750
@@ -2067,7 +2070,7 @@ MonoBehaviour:
     backgroundObject: {fileID: 1493836120}
     hotspotsContainer: {fileID: 745521841}
     cameraObject: {fileID: 1661077253}
-  startingRoomId: lobby
+  startingRoomId: livingroom
 --- !u!4 &290049658
 Transform:
   m_ObjectHideFlags: 0
@@ -2145,6 +2148,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "La puerta al Ala Norte parece estar bloqueada electr\xF3nicamente."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &294805767
@@ -3919,6 +3923,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &459922170
@@ -4088,6 +4093,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &461789606
@@ -4783,6 +4789,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: chapter4.basement_from_security.entered
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &604566858
@@ -5062,6 +5069,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &641822161
@@ -7537,7 +7545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: killer_bunker
+  targetRoomId: killerbunker
   requiredFlag: 
   requiredKeys: 06000000
   requiredChapterId: chapter5
@@ -7549,6 +7557,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: Esta puerta esta cerrada con llave.
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &726997795
@@ -7809,6 +7818,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &758717114
@@ -8079,7 +8089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4c5ec0fd11d442a83d286c55a1f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  targetRoomId: empty_room
+  targetRoomId: emptyRoom
   requiredFlag: 
   requiredKeys: 06000000
   requiredChapterId: chapter5
@@ -8091,6 +8101,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: Esta puerta esta cerrada con llave.
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &790100812
@@ -8350,6 +8361,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &806140188
@@ -11123,6 +11135,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1220921263
@@ -11842,6 +11855,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: Esta puerta esta cerrada con llave.
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1316515061
@@ -13161,6 +13175,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1446252348
@@ -13291,10 +13306,11 @@ MonoBehaviour:
   - {x: 4.27, y: -0.4}
   - {x: 4.67, y: -0.4}
   - {x: 5.1, y: -0.4}
-  hitboxSize: {x: 0.3, y: 0.3}
+  hitboxSize: {x: 0.45, y: 0.45}
   unlockFlag: SecurityRoom.Unlocked
   wrongPasswordMessage: "Parece que no es la combinaci\xF3n correcta..."
   correctPasswordMessage: El mecanismo hace click. La puerta se ha desbloqueado.
+    Pulsa la puerta otra vez para entrar.
   digitClickSound: {fileID: 0}
   wrongSound: {fileID: 0}
   correctSound: {fileID: 0}
@@ -14536,6 +14552,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1620307071
@@ -16022,6 +16039,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1724237193
@@ -17124,6 +17142,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1837860065
@@ -17293,6 +17312,7 @@ MonoBehaviour:
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
   setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  securityPasswordPanel: {fileID: 0}
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1842498998
