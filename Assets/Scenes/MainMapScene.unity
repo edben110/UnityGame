@@ -1124,7 +1124,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &160640877
@@ -1297,7 +1297,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &180523222
@@ -1485,115 +1485,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217387911}
   m_CullTransparentMesh: 1
---- !u!1 &217749924
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 217749925}
-  - component: {fileID: 217749927}
-  - component: {fileID: 217749926}
-  m_Layer: 0
-  m_Name: HS_chapter2_estudio_archivador
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &217749925
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217749924}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &217749926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217749924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter2_estudio_archivador
-  requiredChapterId: chapter2
-  conversationId: chapter2_estudio_archivador
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &217749927
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217749924}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &254323723
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,115 +2147,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &299342763
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 299342764}
-  - component: {fileID: 299342767}
-  - component: {fileID: 299342765}
-  m_Layer: 0
-  m_Name: HS_chapter4_carpeta_evidencia
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &299342764
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299342763}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: -1, z: 0}
-  m_LocalScale: {x: 0.21459228, y: 0.21459228, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &299342765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299342763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter4_carpeta_evidencia
-  requiredChapterId: chapter4
-  conversationId: chapter4_carpeta_evidencia
-  startNodeId: start
-  consumeAfterUse: 1
-  setFlagOnInteract: 
-  grantItemId: carpeta_evidencia
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &299342767
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299342763}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.5, y: 4.66}
-    newSize: {x: 4.5, y: 4.66}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &303612374
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,115 +2745,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &329393439
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 329393440}
-  - component: {fileID: 329393442}
-  - component: {fileID: 329393441}
-  m_Layer: 0
-  m_Name: HS_chapter5_maletin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &329393440
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329393439}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &329393441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329393439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter5_maletin
-  requiredChapterId: chapter5
-  conversationId: chapter5_maletin
-  startNodeId: start
-  consumeAfterUse: 1
-  setFlagOnInteract: 
-  grantItemId: relicario
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &329393442
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329393439}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &331399822
 GameObject:
   m_ObjectHideFlags: 0
@@ -3229,115 +2902,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381345427}
   m_CullTransparentMesh: 1
---- !u!1 &401645332
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 401645333}
-  - component: {fileID: 401645336}
-  - component: {fileID: 401645334}
-  m_Layer: 0
-  m_Name: HS_chapter5_nota_roja
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &401645333
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 401645332}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 1, z: 0}
-  m_LocalScale: {x: 0.21551725, y: 0.21551725, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &401645334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 401645332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter5_nota_roja
-  requiredChapterId: chapter5
-  conversationId: chapter5_nota_roja
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &401645336
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 401645332}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.64, y: 3.72}
-    newSize: {x: 4.64, y: 3.72}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &404231387
 GameObject:
   m_ObjectHideFlags: 0
@@ -4492,115 +4056,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538782183}
   m_CullTransparentMesh: 1
---- !u!1 &559764711
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 559764712}
-  - component: {fileID: 559764715}
-  - component: {fileID: 559764713}
-  m_Layer: 0
-  m_Name: HS_chapter4_cuadro_cinco
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &559764712
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559764711}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 1.5, z: 0}
-  m_LocalScale: {x: 0.06510417, y: 0.06510417, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &559764713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559764711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter4_cuadro_cinco
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_cinco
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &559764715
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559764711}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 15.36, y: 10.24}
-    newSize: {x: 15.36, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &576627963
 GameObject:
   m_ObjectHideFlags: 0
@@ -4633,7 +4088,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.469, y: -59.859726}
+  m_AnchoredPosition: {x: -11.35, y: -59.67}
   m_SizeDelta: {x: 2.1881, y: 2.0983}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &587178100
@@ -4829,10 +4284,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.2, y: 0.86}
+    newSize: {x: 1.2, y: 0.86}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
@@ -4887,15 +4342,15 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -897740712011316302, guid: f8ba1d3b8114aea41be3546aa83eb9c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.2, y: 0.86}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!1 &623919434
 GameObject:
@@ -4915,21 +4370,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &623919435
-Transform:
+--- !u!224 &623919435
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623919434}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 2.01, y: -67.27}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &623919436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4958,7 +4417,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &623919437
@@ -7733,18 +7192,7 @@ Transform:
   - {fileID: 267421748}
   - {fileID: 1220921261}
   - {fileID: 294805765}
-  - {fileID: 1297561641}
-  - {fileID: 217749925}
-  - {fileID: 559764712}
-  - {fileID: 851867029}
-  - {fileID: 299342764}
-  - {fileID: 401645333}
-  - {fileID: 329393440}
   - {fileID: 869424476}
-  - {fileID: 1031111134}
-  - {fileID: 2104364813}
-  - {fileID: 1574513360}
-  - {fileID: 1993620604}
   - {fileID: 1794638036}
   - {fileID: 180523220}
   - {fileID: 160640875}
@@ -7990,7 +7438,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &781062627
@@ -8981,115 +8429,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &851867028
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 851867029}
-  - component: {fileID: 851867032}
-  - component: {fileID: 851867030}
-  m_Layer: 0
-  m_Name: HS_chapter4_cuadro_codigo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &851867029
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 851867028}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 1.5, z: 0}
-  m_LocalScale: {x: 0.21881837, y: 0.21881837, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &851867030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 851867028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter4_cuadro_codigo
-  requiredChapterId: chapter4
-  conversationId: chapter4_cuadro_codigo
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &851867032
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 851867028}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.57, y: 4.02}
-    newSize: {x: 4.57, y: 4.02}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &857736047
 GameObject:
   m_ObjectHideFlags: 0
@@ -9288,7 +8627,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!212 &869424478
@@ -10290,115 +9629,6 @@ MonoBehaviour:
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!1 &1031111133
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1031111134}
-  - component: {fileID: 1031111136}
-  - component: {fileID: 1031111135}
-  m_Layer: 0
-  m_Name: HS_chapter4_fonografo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1031111134
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031111133}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1031111135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031111133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter4_fonografo
-  requiredChapterId: chapter4
-  conversationId: chapter4_fonografo
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1031111136
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031111133}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &1074313677
 GameObject:
   m_ObjectHideFlags: 0
@@ -10460,7 +9690,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
 --- !u!61 &1074313680
@@ -11922,7 +11152,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
 --- !u!61 &1260874355
@@ -12206,115 +11436,6 @@ MonoBehaviour:
   showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!1 &1297561640
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1297561641}
-  - component: {fileID: 1297561643}
-  - component: {fileID: 1297561642}
-  m_Layer: 0
-  m_Name: HS_chapter2_estudio_nota_tablon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1297561641
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297561640}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1297561642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297561640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter2_estudio_nota_tablon
-  requiredChapterId: chapter2
-  conversationId: chapter2_estudio_nota_tablon
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1297561643
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297561640}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &1307022782
 GameObject:
   m_ObjectHideFlags: 0
@@ -13512,7 +12633,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
 --- !u!61 &1416465146
@@ -14091,7 +13212,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &1447478150
@@ -14862,115 +13983,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &1574513359
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1574513360}
-  - component: {fileID: 1574513362}
-  - component: {fileID: 1574513361}
-  m_Layer: 0
-  m_Name: HS_chapter5_mirilla
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1574513360
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574513359}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1574513361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574513359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter5_mirilla
-  requiredChapterId: chapter5
-  conversationId: chapter5_mirilla
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1574513362
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574513359}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &1596711129
 GameObject:
   m_ObjectHideFlags: 0
@@ -15459,11 +14471,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 831
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 467.25
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.x
@@ -17387,7 +16399,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &1794638038
@@ -18516,21 +17528,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1873997892
-Transform:
+--- !u!224 &1873997892
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873997891}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 745521842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 14.05, y: -2.1}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873997893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18558,7 +17574,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 0.9, y: 0.9}
 --- !u!61 &1873997894
@@ -19656,7 +18672,7 @@ MonoBehaviour:
   grantItemDisplayNameAfterDialogue: 
   grantItemDescriptionAfterDialogue: 
   grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
+  showDebugMarkerInGame: 0
   debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
   debugMarkerSize: {x: 6, y: 6}
 --- !u!61 &1987654324
@@ -19704,115 +18720,6 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!1 &1993620603
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1993620604}
-  - component: {fileID: 1993620606}
-  - component: {fileID: 1993620605}
-  m_Layer: 0
-  m_Name: HS_chapter5_cilindros
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1993620604
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993620603}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1993620605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993620603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter5_cilindros
-  requiredChapterId: chapter5
-  conversationId: chapter5_cilindros
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 1
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &1993620606
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993620603}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &2035133693
 GameObject:
@@ -19987,115 +18894,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1613056864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2104364812
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2104364813}
-  - component: {fileID: 2104364816}
-  - component: {fileID: 2104364814}
-  m_Layer: 0
-  m_Name: HS_chapter5_mapa_actualizado
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2104364813
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104364812}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 1, z: 0}
-  m_LocalScale: {x: 0.21660651, y: 0.21660651, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 745521842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2104364814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104364812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562dee17547dba64b8947433582d92de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapHotspot
-  hotspotId: chapter5_mapa_actualizado
-  requiredChapterId: chapter5
-  conversationId: chapter5_mapa_actualizado
-  startNodeId: start
-  consumeAfterUse: 0
-  setFlagOnInteract: 
-  grantItemId: 
-  grantItemDisplayName: 
-  grantItemDescription: 
-  grantItemSprite: {fileID: 0}
-  hideAfterPickup: 1
-  grantItemIdAfterDialogue: 
-  grantItemDisplayNameAfterDialogue: 
-  grantItemDescriptionAfterDialogue: 
-  grantItemSpriteAfterDialogue: {fileID: 0}
-  showDebugMarkerInGame: 0
-  debugMarkerColor: {r: 1, g: 1, b: 0, a: 0.65}
-  debugMarkerSize: {x: 0.9, y: 0.9}
---- !u!61 &2104364816
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104364812}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.54, y: 4.25}
-    newSize: {x: 5.54, y: 4.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.2, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &2104381992
 GameObject:
   m_ObjectHideFlags: 0
