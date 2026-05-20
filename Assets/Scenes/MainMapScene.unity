@@ -610,6 +610,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: 
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -834,6 +835,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -1066,6 +1068,7 @@ GameObject:
   - component: {fileID: 160640875}
   - component: {fileID: 160640877}
   - component: {fileID: 160640876}
+  - component: {fileID: 160640878}
   m_Layer: 0
   m_Name: HS_chapter4_caja_puzzle_llave
   m_TagString: Untagged
@@ -1089,7 +1092,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.62, y: -2.6}
+  m_AnchoredPosition: {x: 3, y: -79.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &160640876
@@ -1113,7 +1116,7 @@ MonoBehaviour:
   grantItemId: SingleUseKey
   grantItemDisplayName: Llave Desgastada
   grantItemDescription: Una llave vieja y desgastada. Solo resistira un uso mas.
-  grantItemSprite: {fileID: 0}
+  grantItemSprite: {fileID: 21300000, guid: 311d4081dbb97104e8882e409c7a125b, type: 3}
   hideAfterPickup: 1
   grantItemIdAfterDialogue: 
   grantItemDisplayNameAfterDialogue: 
@@ -1159,15 +1162,74 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 1.2, y: 1.2}
   m_EdgeRadius: 0
+--- !u!212 &160640878
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160640874}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 100
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: 311d4081dbb97104e8882e409c7a125b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
 --- !u!1 &180523219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1806,6 +1868,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -2072,7 +2135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   targetRoomId: ala_norte
   requiredFlag: 
-  requiredKeys: 06000000
+  requiredKeys: 
   requiredChapterId: chapter4
   requiredNpcTalkCount: 1
   triggersChapterTransition: 1
@@ -2080,7 +2143,8 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
-  lockedMessage: La puerta al Ala Norte esta cerrada. Necesito la llave desgastada.
+  setFlagOnPass: 
+  lockedMessage: "La puerta al Ala Norte parece estar bloqueada electr\xF3nicamente."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &294805767
@@ -3853,6 +3917,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 5
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -4021,6 +4086,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -4715,6 +4781,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: chapter4.basement_from_security.entered
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -4993,6 +5060,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -7479,6 +7547,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: Esta puerta esta cerrada con llave.
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -7675,6 +7744,7 @@ Transform:
   - {fileID: 158418040}
   - {fileID: 623919435}
   - {fileID: 1873997892}
+  - {fileID: 1563252641}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &758717111
@@ -7737,6 +7807,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -8018,6 +8089,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: Esta puerta esta cerrada con llave.
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -8276,6 +8348,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -9395,7 +9468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 15.5789795, y: -88.20001}
+  m_AnchoredPosition: {x: 15.579102, y: -88.19995}
   m_SizeDelta: {x: 352.662, y: 477.341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &996581747
@@ -11048,6 +11121,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -11757,15 +11831,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
   targetRoomId: KidNappedSimon
   requiredFlag: 
-  requiredKeys: 
-  requiredChapterId: 
+  requiredKeys: 06000000
+  requiredChapterId: chapter5
   requiredNpcTalkCount: 0
   triggersChapterTransition: 0
   transitionToChapterId: 
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
-  lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
+  setFlagOnPass: 
+  lockedMessage: Esta puerta esta cerrada con llave.
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!61 &1316515061
@@ -13083,6 +13158,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -13899,6 +13975,163 @@ RectTransform:
   m_AnchoredPosition: {x: 356.99997, y: 4.1086254}
   m_SizeDelta: {x: 326.2592, y: 80.7065}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1563252640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563252641}
+  - component: {fileID: 1563252643}
+  - component: {fileID: 1563252642}
+  - component: {fileID: 1563252644}
+  m_Layer: 0
+  m_Name: HS_SecurityUnlockButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1563252641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563252640}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.5, y: -80.5, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 745521842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1563252642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563252640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f597c22be61e7a5469eaea75a382ee14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SecurityUnlockButton
+  doorUnlockedFlag: UnlockNorthStreetDoor
+  unlockMessage: "Parece que este panel controla los bloqueos de la mansi\xF3n...
+    eso deber\xEDa abrir el acceso al ala norte."
+  alreadyUnlockedMessage: "El sistema de seguridad ya est\xE1 desactivado. La puerta
+    al ala norte deber\xEDa estar abierta."
+  unlockSound: {fileID: 0}
+--- !u!61 &1563252643
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563252640}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.5, y: 1.5}
+  m_EdgeRadius: 0
+--- !u!212 &1563252644
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563252640}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 100
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 0.3, g: 0.5, b: 0.3, a: 0.9}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.16, y: 0.16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
 --- !u!1 &1574513359
 GameObject:
   m_ObjectHideFlags: 0
@@ -14300,6 +14533,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -14454,11 +14688,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 890
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 489
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_LocalScale.x
@@ -14674,8 +14908,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.1342, y: -12.2153}
-  m_SizeDelta: {x: 0.1447, y: 0.186}
+  m_AnchoredPosition: {x: 1.591, y: -12.121}
+  m_SizeDelta: {x: 0.2756, y: 0.2711}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1623652293
 MonoBehaviour:
@@ -14769,7 +15003,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: 0.2, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -14813,12 +15047,12 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 4.3, y: 3.85}
-    newSize: {x: 0.1, y: 0.1}
+    newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
 --- !u!114 &1623652297
 MonoBehaviour:
@@ -14987,6 +15221,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629071097}
   m_CullTransparentMesh: 1
+--- !u!1 &1652259931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1652259933}
+  - component: {fileID: 1652259932}
+  m_Layer: 0
+  m_Name: SingleUseKeySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1652259932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652259931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea96ed3e8e48134c904c30bbf1e95a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SingleUseKeySpawner
+  singleUseKeyHotspot: {fileID: 160640876}
+  securityRoomUnlockedFlag: SecurityRoom.Unlocked
+  basementFromSecurityEnteredFlag: chapter4.basement_from_security.entered
+  spawnDialogue: "No me percat\xE9 de esa llave antes, parece haberse ca\xEDdo de
+    alg\xFAn lugar al abrir la puerta."
+--- !u!4 &1652259933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652259931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1661077250
 GameObject:
   m_ObjectHideFlags: 0
@@ -15736,6 +16019,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -16837,6 +17121,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -17005,6 +17290,7 @@ MonoBehaviour:
   enforceChapter3EntryValidation: 1
   simonRoomRequiredKey: 2
   chapter2BookDecisionCompleteFlag: chapter2.book_decision.completed
+  setFlagOnPass: 
   lockedMessage: "Esta puerta est\xE1 cerrada, requiere una llave."
   showDebugGizmo: 1
   gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
@@ -18085,8 +18371,8 @@ Transform:
   m_GameObject: {fileID: 1968925658}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13, y: -56.22, z: 0}
-  m_LocalScale: {x: 1.1523474, y: 0.971086, z: 1}
+  m_LocalPosition: {x: -0.0468, y: -56.1012, z: 0}
+  m_LocalScale: {x: 1.1631795, y: 0.994295, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 720863764}
@@ -18997,3 +19283,4 @@ SceneRoots:
   - {fileID: 2048511736}
   - {fileID: 1143663162}
   - {fileID: 1267732868}
+  - {fileID: 1652259933}
