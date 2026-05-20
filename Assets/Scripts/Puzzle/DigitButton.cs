@@ -1,35 +1,51 @@
 using UnityEngine;
 
 /// <summary>
-/// Hitbox invisible clickeable que representa un dígito del teclado numérico.
-/// Se coloca sobre el número ya dibujado en el sprite del fondo.
-/// NO tiene visual propio — es solo un collider invisible.
-/// 
-/// Al ser clickeado, reporta al NumericPasswordPanel qué dígito fue presionado.
+/// Botón de dígito del teclado numérico (colocado en escena sobre cada número).
+/// Debe tener parentPanel asignado al NumericPasswordPanel de Door_ToSecurityRoom.
 /// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
 public class DigitButton : Interactable
 {
-    private int digitValue;
-    private NumericPasswordPanel parentPanel;
-    private bool initialized;
+    [SerializeField] private int digitValue = 1;
+    [SerializeField] private NumericPasswordPanel parentPanel;
 
-    /// <summary>
-    /// Inicializa el botón con su valor y referencia al panel padre.
-    /// Llamado por NumericPasswordPanel al crear los hitboxes.
-    /// </summary>
-    public void Initialize(int value, NumericPasswordPanel panel)
+    public int DigitValue => digitValue;
+
+    private void Awake()
     {
-        digitValue = value;
-        parentPanel = panel;
-        initialized = true;
+        digitValue = Mathf.Clamp(digitValue, 1, 9);
     }
+
+    public void BindToPanel(NumericPasswordPanel panel)
+    {
+        parentPanel = panel;
+    }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        digitValue = Mathf.Clamp(digitValue, 1, 9);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col == null)
+        {
+            return;
+        }
+
+        Gizmos.color = new Color(1f, 0.85f, 0.2f, 0.9f);
+        Gizmos.DrawWireCube(transform.position, col.bounds.size);
+    }
+#endif
 
     public override void Interact()
     {
-        if (!initialized || parentPanel == null)
+        if (parentPanel == null)
         {
-            Debug.LogWarning($"[DigitButton] No inicializado correctamente. Digit: {digitValue}");
+            Debug.LogWarning($"[DigitButton] Sin panel asignado. Dígito: {digitValue}");
             return;
         }
 
@@ -38,6 +54,6 @@ public class DigitButton : Interactable
             return;
         }
 
-        parentPanel.OnDigitPressed(digitValue);
+        parentPanel.TryRegisterDigit(digitValue);
     }
 }

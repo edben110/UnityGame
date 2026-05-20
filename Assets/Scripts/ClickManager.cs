@@ -74,7 +74,7 @@ public class ClickManager : MonoBehaviour
             // Raycast que detecta múltiples hits
             RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
 
-            if (TryHandlePasswordDigitClick(hits))
+            if (TryHandlePasswordDigitClick(hits, mousePos))
             {
                 return;
             }
@@ -137,15 +137,16 @@ public class ClickManager : MonoBehaviour
         return null;
     }
 
-    private static bool TryHandlePasswordDigitClick(RaycastHit2D[] hits)
+    private static bool TryHandlePasswordDigitClick(RaycastHit2D[] hits, Vector2 mouseWorldPos)
     {
-        if (NumericPasswordPanel.GetActivePanel() == null)
+        NumericPasswordPanel activePanel = NumericPasswordPanel.GetActivePanel();
+        if (activePanel == null || !activePanel.CanAcceptDigitInput)
         {
             return false;
         }
 
         DigitButton bestDigit = null;
-        float bestDistance = float.MaxValue;
+        float bestSqrDistance = float.MaxValue;
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -155,14 +156,16 @@ public class ClickManager : MonoBehaviour
             }
 
             DigitButton digitButton = hits[i].collider.GetComponent<DigitButton>();
-            if (digitButton == null || !CanInteractWith(digitButton))
+            if (digitButton == null || !CanInteractWithDigitButton(digitButton))
             {
                 continue;
             }
 
-            if (hits[i].distance < bestDistance)
+            Vector2 center = hits[i].collider.bounds.center;
+            float sqrDistance = (center - mouseWorldPos).sqrMagnitude;
+            if (sqrDistance < bestSqrDistance)
             {
-                bestDistance = hits[i].distance;
+                bestSqrDistance = sqrDistance;
                 bestDigit = digitButton;
             }
         }
@@ -174,6 +177,27 @@ public class ClickManager : MonoBehaviour
 
         bestDigit.Interact();
         return true;
+    }
+
+    private static bool CanInteractWithDigitButton(DigitButton digitButton)
+    {
+        if (WorldInteractionGate.BlocksMapPointAndClick)
+        {
+            return false;
+        }
+
+        if (digitButton == null || !digitButton.isActiveAndEnabled || !digitButton.gameObject.activeInHierarchy)
+        {
+            return false;
+        }
+
+        // Con el teclado activo, los dígitos siempre son clickeables aunque el fondo sea de otra jerarquía.
+        if (NumericPasswordPanel.GetActivePanel() != null)
+        {
+            return true;
+        }
+
+        return CanInteractWith(digitButton);
     }
 
     private static bool CanInteractWith(Interactable interactable)

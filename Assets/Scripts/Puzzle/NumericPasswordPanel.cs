@@ -1,60 +1,41 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Panel de contraseña numérica para Door_ToSecurityRoom.
-/// 
-/// DISEÑO:
-/// - NO crea números visuales (ya existen en el sprite del fondo).
-/// - Crea hitboxes invisibles (BoxCollider2D) sobre cada número del fondo.
-/// - El jugador clickea los números en secuencia.
-/// - Al completar la secuencia correcta (4-7-2-9), desbloquea la puerta.
-/// - Si la secuencia es incorrecta, muestra diálogo y resetea.
-///
-/// CONTRASEÑA: 4-7-2-9 (del archivo.txt / flujoHistoria.txt)
-/// Origen narrativo: Fecha de la carta del padre (4 de julio de 1929)
-///   "4" = día, "7" = mes (julio), "2-9" = año (29)
-///
-/// CONFIGURACIÓN EN INSPECTOR:
-/// - correctPassword: la secuencia correcta (default: 4,7,2,9)
-/// - digitPositions: posiciones de cada número 1-9 en el fondo
-/// - hitboxSize: tamaño de cada hitbox invisible
-/// - doorToUnlock: referencia al DoorTrigger que se desbloquea
+/// Botones en escena (DigitButton). Contraseña: 4-7-2-9. Valida al 4.º dígito.
 /// </summary>
 public class NumericPasswordPanel : MonoBehaviour
 {
-    [Header("Contraseña")]
-    [Tooltip("Secuencia correcta de dígitos (del archivo.txt: 4-7-2-9)")]
-    [SerializeField] private int[] correctPassword = new int[] { 4, 7, 2, 9 };
-
-    [Header("Layout del teclado numérico")]
-    [Tooltip("Posiciones locales de cada dígito 1-9 sobre el fondo. Index 0 = dígito 1, Index 8 = dígito 9")]
-    [SerializeField] private Vector2[] digitPositions = new Vector2[]
+    private static readonly Vector2 HitboxSize = new Vector2(0.3f, 0.3f);
+    private static readonly Vector2[] DigitPositions =
     {
-        // Layout estándar 3x3:
-        //  1  2  3
-        //  4  5  6
-        //  7  8  9
-        new Vector2(-1.0f,  1.0f),  // 1
-        new Vector2( 0.0f,  1.0f),  // 2
-        new Vector2( 1.0f,  1.0f),  // 3
-        new Vector2(-1.0f,  0.0f),  // 4
-        new Vector2( 0.0f,  0.0f),  // 5
-        new Vector2( 1.0f,  0.0f),  // 6
-        new Vector2(-1.0f, -1.0f),  // 7
-        new Vector2( 0.0f, -1.0f),  // 8
-        new Vector2( 1.0f, -1.0f),  // 9
+        new Vector2(4.27f, 0.35f),   // 1
+        new Vector2(4.67f, 0.35f),   // 2
+        new Vector2(5.1f, 0.35f),     // 3
+        new Vector2(4.27f, -0.01f),  // 4
+        new Vector2(4.67f, -0.01f),  // 5
+        new Vector2(5.1f, -0.01f),   // 6
+        new Vector2(4.27f, -0.4f),   // 7
+        new Vector2(4.67f, -0.4f),   // 8
+        new Vector2(5.1f, -0.4f),    // 9
     };
 
-    [Header("Hitbox")]
-    [Tooltip("Tamaño de cada hitbox invisible sobre los números")]
-    [SerializeField] private Vector2 hitboxSize = new Vector2(0.45f, 0.45f);
-    [Tooltip("Padre de los botones (BG_SecureDoor). Si está vacío, se busca el fondo de secureDoor.")]
-    [SerializeField] private Transform digitHitboxParent;
+    [Header("Contraseña")]
+    [SerializeField] private int[] correctPassword = new int[] { 4, 7, 2, 9 };
 
-    [Header("Puerta a desbloquear")]
-    [Tooltip("Flag que se setea al resolver la contraseña (la puerta lo lee)")]
+    [Header("Botones en escena")]
+    [SerializeField] private DigitButton[] sceneDigitButtons;
+
+    [Header("Input")]
+    [Tooltip("Tiempo mínimo entre pulsaciones para evitar doble registro.")]
+    [SerializeField] private float inputCooldownSeconds = 0.12f;
+    [Tooltip("Tiempo de bloqueo extra mientras se valida la secuencia.")]
+    [SerializeField] private float validationLockSeconds = 0.25f;
+
+    [Header("Puerta")]
     [SerializeField] private string unlockFlag = "SecurityRoom.Unlocked";
 
     [Header("Feedback")]
@@ -66,14 +47,19 @@ public class NumericPasswordPanel : MonoBehaviour
     [SerializeField] private AudioClip wrongSound;
     [SerializeField] private AudioClip correctSound;
 
-    private List<int> currentInput = new List<int>();
+    private readonly List<int> currentInput = new List<int>();
     private bool isUnlocked;
     private bool panelIsShowing;
-    private GameObject[] digitHitboxes;
+    private bool isInputLocked;
+    private int lastAcceptedInputFrame = -1;
+    private float nextInputAllowedTime;
     private AudioSource audioSource;
+    private Coroutine inputUnlockRoutine;
 
     public bool IsUnlocked => isUnlocked;
     public bool IsPanelShowing => panelIsShowing;
+    public bool CanAcceptDigitInput =>
+        panelIsShowing && !isUnlocked && !isInputLocked && Time.time >= nextInputAllowedTime;
     public int RequiredDigitCount => correctPassword != null ? correctPassword.Length : 0;
 
     public event Action PasswordCorrect;
@@ -87,6 +73,9 @@ public class NumericPasswordPanel : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
         }
+
+        BindSceneDigitButtons();
+        ApplySceneButtonLayout();
     }
 
     private void Start()
@@ -94,25 +83,19 @@ public class NumericPasswordPanel : MonoBehaviour
         if (StoryState.Instance != null && StoryState.Instance.HasFlag(unlockFlag))
         {
             isUnlocked = true;
-            DisableHitboxes();
-            Debug.Log("[NumericPassword] Ya desbloqueado previamente.");
+            SetDigitButtonsInteractable(false);
             return;
         }
 
         panelIsShowing = false;
         EnsureDoorColliderEnabled();
+        SetDigitButtonsInteractable(false);
     }
 
-    /// <summary>
-    /// Muestra el panel de contraseña activando los hitboxes y haciéndolo visible.
-    /// Desactiva el collider del padre (DoorTrigger) para que los hitboxes reciban clicks.
-    /// Llamado por DoorTrigger cuando el jugador interactúa con Door_ToSecurityRoom.
-    /// </summary>
     public void ShowPanel()
     {
         if (isUnlocked)
         {
-            Debug.Log("[NumericPassword] Panel ya desbloqueado, no se muestra.");
             return;
         }
 
@@ -121,23 +104,28 @@ public class NumericPasswordPanel : MonoBehaviour
             gameObject.SetActive(true);
         }
 
+        if (!HasSceneDigitButtons())
+        {
+            Debug.LogError("[NumericPassword] No hay DigitButton en escena. Asigna sceneDigitButtons.");
+            return;
+        }
+
+        ReleaseInputLockImmediate();
         SetDoorColliderEnabled(false);
         currentInput.Clear();
-        CreateDigitHitboxes();
-
+        BindSceneDigitButtons();
+        ApplySceneButtonLayout();
+        SetDigitButtonsInteractable(true);
         panelIsShowing = true;
-        Debug.Log($"[NumericPassword] Teclado activo. Introduce {RequiredDigitCount} dígitos (ej. 4-7-2-9).");
+        Debug.Log($"[NumericPassword] Teclado activo. Introduce {RequiredDigitCount} dígitos (4-7-2-9).");
     }
 
-    /// <summary>
-    /// Oculta el panel y reactiva el collider del DoorTrigger.
-    /// </summary>
     public void HidePanel()
     {
         panelIsShowing = false;
-        DisableHitboxes();
+        ReleaseInputLockImmediate();
+        SetDigitButtonsInteractable(false);
         EnsureDoorColliderEnabled();
-        Debug.Log("[NumericPassword] Panel ocultado. Collider de puerta reactivado.");
     }
 
     public static NumericPasswordPanel GetActivePanel()
@@ -158,92 +146,56 @@ public class NumericPasswordPanel : MonoBehaviour
     }
 
     /// <summary>
-    /// Crea hitboxes invisibles sobre cada posición de dígito.
-    /// Cada hitbox tiene un DigitButton component que reporta clicks.
+    /// Registra un solo dígito por interacción. Devuelve false si el input fue rechazado (doble clic / bloqueo).
     /// </summary>
-    private Transform ResolveDigitHitboxParent()
+    public bool TryRegisterDigit(int digit)
     {
-        if (digitHitboxParent != null)
+        if (!CanAcceptDigitInput)
         {
-            return digitHitboxParent;
-        }
-
-        if (RoomManager.Instance != null)
-        {
-            Transform secureDoorBg = RoomManager.Instance.GetRoomBackgroundTransform("secureDoor");
-            if (secureDoorBg != null)
-            {
-                return secureDoorBg;
-            }
-        }
-
-        GameObject bg = GameObject.Find("BG_SecureDoor");
-        return bg != null ? bg.transform : transform;
-    }
-
-    private void CreateDigitHitboxes()
-    {
-        DestroyDigitHitboxes();
-
-        Transform parent = ResolveDigitHitboxParent();
-        digitHitboxes = new GameObject[9];
-
-        for (int i = 0; i < 9; i++)
-        {
-            int digitValue = i + 1; // 1-9
-            Vector2 pos = i < digitPositions.Length ? digitPositions[i] : Vector2.zero;
-
-            GameObject hitbox = new GameObject($"DigitHitbox_{digitValue}");
-            hitbox.transform.SetParent(parent, false);
-            hitbox.transform.localPosition = new Vector3(pos.x, pos.y, 0f);
-
-            BoxCollider2D col = hitbox.AddComponent<BoxCollider2D>();
-            col.size = hitboxSize;
-            col.isTrigger = false;
-
-            DigitButton button = hitbox.AddComponent<DigitButton>();
-            button.Initialize(digitValue, this);
-
-            digitHitboxes[i] = hitbox;
-        }
-
-        Debug.Log("[NumericPassword] 9 hitboxes creados sobre el teclado numérico del fondo.");
-    }
-
-    /// <summary>
-    /// Llamado por DigitButton cuando el jugador clickea un número.
-    /// </summary>
-    public void OnDigitPressed(int digit)
-    {
-        if (isUnlocked || !panelIsShowing)
-        {
-            return;
+            return false;
         }
 
         if (digit < 1 || digit > 9 || currentInput.Count >= RequiredDigitCount)
         {
-            return;
+            return false;
         }
 
-        currentInput.Add(digit);
-        Debug.Log($"[NumericPassword] Dígito {currentInput.Count}/{RequiredDigitCount}: {digit}");
+        // Un solo dígito por frame de Unity.
+        if (Time.frameCount == lastAcceptedInputFrame)
+        {
+            return false;
+        }
 
-        // Feedback sonoro
+        LockInputUntil(Time.time + inputCooldownSeconds);
+        lastAcceptedInputFrame = Time.frameCount;
+
+        currentInput.Add(digit);
+        Debug.Log($"[NumericPassword] Dígito {currentInput.Count}/{RequiredDigitCount}: {digit} | Secuencia: {GetInputPreview()}");
+
         if (digitClickSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(digitClickSound);
         }
 
-        // Verificar si ya tiene suficientes dígitos
         if (currentInput.Count >= RequiredDigitCount)
         {
+            LockInputUntil(Time.time + validationLockSeconds);
             ValidatePassword();
         }
+
+        return true;
     }
 
-    /// <summary>
-    /// Valida la secuencia ingresada contra la contraseña correcta.
-    /// </summary>
+    private string GetInputPreview()
+    {
+        if (currentInput.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        return string.Join("-", currentInput);
+    }
+
     private void ValidatePassword()
     {
         bool isCorrect = currentInput.Count == RequiredDigitCount;
@@ -270,8 +222,8 @@ public class NumericPasswordPanel : MonoBehaviour
     {
         isUnlocked = true;
         panelIsShowing = false;
+        isInputLocked = true;
 
-        // Persistir el desbloqueo
         if (StoryState.Instance != null)
         {
             StoryState.Instance.SetFlag(unlockFlag, true);
@@ -279,7 +231,6 @@ public class NumericPasswordPanel : MonoBehaviour
 
         EnsureDoorColliderEnabled();
 
-        // Feedback
         if (correctSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(correctSound);
@@ -291,16 +242,13 @@ public class NumericPasswordPanel : MonoBehaviour
             panel.ShowSystemMessage(correctPasswordMessage);
         }
 
-        // Desactivar hitboxes (ya no se necesitan)
-        DisableHitboxes();
-
-        Debug.Log("[NumericPassword] ★ CONTRASEÑA CORRECTA. Puerta desbloqueada. Collider padre reactivado.");
+        SetDigitButtonsInteractable(false);
+        Debug.Log("[NumericPassword] Contraseña correcta (4-7-2-9). Puerta desbloqueada.");
         PasswordCorrect?.Invoke();
     }
 
     private void OnPasswordWrong()
     {
-        // Feedback
         if (wrongSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(wrongSound);
@@ -312,54 +260,144 @@ public class NumericPasswordPanel : MonoBehaviour
             panel.ShowSystemMessage(wrongPasswordMessage);
         }
 
-        // Reset automático
         currentInput.Clear();
-
+        lastAcceptedInputFrame = -1;
+        LockInputUntil(Time.time + inputCooldownSeconds);
         Debug.Log("[NumericPassword] Contraseña incorrecta. Secuencia reseteada.");
         PasswordWrong?.Invoke();
     }
 
-    /// <summary>
-    /// Resetea la secuencia manualmente (botón limpiar).
-    /// </summary>
     public void ClearInput()
     {
         currentInput.Clear();
-        Debug.Log("[NumericPassword] Input limpiado manualmente.");
+        lastAcceptedInputFrame = -1;
     }
 
-    private void DisableHitboxes()
+    public void ForceUnlock()
     {
-        DestroyDigitHitboxes();
-    }
-
-    private void DestroyDigitHitboxes()
-    {
-        if (digitHitboxes == null)
+        if (isUnlocked)
         {
             return;
         }
 
-        for (int i = 0; i < digitHitboxes.Length; i++)
-        {
-            if (digitHitboxes[i] != null)
-            {
-                Destroy(digitHitboxes[i]);
-            }
-        }
-
-        digitHitboxes = null;
+        OnPasswordCorrect();
     }
 
-    /// <summary>
-    /// API para testing: forzar desbloqueo sin contraseña.
-    /// Solo usar en modo debug/testing.
-    /// </summary>
-    public void ForceUnlock()
+    private void ApplySceneButtonLayout()
     {
-        if (isUnlocked) return;
-        OnPasswordCorrect();
-        Debug.Log("[NumericPassword] FORZADO: Puerta desbloqueada sin contraseña (testing).");
+        if (!HasSceneDigitButtons())
+        {
+            return;
+        }
+
+        for (int i = 0; i < sceneDigitButtons.Length; i++)
+        {
+            DigitButton button = sceneDigitButtons[i];
+            if (button == null)
+            {
+                continue;
+            }
+
+            int index = button.DigitValue - 1;
+            if (index >= 0 && index < DigitPositions.Length)
+            {
+                Transform t = button.transform;
+                t.localPosition = new Vector3(DigitPositions[index].x, DigitPositions[index].y, 0f);
+            }
+
+            BoxCollider2D col = button.GetComponent<BoxCollider2D>();
+            if (col != null)
+            {
+                col.size = HitboxSize;
+                col.offset = Vector2.zero;
+            }
+        }
+    }
+
+    private void BindSceneDigitButtons()
+    {
+        if (sceneDigitButtons == null || sceneDigitButtons.Length == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < sceneDigitButtons.Length; i++)
+        {
+            DigitButton button = sceneDigitButtons[i];
+            if (button != null)
+            {
+                button.BindToPanel(this);
+            }
+        }
+    }
+
+    private bool HasSceneDigitButtons()
+    {
+        return sceneDigitButtons != null && sceneDigitButtons.Length > 0;
+    }
+
+    private void SetDigitButtonsInteractable(bool interactable)
+    {
+        if (!HasSceneDigitButtons())
+        {
+            return;
+        }
+
+        for (int i = 0; i < sceneDigitButtons.Length; i++)
+        {
+            DigitButton button = sceneDigitButtons[i];
+            if (button == null)
+            {
+                continue;
+            }
+
+            BoxCollider2D col = button.GetComponent<BoxCollider2D>();
+            if (col != null)
+            {
+                col.enabled = interactable && !isUnlocked;
+            }
+        }
+    }
+
+    private void LockInputUntil(float unlockTime)
+    {
+        isInputLocked = true;
+        nextInputAllowedTime = unlockTime;
+
+        if (inputUnlockRoutine != null)
+        {
+            StopCoroutine(inputUnlockRoutine);
+        }
+
+        float delay = Mathf.Max(0f, unlockTime - Time.time);
+        if (delay > 0f)
+        {
+            inputUnlockRoutine = StartCoroutine(ReleaseInputLockAfter(delay));
+        }
+        else
+        {
+            isInputLocked = false;
+        }
+    }
+
+    private IEnumerator ReleaseInputLockAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isInputLocked = false;
+        inputUnlockRoutine = null;
+    }
+
+    private void ReleaseInputLockImmediate()
+    {
+        if (inputUnlockRoutine != null)
+        {
+            StopCoroutine(inputUnlockRoutine);
+            inputUnlockRoutine = null;
+        }
+
+        isInputLocked = false;
+        nextInputAllowedTime = 0f;
+        lastAcceptedInputFrame = -1;
     }
 
     private void SetDoorColliderEnabled(bool enabled)
