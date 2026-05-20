@@ -36,6 +36,12 @@ public class EndingFlowController : MonoBehaviour
     [TextArea(2, 4)]
     [SerializeField] private string final3Epilogue = "El sótano del asesino guardaba el último secreto.";
 
+    [Header("Créditos")]
+    [Tooltip("Escena a cargar al terminar Creditos.")]
+    [SerializeField] private string menuSceneName = "MenuScene";
+    [Tooltip("Si true, se reproducen créditos después del final y luego vuelve a MenuScene.")]
+    [SerializeField] private bool playCreditsAfterEnding = true;
+
     private bool isResolvingEnding;
 
     private void Awake()
@@ -171,6 +177,29 @@ public class EndingFlowController : MonoBehaviour
         }
 
         Debug.Log($"[EndingFlow] Final_{endingIndex} completado. Juego finalizado.");
+
+        if (playCreditsAfterEnding)
+        {
+            // Bloquear interacción del mundo mientras corren créditos (WorldInteractionGate ya lo usa).
+            EndingCinematicPlayer.PlayCredits(ReturnToMenuScene);
+        }
+        else
+        {
+            ReturnToMenuScene();
+        }
+    }
+
+    private void ReturnToMenuScene()
+    {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogWarning("[EndingFlow] No hay GameManager. No se puede volver a MenuScene.");
+            return;
+        }
+
+        // Volver al menú. La UI del menú controla nueva partida/continuar.
+        var sceneController = new SceneController();
+        sceneController.TryLoadScene(menuSceneName);
     }
 
     public static bool AnyNpcAlive()

@@ -12,7 +12,7 @@ public static class SetupEndingCinematics
     private const string SourceFolder = "Assets/Cinematicas";
     private const string TargetFolder = "Assets/Resources/Cinematicas";
 
-    private static readonly string[] EndingFiles = { "Final_1.mp4", "Final_2.mp4", "Final_3.mp4" };
+    private static readonly string[] EndingFiles = { "Final_1.mp4", "Final_2.mp4", "Final_3.mp4", "Creditos.mp4" };
 
     [MenuItem("Tools/Narrativa/Configurar finales (videos + EndingFlowController)")]
     public static void Configure()
@@ -25,11 +25,12 @@ public static class SetupEndingCinematics
 
         EditorUtility.DisplayDialog(
             "Finales",
-            $"Videos copiados/actualizados: {copied}/3\n" +
+            $"Videos copiados/actualizados: {copied}/4\n" +
             "EndingFlowController en MainMapScene.\n\n" +
             "Flujo:\n" +
             "- Door_ToKidNappedSimon → Final_1 (algún NPC vivo) o Final_2 (todos muertos)\n" +
-            "- Door_ToEmptyRoom + Door_ToKillerBunker → Final_3",
+            "- Door_ToEmptyRoom + Door_ToKillerBunker → Final_3\n" +
+            "- Luego: Creditos → MenuScene",
             "OK");
     }
 

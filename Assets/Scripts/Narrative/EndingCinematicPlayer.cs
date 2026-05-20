@@ -54,6 +54,12 @@ public class EndingCinematicPlayer : MonoBehaviour
         Instance.StartPlayback(endingIndex, finishedCallback);
     }
 
+    public static void PlayCredits(Action finishedCallback)
+    {
+        EnsureInstance();
+        Instance.StartPlaybackCredits(finishedCallback);
+    }
+
     private static void EnsureInstance()
     {
         if (Instance != null)
@@ -78,6 +84,19 @@ public class EndingCinematicPlayer : MonoBehaviour
         playRoutine = StartCoroutine(PlayRoutine(endingIndex, finishedCallback));
     }
 
+    private void StartPlaybackCredits(Action finishedCallback)
+    {
+        if (playRoutine != null)
+        {
+            StopCoroutine(playRoutine);
+            playRoutine = null;
+        }
+
+        ReleaseActiveClip();
+        ClearVideoSurface();
+        playRoutine = StartCoroutine(PlayCreditsRoutine(finishedCallback));
+    }
+
     private IEnumerator PlayRoutine(int endingIndex, Action finishedCallback)
     {
         IsPlaying = true;
@@ -87,6 +106,48 @@ public class EndingCinematicPlayer : MonoBehaviour
         if (!EndingCinematicCatalog.TryLoadEnding(endingIndex, out VideoClip clip))
         {
             Debug.LogError($"[EndingCinematicPlayer] No se encontró Final_{endingIndex} en Resources/Cinematicas.");
+            CompletePlayback();
+            yield break;
+        }
+
+        activeClip = clip;
+        ReleaseRenderTexture();
+        EnsureRenderTexture();
+        ClearRenderTexture();
+
+        overlayRoot.SetActive(true);
+        videoImage.texture = renderTexture;
+        videoImage.color = Color.white;
+        videoPlayer.targetTexture = renderTexture;
+        videoPlayer.clip = clip;
+        videoPlayer.isLooping = false;
+        videoPlayer.time = 0d;
+        videoPlayer.Prepare();
+
+        while (!videoPlayer.isPrepared)
+        {
+            yield return null;
+        }
+
+        videoPlayer.Play();
+
+        while (videoPlayer.isPlaying)
+        {
+            yield return null;
+        }
+
+        CompletePlayback();
+    }
+
+    private IEnumerator PlayCreditsRoutine(Action finishedCallback)
+    {
+        IsPlaying = true;
+        EnsureUiBuilt();
+        onFinished = finishedCallback;
+
+        if (!EndingCinematicCatalog.TryLoadCredits(out VideoClip clip))
+        {
+            Debug.LogError("[EndingCinematicPlayer] No se encontró 'Creditos' en Resources/Cinematicas.");
             CompletePlayback();
             yield break;
         }

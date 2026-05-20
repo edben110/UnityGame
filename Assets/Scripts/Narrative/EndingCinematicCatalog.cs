@@ -9,6 +9,7 @@ public static class EndingCinematicCatalog
     public const string Final1Resource = "Final_1";
     public const string Final2Resource = "Final_2";
     public const string Final3Resource = "Final_3";
+    public const string CreditsResource = "Creditos";
 
     public static bool TryLoadEnding(int endingIndex, out VideoClip clip)
     {
@@ -20,6 +21,18 @@ public static class EndingCinematicCatalog
             3 => Final3Resource,
             _ => null
         };
+
+        return TryLoadByResourceName(resourceName, out clip);
+    }
+
+    public static bool TryLoadCredits(out VideoClip clip)
+    {
+        return TryLoadByResourceName(CreditsResource, out clip);
+    }
+
+    private static bool TryLoadByResourceName(string resourceName, out VideoClip clip)
+    {
+        clip = null;
 
         if (string.IsNullOrEmpty(resourceName))
         {
