@@ -177,6 +177,9 @@ public class AcertijoPuzzleService : MonoBehaviour
         InventoryNarrativeDefaults.EnsureItemRegistered(itemId);
         bool added = InventoryState.AddItem(itemId);
 
+        if (ItemSoundManager.Instance != null)
+            ItemSoundManager.Instance.PlayItemSound();
+
         if (StoryState.Instance != null)
         {
             StoryState.Instance.SetFlag(BedroomPuzzleSolvedFlag, true);

@@ -244,6 +244,9 @@ public override void Interact()
             {
                 CharacterAnxietySystem.Instance.OnItemCollected();
             }
+
+            if (ItemSoundManager.Instance != null)
+                ItemSoundManager.Instance.PlayItemSound();
         }
 
         if (StoryState.Instance != null && (hideAfterPickup || consumeAfterUse) && IsItemCollected())
@@ -362,6 +365,9 @@ public override void Interact()
         }
 
         bool added = InventoryState.AddItem(itemId);
+        if (ItemSoundManager.Instance != null)
+            ItemSoundManager.Instance.PlayItemSound();
+
         if (added && CharacterAnxietySystem.Instance != null)
         {
             CharacterAnxietySystem.Instance.OnItemCollected();
