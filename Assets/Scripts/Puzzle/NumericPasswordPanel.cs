@@ -12,15 +12,15 @@ public class NumericPasswordPanel : MonoBehaviour
     private static readonly Vector2 HitboxSize = new Vector2(0.3f, 0.3f);
     private static readonly Vector2[] DigitPositions =
     {
-        new Vector2(4.27f, 0.35f),   // 1
-        new Vector2(4.67f, 0.35f),   // 2
-        new Vector2(5.1f, 0.35f),     // 3
-        new Vector2(4.27f, -0.01f),  // 4
-        new Vector2(4.67f, -0.01f),  // 5
-        new Vector2(5.1f, -0.01f),   // 6
-        new Vector2(4.27f, -0.4f),   // 7
-        new Vector2(4.67f, -0.4f),   // 8
-        new Vector2(5.1f, -0.4f),    // 9
+        new Vector2(2.67f, 0.1f),    // 1
+        new Vector2(3.02f, 0.1f),    // 2
+        new Vector2(3.37f, 0.1f),    // 3
+        new Vector2(2.67f, -0.26f),  // 4
+        new Vector2(3.02f, -0.26f),  // 5
+        new Vector2(3.37f, -0.26f),  // 6
+        new Vector2(2.67f, -0.65f),  // 7
+        new Vector2(3.02f, -0.65f),  // 8
+        new Vector2(3.37f, -0.65f),  // 9
     };
 
     [Header("Contraseña")]
@@ -31,7 +31,7 @@ public class NumericPasswordPanel : MonoBehaviour
 
     [Header("Input")]
     [Tooltip("Tiempo mínimo entre pulsaciones para evitar doble registro.")]
-    [SerializeField] private float inputCooldownSeconds = 0.12f;
+    [SerializeField] private float inputCooldownSeconds = 0.15f;
     [Tooltip("Tiempo de bloqueo extra mientras se valida la secuencia.")]
     [SerializeField] private float validationLockSeconds = 0.25f;
 
@@ -262,6 +262,8 @@ public class NumericPasswordPanel : MonoBehaviour
 
         currentInput.Clear();
         lastAcceptedInputFrame = -1;
+        panelIsShowing = true;
+        SetDigitButtonsInteractable(true);
         LockInputUntil(Time.time + inputCooldownSeconds);
         Debug.Log("[NumericPassword] Contraseña incorrecta. Secuencia reseteada.");
         PasswordWrong?.Invoke();

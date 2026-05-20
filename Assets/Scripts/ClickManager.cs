@@ -146,11 +146,17 @@ public class ClickManager : MonoBehaviour
         }
 
         DigitButton bestDigit = null;
+        Collider2D bestCollider = null;
         float bestSqrDistance = float.MaxValue;
 
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i].collider == null)
+            {
+                continue;
+            }
+
+            if (!hits[i].collider.OverlapPoint(mouseWorldPos))
             {
                 continue;
             }
@@ -167,10 +173,16 @@ public class ClickManager : MonoBehaviour
             {
                 bestSqrDistance = sqrDistance;
                 bestDigit = digitButton;
+                bestCollider = hits[i].collider;
             }
         }
 
-        if (bestDigit == null)
+        if (bestDigit == null || bestCollider == null)
+        {
+            return false;
+        }
+
+        if (!bestCollider.OverlapPoint(mouseWorldPos))
         {
             return false;
         }

@@ -642,6 +642,16 @@ public class SceneNarrativeConfigurator : EditorWindow
             gateObj.AddComponent<Chapter5ValidationGate>();
             Debug.Log("[Configurador] Chapter5ValidationGate CREADO.");
         }
+
+        // EndingFlowController
+        if (UnityEngine.Object.FindAnyObjectByType<EndingFlowController>() == null)
+        {
+            GameObject systemsParent = FindOrCreateParent("_Systems");
+            GameObject endingObj = new GameObject("EndingFlowController");
+            endingObj.transform.SetParent(systemsParent.transform);
+            endingObj.AddComponent<EndingFlowController>();
+            Debug.Log("[Configurador] EndingFlowController CREADO.");
+        }
     }
 
     // ═══════════════════════════════════════════════════════════════

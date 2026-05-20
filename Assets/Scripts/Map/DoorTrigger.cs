@@ -842,6 +842,11 @@ public class DoorTrigger : Interactable
             {
                 CharacterAnxietySystem.Instance.OnDoorInteracted();
             }
+
+            if (EndingFlowController.Instance != null)
+            {
+                EndingFlowController.Instance.OnRoomEntered(gameObject.name, targetRoomId);
+            }
         }
 
         return success;

@@ -39,6 +39,11 @@ public static class WorldInteractionGate
     {
         get
         {
+            if (EndingCinematicPlayer.IsPlaying || EndingFlowController.IsResolvingEnding)
+            {
+                return true;
+            }
+
             if (DialoguePanelUI.Instance != null && DialoguePanelUI.Instance.IsOpen)
             {
                 return true;

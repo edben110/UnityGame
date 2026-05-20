@@ -8647,7 +8647,7 @@ Transform:
   m_GameObject: {fileID: 814765192}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.1, y: -0.01, z: 0}
+  m_LocalPosition: {x: 3.37, y: -0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9289,6 +9289,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chapter5ValidationGate
   requiredKeysForChapter5: 0100000004000000020000000600000005000000
+--- !u!1 &912102690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912102691}
+  - component: {fileID: 912102692}
+  m_Layer: 0
+  m_Name: EndingFlowController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &912102691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912102690}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1267732868}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &912102692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912102690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f4a2b61c3d4e5f9a0b1c2d3e4f5a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndingFlowController
+  kidnappedSimonDoorName: Door_ToKidNappedSimon
+  kidnappedSimonRoomId: KidNappedSimon
+  emptyRoomDoorName: Door_ToEmptyRoom
+  emptyRoomId: emptyRoom
+  killerBunkerDoorName: Door_ToKillerBunker
+  killerBunkerRoomId: killerbunker
+  final1Epilogue: Algunos sobrevivieron. La verdad no murio con ellos.
+  final2Epilogue: Nadie quedo. Solo el silencio de la mansion.
+  final3Epilogue: El sotano del asesino guardaba el ultimo secreto.
 --- !u!1 &920561804
 GameObject:
   m_ObjectHideFlags: 0
@@ -10468,7 +10521,7 @@ Transform:
   m_GameObject: {fileID: 1106116299}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.67, y: -0.4, z: 0}
+  m_LocalPosition: {x: 3.02, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10950,7 +11003,7 @@ Transform:
   m_GameObject: {fileID: 1155246275}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.67, y: -0.01, z: 0}
+  m_LocalPosition: {x: 3.02, y: -0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11663,6 +11716,7 @@ Transform:
   m_Children:
   - {fileID: 254323724}
   - {fileID: 912102682}
+  - {fileID: 912102691}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1294416194
@@ -12705,7 +12759,7 @@ Transform:
   m_GameObject: {fileID: 1371176231}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.1, y: 0.35, z: 0}
+  m_LocalPosition: {x: 3.37, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15119,7 +15173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 952
+      value: 1048
       objectReference: {fileID: 0}
     - target: {fileID: 4118169694634105018, guid: 7e3572ed2b9093c4da33d4cf7d128f9b, type: 3}
       propertyPath: m_SizeDelta.y
@@ -15916,7 +15970,7 @@ Transform:
   m_GameObject: {fileID: 1664894860}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.67, y: 0.35, z: 0}
+  m_LocalPosition: {x: 3.02, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16968,7 +17022,7 @@ Transform:
   m_GameObject: {fileID: 1785601333}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.27, y: -0.01, z: 0}
+  m_LocalPosition: {x: 2.67, y: -0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17766,7 +17820,7 @@ Transform:
   m_GameObject: {fileID: 1829971356}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.1, y: -0.4, z: 0}
+  m_LocalPosition: {x: 3.37, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19146,7 +19200,7 @@ Transform:
   m_GameObject: {fileID: 1949956813}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.27, y: -0.4, z: 0}
+  m_LocalPosition: {x: 2.67, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19632,7 +19686,7 @@ Transform:
   m_GameObject: {fileID: 2050516632}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.27, y: 0.35, z: 0}
+  m_LocalPosition: {x: 2.67, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

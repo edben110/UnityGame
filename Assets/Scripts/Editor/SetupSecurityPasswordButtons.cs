@@ -14,15 +14,15 @@ public static class SetupSecurityPasswordButtons
     private static readonly Vector2 HitboxSize = new Vector2(0.3f, 0.3f);
     private static readonly Vector2[] DefaultDigitPositions =
     {
-        new Vector2(4.27f, 0.35f),
-        new Vector2(4.67f, 0.35f),
-        new Vector2(5.1f, 0.35f),
-        new Vector2(4.27f, -0.01f),
-        new Vector2(4.67f, -0.01f),
-        new Vector2(5.1f, -0.01f),
-        new Vector2(4.27f, -0.4f),
-        new Vector2(4.67f, -0.4f),
-        new Vector2(5.1f, -0.4f),
+        new Vector2(2.67f, 0.1f),
+        new Vector2(3.02f, 0.1f),
+        new Vector2(3.37f, 0.1f),
+        new Vector2(2.67f, -0.26f),
+        new Vector2(3.02f, -0.26f),
+        new Vector2(3.37f, -0.26f),
+        new Vector2(2.67f, -0.65f),
+        new Vector2(3.02f, -0.65f),
+        new Vector2(3.37f, -0.65f),
     };
 
     [MenuItem("Tools/Puzzle/Configurar botones puerta seguridad")]
