@@ -35,7 +35,7 @@ public class NpcInteractable : Interactable
         string askItemLabel;
         bool hasItemAction = TryBuildSpecificItemQuestionAction(runner, itemId, out askItemAction, out askItemLabel);
 
-        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, hasItemAction ? askItemAction : null, hasItemAction ? askItemLabel : string.Empty);
+        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), npcId, OnTalkPressed, hasItemAction ? askItemAction : null, hasItemAction ? askItemLabel : string.Empty);
         TryHandlePendingDisappearances();
 
         if (!hasItemAction)
@@ -81,7 +81,7 @@ public class NpcInteractable : Interactable
             motivoLabel = "¿Por qué estás aquí?";
         }
 
-        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, askItemAction ?? motivoAction, askItemLabel.Length > 0 ? askItemLabel : motivoLabel);
+        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), npcId, OnTalkPressed, askItemAction ?? motivoAction, askItemLabel.Length > 0 ? askItemLabel : motivoLabel);
         TryHandlePendingDisappearances();
     }
 
@@ -255,39 +255,6 @@ private void OnTalkPressed()
         }
 
         return $"{talkConversationId}_critical";
-    }
-
-    private void OnVerifyPressed()
-    {
-        if (NpcInteractionMenuUI.Instance == null)
-        {
-            return;
-        }
-
-        if (CharacterAnxietySystem.Instance == null)
-        {
-            NpcInteractionMenuUI.Instance.ShowStatusText("Sistema de ansiedad no configurado.");
-            AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
-            if (anxietySystem != null)
-            {
-                anxietySystem.HideVerificationOverlay();
-            }
-            return;
-        }
-
-        float anxiety = CharacterAnxietySystem.Instance.GetAnxiety(npcId);
-        string status = CharacterAnxietySystem.Instance.GetFormattedStatus(npcId);
-        float normalized = anxiety / 100f;
-
-        if (NpcInteractionMenuUI.Instance != null)
-        {
-            NpcInteractionMenuUI.Instance.ShowAnxietyStatus(status, normalized);
-        }
-        else
-        {
-            AnxietySystem overlaySystem = FindAnyObjectByType<AnxietySystem>();
-            overlaySystem?.ShowVerificationOverlay(normalized, status);
-        }
     }
 
     private void OnAskItemPressed(string conversationId)

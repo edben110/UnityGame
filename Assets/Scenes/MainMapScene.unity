@@ -771,7 +771,7 @@ MonoBehaviour:
   titleText: {fileID: 1005990210}
   statusText: {fileID: 1377013879}
   talkButton: {fileID: 1675981729}
-  verifyAnxietyButton: {fileID: 1942016010}
+  verifyAnxietyButton: {fileID: 0}
   askItemButton: {fileID: 266363897}
   askItemButtonText: {fileID: 0}
   closeButton: {fileID: 1547089747}
@@ -18070,7 +18070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1942016010
 MonoBehaviour:
   m_ObjectHideFlags: 0
