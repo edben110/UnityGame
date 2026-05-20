@@ -473,15 +473,15 @@ private void OnTalkPressed()
         if (InventoryCatalog.Instance != null)
         {
             string displayName = InventoryCatalog.Instance.GetDisplayNameOrFallback(itemId);
-            return $"Preguntar por: {displayName}";
+            return $"Preguntar por {displayName}";
         }
 
         if (itemId.Contains("foto", StringComparison.OrdinalIgnoreCase))
         {
-            return "Preguntar por: la foto";
+            return "Preguntar por la foto";
         }
 
-        return $"Preguntar por: {itemId.Replace('_', ' ')}";
+        return $"Preguntar por {itemId.Replace('_', ' ')}";
     }
 
     private string GetDisplayName()

@@ -233,7 +233,7 @@ public void Hide()
             displayName = InventoryCatalog.Instance.GetDisplayNameOrFallback(selectedItem);
         }
 
-        buttonLabel.text = $"Preguntar por: {displayName}";
+        buttonLabel.text = $"Preguntar por {displayName}";
     }
 
     private void OnSelectedItemChanged(string _)
