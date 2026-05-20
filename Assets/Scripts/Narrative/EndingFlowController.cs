@@ -16,7 +16,6 @@ public class EndingFlowController : MonoBehaviour
     public static bool IsResolvingEnding =>
         Instance != null && Instance.isResolvingEnding;
 
-    private const string FlagEmptyRoomVisited = "ending.empty_room.visited";
     private const string FlagGameComplete = "ending.game_complete";
     private const string FlagPlayedPrefix = "ending.played.final_";
 
@@ -86,16 +85,11 @@ public class EndingFlowController : MonoBehaviour
         string door = doorObjectName ?? string.Empty;
         string room = roomId ?? string.Empty;
 
-        if (Matches(door, emptyRoomDoorName) || Matches(room, emptyRoomId))
+        // Final 3: ahora se dispara al interactuar con cualquiera de las dos puertas.
+        if (Matches(door, emptyRoomDoorName) || Matches(room, emptyRoomId)
+            || Matches(door, killerBunkerDoorName) || Matches(room, killerBunkerRoomId))
         {
-            StoryState.Instance.SetFlag(FlagEmptyRoomVisited, true);
-            Debug.Log("[EndingFlow] Habitación vacía visitada. Ruta al Final 3 habilitada.");
-            return;
-        }
-
-        if (Matches(door, killerBunkerDoorName) || Matches(room, killerBunkerRoomId))
-        {
-            TryPlayFinal3();
+            PlayEnding(3, final3Epilogue);
             return;
         }
 
@@ -124,27 +118,7 @@ public class EndingFlowController : MonoBehaviour
         }
     }
 
-    private void TryPlayFinal3()
-    {
-        if (HasPlayedEnding(3))
-        {
-            return;
-        }
-
-        if (StoryState.Instance == null || !StoryState.Instance.HasFlag(FlagEmptyRoomVisited))
-        {
-            DialoguePanelUI panel = DialoguePanelUI.Instance;
-            if (panel != null)
-            {
-                panel.ShowSystemMessage("Hay otra puerta que debería revisar antes de bajar aquí.");
-            }
-
-            Debug.Log("[EndingFlow] Final 3 bloqueado: falta visitar la habitación vacía.");
-            return;
-        }
-
-        PlayEnding(3, final3Epilogue);
-    }
+    // (Final 3 ya no requiere validación previa.)
 
     private void PlayEnding(int endingIndex, string epilogueMessage)
     {
