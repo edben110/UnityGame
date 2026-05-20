@@ -18,6 +18,7 @@ public class EndingFlowController : MonoBehaviour
 
     private const string FlagGameComplete = "ending.game_complete";
     private const string FlagPlayedPrefix = "ending.played.final_";
+    private static readonly string[] EndingNpcIds = { "robert", "ana", "ben", "lisa", "lucas" };
 
     [Header("Puertas / habitaciones")]
     [SerializeField] private string kidnappedSimonDoorName = "Door_ToKidNappedSimon";
@@ -42,6 +43,7 @@ public class EndingFlowController : MonoBehaviour
     [SerializeField] private bool playCreditsAfterEnding = true;
 
     private bool isResolvingEnding;
+    private bool subscribedToStoryState;
 
     private void Awake()
     {
@@ -54,8 +56,15 @@ public class EndingFlowController : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        TrySubscribeToStoryState();
+        TryTriggerFinal3IfAllNpcsDead();
+    }
+
     private void OnDestroy()
     {
+        UnsubscribeFromStoryState();
         if (Instance == this)
         {
             Instance = null;
@@ -67,6 +76,9 @@ public class EndingFlowController : MonoBehaviour
     /// </summary>
     public void OnRoomEntered(string doorObjectName, string roomId)
     {
+        // Si en cualquier momento murieron los 5 NPCs, el Final 3 tiene prioridad.
+        TryTriggerFinal3IfAllNpcsDead();
+
         if (isResolvingEnding || EndingCinematicPlayer.IsPlaying)
         {
             return;
@@ -131,6 +143,89 @@ public class EndingFlowController : MonoBehaviour
         Debug.Log($"[EndingFlow] Iniciando cinemática Final_{endingIndex}.");
 
         EndingCinematicPlayer.Play(endingIndex, () => OnEndingCinematicFinished(endingIndex, epilogueMessage));
+    }
+
+    private void TrySubscribeToStoryState()
+    {
+        if (subscribedToStoryState)
+        {
+            return;
+        }
+
+        if (StoryState.Instance == null)
+        {
+            return;
+        }
+
+        StoryState.Instance.StateChanged += OnStoryStateChanged;
+        subscribedToStoryState = true;
+    }
+
+    private void UnsubscribeFromStoryState()
+    {
+        if (!subscribedToStoryState)
+        {
+            return;
+        }
+
+        if (StoryState.Instance != null)
+        {
+            StoryState.Instance.StateChanged -= OnStoryStateChanged;
+        }
+
+        subscribedToStoryState = false;
+    }
+
+    private void OnStoryStateChanged()
+    {
+        TryTriggerFinal3IfAllNpcsDead();
+    }
+
+    private void TryTriggerFinal3IfAllNpcsDead()
+    {
+        // Intentar engancharse si StoryState apareció después del Start.
+        TrySubscribeToStoryState();
+
+        if (isResolvingEnding || EndingCinematicPlayer.IsPlaying)
+        {
+            return;
+        }
+
+        if (StoryState.Instance == null)
+        {
+            return;
+        }
+
+        if (StoryState.Instance.HasFlag(FlagGameComplete) || HasPlayedEnding(3))
+        {
+            return;
+        }
+
+        if (!AreAllEndingNpcsDead())
+        {
+            return;
+        }
+
+        Debug.Log("[EndingFlow] Todos los NPCs han muerto. Disparando Final_3 automáticamente.");
+        PlayEnding(3, final3Epilogue);
+    }
+
+    private static bool AreAllEndingNpcsDead()
+    {
+        if (StoryState.Instance == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < EndingNpcIds.Length; i++)
+        {
+            if (!StoryState.Instance.HasFlag($"npc.dead.{EndingNpcIds[i]}"))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void OnEndingCinematicFinished(int endingIndex, string epilogueMessage)
