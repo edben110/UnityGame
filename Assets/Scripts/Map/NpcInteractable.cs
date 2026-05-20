@@ -276,12 +276,17 @@ private void OnTalkPressed()
         }
 
         float anxiety = CharacterAnxietySystem.Instance.GetAnxiety(npcId);
-        NpcInteractionMenuUI.Instance.ShowStatusText(CharacterAnxietySystem.Instance.GetFormattedStatus(npcId));
+        string status = CharacterAnxietySystem.Instance.GetFormattedStatus(npcId);
+        float normalized = anxiety / 100f;
 
-        AnxietySystem overlaySystem = FindAnyObjectByType<AnxietySystem>();
-        if (overlaySystem != null)
+        if (NpcInteractionMenuUI.Instance != null)
         {
-            overlaySystem.ShowVerificationOverlay(anxiety / 100f);
+            NpcInteractionMenuUI.Instance.ShowAnxietyStatus(status, normalized);
+        }
+        else
+        {
+            AnxietySystem overlaySystem = FindAnyObjectByType<AnxietySystem>();
+            overlaySystem?.ShowVerificationOverlay(normalized, status);
         }
     }
 

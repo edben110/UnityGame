@@ -8,6 +8,7 @@ public class AnxietySystem : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private TMP_Text anxietyLabel;
+    [SerializeField] private TMP_Text npcStatusText;
     [SerializeField] private Image anxietyOverlay;
 
     [Header("Audio")]
@@ -23,6 +24,11 @@ public class AnxietySystem : MonoBehaviour
     private Vignette vignette;
     private ChromaticAberration chromatic;
 
+    private void Awake()
+    {
+        TryResolveNpcStatusText();
+    }
+
     private void Start()
     {
         if (volume != null && volume.profile != null)
@@ -37,10 +43,8 @@ public class AnxietySystem : MonoBehaviour
             OnStateChanged();
         }
 
-        if (anxietyOverlay != null)
-        {
-            anxietyOverlay.gameObject.SetActive(false);
-        }
+        HideOverlayImage();
+        ClearNpcStatusText();
     }
 
     private void OnDestroy()
@@ -92,23 +96,71 @@ public class AnxietySystem : MonoBehaviour
 
     public void ShowVerificationOverlay(float normalizedIntensity)
     {
-        if (anxietyOverlay == null)
+        ShowVerificationOverlay(normalizedIntensity, null);
+    }
+
+    public void ShowVerificationOverlay(float normalizedIntensity, string statusMessage)
+    {
+        float clampedIntensity = Mathf.Clamp01(normalizedIntensity);
+        HideOverlayImage();
+        TryResolveNpcStatusText();
+
+        if (npcStatusText == null)
         {
             return;
         }
 
-        float clampedIntensity = Mathf.Clamp01(normalizedIntensity);
-        Color color = overlayColor;
-        color.a = clampedIntensity * overlayAlphaMax;
-        anxietyOverlay.color = color;
-        anxietyOverlay.gameObject.SetActive(color.a > 0.01f);
+        int anxietyPercent = Mathf.RoundToInt(clampedIntensity * 100f);
+        npcStatusText.gameObject.SetActive(true);
+        npcStatusText.text = string.IsNullOrWhiteSpace(statusMessage)
+            ? $"Ansiedad: {anxietyPercent}/100"
+            : statusMessage;
+        npcStatusText.color = EvaluateAnxietyTextColor(clampedIntensity);
     }
 
     public void HideVerificationOverlay()
+    {
+        HideOverlayImage();
+        ClearNpcStatusText();
+    }
+
+    private void TryResolveNpcStatusText()
+    {
+        if (npcStatusText != null)
+        {
+            return;
+        }
+
+        GameObject statusObject = GameObject.Find("NpcStatusText");
+        if (statusObject != null)
+        {
+            npcStatusText = statusObject.GetComponent<TMP_Text>();
+        }
+    }
+
+    private void HideOverlayImage()
     {
         if (anxietyOverlay != null)
         {
             anxietyOverlay.gameObject.SetActive(false);
         }
+    }
+
+    private void ClearNpcStatusText()
+    {
+        if (npcStatusText == null)
+        {
+            return;
+        }
+
+        npcStatusText.text = string.Empty;
+    }
+
+    private Color EvaluateAnxietyTextColor(float normalizedIntensity)
+    {
+        Color low = new Color(0.88f, 0.86f, 0.8f, 1f);
+        Color high = overlayColor;
+        high.a = 1f;
+        return Color.Lerp(low, high, normalizedIntensity);
     }
 }

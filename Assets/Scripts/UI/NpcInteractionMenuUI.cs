@@ -146,6 +146,27 @@ public class NpcInteractionMenuUI : MonoBehaviour
         }
     }
 
+    public void ShowAnxietyStatus(string text, float normalizedAnxiety)
+    {
+        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+        if (anxietySystem != null)
+        {
+            anxietySystem.ShowVerificationOverlay(normalizedAnxiety, text);
+            return;
+        }
+
+        if (statusText == null)
+        {
+            return;
+        }
+
+        statusText.gameObject.SetActive(true);
+        statusText.text = text ?? string.Empty;
+        Color low = new Color(0.88f, 0.86f, 0.8f, 1f);
+        Color high = new Color(0.75f, 0.1f, 0.08f, 1f);
+        statusText.color = Color.Lerp(low, high, Mathf.Clamp01(normalizedAnxiety));
+    }
+
 public void Hide()
     {
         onTalk = null;
