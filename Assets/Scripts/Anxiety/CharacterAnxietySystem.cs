@@ -15,9 +15,9 @@ public class CharacterAnxietySystem : MonoBehaviour
         [Range(0f, 100f)] public float criticalThreshold = 75f;
     }
 
-    private const float DoorInteractionAnxietyDelta = 7f;
-    private const float ItemPickupAnxietyDelta = 2f;
-    private const float ObjectQuestionAnxietyReduction = 5f;
+    private const float DoorInteractionAnxietyDelta = 3f;
+    private const float ItemPickupAnxietyDelta = 1f;
+    private const float AskItemAnxietyReduction = 10f;
     private const float NewGameAnxietyMin = 0f;
     private const float NewGameAnxietyMax = 20f;
 
@@ -256,19 +256,16 @@ public class CharacterAnxietySystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Baja ansiedad al preguntar por un objeto. Una vez por objeto (-5).
+    /// Baja ansiedad del NPC al usar BtnAskItem con un objeto del inventario (-10).
     /// </summary>
-    public bool TryApplyObjectQuestionRelief(string characterId, string itemId)
+    public bool ApplyAskItemRelief(string characterId)
     {
-        if (string.IsNullOrWhiteSpace(itemId)
-            || !lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry)
-            || entry == null)
+        if (!lookup.TryGetValue(characterId, out CharacterAnxietyEntry entry) || entry == null)
         {
             return false;
         }
 
-        string normalizedItemId = NormalizeItemId(itemId);
-        if (StoryState.Instance != null && StoryState.Instance.HasFlag(GetItemQuestionReliefFlag(normalizedItemId)))
+        if (IsDead(characterId) || !IsAnxietyActiveForCurrentChapter())
         {
             return false;
         }
@@ -278,17 +275,31 @@ public class CharacterAnxietySystem : MonoBehaviour
             return false;
         }
 
-        entry.anxiety = Mathf.Clamp(entry.anxiety - ObjectQuestionAnxietyReduction, 0f, 100f);
+        float before = entry.anxiety;
+        entry.anxiety = Mathf.Clamp(entry.anxiety - AskItemAnxietyReduction, 0f, 100f);
+        if (Mathf.Approximately(before, entry.anxiety))
+        {
+            return false;
+        }
+
         PersistCharacterState(entry);
         ApplyAnxietyLevelFlags(entry);
         CharacterAnxietyChanged?.Invoke(entry.id, entry.anxiety);
 
-        if (StoryState.Instance != null)
+        if (StoryState.Instance != null && entry.anxiety < entry.criticalThreshold)
         {
-            StoryState.Instance.SetFlag(GetItemQuestionReliefFlag(normalizedItemId), true);
+            StoryState.Instance.SetFlag($"npc.critical.{entry.id}", false);
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Compatibilidad: delega en ApplyAskItemRelief.
+    /// </summary>
+    public bool TryApplyObjectQuestionRelief(string characterId, string itemId)
+    {
+        return ApplyAskItemRelief(characterId);
     }
 
     public bool HasUsedTalkRelief(string characterId)

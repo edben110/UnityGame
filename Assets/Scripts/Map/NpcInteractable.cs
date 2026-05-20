@@ -276,16 +276,10 @@ private void OnTalkPressed()
             return;
         }
 
-        string itemId = ExtractItemIdFromConversation(conversationId);
         if (CharacterAnxietySystem.Instance != null
-            && !string.IsNullOrWhiteSpace(itemId)
             && !conversationId.Equals("chapter2_book_decision", StringComparison.Ordinal))
         {
-            if (!CharacterAnxietySystem.Instance.TryApplyObjectQuestionRelief(npcId, itemId)
-                && CharacterAnxietySystem.Instance.HasUsedObjectQuestionRelief(itemId))
-            {
-                Debug.Log($"[NPC] Pregunta por '{itemId}' ya usada para bajar ansiedad en esta partida.");
-            }
+            CharacterAnxietySystem.Instance.ApplyAskItemRelief(npcId);
         }
 
         if (conversationId == "chapter2_book_decision")
