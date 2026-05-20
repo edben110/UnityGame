@@ -41,6 +41,10 @@ public class DoorTrigger : Interactable
     [Header("Feedback")]
     [SerializeField] private string lockedMessage = "Esta puerta está cerrada.";
 
+    [Header("Sala de seguridad (contraseña 4-7-2-9)")]
+    [Tooltip("Panel numérico en el mismo GameObject (Door_ToSecurityRoom). Se resuelve en Awake si está vacío.")]
+    [SerializeField] private NumericPasswordPanel securityPasswordPanel;
+
     [Header("Depuración")]
     [SerializeField] private bool showDebugGizmo = true;
     [SerializeField] private Color gizmoColor = new Color(0f, 1f, 0f, 0.3f);
@@ -53,6 +57,11 @@ public class DoorTrigger : Interactable
         "npc.talked.lisa",
         "npc.talked.lucas"
     };
+
+    private void Awake()
+    {
+        CacheSecurityPasswordPanel();
+    }
 
     private void Start()
     {
@@ -1039,30 +1048,47 @@ public class DoorTrigger : Interactable
         return false;
     }
 
+    private void CacheSecurityPasswordPanel()
+    {
+        if (!IsSecurityRoomDoor())
+        {
+            return;
+        }
+
+        if (securityPasswordPanel == null)
+        {
+            securityPasswordPanel = GetComponent<NumericPasswordPanel>();
+        }
+    }
+
     /// <summary>
-    /// Busca el NumericPasswordPanel en la escena, incluyendo objetos inactivos.
+    /// Resuelve el panel de contraseña: primero el del mismo GameObject, luego búsqueda en escena.
     /// </summary>
     private NumericPasswordPanel FindPasswordPanel()
     {
+        CacheSecurityPasswordPanel();
+        if (securityPasswordPanel != null)
+        {
+            return securityPasswordPanel;
+        }
+
         NumericPasswordPanel[] panels = FindObjectsByType<NumericPasswordPanel>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         if (panels == null || panels.Length == 0)
         {
             return null;
         }
 
-        // Si hay múltiples, preferir el que NO está en Door_ToSecurityRoom (el panel standalone)
-        if (panels.Length > 1)
+        for (int i = 0; i < panels.Length; i++)
         {
-            for (int i = 0; i < panels.Length; i++)
+            if (string.Equals(panels[i].gameObject.name, "Door_ToSecurityRoom", StringComparison.OrdinalIgnoreCase))
             {
-                if (!string.Equals(panels[i].gameObject.name, "Door_ToSecurityRoom", StringComparison.OrdinalIgnoreCase))
-                {
-                    return panels[i];
-                }
+                securityPasswordPanel = panels[i];
+                return securityPasswordPanel;
             }
         }
 
-        return panels[0];
+        securityPasswordPanel = panels[0];
+        return securityPasswordPanel;
     }
 
     private bool ShouldAutoStartChapter5OnEntry()

@@ -87,26 +87,16 @@ public class NumericPasswordPanel : MonoBehaviour
 
     private void Start()
     {
-        // Verificar si ya fue desbloqueado previamente
         if (StoryState.Instance != null && StoryState.Instance.HasFlag(unlockFlag))
         {
             isUnlocked = true;
+            DisableHitboxes();
             Debug.Log("[NumericPassword] Ya desbloqueado previamente.");
             return;
         }
 
-        CreateDigitHitboxes();
-
-        // Desactivar el collider del DoorTrigger padre para que los hitboxes reciban clicks directamente
-        // El jugador verá el teclado y podrá clickear los números sin que el DoorTrigger intercepte
-        BoxCollider2D parentCollider = GetComponent<BoxCollider2D>();
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = false;
-            Debug.Log("[NumericPassword] Collider padre desactivado para permitir interacción con hitboxes.");
-        }
-
-        panelIsShowing = true;
+        panelIsShowing = false;
+        EnsureDoorColliderEnabled();
     }
 
     /// <summary>
@@ -122,18 +112,12 @@ public class NumericPasswordPanel : MonoBehaviour
             return;
         }
 
-        // Asegurar que el GameObject está activo
-        if (!gameObject.activeSelf)
+        if (!gameObject.activeInHierarchy)
         {
             gameObject.SetActive(true);
         }
 
-        // Desactivar el collider del DoorTrigger para que los digit hitboxes reciban clicks
-        BoxCollider2D parentCollider = GetComponent<BoxCollider2D>();
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = false;
-        }
+        SetDoorColliderEnabled(false);
 
         // Crear hitboxes si no existen aún
         if (digitHitboxes == null || digitHitboxes.Length == 0)
@@ -165,15 +149,8 @@ public class NumericPasswordPanel : MonoBehaviour
     public void HidePanel()
     {
         panelIsShowing = false;
-
-        // Reactivar el collider del DoorTrigger
-        BoxCollider2D parentCollider = GetComponent<BoxCollider2D>();
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = true;
-        }
-
-        Debug.Log("[NumericPassword] Panel ocultado. Collider padre reactivado.");
+        EnsureDoorColliderEnabled();
+        Debug.Log("[NumericPassword] Panel ocultado. Collider de puerta reactivado.");
     }
 
     /// <summary>
@@ -274,12 +251,7 @@ public class NumericPasswordPanel : MonoBehaviour
             StoryState.Instance.SetFlag(unlockFlag, true);
         }
 
-        // Reactivar el collider del DoorTrigger para que la puerta funcione normalmente
-        BoxCollider2D parentCollider = GetComponent<BoxCollider2D>();
-        if (parentCollider != null)
-        {
-            parentCollider.enabled = true;
-        }
+        EnsureDoorColliderEnabled();
 
         // Feedback
         if (correctSound != null && audioSource != null)
@@ -352,5 +324,19 @@ public class NumericPasswordPanel : MonoBehaviour
         if (isUnlocked) return;
         OnPasswordCorrect();
         Debug.Log("[NumericPassword] FORZADO: Puerta desbloqueada sin contraseña (testing).");
+    }
+
+    private void SetDoorColliderEnabled(bool enabled)
+    {
+        BoxCollider2D doorCollider = GetComponent<BoxCollider2D>();
+        if (doorCollider != null)
+        {
+            doorCollider.enabled = enabled;
+        }
+    }
+
+    private void EnsureDoorColliderEnabled()
+    {
+        SetDoorColliderEnabled(true);
     }
 }
