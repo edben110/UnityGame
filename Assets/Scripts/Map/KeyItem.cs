@@ -133,6 +133,12 @@ public class KeyItem : Interactable
             Debug.Log($"[KeyItem] La llave '{itemId}' ya estaba en el inventario.");
         }
 
+        // Reproducir sonido de recolección
+        if (playSound && ItemSoundManager.Instance != null)
+        {
+            ItemSoundManager.Instance.PlayItemSound();
+        }
+
         // Destruir la llave del mundo
         Destroy(gameObject);
     }

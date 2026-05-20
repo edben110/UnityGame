@@ -239,6 +239,9 @@ public class DialogueRunner : MonoBehaviour
             string itemId = line.addInventoryItemId;
             InventoryNarrativeDefaults.EnsureItemRegistered(itemId);
             InventoryState.AddItem(itemId);
+
+            if (ItemSoundManager.Instance != null)
+                ItemSoundManager.Instance.PlayItemSound();
         }
 
         if (!string.IsNullOrWhiteSpace(line.removeInventoryItemId))

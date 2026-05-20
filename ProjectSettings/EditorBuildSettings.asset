@@ -11,19 +11,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PrologueScene.unity
     guid: 84e02a15cfc7e4a439c540d56e9af1a9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Chapter01Scene.unity
     guid: bddfab9fddf65fc47a9421a431d89257
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Chapter02Scene.unity
     guid: 0367c1f4621b0f346b6a3e55f5741057
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Chapter03Scene.unity
     guid: f7495eb519649cb4a8eee2820dae96e9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Chapter04Scene.unity
     guid: 38998265d03229c40986b713c1041a10
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Chapter05Scene.unity
     guid: b4b8e49dbeba7574f9188df787a3fe8a
   - enabled: 1

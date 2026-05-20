@@ -204,7 +204,7 @@ public class SceneNarrativeConfigurator : EditorWindow
         new DoorConfig
         {
             name = "Door_ToNorthStreet",
-            targetRoomId = "ala_norte",
+            targetRoomId = "northstreet",
             requiredChapterId = "chapter4",
             requiredFlag = "",
             requiredKeys = new KeyType[] { KeyType.SingleUseKey },
@@ -219,7 +219,7 @@ public class SceneNarrativeConfigurator : EditorWindow
         new DoorConfig
         {
             name = "Door_ToEmptyRoom",
-            targetRoomId = "empty_room",
+            targetRoomId = "emptyRoom",
             requiredChapterId = "chapter5",
             requiredFlag = "",
             requiredKeys = new KeyType[] { KeyType.SingleUseKey },
@@ -234,7 +234,7 @@ public class SceneNarrativeConfigurator : EditorWindow
         new DoorConfig
         {
             name = "Door_ToKidnappedSimon",
-            targetRoomId = "simon_captive",
+            targetRoomId = "KidNappedSimon",
             requiredChapterId = "chapter5",
             requiredFlag = "",
             requiredKeys = new KeyType[] { KeyType.SingleUseKey },
@@ -249,7 +249,7 @@ public class SceneNarrativeConfigurator : EditorWindow
         new DoorConfig
         {
             name = "Door_ToKillerBunker",
-            targetRoomId = "killer_bunker",
+            targetRoomId = "killerbunker",
             requiredChapterId = "chapter5",
             requiredFlag = "",
             requiredKeys = new KeyType[] { KeyType.SingleUseKey },
@@ -641,6 +641,16 @@ public class SceneNarrativeConfigurator : EditorWindow
             gateObj.transform.SetParent(systemsParent.transform);
             gateObj.AddComponent<Chapter5ValidationGate>();
             Debug.Log("[Configurador] Chapter5ValidationGate CREADO.");
+        }
+
+        // EndingFlowController
+        if (UnityEngine.Object.FindAnyObjectByType<EndingFlowController>() == null)
+        {
+            GameObject systemsParent = FindOrCreateParent("_Systems");
+            GameObject endingObj = new GameObject("EndingFlowController");
+            endingObj.transform.SetParent(systemsParent.transform);
+            endingObj.AddComponent<EndingFlowController>();
+            Debug.Log("[Configurador] EndingFlowController CREADO.");
         }
     }
 

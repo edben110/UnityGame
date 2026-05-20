@@ -8,6 +8,7 @@ public class AnxietySystem : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private TMP_Text anxietyLabel;
+    [SerializeField] private TMP_Text npcStatusText;
     [SerializeField] private Image anxietyOverlay;
 
     [Header("Audio")]
@@ -20,8 +21,16 @@ public class AnxietySystem : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float overlayAlphaMax = 0.4f;
     [SerializeField] private Color overlayColor = new Color(0.45f, 0f, 0f, 1f);
 
+    private const string NpcAnxietyNumberColor = "#FFFFFF";
+    private const string NpcAnxietySuffixColor = "#8A8580";
+
     private Vignette vignette;
     private ChromaticAberration chromatic;
+
+    private void Awake()
+    {
+        TryResolveNpcStatusText();
+    }
 
     private void Start()
     {
@@ -37,10 +46,8 @@ public class AnxietySystem : MonoBehaviour
             OnStateChanged();
         }
 
-        if (anxietyOverlay != null)
-        {
-            anxietyOverlay.gameObject.SetActive(false);
-        }
+        HideOverlayImage();
+        ClearNpcStatusText();
     }
 
     private void OnDestroy()
@@ -92,23 +99,71 @@ public class AnxietySystem : MonoBehaviour
 
     public void ShowVerificationOverlay(float normalizedIntensity)
     {
-        if (anxietyOverlay == null)
+        ShowNpcAnxiety(Mathf.RoundToInt(Mathf.Clamp01(normalizedIntensity) * 100f));
+    }
+
+    public void ShowVerificationOverlay(float normalizedIntensity, string statusMessage)
+    {
+        ShowNpcAnxiety(Mathf.RoundToInt(Mathf.Clamp01(normalizedIntensity) * 100f));
+    }
+
+    /// <summary>
+    /// Muestra solo el valor de ansiedad del NPC en NpcStatusText (ej. 45/100).
+    /// El número va en blanco; el sufijo /100 en gris para contraste.
+    /// </summary>
+    public void ShowNpcAnxiety(int anxietyPercent)
+    {
+        HideOverlayImage();
+        TryResolveNpcStatusText();
+
+        if (npcStatusText == null)
         {
             return;
         }
 
-        float clampedIntensity = Mathf.Clamp01(normalizedIntensity);
-        Color color = overlayColor;
-        color.a = clampedIntensity * overlayAlphaMax;
-        anxietyOverlay.color = color;
-        anxietyOverlay.gameObject.SetActive(color.a > 0.01f);
+        int value = Mathf.Clamp(anxietyPercent, 0, 100);
+        npcStatusText.gameObject.SetActive(true);
+        npcStatusText.richText = true;
+        npcStatusText.text =
+            $"<color={NpcAnxietyNumberColor}><b>{value}</b></color><color={NpcAnxietySuffixColor}>/100</color>";
+        npcStatusText.color = Color.white;
     }
 
     public void HideVerificationOverlay()
+    {
+        HideOverlayImage();
+        ClearNpcStatusText();
+    }
+
+    private void TryResolveNpcStatusText()
+    {
+        if (npcStatusText != null)
+        {
+            return;
+        }
+
+        GameObject statusObject = GameObject.Find("NpcStatusText");
+        if (statusObject != null)
+        {
+            npcStatusText = statusObject.GetComponent<TMP_Text>();
+        }
+    }
+
+    private void HideOverlayImage()
     {
         if (anxietyOverlay != null)
         {
             anxietyOverlay.gameObject.SetActive(false);
         }
+    }
+
+    private void ClearNpcStatusText()
+    {
+        if (npcStatusText == null)
+        {
+            return;
+        }
+
+        npcStatusText.text = string.Empty;
     }
 }

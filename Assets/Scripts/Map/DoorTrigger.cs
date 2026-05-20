@@ -34,8 +34,16 @@ public class DoorTrigger : Interactable
     [SerializeField] private KeyType simonRoomRequiredKey = KeyType.BedroomKey;
     [SerializeField] private string chapter2BookDecisionCompleteFlag = "chapter2.book_decision.completed";
 
+    [Header("Acciones al pasar")]
+    [Tooltip("Flag que se setea en StoryState al cruzar esta puerta exitosamente")]
+    [SerializeField] private string setFlagOnPass;
+
     [Header("Feedback")]
     [SerializeField] private string lockedMessage = "Esta puerta está cerrada.";
+
+    [Header("Sala de seguridad (contraseña 4-7-2-9)")]
+    [Tooltip("Panel numérico en el mismo GameObject (Door_ToSecurityRoom). Se resuelve en Awake si está vacío.")]
+    [SerializeField] private NumericPasswordPanel securityPasswordPanel;
 
     [Header("Depuración")]
     [SerializeField] private bool showDebugGizmo = true;
@@ -49,6 +57,11 @@ public class DoorTrigger : Interactable
         "npc.talked.lisa",
         "npc.talked.lucas"
     };
+
+    private void Awake()
+    {
+        CacheSecurityPasswordPanel();
+    }
 
     private void Start()
     {
@@ -165,11 +178,14 @@ public class DoorTrigger : Interactable
 
         if (!validation.canPass)
         {
-            // Mostrar feedback narrativo
-            DialoguePanelUI panel = DialoguePanelUI.Instance;
-            if (panel != null)
+            // Mostrar feedback narrativo (solo si hay mensaje)
+            if (!string.IsNullOrWhiteSpace(validation.blockReason))
             {
-                panel.ShowSystemMessage(validation.blockReason);
+                DialoguePanelUI panel = DialoguePanelUI.Instance;
+                if (panel != null)
+                {
+                    panel.ShowSystemMessage(validation.blockReason);
+                }
             }
             return;
         }
@@ -242,6 +258,24 @@ public class DoorTrigger : Interactable
             return;
         }
 
+        // ═══ PUERTA DE SEGURIDAD (entrada con diálogo contextual) ═══
+        if (IsSecurityRoomDoor())
+        {
+            bool firstEntry = StoryState.Instance == null || !StoryState.Instance.HasFlag("chapter4.security_room.entered");
+            ChangeRoom();
+
+            if (firstEntry)
+            {
+                DialogueRunner runner = FindAnyObjectByType<DialogueRunner>();
+                if (runner != null && !runner.IsRunning && runner.HasConversation("chapter4_security_room_entry"))
+                {
+                    runner.StartConversation("chapter4_security_room_entry", "start");
+                    Debug.Log("[DoorTrigger] Entrando a Security Room por primera vez. Lanzando diálogo contextual.");
+                }
+            }
+            return;
+        }
+
         // Puerta normal (sin transición de capítulo)
         DialoguePanelUI normalPanel = DialoguePanelUI.Instance;
         if (normalPanel != null)
@@ -289,6 +323,70 @@ public class DoorTrigger : Interactable
         result.npcTalkCount = CountNpcTalksInCurrentChapter();
         result.allNpcsTalked = result.npcTalkCount >= 5;
         result.hasKey = true;
+
+        // ═══ PUERTA AL ALA NORTE (Door_ToNorthStreet) — Bloqueo electrónico ═══
+        if (IsNorthStreetDoorAnyChapter())
+        {
+            bool doorUnlocked = StoryState.Instance != null && StoryState.Instance.HasFlag("UnlockNorthStreetDoor");
+
+            if (!doorUnlocked)
+            {
+                result.canPass = false;
+                result.blockReason = "La perilla de la puerta gira y se abre un poco, pero parece que hay un circuito que la mantiene bloqueada.";
+                return result;
+            }
+
+            // Puerta desbloqueada físicamente — ahora validar requisitos narrativos del Cap 5
+            if (StoryState.Instance != null && StoryState.Instance.CurrentChapterId == "chapter4")
+            {
+                if (Chapter5ValidationGate.Instance != null)
+                {
+                    if (!Chapter5ValidationGate.Instance.ValidateChapter5Entry(out string chapter5BlockReason))
+                    {
+                        result.canPass = false;
+                        result.blockReason = chapter5BlockReason;
+                        return result;
+                    }
+                }
+            }
+
+            result.canPass = true;
+            return result;
+        }
+
+        // ═══ PUERTA DE LA SALA DE SEGURIDAD (requiere contraseña numérica) ═══
+        if (IsSecurityRoomDoor())
+        {
+            if (StoryState.Instance == null || !StoryState.Instance.HasFlag("SecurityRoom.Unlocked"))
+            {
+                // Buscar el PasswordPanel en la escena (incluye objetos inactivos)
+                NumericPasswordPanel passwordPanel = FindPasswordPanel();
+
+                if (passwordPanel != null && !passwordPanel.IsUnlocked)
+                {
+                    if (passwordPanel.IsPanelShowing)
+                    {
+                        result.canPass = false;
+                        result.blockReason = string.Empty;
+                        return result;
+                    }
+
+                    passwordPanel.ShowPanel();
+                    Debug.Log("[DoorTrigger] Puerta de seguridad: activando PasswordPanel.");
+                    result.canPass = false;
+                    result.blockReason = string.Empty;
+                    return result;
+                }
+
+                result.canPass = false;
+                result.blockReason = "La puerta tiene un teclado numérico. Necesito encontrar la combinación correcta.";
+                return result;
+            }
+
+            // Ya desbloqueada — permitir paso
+            result.canPass = true;
+            return result;
+        }
 
         if (IsSecretBasementDoor())
         {
@@ -732,9 +830,23 @@ public class DoorTrigger : Interactable
         bool success = RoomManager.Instance.ChangeRoom(targetRoomId);
         Debug.Log($"[DoorTrigger] ChangeRoom('{targetRoomId}') => {success}");
 
-        if (success && CharacterAnxietySystem.Instance != null)
+        if (success)
         {
-            CharacterAnxietySystem.Instance.OnDoorInteracted();
+            // Setear flag al pasar exitosamente
+            if (!string.IsNullOrWhiteSpace(setFlagOnPass) && StoryState.Instance != null)
+            {
+                StoryState.Instance.SetFlag(setFlagOnPass, true);
+            }
+
+            if (CharacterAnxietySystem.Instance != null)
+            {
+                CharacterAnxietySystem.Instance.OnDoorInteracted();
+            }
+
+            if (EndingFlowController.Instance != null)
+            {
+                EndingFlowController.Instance.OnRoomEntered(gameObject.name, targetRoomId);
+            }
         }
 
         return success;
@@ -888,7 +1000,20 @@ public class DoorTrigger : Interactable
             return false;
         }
 
-        // Detectar por nombre del GameObject
+        return IsNorthStreetDoorByNameOrTarget();
+    }
+
+    /// <summary>
+    /// Detecta si esta puerta es la del Ala Norte sin restricción de capítulo.
+    /// Usada para el bloqueo electrónico que aplica en cualquier momento.
+    /// </summary>
+    private bool IsNorthStreetDoorAnyChapter()
+    {
+        return IsNorthStreetDoorByNameOrTarget();
+    }
+
+    private bool IsNorthStreetDoorByNameOrTarget()
+    {
         if (string.Equals(gameObject.name, "Door_ToNorthStreet", StringComparison.OrdinalIgnoreCase)
             || string.Equals(gameObject.name, "Door_NorthStreet", StringComparison.OrdinalIgnoreCase)
             || string.Equals(gameObject.name, "Door_ToAlaNorte", StringComparison.OrdinalIgnoreCase))
@@ -896,7 +1021,6 @@ public class DoorTrigger : Interactable
             return true;
         }
 
-        // Detectar por targetRoomId
         if (string.Equals(targetRoomId, "northstreet", StringComparison.OrdinalIgnoreCase)
             || string.Equals(targetRoomId, "ala_norte", StringComparison.OrdinalIgnoreCase)
             || string.Equals(targetRoomId, "alanorte", StringComparison.OrdinalIgnoreCase)
@@ -908,9 +1032,84 @@ public class DoorTrigger : Interactable
         return false;
     }
 
+    /// <summary>
+    /// Detecta si esta puerta es la de la Sala de Seguridad (requiere contraseña 4-7-2-9).
+    /// </summary>
+    private bool IsSecurityRoomDoor()
+    {
+        if (string.Equals(gameObject.name, "Door_ToSecurityRoom", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (string.Equals(targetRoomId, "security_room", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "securityroom", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "securityRoom", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(targetRoomId, "sala_seguridad", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void CacheSecurityPasswordPanel()
+    {
+        if (!IsSecurityRoomDoor())
+        {
+            return;
+        }
+
+        if (securityPasswordPanel == null)
+        {
+            securityPasswordPanel = GetComponent<NumericPasswordPanel>();
+        }
+    }
+
+    /// <summary>
+    /// Resuelve el panel de contraseña: primero el del mismo GameObject, luego búsqueda en escena.
+    /// </summary>
+    private NumericPasswordPanel FindPasswordPanel()
+    {
+        CacheSecurityPasswordPanel();
+        if (securityPasswordPanel != null)
+        {
+            return securityPasswordPanel;
+        }
+
+        NumericPasswordPanel[] panels = FindObjectsByType<NumericPasswordPanel>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (panels == null || panels.Length == 0)
+        {
+            return null;
+        }
+
+        for (int i = 0; i < panels.Length; i++)
+        {
+            if (string.Equals(panels[i].gameObject.name, "Door_ToSecurityRoom", StringComparison.OrdinalIgnoreCase))
+            {
+                securityPasswordPanel = panels[i];
+                return securityPasswordPanel;
+            }
+        }
+
+        securityPasswordPanel = panels[0];
+        return securityPasswordPanel;
+    }
+
     private bool ShouldAutoStartChapter5OnEntry()
     {
-        return IsNorthStreetDoor();
+        if (StoryState.Instance == null || StoryState.Instance.CurrentChapterId != "chapter4")
+        {
+            return false;
+        }
+
+        if (!IsNorthStreetDoorByNameOrTarget())
+        {
+            return false;
+        }
+
+        // Solo dispara transición si la puerta fue desbloqueada desde Security Room
+        return StoryState.Instance.HasFlag("UnlockNorthStreetDoor");
     }
 
     private bool IsLobbyTarget()

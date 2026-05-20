@@ -15,6 +15,7 @@ public class NpcInteractionMenuUI : MonoBehaviour
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private Button talkButton;
+    [FormerlySerializedAs("verifyAnxietyButton")]
     [SerializeField] private Button verifyAnxietyButton;
     [FormerlySerializedAs("contextButton")]
     [SerializeField] private Button askItemButton;
@@ -23,7 +24,6 @@ public class NpcInteractionMenuUI : MonoBehaviour
     [SerializeField] private Button closeButton;
 
     private Action onTalk;
-    private Action onVerify;
     private Action onAskItem;
     private string askItemLabelOverride = string.Empty;
     private bool askItemVisible;
@@ -46,8 +46,7 @@ public class NpcInteractionMenuUI : MonoBehaviour
 
         if (verifyAnxietyButton != null)
         {
-            verifyAnxietyButton.onClick.AddListener(HandleVerify);
-            EnsureCursorHover(verifyAnxietyButton.gameObject);
+            verifyAnxietyButton.gameObject.SetActive(false);
         }
 
         if (GetAskButton() != null)
@@ -90,11 +89,6 @@ public class NpcInteractionMenuUI : MonoBehaviour
             talkButton.onClick.RemoveListener(HandleTalk);
         }
 
-        if (verifyAnxietyButton != null)
-        {
-            verifyAnxietyButton.onClick.RemoveListener(HandleVerify);
-        }
-
         if (GetAskButton() != null)
         {
             GetAskButton().onClick.RemoveListener(HandleAskItem);
@@ -111,10 +105,9 @@ public class NpcInteractionMenuUI : MonoBehaviour
         }
     }
 
-    public void Show(string npcName, Action talkAction, Action verifyAction, Action askItemAction = null, string askItemLabel = "")
+    public void Show(string npcName, string npcId, Action talkAction, Action askItemAction = null, string askItemLabel = "")
     {
         onTalk = talkAction;
-        onVerify = verifyAction;
         onAskItem = askItemAction;
         askItemLabelOverride = askItemLabel ?? string.Empty;
         askItemVisible = askItemAction != null;
@@ -124,11 +117,7 @@ public class NpcInteractionMenuUI : MonoBehaviour
             titleText.text = string.IsNullOrWhiteSpace(npcName) ? "Interaccion" : npcName;
         }
 
-        if (statusText != null)
-        {
-            statusText.text = "Elige una opcion.";
-        }
-
+        RefreshNpcAnxiety(npcId);
         SetAskItemButtonState(askItemVisible);
         RefreshAskItemButtonLabel();
 
@@ -140,23 +129,27 @@ public class NpcInteractionMenuUI : MonoBehaviour
 
     public void ShowStatusText(string text)
     {
-        if (statusText != null)
+        if (string.IsNullOrWhiteSpace(text))
         {
-            statusText.text = text ?? string.Empty;
+            return;
         }
+
+        DialoguePanelUI panel = DialoguePanelUI.Instance;
+        if (panel != null)
+        {
+            panel.ShowSystemMessage(text);
+            return;
+        }
+
+        Debug.Log($"[NpcInteractionMenuUI] {text}");
     }
 
-public void Hide()
+    public void Hide()
     {
         onTalk = null;
-        onVerify = null;
         onAskItem = null;
         askItemLabelOverride = string.Empty;
         askItemVisible = false;
-
-        // NO ocultamos el overlay de ansiedad aqui;
-        // el overlay se gestiona independientemente y debe
-        // permanecer hasta que el jugador cambie de contexto.
 
         SetAskItemButtonState(false);
 
@@ -165,18 +158,52 @@ public void Hide()
             root.SetActive(false);
         }
 
-        // Restaurar cursor al cerrar el menú
+        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+        if (anxietySystem != null)
+        {
+            anxietySystem.HideVerificationOverlay();
+        }
+
         CursorManager.SetDefault();
+    }
+
+    private void RefreshNpcAnxiety(string npcId)
+    {
+        if (CharacterAnxietySystem.Instance == null || string.IsNullOrWhiteSpace(npcId))
+        {
+            DisplayAnxietyValue(0);
+            return;
+        }
+
+        float anxiety = CharacterAnxietySystem.Instance.GetAnxiety(npcId);
+        DisplayAnxietyValue(Mathf.RoundToInt(anxiety));
+    }
+
+    private void DisplayAnxietyValue(int anxietyValue)
+    {
+        int clamped = Mathf.Clamp(anxietyValue, 0, 100);
+
+        AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
+        if (anxietySystem != null)
+        {
+            anxietySystem.ShowNpcAnxiety(clamped);
+            return;
+        }
+
+        if (statusText == null)
+        {
+            return;
+        }
+
+        statusText.gameObject.SetActive(true);
+        statusText.richText = true;
+        statusText.text = $"<color=#FFFFFF><b>{clamped}</b></color><color=#8A8580>/100</color>";
+        statusText.color = Color.white;
     }
 
     private void HandleTalk()
     {
         onTalk?.Invoke();
-    }
-
-    private void HandleVerify()
-    {
-        onVerify?.Invoke();
     }
 
     private void HandleAskItem()
@@ -233,7 +260,7 @@ public void Hide()
             displayName = InventoryCatalog.Instance.GetDisplayNameOrFallback(selectedItem);
         }
 
-        buttonLabel.text = $"Preguntar por: {displayName}";
+        buttonLabel.text = $"Preguntar por {displayName}";
     }
 
     private void OnSelectedItemChanged(string _)

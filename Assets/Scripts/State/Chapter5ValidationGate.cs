@@ -69,6 +69,15 @@ public class Chapter5ValidationGate : MonoBehaviour
             return false;
         }
 
+        // Si la puerta al Ala Norte fue desbloqueada desde la Sala de Seguridad,
+        // no bloquear el avance por validaciones de entrega/decisión de NPCs.
+        // (HS_SecurityUnlockButton → UnlockNorthStreetDoor)
+        if (StoryState.Instance.HasFlag("UnlockNorthStreetDoor"))
+        {
+            Debug.Log("[Chapter5Gate] Puerta desbloqueada por SecurityUnlockButton. Se omite validación de Capítulo 5.");
+            return true;
+        }
+
         // Verificar que estamos en chapter4
         if (StoryState.Instance.CurrentChapterId != "chapter4")
         {

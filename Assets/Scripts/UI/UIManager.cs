@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -54,17 +53,12 @@ public class UIManager : MonoBehaviour
 
         // Forzar creacion propia ignorando referencias de escena
         mainMenuPanel = null;
-        chaptersPanel = null;
         gameTitleText = null;
         newGameButton = null;
         continueButton = null;
-        chaptersButton = null;
         quitButton = null;
-        chapterButtonsContainer = null;
-        backToMainMenuButton = null;
 
         EnsureMainMenuPanel();
-        EnsureChaptersPanel();
         WireEvents();
         ShowMainMenu();
         Invoke(nameof(RefreshContinueState), 0f);
@@ -81,7 +75,6 @@ public class UIManager : MonoBehaviour
     {
         // Ocultar paneles/botones viejos creados en la escena
         if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
-        if (chaptersPanel != null) chaptersPanel.SetActive(false);
         if (gameTitleText != null) gameTitleText.gameObject.SetActive(false);
 
         // Ocultar TODOS los hijos del canvas que no sean UIManager o Camera
@@ -111,24 +104,13 @@ public class UIManager : MonoBehaviour
     {
         if (debugLogs) Debug.Log("UIManager: Mostrar MainMenuPanel");
         SetPanelState(mainMenuPanel, true);
-        SetPanelState(chaptersPanel, false);
         if (backgroundObj != null) backgroundObj.SetActive(true);
         RefreshContinueState();
-    }
-
-    public void ShowChapters()
-    {
-        if (debugLogs) Debug.Log("UIManager: Mostrando ChaptersPanel.");
-        SetPanelState(mainMenuPanel, false);
-        SetPanelState(chaptersPanel, true);
-        if (backgroundObj != null) backgroundObj.SetActive(true);
-        BuildChapterButtons();
     }
 
     public void HideAllMenuUi()
     {
         SetPanelState(mainMenuPanel, false);
-        SetPanelState(chaptersPanel, false);
 
         if (backgroundObj != null)
         {
@@ -142,18 +124,14 @@ public class UIManager : MonoBehaviour
     {
         WireButton(newGameButton, OnClickNewGame);
         WireButton(continueButton, OnClickContinue);
-        WireButton(chaptersButton, ShowChapters);
         WireButton(quitButton, OnClickQuit);
-        WireButton(backToMainMenuButton, ShowMainMenu);
     }
 
     private void UnwireEvents()
     {
         UnwireButton(newGameButton, OnClickNewGame);
         UnwireButton(continueButton, OnClickContinue);
-        UnwireButton(chaptersButton, ShowChapters);
         UnwireButton(quitButton, OnClickQuit);
-        UnwireButton(backToMainMenuButton, ShowMainMenu);
     }
 
     private static void WireButton(Button btn, UnityEngine.Events.UnityAction action)
@@ -198,136 +176,7 @@ public class UIManager : MonoBehaviour
             label.color = canContinue ? ghostWhite : dimWhite;
     }
 
-    // ==================== CAPITULOS ====================
-
-    private void BuildChapterButtons()
-    {
-        if (chapterButtonsContainer == null) { Debug.LogError("No se asigno chapterButtonsContainer."); return; }
-
-        ClearContainer(chapterButtonsContainer);
-
-        if (GameManager.Instance == null) { Debug.LogError("GameManager no encontrado."); return; }
-
-        // Cargar marco
-        Sprite marcoSprite = Resources.Load<Sprite>("Sprites/marcoCapitulos");
-        if (marcoSprite == null)
-        {
-            // Intentar cargar como Texture2D y crear sprite
-            Texture2D marcoTex = Resources.Load<Texture2D>("Sprites/marcoCapitulos");
-            if (marcoTex != null)
-                marcoSprite = Sprite.Create(marcoTex, new Rect(0, 0, marcoTex.width, marcoTex.height), new Vector2(0.5f, 0.5f));
-        }
-
-        // Mostrar los 5 capitulos (desbloqueados y bloqueados)
-        IReadOnlyList<ChapterDefinition> allChapters = GameManager.Instance.Chapters;
-        List<ChapterDefinition> unlocked = GameManager.Instance.GetUnlockedChapters();
-
-        foreach (ChapterDefinition chapter in allChapters)
-        {
-            if (chapter == null || !chapter.IsValid()) continue;
-
-            bool isUnlocked = false;
-            foreach (ChapterDefinition u in unlocked)
-            {
-                if (u.id == chapter.id) { isUnlocked = true; break; }
-            }
-
-            string label = string.IsNullOrWhiteSpace(chapter.displayName) ? chapter.id : chapter.displayName;
-            CreateChapterCard(chapterButtonsContainer, label, chapter.id, marcoSprite, isUnlocked);
-        }
-
-        if (debugLogs) Debug.Log($"UIManager: {allChapters.Count} tarjetas de capitulos generadas.");
-    }
-
-    private void CreateChapterCard(Transform parent, string label, string chapterId, Sprite marcoSprite, bool unlocked)
-    {
-        GameObject cardObj = new GameObject(label + "Card", typeof(RectTransform), typeof(Button));
-        cardObj.transform.SetParent(parent, false);
-
-        // Marco como fondo usando RawImage
-        RawImage cardImage = cardObj.AddComponent<RawImage>();
-        Texture2D marcoTex = Resources.Load<Texture2D>("Sprites/marcoCapitulos");
-        if (marcoTex != null)
-        {
-            cardImage.texture = marcoTex;
-            cardImage.color = unlocked ? Color.white : new Color(0.4f, 0.4f, 0.4f, 0.85f);
-            Debug.Log($"Marco cargado OK para {label}");
-        }
-        else
-        {
-            Debug.LogError("NO se pudo cargar Sprites/marcoCapitulos");
-            cardImage.color = unlocked ? new Color(0.25f, 0.08f, 0.08f, 0.8f) : new Color(0.2f, 0.2f, 0.2f, 0.7f);
-        }
-
-        // Tamano flexible
-        LayoutElement le = cardObj.AddComponent<LayoutElement>();
-        le.flexibleWidth = 1;
-        le.flexibleHeight = 1;
-
-        // Texto del capitulo
-        GameObject textObj = new GameObject("Text (TMP)", typeof(RectTransform), typeof(TextMeshProUGUI));
-        textObj.transform.SetParent(cardObj.transform, false);
-
-        RectTransform textRect = textObj.GetComponent<RectTransform>();
-        textRect.anchorMin = new Vector2(0.1f, 0.55f);
-        textRect.anchorMax = new Vector2(0.9f, 0.85f);
-        textRect.offsetMin = Vector2.zero;
-        textRect.offsetMax = Vector2.zero;
-
-        TextMeshProUGUI tmp = textObj.GetComponent<TextMeshProUGUI>();
-        tmp.text = label.ToUpper();
-        tmp.fontSize = 26;
-        tmp.fontStyle = FontStyles.Bold;
-        tmp.color = unlocked ? ghostWhite : dimWhite;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.enableWordWrapping = true;
-        tmp.raycastTarget = false;
-        EnsureFontAsset(tmp);
-
-        // Candado si esta bloqueado
-        if (!unlocked)
-        {
-            GameObject lockObj = new GameObject("LockText", typeof(RectTransform), typeof(TextMeshProUGUI));
-            lockObj.transform.SetParent(cardObj.transform, false);
-
-            RectTransform lockRect = lockObj.GetComponent<RectTransform>();
-            lockRect.anchorMin = new Vector2(0.1f, 0.15f);
-            lockRect.anchorMax = new Vector2(0.9f, 0.45f);
-            lockRect.offsetMin = Vector2.zero;
-            lockRect.offsetMax = Vector2.zero;
-
-            TextMeshProUGUI lockTmp = lockObj.GetComponent<TextMeshProUGUI>();
-            lockTmp.text = "BLOQUEADO";
-            lockTmp.fontSize = 22;
-            lockTmp.fontStyle = FontStyles.Italic;
-            lockTmp.alignment = TextAlignmentOptions.Center;
-            lockTmp.color = new Color(0.7f, 0.3f, 0.3f, 0.9f);
-            lockTmp.raycastTarget = false;
-            EnsureFontAsset(lockTmp);
-        }
-
-        // Boton
-        Button btn = cardObj.GetComponent<Button>();
-        btn.interactable = unlocked;
-        btn.transition = Selectable.Transition.None;
-
-        // Hover en tarjetas desbloqueadas
-        if (unlocked)
-        {
-            CardHoverEffect hover = cardObj.AddComponent<CardHoverEffect>();
-            hover.Init(cardImage.color);
-
-            string capturedId = chapterId;
-            btn.onClick.AddListener(() => GameManager.Instance.LoadChapterById(capturedId));
-        }
-    }
-
-    private static void ClearContainer(Transform container)
-    {
-        if (container == null) return;
-        for (int i = container.childCount - 1; i >= 0; i--)
-            Destroy(container.GetChild(i).gameObject);
-    }
+    // ==================== CAPITULOS (funcionalidad removida) ====================
 
     private static void SetPanelState(GameObject panel, bool active)
     {
@@ -422,72 +271,18 @@ public class UIManager : MonoBehaviour
             leftEdge, y1 - btnHeight, rightEdge, y1);
 
         float y2 = y1 - btnHeight - gap;
-        chaptersButton = CreateFixedButton(mainMenuPanel.transform, chaptersLabel, 28, ghostWhite,
+        quitButton = CreateFixedButton(mainMenuPanel.transform, quitLabel, 28, ghostWhite,
             leftEdge, y2 - btnHeight, rightEdge, y2);
 
-        float y3 = y2 - btnHeight - gap;
-        quitButton = CreateFixedButton(mainMenuPanel.transform, quitLabel, 28, ghostWhite,
-            leftEdge, y3 - btnHeight, rightEdge, y3);
-
         // Marco decorativo justo debajo del ultimo boton
-        float marcoTop = y3 - btnHeight - 0.005f;
+        float marcoTop = y2 - btnHeight - 0.005f;
         CreateMarcoDecorativo(mainMenuPanel.transform, leftEdge, marcoTop);
 
         // Texto de ubicacion abajo a la izquierda
         CreateLocationText(mainMenuPanel.transform);
     }
 
-    private void EnsureChaptersPanel()
-    {
-        if (chaptersPanel == null)
-            chaptersPanel = CreateTransparentPanel("ChaptersPanel", rootCanvas.transform);
-
-        Image panelImg = chaptersPanel.GetComponent<Image>();
-        if (panelImg != null) panelImg.color = new Color(0, 0, 0, 0.85f);
-
-        // Titulo
-        Transform existingTitle = chaptersPanel.transform.Find("ChaptersTitle");
-        if (existingTitle == null)
-            CreateSectionTitle(chaptersPanel.transform, "CAPITULOS");
-
-        // Contenedor horizontal para las tarjetas de capitulos
-        if (chapterButtonsContainer == null)
-        {
-            GameObject container = new GameObject("ChaptersButtonContainer", typeof(RectTransform));
-            container.transform.SetParent(chaptersPanel.transform, false);
-
-            RectTransform cRect = container.GetComponent<RectTransform>();
-            cRect.anchorMin = new Vector2(0.10f, 0.10f);
-            cRect.anchorMax = new Vector2(0.90f, 0.80f);
-            cRect.offsetMin = Vector2.zero;
-            cRect.offsetMax = Vector2.zero;
-
-            GridLayoutGroup glg = container.AddComponent<GridLayoutGroup>();
-            glg.cellSize = new Vector2(380, 380);
-            glg.spacing = new Vector2(30, 20);
-            glg.childAlignment = TextAnchor.MiddleCenter;
-            glg.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            glg.constraintCount = 3;
-
-            chapterButtonsContainer = container.transform;
-        }
-
-        // Boton volver
-        if (backToMainMenuButton == null)
-            backToMainMenuButton = CreateTextButton(chaptersPanel.transform, "VOLVER", 28, ghostWhite);
-        else
-            StyleTextButton(backToMainMenuButton, "VOLVER", 28, ghostWhite);
-
-        RectTransform backRect = backToMainMenuButton.GetComponent<RectTransform>();
-        backRect.anchorMin = new Vector2(0.02f, 0.02f);
-        backRect.anchorMax = new Vector2(0.15f, 0.10f);
-        backRect.offsetMin = Vector2.zero;
-        backRect.offsetMax = Vector2.zero;
-
-        LayoutElement le = backToMainMenuButton.GetComponent<LayoutElement>();
-        if (le == null) le = backToMainMenuButton.gameObject.AddComponent<LayoutElement>();
-        le.ignoreLayout = true;
-    }
+    // EnsureChaptersPanel() — removido (funcionalidad de capitulos eliminada)
 
     // ==================== CREACION DE ELEMENTOS ====================
 

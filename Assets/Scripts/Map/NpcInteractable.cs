@@ -35,7 +35,7 @@ public class NpcInteractable : Interactable
         string askItemLabel;
         bool hasItemAction = TryBuildSpecificItemQuestionAction(runner, itemId, out askItemAction, out askItemLabel);
 
-        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, hasItemAction ? askItemAction : null, hasItemAction ? askItemLabel : string.Empty);
+        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), npcId, OnTalkPressed, hasItemAction ? askItemAction : null, hasItemAction ? askItemLabel : string.Empty);
         TryHandlePendingDisappearances();
 
         if (!hasItemAction)
@@ -81,7 +81,7 @@ public class NpcInteractable : Interactable
             motivoLabel = "¿Por qué estás aquí?";
         }
 
-        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), OnTalkPressed, OnVerifyPressed, askItemAction ?? motivoAction, askItemLabel.Length > 0 ? askItemLabel : motivoLabel);
+        NpcInteractionMenuUI.Instance.Show(GetDisplayName(), npcId, OnTalkPressed, askItemAction ?? motivoAction, askItemLabel.Length > 0 ? askItemLabel : motivoLabel);
         TryHandlePendingDisappearances();
     }
 
@@ -257,34 +257,6 @@ private void OnTalkPressed()
         return $"{talkConversationId}_critical";
     }
 
-    private void OnVerifyPressed()
-    {
-        if (NpcInteractionMenuUI.Instance == null)
-        {
-            return;
-        }
-
-        if (CharacterAnxietySystem.Instance == null)
-        {
-            NpcInteractionMenuUI.Instance.ShowStatusText("Sistema de ansiedad no configurado.");
-            AnxietySystem anxietySystem = FindAnyObjectByType<AnxietySystem>();
-            if (anxietySystem != null)
-            {
-                anxietySystem.HideVerificationOverlay();
-            }
-            return;
-        }
-
-        float anxiety = CharacterAnxietySystem.Instance.GetAnxiety(npcId);
-        NpcInteractionMenuUI.Instance.ShowStatusText(CharacterAnxietySystem.Instance.GetFormattedStatus(npcId));
-
-        AnxietySystem overlaySystem = FindAnyObjectByType<AnxietySystem>();
-        if (overlaySystem != null)
-        {
-            overlaySystem.ShowVerificationOverlay(anxiety / 100f);
-        }
-    }
-
     private void OnAskItemPressed(string conversationId)
     {
         if (string.IsNullOrWhiteSpace(conversationId))
@@ -304,16 +276,10 @@ private void OnTalkPressed()
             return;
         }
 
-        string itemId = ExtractItemIdFromConversation(conversationId);
         if (CharacterAnxietySystem.Instance != null
-            && !string.IsNullOrWhiteSpace(itemId)
             && !conversationId.Equals("chapter2_book_decision", StringComparison.Ordinal))
         {
-            if (!CharacterAnxietySystem.Instance.TryApplyObjectQuestionRelief(npcId, itemId)
-                && CharacterAnxietySystem.Instance.HasUsedObjectQuestionRelief(itemId))
-            {
-                Debug.Log($"[NPC] Pregunta por '{itemId}' ya usada para bajar ansiedad en esta partida.");
-            }
+            CharacterAnxietySystem.Instance.ApplyAskItemRelief(npcId);
         }
 
         if (conversationId == "chapter2_book_decision")
@@ -473,15 +439,15 @@ private void OnTalkPressed()
         if (InventoryCatalog.Instance != null)
         {
             string displayName = InventoryCatalog.Instance.GetDisplayNameOrFallback(itemId);
-            return $"Preguntar por: {displayName}";
+            return $"Preguntar por {displayName}";
         }
 
         if (itemId.Contains("foto", StringComparison.OrdinalIgnoreCase))
         {
-            return "Preguntar por: la foto";
+            return "Preguntar por la foto";
         }
 
-        return $"Preguntar por: {itemId.Replace('_', ' ')}";
+        return $"Preguntar por {itemId.Replace('_', ' ')}";
     }
 
     private string GetDisplayName()
